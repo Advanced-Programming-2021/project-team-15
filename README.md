@@ -3,5 +3,5 @@
 
 ### Team Members:
 - Mehrad Milanloo 99105775
-- Student2 99100000
+- Parnian Razavipour 99101665
 - Student3 99100000
