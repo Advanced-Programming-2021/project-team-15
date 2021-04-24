@@ -20,6 +20,7 @@ public class User {
         allDecksOfUser = new ArrayList<>();
         allCardsOfUser = new ArrayList<>();
     }
+
     public static User getUserByUserName(String userName)
     {
         for (User user : allUsersOfUser)
