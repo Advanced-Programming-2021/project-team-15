@@ -1,31 +1,32 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Card {
-    public enum CardType{
-        MONSTER,
-        MAGIC
-    }
+
     private static ArrayList<Card> allCards;
-   // protected ArrayList<CardAction> cardActions ;
+
+    static {
+        allCards = new ArrayList<>();
+    }
+
+//    protected ArrayList<CardAction> cardActions ;
     protected String cardName ;
-    protected String  cardDescription;
+    protected String cardDescription;
     protected String cardNumber;
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType ;
-    protected Zone  placedZone ;
-    static {
-        allCards =new ArrayList<>();
-    }
-    public Card(String cardDescription , String cardName , String cardNumber , CardType cardType){
+    protected Zone placedZone;
+    protected int price;
+    public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
         this.cardNumber = cardNumber;
         this.cardType = cardType;
     }
-    //public String getInfo()
 
     public static ArrayList<Card> getAllCards() {
         return allCards;
@@ -89,5 +90,18 @@ public class Card {
 
     public void setPlacedZone(Zone placedZone) {
         this.placedZone = placedZone;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public enum CardType {
+        MONSTER,
+        MAGIC
     }
 }
