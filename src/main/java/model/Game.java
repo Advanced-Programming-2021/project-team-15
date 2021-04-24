@@ -7,9 +7,16 @@ public class Game {
     private User secondPlayer;
     private int roundNumber;
     private int roundCount;
-    // private HashMap<Integer , Phase> phases;
+    private static HashMap<Integer , Phase.PhaseLevel> phases;
     private Player gameWinner;
     private Player roundWinner;
+    static {
+        int i =0 ;
+        for (Phase.PhaseLevel phaseLevel : Phase.PhaseLevel.values() )
+        { i++;
+          phases.put(i  , phaseLevel);
+        }
+    }
     Game(User firstPlayer , User secondPlayer , int roundNumber)
     {
         this.roundNumber = roundNumber;
