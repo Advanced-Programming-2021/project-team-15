@@ -1,26 +1,24 @@
 package model;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class Card {
 
-    private static ArrayList<Card> allCards;
-
-    static {
+    private ArrayList<Card> allCards;
+    {
         allCards = new ArrayList<>();
     }
 
 //    protected ArrayList<CardAction> cardActions ;
-    protected String cardName ;
-    protected String cardDescription;
+    @SerializedName("Name")protected String cardName ;
+    @SerializedName("Description")protected String cardDescription;
     protected String cardNumber;
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType ;
     protected Zone placedZone;
-    protected int price;
+    @SerializedName("Price")protected int price;
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -28,12 +26,17 @@ public class Card {
         this.cardType = cardType;
     }
 
-    public static ArrayList<Card> getAllCards() {
+    public void addCard(Card card)
+    {
+        allCards.add(card);
+    }
+
+    public  ArrayList<Card> getAllCards() {
         return allCards;
     }
 
-    public static void setAllCards(ArrayList<Card> allCards) {
-        Card.allCards = allCards;
+    public void setAllCards(ArrayList<Card> allCards) {
+        this.allCards = allCards;
     }
 
     public String getCardName() {

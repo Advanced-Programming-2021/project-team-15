@@ -2,22 +2,28 @@ package controller;
 
 import com.google.gson.Gson;
 import model.Card;
+import model.MonsterCard;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
 public class JSONController {
-    public void cardParseJson() {
+    private Card card ;
+    public  void MonsterCardParseJson() {
         Gson gson = new Gson();
         try (Reader reader = new FileReader("Monster.json")) {
-            Card[] CardArray = gson.fromJson(reader, Card[].class);
-            for(Card card : CardArray) {
-                System.out.println(card.getCardName());
+            MonsterCard[] monsterCardArray = gson.fromJson(reader, MonsterCard[].class);
+            for(MonsterCard monsterCard : monsterCardArray) {
+                card.addCard(monsterCard);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

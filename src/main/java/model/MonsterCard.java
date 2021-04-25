@@ -1,11 +1,13 @@
 package model;
-
 public class MonsterCard extends Card {
-    private int attackPoint;
-    private int defensePoint;
-    private int level;
+    @SerializedName("Atk")private int attackPoint;
+    @SerializedName("Def")private int defensePoint;
+    @SerializedName("Level") private int level;
+    @SerializedName("Monster Type")private String Type;
     private MonsterType monsterType;
+    @SerializedName("Attribute") private String attribute;
     private MonsterAttribute monsterAttribute;
+    @SerializedName("Card Type") private String EffectType;
     private MonsterEffectType monsterEffectType;
     private Mode mode;
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
