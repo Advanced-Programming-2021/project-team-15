@@ -7,11 +7,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu{
-    RegexController regexController = new RegexController();
-    public LoginMenu(String menuName) {
-        super(menuName);
+    public LoginMenu() {
+        super("Login menu");
     }
-    LoginController loginController = new LoginController("Login Menu");
+    LoginController loginController = new LoginController();
     @Override
     public void scanInput() {
         Scanner scanner = new Scanner(System.in);

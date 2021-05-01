@@ -3,9 +3,9 @@ package controller;
 import view.LoginMenu;
 
 public class MainMenuController extends MenuController{
-    LoginMenu loginMenu = new LoginMenu("Login Menu");
-    public MainMenuController(String menuName) {
-        super(menuName);
+    LoginMenu loginMenu = new LoginMenu();
+    public MainMenuController() {
+        super("Main Menu");
     }
     public void menuEnter(String menuName)
     {

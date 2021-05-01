@@ -1,11 +1,13 @@
 package view;
 
 import controller.MenuController;
+import controller.RegexController;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Menu {
+    RegexController regexController = new RegexController();
     private final MenuController menuController;
     protected String menuName;
     protected boolean isExit = false;

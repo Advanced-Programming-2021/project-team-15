@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexController {
-    LoginController loginController = new LoginController("Login Menu");
-    MainMenuController mainMenuController =new MainMenuController("Main Menu");
+    LoginController loginController = new LoginController();
+    MainMenuController mainMenuController =new MainMenuController();
 
     public Boolean createUserRegex(String input)
     { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");

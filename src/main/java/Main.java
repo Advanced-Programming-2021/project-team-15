@@ -29,7 +29,7 @@ public class Main {
             }
             System.out.println("-----------------------------------------------");
         }
-        LoginMenu loginMenu = new LoginMenu("Login Menu");
+        LoginMenu loginMenu = new LoginMenu();
         loginMenu.scanInput();
         System.out.println("return shod");
     }

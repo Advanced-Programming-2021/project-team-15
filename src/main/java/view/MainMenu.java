@@ -6,10 +6,9 @@ import controller.RegexController;
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
-    RegexController regexController = new RegexController();
-    MainMenuController mainMenuController = new MainMenuController("Main Menu");
-    public MainMenu(String menuName) {
-        super(menuName);
+    MainMenuController mainMenuController = new MainMenuController();
+    public MainMenu() {
+        super("Main Menu");
     }
     public void scanInput()
     {   Scanner scanner = new Scanner(System.in);
