@@ -1,11 +1,13 @@
 package view;
 
 import controller.LoginController;
+import controller.RegexController;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu{
+    RegexController regexController = new RegexController();
     public LoginMenu(String menuName) {
         super(menuName);
     }
@@ -15,19 +17,20 @@ public class LoginMenu extends Menu{
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            if (input.equals("Login"))
-                checkAndCallLogin(getCommandMatcher(input, "Login"));
-            if (input.equals("Show"))
-                checkAndCallShowCurrentMenu();
-            if (input.equals("Exit"))
+            if(input.startsWith("user create ")) {
+                if(!regexController.userRegex(input))
+                    System.out.println("invalid command");
+            }
+            else if (input.equals("menu exit"))
                 checkAndCallMenuExit();
+            else if (input.startsWith("menu "))
+            {if(regexController.showMenuRegex(input))
+              checkAndCallShowCurrentMenu();
+                else System.out.println("invalid command");}
             if (super.isExit) {
                 super.isExit = false;
                 return;
             }
         }
-    }
-    public void checkAndCallLogin(Matcher matcher) {
-        loginController.loginUser("pari","15");
     }
 }
