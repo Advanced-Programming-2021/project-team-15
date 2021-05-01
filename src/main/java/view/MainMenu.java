@@ -10,6 +10,7 @@ public class MainMenu extends Menu {
     public MainMenu() {
         super("Main Menu");
     }
+    @Override
     public void scanInput()
     {   Scanner scanner = new Scanner(System.in);
         while(true)

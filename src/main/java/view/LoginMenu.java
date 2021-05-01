@@ -19,10 +19,12 @@ public class LoginMenu extends Menu{
             if(input.startsWith("user create ")) {
                 if(!regexController.createUserRegex(input))
                     System.out.println("invalid command");
+                  continue;
             }
             if(input.startsWith("user login ")) {
                 if (!regexController.loginUserRegex(input))
                     System.out.println("invalid command");
+                continue;
             }
             else if (input.equals("menu exit"))
                 checkAndCallMenuExit();

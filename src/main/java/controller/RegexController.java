@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class RegexController {
     LoginController loginController = new LoginController();
     MainMenuController mainMenuController =new MainMenuController();
+    ProfileController profileController = new ProfileController();
 
     public Boolean createUserRegex(String input)
     { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
@@ -86,13 +87,58 @@ public class RegexController {
             return commandValidation;
         }
         public Boolean enterMenuRegex(String input)
-        { Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)");
+        { Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)$");
             if(matcher.find())
             {  mainMenuController.menuEnter(matcher.group(1));
                 return true;
             }
             else return false;
         }
+        public Boolean changeNicknameRegex(String input)
+        {
+            Matcher matcher = getCommandMatcher(input , "profile change --nickname (\\S+)$");
+            if(matcher.find())
+            {  profileController.changeNickname(matcher.group(1));
+                return true;
+            }
+            else return false;
+        }
+        public Boolean changePasswordRegex(String input)
+        {
+            Matcher matcher = getCommandMatcher(input  , "profile change --password (\\S+) (\\S+) (\\S+) (\\S+)$");
+                    if(matcher.find())
+                    {
+                      return isChangePasswordCommandValid(matcher);
+                    }
+                    return false;
+        }
+        public Boolean isChangePasswordCommandValid(Matcher matcher)
+        { boolean commandValidation = true;
+            CommandCase commandCase;
+            HashMap<String ,String> inputParameters  = new HashMap();
+            inputParameters.put(matcher.group(1) , matcher.group(2));
+            inputParameters.put(matcher.group(3) ,matcher.group(4));
+            ArrayList<String> longCommandParameters = new ArrayList<>();
+            longCommandParameters.add("--current");
+            longCommandParameters.add("--new");
+            ArrayList<String> shortCommandParameters = new ArrayList<>();
+            shortCommandParameters.add("-c");
+            shortCommandParameters.add("-n");
+            if( longCommandParameters.containsAll(inputParameters.keySet()) && inputParameters.keySet().containsAll(longCommandParameters))
+                commandCase = CommandCase.LONG;
+            else if(inputParameters.keySet().containsAll(shortCommandParameters) &&  shortCommandParameters.containsAll(inputParameters.keySet()))
+                commandCase = CommandCase.SHORT;
+            else {
+                commandCase  = CommandCase.INVALID;
+                commandValidation = false;
+            }
+            if (commandCase.equals(CommandCase.LONG))
+                profileController.changePassword(inputParameters.get("--current") , inputParameters.get("--new"));
+            else if(commandCase.equals(CommandCase.SHORT))
+                loginController.loginUser(inputParameters.get("-c") , inputParameters.get("-n"));
+            return commandValidation;
+        }
+
 
 
     private  Matcher getCommandMatcher(String command, String regex) {
