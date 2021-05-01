@@ -9,7 +9,7 @@ public class RegexController {
     LoginController loginController;
 
     public Boolean userRegex(String input)
-    { Matcher matcher = getCommandMatcher(input, "\\buser create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
+    { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
         if(matcher.find()) {
            return isCreateUserCommandValid(matcher);
         }
