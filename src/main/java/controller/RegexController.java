@@ -17,7 +17,7 @@ public class RegexController {
     }
         public Boolean isCreateUserCommandValid(Matcher matcher)
         {   boolean commandValidation = true;
-            int num  = 1;
+            CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
             inputParameters.put(matcher.group(1) , matcher.group(2));
             inputParameters.put(matcher.group(3) ,matcher.group(4));
@@ -31,23 +31,24 @@ public class RegexController {
             shortCommand.add("-n");
             shortCommand.add("-p");
             if(inputParameters.keySet().containsAll(longCommandParameters) &&  longCommandParameters.containsAll(inputParameters.keySet()))
-                num = 2;
+                commandCase = CommandCase.LONG;
             else if(inputParameters.keySet().containsAll(shortCommand) &&  shortCommand.containsAll(inputParameters.keySet()))
-                num = 3;
-            else
+                commandCase = CommandCase.SHORT;
+            else {
+                commandCase  = CommandCase.INVALID;
                 commandValidation = false;
-            if (num ==2)
+            }
+            if (commandCase.equals(CommandCase.LONG))
                 loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
-            else if(num ==3)
+            else if(commandCase.equals(CommandCase.SHORT))
                 loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
             return commandValidation;
         }
         public Boolean showMenuRegex(String input)
-        { Matcher matcher = getCommandMatcher(input, "\\bmenu ((show-current)|(current-show))$");
+        { Matcher matcher = getCommandMatcher(input, "menu ((show-current)|(current-show))$");
             if(matcher.find())
                 return true;
             else return false;
-
         }
 
 
@@ -55,6 +56,11 @@ public class RegexController {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
         return matcher;
+    }
+    enum CommandCase
+    {  SHORT ,
+        LONG ,
+        INVALID
     }
 
 }
