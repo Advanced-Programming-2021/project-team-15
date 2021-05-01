@@ -1,12 +1,14 @@
 package model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MonsterCard extends Card {
-    private int attackPoint;
-    private int defensePoint;
-    private int level;
-    private MonsterType monsterType;
-    private MonsterAttribute monsterAttribute;
-    private MonsterEffectType monsterEffectType;
+    @SerializedName("Atk")private int attackPoint;
+    @SerializedName("Def")private int defensePoint;
+    @SerializedName("Level") private int level;
+    @SerializedName("Monster Type") private MonsterType monsterType;
+    @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
+    @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
     private Mode mode;
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
@@ -85,27 +87,27 @@ public class MonsterCard extends Card {
     }
 
     enum MonsterEffectType {
-        NORMAL,
-        EFFECT,
-        RITUAL
+        @SerializedName("Normal") NORMAL,
+        @SerializedName("Effect") EFFECT,
+        @SerializedName("Ritual") RITUAL
     }
 
     enum MonsterType {
-        SPELL_CASTER,
-        WARRIOR,
-        BEAST_WARRIOR,
-        FIEND,
-        AQUA,
-        BEAST,
-        PYRO,
-        THUNDER,
-        DRAGON,
-        MACHINE,
-        ROCK,
-        INSECT,
-        CYBER,
-        FAIRY,
-        SEA_SERPENT
+        @SerializedName("Spellcaster") SPELL_CASTER,
+        @SerializedName("Warrior") WARRIOR,
+        @SerializedName("Beast-Warrior") BEAST_WARRIOR,
+        @SerializedName("Fiend") FIEND,
+        @SerializedName("Aqua") AQUA,
+        @SerializedName("Beast") BEAST,
+        @SerializedName("Pyro") PYRO,
+        @SerializedName("Thunder") THUNDER,
+        @SerializedName("Dragon") DRAGON,
+        @SerializedName("Machine") MACHINE,
+        @SerializedName("Rock") ROCK,
+        @SerializedName("Insect") INSECT,
+        @SerializedName("Cyber") CYBER,
+        @SerializedName("Fairy") FAIRY,
+        @SerializedName("Sea Serpent") SEA_SERPENT
     }
 
     enum Mode {
@@ -114,11 +116,11 @@ public class MonsterCard extends Card {
     }
 
     enum MonsterAttribute {
-        DARK,
-        WATER,
-        FIRE,
-        EARTH,
-        WIND,
-        LIGHT
+        @SerializedName("DARK") DARK,
+        @SerializedName("WATER") WATER,
+        @SerializedName("FIRE") FIRE,
+        @SerializedName("EARTH") EARTH,
+        @SerializedName("WIND") WIND,
+        @SerializedName("LIGHT") LIGHT
     }
 }
