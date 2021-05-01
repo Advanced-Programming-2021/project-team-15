@@ -11,7 +11,7 @@ public class LoginMenu extends Menu{
     public LoginMenu(String menuName) {
         super(menuName);
     }
-    LoginController loginController = new LoginController("LoginController");
+    LoginController loginController = new LoginController("Login Menu");
     @Override
     public void scanInput() {
         Scanner scanner = new Scanner(System.in);
