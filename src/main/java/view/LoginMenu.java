@@ -25,13 +25,11 @@ public class LoginMenu extends Menu{
                 if (!regexController.loginUserRegex(input))
                     System.out.println("invalid command");
             }
-
             else if (input.equals("menu exit"))
                 checkAndCallMenuExit();
-            else if (input.startsWith("menu "))
-            {if(regexController.showMenuRegex(input))
+            else if(regexController.showMenuRegex(input))
               checkAndCallShowCurrentMenu();
-                else System.out.println("invalid command");}
+                else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
                 return;

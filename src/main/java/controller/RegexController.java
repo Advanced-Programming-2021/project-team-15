@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class RegexController {
     LoginController loginController = new LoginController("Login Menu");
+    MainMenuController mainMenuController =new MainMenuController("Main Menu");
 
     public Boolean createUserRegex(String input)
     { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
@@ -84,9 +85,17 @@ public class RegexController {
                 loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
             return commandValidation;
         }
+        public Boolean enterMenuRegex(String input)
+        { Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)");
+            if(matcher.find())
+            {  mainMenuController.menuEnter(matcher.group(1));
+                return true;
+            }
+            else return false;
+        }
 
 
-    private static Matcher getCommandMatcher(String command, String regex) {
+    private  Matcher getCommandMatcher(String command, String regex) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(command);
         return matcher;
