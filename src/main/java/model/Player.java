@@ -1,25 +1,27 @@
 package model;
 
-public class Player extends User{
+public class Player extends User {
     private int lifePoint;
-    private  Deck activeDeck;
+    private Deck activeDeck;
     private Zone gameZone;
     private Boolean haveSelectedCard;
     private int winCount;
-    public Player(Deck activeDeck , String userName , String passWord) {
-        super(userName ,passWord);
+
+    public Player(Deck activeDeck, String userName, String passWord, String nickName) {
+        super(userName, nickName, passWord);
         this.activeDeck = activeDeck;
     }
-    public void reduceLifePoint(int point)
-    {
+
+    public void reduceLifePoint(int point) {
         this.lifePoint -= point;
     }
-    public void increaseLifePoint(int point)
-    {
-        this.lifePoint+=point;
+
+    public void increaseLifePoint(int point) {
+        this.lifePoint += point;
     }
-    public void increasePlayerWinCount(int number)
-    { winCount+=number;
+
+    public void increasePlayerWinCount(int number) {
+        winCount += number;
     }
 
     public int getLifePoint() {

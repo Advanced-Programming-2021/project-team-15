@@ -21,7 +21,7 @@ public class MainMenu extends Menu {
                mainMenuController.logout();
         else if (input.startsWith("menu enter"))
             { if(regexController.enterMenuRegex(input));
-                continue;}
+            }
         else if(regexController.showMenuRegex(input))
             checkAndCallShowCurrentMenu();
         else System.out.println("invalid command");

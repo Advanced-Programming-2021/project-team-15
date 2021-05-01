@@ -7,4 +7,8 @@ public class DeckMenu extends Menu {
     }
 
 
+    @Override
+    public void scanInput() {
+
+    }
 }

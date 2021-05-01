@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-    private static ArrayList<User> allUsersOfUser ;
+    private static ArrayList<User> allUsers ;
     private ArrayList<Deck> allDecksOfUser;
     private ArrayList<Card> allCardsOfUser;
     private String userName;
@@ -12,31 +12,31 @@ public class User {
     private int score;
     private int money;
     static {
-        allUsersOfUser = new ArrayList<>();
+        allUsers = new ArrayList<>();
     }
-    public User(String userName , String passWord) {
-        this.userName =  userName;
+    public User(String userName, String nickName, String passWord) {
+        this.userName = userName;
+        this.nickName = nickName;
         this.passWord = passWord;
         allDecksOfUser = new ArrayList<>();
         allCardsOfUser = new ArrayList<>();
+        allUsers.add(this);
     }
 
-    public static User getUserByUserName(String userName)
-    {
-        for (User user : allUsersOfUser)
-        {
+    public static User getUserByUserName(String userName) {
+        for (User user : allUsers) {
             if(user.userName.equals(userName))
                 return user;
         }
         return null;
     }
 
-    public static ArrayList<User> getAllUsersOfUser() {
-        return allUsersOfUser;
+    public static ArrayList<User> getAllUsers() {
+        return allUsers;
     }
 
-    public static void setAllUsersOfUser(ArrayList<User> allUsersOfUser) {
-        User.allUsersOfUser = allUsersOfUser;
+    public static void setAllUsers(ArrayList<User> allUsers) {
+        User.allUsers = allUsers;
     }
 
     public ArrayList<Deck> getAllDecksOfUser() {
