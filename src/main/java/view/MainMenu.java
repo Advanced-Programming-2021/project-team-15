@@ -6,10 +6,18 @@ import controller.RegexController;
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
-    MainMenuController mainMenuController = new MainMenuController();
-    public MainMenu() {
+    private static MainMenu mainMenu;
+    private MainMenu() {
         super("Main Menu");
     }
+    public static MainMenu getInstance()
+    {
+        if(mainMenu==null)
+            mainMenu = new MainMenu();
+        return mainMenu;
+    }
+
+    MainMenuController mainMenuController = new MainMenuController();
     @Override
     public void scanInput()
     {   Scanner scanner = new Scanner(System.in);

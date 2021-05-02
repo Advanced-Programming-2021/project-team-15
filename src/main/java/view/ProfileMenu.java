@@ -5,8 +5,15 @@ import controller.RegexController;
 import java.util.Scanner;
 
 public class ProfileMenu extends Menu {
-    public ProfileMenu() {
+    private static ProfileMenu profileMenu;
+    private ProfileMenu() {
         super("Profile Menu");
+    }
+    public static ProfileMenu getInstance()
+    {
+        if (profileMenu==null)
+            profileMenu= new ProfileMenu();
+        return profileMenu;
     }
 
     @Override

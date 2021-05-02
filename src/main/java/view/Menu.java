@@ -15,8 +15,8 @@ public abstract class Menu {
 
     public Menu(String menuName) {
         this.setMenuName(menuName);
+
         menuController = new MenuController("Menu");
-        regexController = new RegexController();
     }
 
     public abstract void scanInput();

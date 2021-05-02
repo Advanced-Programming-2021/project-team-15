@@ -7,8 +7,14 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu{
-    public LoginMenu() {
+    private static LoginMenu loginMenu;
+    private LoginMenu() {
         super("Login Menu");
+    }
+    public static LoginMenu getInstance()
+    {  if(loginMenu==null)
+        loginMenu = new LoginMenu();
+        return loginMenu;
     }
     LoginController loginController = new LoginController();
     @Override

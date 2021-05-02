@@ -3,10 +3,18 @@ package view;
 import java.util.Scanner;
 
 public class DeckMenu extends Menu {
-    public DeckMenu()
+    private static DeckMenu deckMenu;
+    private DeckMenu()
     {
         super("Deck Menu");
     }
+    public static DeckMenu getInstance()
+    {
+        if(deckMenu==null)
+            deckMenu = new DeckMenu();
+        return deckMenu;
+    }
+
 
 
     @Override

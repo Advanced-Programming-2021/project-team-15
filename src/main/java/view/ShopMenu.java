@@ -3,8 +3,14 @@ package view;
 import java.util.Scanner;
 
 public class ShopMenu extends Menu{
-    public ShopMenu()
-    { super("Shop Menu");
+    private static ShopMenu shopMenu;
+    private ShopMenu()
+    { super("Shop Menu"); }
+    public static ShopMenu getInstance()
+    {
+        if(shopMenu==null)
+            shopMenu = new ShopMenu();
+        return shopMenu;
     }
 
     @Override
