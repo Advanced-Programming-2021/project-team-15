@@ -1,5 +1,7 @@
 package controller;
 
+import model.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -9,6 +11,7 @@ public class RegexController {
     LoginController loginController = new LoginController();
     MainMenuController mainMenuController =new MainMenuController();
     ProfileController profileController = new ProfileController();
+    DeckController deckController = new DeckController();
 
     public Boolean createUserRegex(String input)
     { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
@@ -138,6 +141,108 @@ public class RegexController {
                 loginController.loginUser(inputParameters.get("-c") , inputParameters.get("-n"));
             return commandValidation;
         }
+        public Boolean createDeckRegex(String input)
+        {
+            Matcher matcher =  getCommandMatcher(input , "deck create (\\S+)$");
+            if(matcher.find())
+            {  deckController.createDeck(matcher.group(1));
+                return true;
+            }
+            return false;
+        }
+    public Boolean deleteDeckRegex(String input)
+    {
+        Matcher matcher =  getCommandMatcher(input , "deck delete (\\S+)$");
+        if(matcher.find())
+        {  deckController.removeDeck(matcher.group(1));
+            return true;
+        }
+        return false;
+    }
+    public Boolean setActiveDeckRegex(String input)
+    {
+        Matcher matcher  = getCommandMatcher(input , "deck set-active (\\S+)$");
+                if(matcher.find())
+                {
+                    deckController.setActiveDeck(matcher.group(1));
+                    return true;
+                }
+                return false;
+    }
+    public Boolean addCardToDeckRegex(String input , String addOrRemove)
+    {
+        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?\"$");
+         if(deckMatcher.find())
+         {  return isAddCardToDeckValid(deckMatcher , input , addOrRemove);
+         }
+         else return false;
+    }
+    public Boolean showCardsRegex(String input)
+    { if(input.equals("\\bdeck show --cards$"))
+    {
+        //show cards of the  user
+        return true;}
+        else return false;
+    }
+    public Boolean showAllDecksRegex(String input)
+    {
+        if(input.equals("\\bdeck show --all"))
+        {
+            deckController.showAllDecksOfTheUser();
+            return true;
+        }
+        return false;
+    }
+    public Boolean showDeckRegex(String input)
+    {
+        Matcher matcher = getCommandMatcher(input , "deck show --deck-name (\\S+)( --side)?");
+        if(matcher.find())
+
+        {
+            //show a deck of the  user
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public Boolean isAddCardToDeckValid(Matcher matcher , String input , String addOrRemove)
+    { boolean commandValidation = true;
+        CommandCase commandCase;
+        HashMap<String ,String> inputParameters  = new HashMap();
+        inputParameters.put(matcher.group(2) , matcher.group(3));
+        inputParameters.put(matcher.group(4) ,matcher.group(5));
+        ArrayList<String> longCommandParameters = new ArrayList<>();
+        longCommandParameters.add("--card");
+        longCommandParameters.add("--deck");
+        ArrayList<String> shortCommandParameters = new ArrayList<>();
+        shortCommandParameters.add("-c");
+        shortCommandParameters.add("-d");
+        if(inputParameters.keySet().containsAll(longCommandParameters) &&  longCommandParameters.containsAll(inputParameters.keySet()))
+            commandCase = CommandCase.LONG;
+        else if(inputParameters.keySet().containsAll(shortCommandParameters) &&  shortCommandParameters.containsAll(inputParameters.keySet()))
+            commandCase = CommandCase.SHORT;
+        else {
+            commandCase  = CommandCase.INVALID;
+            commandValidation = false;
+        }
+        String sideOrMain = "main";
+        if(input.endsWith("--side"))
+            sideOrMain = "side";
+
+        if (commandCase.equals(CommandCase.LONG)) {
+            if(addOrRemove.equals("add"))
+            deckController.addCardToDeck(inputParameters.get("--card"), inputParameters.get("--deck"), sideOrMain);
+            else deckController.removeCardFromDeck(inputParameters.get("--card"), inputParameters.get("--deck"), sideOrMain);
+        }
+        else if(commandCase.equals(CommandCase.SHORT)) {
+            if(addOrRemove.equals("add"))
+            deckController.addCardToDeck(inputParameters.get("-c"), inputParameters.get("-d"), sideOrMain);
+            else deckController.removeCardFromDeck(inputParameters.get("-c"), inputParameters.get("-d"), sideOrMain);
+        }
+        return commandValidation;
+    }
 
 
 
