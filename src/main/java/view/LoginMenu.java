@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 
 public class LoginMenu extends Menu{
     public LoginMenu() {
-        super("Login menu");
+        super("Login Menu");
     }
     LoginController loginController = new LoginController();
     @Override
