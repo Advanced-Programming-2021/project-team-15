@@ -1,12 +1,21 @@
 package controller;
 
+import model.User;
+import view.MainMenu;
+
 public class LoginController extends MenuController{
 
-    public LoginController(String menuName) {
-        super(menuName);
+    public LoginController() {
+        super("Login Menu");
     }
-
+    public void registerUser(String userName , String nickName , String passWord) {
+        new User(userName,nickName,passWord);
+    }
     public void loginUser(String username, String password) {
-        return;
+        //System.out.println(user.getUserName());
+        super.setUser(User.getUserByUserName(username));
+        //System.out.println(super.user.getUserName());
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.scanInput();
     }
 }
