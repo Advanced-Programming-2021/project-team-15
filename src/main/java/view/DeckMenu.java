@@ -29,7 +29,7 @@ public class DeckMenu extends Menu {
                 continue;
             else if(regexController.showDeckRegex(input))
                 continue;
-            else if(regexController.showCardsRegex(input))
+            else if(regexController.showCardsOfUserRegex(input))
                 continue;
             else if(regexController.showMenuRegex(input))
                 checkAndCallShowCurrentMenu();

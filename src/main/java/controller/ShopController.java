@@ -5,5 +5,14 @@ public class ShopController extends MenuController{
     {
         super("Shop Menu");
     }
+    public void buyItem(String cardName)
+    {
+
+    }
+    public void showAllCards()
+    {
+
+    }
+
 
 }

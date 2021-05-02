@@ -12,6 +12,7 @@ public class RegexController {
     MainMenuController mainMenuController =new MainMenuController();
     ProfileController profileController = new ProfileController();
     DeckController deckController = new DeckController();
+    ShopController shopController = new ShopController();
 
     public Boolean createUserRegex(String input)
     { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
@@ -171,13 +172,13 @@ public class RegexController {
     }
     public Boolean addCardToDeckRegex(String input , String addOrRemove)
     {
-        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?\"$");
+        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?$");
          if(deckMatcher.find())
          {  return isAddCardToDeckValid(deckMatcher , input , addOrRemove);
          }
          else return false;
     }
-    public Boolean showCardsRegex(String input)
+    public Boolean showCardsOfUserRegex(String input)
     { if(input.equals("\\bdeck show --cards$"))
     {
         //show cards of the  user
@@ -195,7 +196,7 @@ public class RegexController {
     }
     public Boolean showDeckRegex(String input)
     {
-        Matcher matcher = getCommandMatcher(input , "deck show --deck-name (\\S+)( --side)?");
+        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)( --side)?$");
         if(matcher.find())
 
         {
@@ -203,6 +204,22 @@ public class RegexController {
             return true;
         }
         return false;
+    }
+    public Boolean buyItemRegex(String input)
+    { Matcher matcher = getCommandMatcher(input , "\\bshop buy (\\S+)$");
+        if(matcher.find())
+        { shopController.buyItem(matcher.group(1));
+            return true;
+        }
+       return false;
+    }
+    public Boolean showAllCards(String input)
+    {  if(input.equals("shop show --all"))
+    {
+        shopController.showAllCards();
+        return true;
+    }
+    return false;
     }
 
 

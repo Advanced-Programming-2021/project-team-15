@@ -25,7 +25,6 @@ public class MainMenu extends Menu {
         else if(regexController.showMenuRegex(input))
             checkAndCallShowCurrentMenu();
         else System.out.println("invalid command");
-
         }
         }
     }
