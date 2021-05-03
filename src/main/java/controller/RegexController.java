@@ -14,15 +14,14 @@ public class RegexController {
     DeckController deckController = new DeckController();
     ShopController shopController = new ShopController();
 
-    public Boolean createUserRegex(String input)
-    { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
+    public Boolean createUserRegex(String input, HashMap<String,String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
         if(matcher.find()) {
-           return isCreateUserCommandValid(matcher);
+           return isCreateUserCommandValid(matcher,enteredDetails);
         }
         else return false;
     }
-        public Boolean isCreateUserCommandValid(Matcher matcher)
-        {   boolean commandValidation = true;
+        public Boolean isCreateUserCommandValid(Matcher matcher, HashMap<String,String> enteredDetails) {   boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
             inputParameters.put(matcher.group(1) , matcher.group(2));
@@ -44,10 +43,18 @@ public class RegexController {
                 commandCase  = CommandCase.INVALID;
                 commandValidation = false;
             }
-            if (commandCase.equals(CommandCase.LONG))
-                loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
-            else if(commandCase.equals(CommandCase.SHORT))
-                loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
+            if (commandCase.equals(CommandCase.LONG)) {
+                enteredDetails.put("username", inputParameters.get("--username"));
+                enteredDetails.put("nickname", inputParameters.get("--nickname"));
+                enteredDetails.put("password", inputParameters.get("--password"));
+            }
+                //loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
+            else if(commandCase.equals(CommandCase.SHORT)) {
+                enteredDetails.put("username", inputParameters.get("-u"));
+                enteredDetails.put("nickname", inputParameters.get("-n"));
+                enteredDetails.put("password", inputParameters.get("-p"));
+            }
+                //loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
             return commandValidation;
         }
         public Boolean showMenuRegex(String input)
@@ -56,15 +63,15 @@ public class RegexController {
                 return true;
             else return false;
         }
-        public Boolean loginUserRegex(String input)
+        public Boolean loginUserRegex(String input, HashMap<String, String> enteredDetails)
         {
             Matcher matcher = getCommandMatcher(input, "user login (\\S+) (\\S+) (\\S+) (\\S+)$");
             if(matcher.find()) {
-                return isLoginUserCommandValid(matcher);
+                return isLoginUserCommandValid(matcher,enteredDetails);
             }
             else return false;
         }
-        public Boolean isLoginUserCommandValid(Matcher matcher)
+        public Boolean isLoginUserCommandValid(Matcher matcher, HashMap<String, String> enteredDetails)
         {  boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
@@ -84,10 +91,16 @@ public class RegexController {
                 commandCase  = CommandCase.INVALID;
                 commandValidation = false;
             }
-            if (commandCase.equals(CommandCase.LONG))
-                loginController.loginUser(inputParameters.get("--username") , inputParameters.get("--password"));
-            else if(commandCase.equals(CommandCase.SHORT))
-                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
+            if (commandCase.equals(CommandCase.LONG)) {
+                enteredDetails.put("username",inputParameters.get("--username"));
+                enteredDetails.put("password",inputParameters.get("--password"));
+            }
+//                loginController.loginUser(inputParameters.get("--username") , inputParameters.get("--password"));
+            else if(commandCase.equals(CommandCase.SHORT)) {
+                enteredDetails.put("username",inputParameters.get("-u"));
+                enteredDetails.put("password",inputParameters.get("-p"));
+            }
+//                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
             return commandValidation;
         }
         public Boolean enterMenuRegex(String input)

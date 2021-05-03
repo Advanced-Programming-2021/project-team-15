@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Menu {
-    RegexController regexController;
+    RegexController regexController = new RegexController();
     private final MenuController menuController;
     protected String menuName;
     protected boolean isExit = false;
@@ -15,7 +15,6 @@ public abstract class Menu {
 
     public Menu(String menuName) {
         this.setMenuName(menuName);
-
         menuController = new MenuController("Menu");
     }
 
