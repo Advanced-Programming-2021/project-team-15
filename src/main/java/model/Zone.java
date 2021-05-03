@@ -5,10 +5,13 @@ import java.util.HashMap;
 
 public class Zone {
     private static HashMap<String, ArrayList<Zone>> allZones;
-    private String zoneName;
     private ZoneType zoneType ;
     static {
-     allZones = new HashMap<>();
+        allZones = new HashMap<>();
+    }
+
+    public Zone(ZoneType zoneType) {
+        this.zoneType = zoneType;
     }
 
     public static HashMap<String, ArrayList<Zone>> getAllZones() {
@@ -17,14 +20,6 @@ public class Zone {
 
     public static void setAllZones(HashMap<String, ArrayList<Zone>> allZones) {
         Zone.allZones = allZones;
-    }
-
-    public String getZoneName() {
-        return zoneName;
-    }
-
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
     }
 
     public ZoneType getZoneType() {
@@ -36,12 +31,12 @@ public class Zone {
     }
 
     enum ZoneType{
-         HAND,
-         MONSTER_CARD,
-         MAGIC_CARD,
-         DECK,
-         FIELD,
-         GRAVEYARD
-     }
+        HAND,
+        MONSTER_CARD,
+        MAGIC_CARD,
+        DECK,
+        FIELD,
+        GRAVEYARD
+    }
 
 }
