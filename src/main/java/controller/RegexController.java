@@ -112,26 +112,27 @@ public class RegexController {
             }
             else return false;
         }
-        public Boolean changeNicknameRegex(String input) {
+        public Boolean changeNicknameRegex(String input, HashMap<String, String> enteredDetails) {
             Matcher matcher = getCommandMatcher(input , "profile change --nickname (\\S+)$");
             if(matcher.find())
-            {  profileController.changeNickname(matcher.group(1));
+            {
+                enteredDetails.put("nickname" , matcher.group(1));
                 return true;
             }
             else return false;
         }
-        public Boolean changePasswordRegex(String input) {
+        public Boolean changePasswordRegex(String input, HashMap<String, String> enteredDetails) {
                if(input.contains(" --password")) {
                 input = input.replaceAll(" --password","");
                 Matcher matcher = getCommandMatcher(input, "profile change (\\S+) (\\S+) (\\S+) (\\S+)$");
                 if (matcher.find())
-                    return isChangePasswordCommandValid(matcher);
+                    return isChangePasswordCommandValid(matcher , enteredDetails);
                 else return false;
             }
             else return false;
 
         }
-        public Boolean isChangePasswordCommandValid(Matcher matcher)
+        public Boolean isChangePasswordCommandValid(Matcher matcher, HashMap<String, String> enteredDetails)
         { boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
@@ -152,9 +153,14 @@ public class RegexController {
                 commandValidation = false;
             }
             if (commandCase.equals(CommandCase.LONG))
-                profileController.changePassword(inputParameters.get("--current") , inputParameters.get("--new"));
+            {
+                enteredDetails.put("current" ,inputParameters.get("--current"));
+                enteredDetails.put("new" , inputParameters.get("--new"));
+            }
             else if(commandCase.equals(CommandCase.SHORT))
-                loginController.loginUser(inputParameters.get("-c") , inputParameters.get("-n"));
+            {   enteredDetails.put("current" ,inputParameters.get("-c"));
+                enteredDetails.put("new" , inputParameters.get("-n"));
+            }
             return commandValidation;
         }
         public Boolean createDeckRegex(String input)
