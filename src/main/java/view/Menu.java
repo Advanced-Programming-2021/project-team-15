@@ -11,6 +11,7 @@ public abstract class Menu {
     private final MenuController menuController;
     protected String menuName;
     protected boolean isExit = false;
+    protected boolean isEnter = false;
     private MenuController.MenuResponse MenuControllerResponse;
 
     public Menu(String menuName) {

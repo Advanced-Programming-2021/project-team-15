@@ -2,9 +2,8 @@ package controller;
 
 import com.google.gson.*;
 import model.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.io.*;
 
 public class JSONController {
     public void MonsterCardParseJson() {
@@ -19,7 +18,15 @@ public class JSONController {
             e.printStackTrace();
         }
     }
-
+    public void refreshUsersFileJson() {
+        Gson gson = new GsonBuilder().create();
+        try(Writer writer = new FileWriter("Users.json")) {
+            gson.toJson(User.getAllUsers(),writer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
 //        @Override
 //        public MagicCard deserialize(JsonElement json, Type typeof, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

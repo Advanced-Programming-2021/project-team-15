@@ -21,7 +21,8 @@ public class RegexController {
         }
         else return false;
     }
-        public Boolean isCreateUserCommandValid(Matcher matcher, HashMap<String,String> enteredDetails) {   boolean commandValidation = true;
+        public Boolean isCreateUserCommandValid(Matcher matcher, HashMap<String,String> enteredDetails) {
+         boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
             inputParameters.put(matcher.group(1) , matcher.group(2));
@@ -103,16 +104,15 @@ public class RegexController {
 //                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
             return commandValidation;
         }
-        public Boolean enterMenuRegex(String input)
-        { Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)$");
-            if(matcher.find())
-            {  mainMenuController.menuEnter(matcher.group(1));
+        public Boolean enterMenuRegex(String input) {
+        Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)$");
+            if(matcher.find()) {
+                mainMenuController.menuEnter(matcher.group(1));
                 return true;
             }
             else return false;
         }
-        public Boolean changeNicknameRegex(String input)
-        {
+        public Boolean changeNicknameRegex(String input) {
             Matcher matcher = getCommandMatcher(input , "profile change --nickname (\\S+)$");
             if(matcher.find())
             {  profileController.changeNickname(matcher.group(1));
@@ -120,8 +120,7 @@ public class RegexController {
             }
             else return false;
         }
-        public Boolean changePasswordRegex(String input)
-        {
+        public Boolean changePasswordRegex(String input) {
             Matcher matcher = getCommandMatcher(input  , "profile change --password (\\S+) (\\S+) (\\S+) (\\S+)$");
                     if(matcher.find())
                     {
