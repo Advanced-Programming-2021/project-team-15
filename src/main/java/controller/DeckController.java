@@ -26,7 +26,7 @@ public class DeckController extends MenuController{
 
     }
 
-    public void showThisDeckOfTheUser()
+    public void showThisDeckOfTheUser(String name , String deckType)
     {
 
     }

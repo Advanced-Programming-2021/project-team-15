@@ -108,13 +108,14 @@ public class RegexController {
             else return false;
         }
         public Boolean changePasswordRegex(String input)
-        {
-            Matcher matcher = getCommandMatcher(input  , "profile change --password (\\S+) (\\S+) (\\S+) (\\S+)$");
-                    if(matcher.find())
-                    {
-                      return isChangePasswordCommandValid(matcher);
-                    }
-                    return false;
+        {   if(input.contains(" --password")) {
+            input = input.replaceAll(" --password","");
+            Matcher matcher = getCommandMatcher(input, "profile change (\\S+) (\\S+) (\\S+) (\\S+)$");
+            if (matcher.find())
+                return isChangePasswordCommandValid(matcher);
+            else return false;
+        }
+        else return false;
         }
         public Boolean isChangePasswordCommandValid(Matcher matcher)
         { boolean commandValidation = true;
@@ -171,10 +172,15 @@ public class RegexController {
                 return false;
     }
     public Boolean addCardToDeckRegex(String input , String addOrRemove)
-    {
-        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?$");
+    {   String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
+
+        }
+        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
          if(deckMatcher.find())
-         {  return isAddCardToDeckValid(deckMatcher , input , addOrRemove);
+         {  return isAddCardToDeckValid(deckMatcher  , addOrRemove , sideOrMain);
          }
          else return false;
     }
@@ -195,12 +201,15 @@ public class RegexController {
         return false;
     }
     public Boolean showDeckRegex(String input)
-    {
-        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)( --side)?$");
+    {    String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
+        }
+        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)$");
         if(matcher.find())
-
         {
-            //show a deck of the  user
+            deckController.showThisDeckOfTheUser(matcher.group(1) , sideOrMain);
             return true;
         }
         return false;
@@ -224,8 +233,8 @@ public class RegexController {
 
 
 
-    public Boolean isAddCardToDeckValid(Matcher matcher , String input , String addOrRemove)
-    { boolean commandValidation = true;
+    public Boolean isAddCardToDeckValid(Matcher matcher , String addOrRemove  ,String sideOrMain)
+    {   boolean commandValidation = true;
         CommandCase commandCase;
         HashMap<String ,String> inputParameters  = new HashMap();
         inputParameters.put(matcher.group(2) , matcher.group(3));
@@ -244,9 +253,6 @@ public class RegexController {
             commandCase  = CommandCase.INVALID;
             commandValidation = false;
         }
-        String sideOrMain = "main";
-        if(input.endsWith("--side"))
-            sideOrMain = "side";
 
         if (commandCase.equals(CommandCase.LONG)) {
             if(addOrRemove.equals("add"))
