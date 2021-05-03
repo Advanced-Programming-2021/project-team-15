@@ -121,12 +121,15 @@ public class RegexController {
             else return false;
         }
         public Boolean changePasswordRegex(String input) {
-            Matcher matcher = getCommandMatcher(input  , "profile change --password (\\S+) (\\S+) (\\S+) (\\S+)$");
-                    if(matcher.find())
-                    {
-                      return isChangePasswordCommandValid(matcher);
-                    }
-                    return false;
+               if(input.contains(" --password")) {
+                input = input.replaceAll(" --password","");
+                Matcher matcher = getCommandMatcher(input, "profile change (\\S+) (\\S+) (\\S+) (\\S+)$");
+                if (matcher.find())
+                    return isChangePasswordCommandValid(matcher);
+                else return false;
+            }
+            else return false;
+
         }
         public Boolean isChangePasswordCommandValid(Matcher matcher)
         { boolean commandValidation = true;
@@ -184,19 +187,25 @@ public class RegexController {
     }
     public Boolean addCardToDeckRegex(String input , String addOrRemove)
     {
-        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?$");
-         if(deckMatcher.find())
-         {  return isAddCardToDeckValid(deckMatcher , input , addOrRemove);
-         }
-         else return false;
+        String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
+        }
+            Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
+            if(deckMatcher.find())
+                return isAddCardToDeckValid(deckMatcher  , addOrRemove , sideOrMain);
+            else return false;
     }
     public Boolean showCardsOfUserRegex(String input)
-    { if(input.equals("\\bdeck show --cards$"))
-    {
-        //show cards of the  user
-        return true;}
+
+        { if(input.equals("\\bdeck show --cards$"))
+        {
+            //show cards of the  user
+            return true;}
         else return false;
-    }
+        }
+
     public Boolean showAllDecksRegex(String input)
     {
         if(input.equals("\\bdeck show --all"))
@@ -208,14 +217,16 @@ public class RegexController {
     }
     public Boolean showDeckRegex(String input)
     {
-        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)( --side)?$");
-        if(matcher.find())
-
-        {
-            //show a deck of the  user
-            return true;
+        String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
         }
-        return false;
+        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)$");
+        if(matcher.find()) {
+            deckController.showThisDeckOfTheUser();  // voroodiezafe shavad
+            return true;}
+        else return false;
     }
     public Boolean buyItemRegex(String input)
     { Matcher matcher = getCommandMatcher(input , "\\bshop buy (\\S+)$");
@@ -236,8 +247,8 @@ public class RegexController {
 
 
 
-    public Boolean isAddCardToDeckValid(Matcher matcher , String input , String addOrRemove)
-    { boolean commandValidation = true;
+    public Boolean isAddCardToDeckValid(Matcher matcher , String addOrRemove  ,String sideOrMain)
+    {   boolean commandValidation = true;
         CommandCase commandCase;
         HashMap<String ,String> inputParameters  = new HashMap();
         inputParameters.put(matcher.group(2) , matcher.group(3));
@@ -256,9 +267,6 @@ public class RegexController {
             commandCase  = CommandCase.INVALID;
             commandValidation = false;
         }
-        String sideOrMain = "main";
-        if(input.endsWith("--side"))
-            sideOrMain = "side";
 
         if (commandCase.equals(CommandCase.LONG)) {
             if(addOrRemove.equals("add"))
