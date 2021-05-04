@@ -1,46 +1,103 @@
 package view;
 
 import controller.LoginController;
-import controller.RegexController;
+import controller.responses.LoginMenuResponses;
 
+import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 
-public class LoginMenu extends Menu{
+public class LoginMenu extends Menu {
     private static LoginMenu loginMenu;
+    LoginController loginController = new LoginController();
+    LoginMenuResponses responses;
+    private String username;
+    private String nickname;
+    private String password;
+
+    {
+        nextMenu = MainMenu.getInstance();
+    }
+
     private LoginMenu() {
         super("Login Menu");
     }
-    public static LoginMenu getInstance()
-    {  if(loginMenu==null)
-        loginMenu = new LoginMenu();
+
+    public static LoginMenu getInstance() {
+        if (loginMenu == null)
+            loginMenu = new LoginMenu();
         return loginMenu;
     }
-    LoginController loginController = new LoginController();
+
     @Override
     public void scanInput() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            if(input.startsWith("user create ")) {
-                if(!regexController.createUserRegex(input))
-                    System.out.println("invalid command");
-                  continue;
+            if (input.startsWith("user create ")) checkAndCallRegister(input);
+            else if (input.startsWith("user login ")) this.isEnter = checkAndCallLogin(input);
+            else if (input.equals("menu exit")) checkAndCallMenuExit();
+            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+            else System.out.println("invalid command");
+            if (isEnter) {
+                isEnter = false;
+                nextMenu.scanInput();
             }
-            if(input.startsWith("user login ")) {
-                if (!regexController.loginUserRegex(input))
-                    System.out.println("invalid command");
-                continue;
-            }
-            else if (input.equals("menu exit"))
-                checkAndCallMenuExit();
-            else if(regexController.showMenuRegex(input))
-              checkAndCallShowCurrentMenu();
-                else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
                 return;
             }
         }
+    }
+
+    private void checkAndCallRegister(String input) {
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.createUserRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+            username = enteredDetails.get("username");
+            nickname = enteredDetails.get("nickname");
+            password = enteredDetails.get("password");
+            responses = loginController.registerUser(username, nickname, password);
+            printResponse(responses);
+        }
+    }
+
+    private boolean checkAndCallLogin(String input) {
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.loginUserRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+            responses = loginController.loginUser(enteredDetails.get("username"), enteredDetails.get("password"));
+            printResponse(responses);
+            return responses == LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
+        }
+        return false;
+    }
+
+    protected void printResponse(LoginMenuResponses loginMenuResponses) {
+        String output = "";
+        switch (loginMenuResponses) {
+            case USER_CREATE_SUCCESSFUL:
+                output = "user created successfully!";
+                break;
+            case USER_NICKNAME_ALREADY_EXISTS:
+                output = "user with nickname " + nickname + " already exists";
+                break;
+            case USER_USERNAME_ALREADY_EXISTS:
+                output = "user with username " + username + " already exists";
+                break;
+            case USER_LOGIN_SUCCESSFUL:
+                output = "user logged in successfully!";
+                break;
+            case USER_USERNAME_PASSWORD_NOT_MATCHED:
+                output = "Username and password didn't match";
+                break;
+            case USER_LOGOUT_SUCCESSFUL:
+                output = "user logged out successfully!";
+                break;
+            default:
+                break;
+        }
+        System.out.println(output);
     }
 }

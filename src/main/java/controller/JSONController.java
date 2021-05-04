@@ -1,10 +1,15 @@
 package controller;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import model.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+
+import java.awt.*;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class JSONController {
     public void MonsterCardParseJson() {
@@ -19,7 +24,29 @@ public class JSONController {
             e.printStackTrace();
         }
     }
+    public void refreshUsersToFileJson() {
+        Gson gson = new GsonBuilder().create();
+        try(Writer writer = new FileWriter("Users.json")) {
+            gson.toJson(User.getAllUsers(),writer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void refreshUsersFromFileJson() {
+        Gson gson = new GsonBuilder().create();
+        try (Reader reader = new FileReader("Users.json")) {
+//            Type founderListType = new TypeToken<ArrayList<Founder>>(){}.getType();
+//            List<Founder> founderList = gson.fromJson(founderJson, founderListType);
+            Type usersListType = new TypeToken<ArrayList<User>>(){}.getType();
+            User.setAllUsers(gson.fromJson(reader, usersListType));
+            //User.setAllUsers((ArrayList<User>)Arrays.asList(gson.fromJson(reader, ArrayList<User>.class)));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
 //        @Override
 //        public MagicCard deserialize(JsonElement json, Type typeof, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {

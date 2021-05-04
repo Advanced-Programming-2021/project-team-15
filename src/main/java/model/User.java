@@ -30,7 +30,13 @@ public class User {
         }
         return null;
     }
-
+    public static User getUserByNickname(String nickname) {
+        for (User user : allUsers) {
+            if(user.nickName.equals(nickname))
+                return user;
+        }
+        return null;
+    }
     public static ArrayList<User> getAllUsers() {
         return allUsers;
     }

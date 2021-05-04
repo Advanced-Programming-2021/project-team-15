@@ -1,28 +1,23 @@
 package controller;
 
-import model.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexController {
-    LoginController loginController = new LoginController();
     MainMenuController mainMenuController =new MainMenuController();
-    ProfileController profileController = new ProfileController();
-    DeckController deckController = new DeckController();
     ShopController shopController = new ShopController();
 
-    public Boolean createUserRegex(String input)
-    { Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
+    public Boolean createUserRegex(String input, HashMap<String,String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
         if(matcher.find()) {
-           return isCreateUserCommandValid(matcher);
+           return isCreateUserCommandValid(matcher,enteredDetails);
         }
         else return false;
     }
-        public Boolean isCreateUserCommandValid(Matcher matcher)
-        {   boolean commandValidation = true;
+        public Boolean isCreateUserCommandValid(Matcher matcher, HashMap<String,String> enteredDetails) {
+         boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
             inputParameters.put(matcher.group(1) , matcher.group(2));
@@ -44,10 +39,18 @@ public class RegexController {
                 commandCase  = CommandCase.INVALID;
                 commandValidation = false;
             }
-            if (commandCase.equals(CommandCase.LONG))
-                loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
-            else if(commandCase.equals(CommandCase.SHORT))
-                loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
+            if (commandCase.equals(CommandCase.LONG)) {
+                enteredDetails.put("username", inputParameters.get("--username"));
+                enteredDetails.put("nickname", inputParameters.get("--nickname"));
+                enteredDetails.put("password", inputParameters.get("--password"));
+            }
+                //loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
+            else if(commandCase.equals(CommandCase.SHORT)) {
+                enteredDetails.put("username", inputParameters.get("-u"));
+                enteredDetails.put("nickname", inputParameters.get("-n"));
+                enteredDetails.put("password", inputParameters.get("-p"));
+            }
+                //loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
             return commandValidation;
         }
         public Boolean showMenuRegex(String input)
@@ -56,15 +59,15 @@ public class RegexController {
                 return true;
             else return false;
         }
-        public Boolean loginUserRegex(String input)
+        public Boolean loginUserRegex(String input, HashMap<String, String> enteredDetails)
         {
             Matcher matcher = getCommandMatcher(input, "user login (\\S+) (\\S+) (\\S+) (\\S+)$");
             if(matcher.find()) {
-                return isLoginUserCommandValid(matcher);
+                return isLoginUserCommandValid(matcher,enteredDetails);
             }
             else return false;
         }
-        public Boolean isLoginUserCommandValid(Matcher matcher)
+        public Boolean isLoginUserCommandValid(Matcher matcher, HashMap<String, String> enteredDetails)
         {  boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
@@ -84,39 +87,47 @@ public class RegexController {
                 commandCase  = CommandCase.INVALID;
                 commandValidation = false;
             }
-            if (commandCase.equals(CommandCase.LONG))
-                loginController.loginUser(inputParameters.get("--username") , inputParameters.get("--password"));
-            else if(commandCase.equals(CommandCase.SHORT))
-                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
+            if (commandCase.equals(CommandCase.LONG)) {
+                enteredDetails.put("username",inputParameters.get("--username"));
+                enteredDetails.put("password",inputParameters.get("--password"));
+            }
+//                loginController.loginUser(inputParameters.get("--username") , inputParameters.get("--password"));
+            else if(commandCase.equals(CommandCase.SHORT)) {
+                enteredDetails.put("username",inputParameters.get("-u"));
+                enteredDetails.put("password",inputParameters.get("-p"));
+            }
+//                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
             return commandValidation;
         }
-        public Boolean enterMenuRegex(String input)
-        { Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)$");
-            if(matcher.find())
-            {  mainMenuController.menuEnter(matcher.group(1));
+        public Boolean enterMenuRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input , "menu enter (.+)$");
+            if(matcher.find()) {
+                enteredDetails.put("menuName",matcher.group(1));
                 return true;
             }
             else return false;
         }
-        public Boolean changeNicknameRegex(String input)
-        {
+        public Boolean changeNicknameRegex(String input, HashMap<String, String> enteredDetails) {
             Matcher matcher = getCommandMatcher(input , "profile change --nickname (\\S+)$");
             if(matcher.find())
-            {  profileController.changeNickname(matcher.group(1));
+            {
+                enteredDetails.put("nickname" , matcher.group(1));
                 return true;
             }
             else return false;
         }
-        public Boolean changePasswordRegex(String input)
-        {
-            Matcher matcher = getCommandMatcher(input  , "profile change --password (\\S+) (\\S+) (\\S+) (\\S+)$");
-                    if(matcher.find())
-                    {
-                      return isChangePasswordCommandValid(matcher);
-                    }
-                    return false;
+        public Boolean changePasswordRegex(String input, HashMap<String, String> enteredDetails) {
+               if(input.contains(" --password")) {
+                input = input.replaceAll(" --password","");
+                Matcher matcher = getCommandMatcher(input, "profile change (\\S+) (\\S+) (\\S+) (\\S+)$");
+                if (matcher.find())
+                    return isChangePasswordCommandValid(matcher , enteredDetails);
+                else return false;
+            }
+            else return false;
+
         }
-        public Boolean isChangePasswordCommandValid(Matcher matcher)
+        public Boolean isChangePasswordCommandValid(Matcher matcher, HashMap<String, String> enteredDetails)
         { boolean commandValidation = true;
             CommandCase commandCase;
             HashMap<String ,String> inputParameters  = new HashMap();
@@ -137,95 +148,84 @@ public class RegexController {
                 commandValidation = false;
             }
             if (commandCase.equals(CommandCase.LONG))
-                profileController.changePassword(inputParameters.get("--current") , inputParameters.get("--new"));
+            {
+                enteredDetails.put("current" ,inputParameters.get("--current"));
+                enteredDetails.put("new" , inputParameters.get("--new"));
+            }
             else if(commandCase.equals(CommandCase.SHORT))
-                loginController.loginUser(inputParameters.get("-c") , inputParameters.get("-n"));
+            {   enteredDetails.put("current" ,inputParameters.get("-c"));
+                enteredDetails.put("new" , inputParameters.get("-n"));
+            }
             return commandValidation;
         }
-        public Boolean createDeckRegex(String input)
+        public Boolean createDeckRegex(String input, HashMap<String, String> enteredDetails)
         {
             Matcher matcher =  getCommandMatcher(input , "deck create (\\S+)$");
             if(matcher.find())
-            {  deckController.createDeck(matcher.group(1));
+            {  enteredDetails.put("name" , matcher.group(1));
                 return true;
             }
             return false;
         }
-    public Boolean deleteDeckRegex(String input)
+    public Boolean deleteDeckRegex(String input ,  HashMap<String, String> enteredDetails)
     {
         Matcher matcher =  getCommandMatcher(input , "deck delete (\\S+)$");
         if(matcher.find())
-        {  deckController.removeDeck(matcher.group(1));
+        {   enteredDetails.put("name" , matcher.group(1));
             return true;
         }
         return false;
     }
-    public Boolean setActiveDeckRegex(String input)
+    public Boolean setActiveDeckRegex(String input , HashMap<String, String> enteredDetails)
     {
         Matcher matcher  = getCommandMatcher(input , "deck set-active (\\S+)$");
                 if(matcher.find())
-                {
-                    deckController.setActiveDeck(matcher.group(1));
+                {   enteredDetails.put("name" , matcher.group(1));
                     return true;
                 }
                 return false;
     }
-    public Boolean addCardToDeckRegex(String input , String addOrRemove)
+    public Boolean AddOrRemoveCardRegex(String input, HashMap<String, String> enteredDetails)
     {
-        Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)( --side)?$");
-         if(deckMatcher.find())
-         {  return isAddCardToDeckValid(deckMatcher , input , addOrRemove);
-         }
-         else return false;
+        String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
+        }
+            Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
+            if(deckMatcher.find())
+                return isAddOrRemoveCardValid(deckMatcher  , sideOrMain , enteredDetails);
+            else return false;
     }
-    public Boolean showCardsOfUserRegex(String input)
-    { if(input.equals("\\bdeck show --cards$"))
+
+
+    public Boolean showDeckRegex(String input, HashMap<String, String> enteredDetails)
     {
-        //show cards of the  user
-        return true;}
+        String sideOrMain = "main";
+        if(input.contains(" --side")) {
+            sideOrMain = "side";
+            input = input.replaceAll(" --side", "");
+        }
+        Matcher matcher = getCommandMatcher(input , "deck show --deck-name (\\S+)$");
+        if(matcher.find()) {
+            enteredDetails.put("type" , sideOrMain);
+            enteredDetails.put("deck" , matcher.group(1));
+            return true;}
         else return false;
     }
-    public Boolean showAllDecksRegex(String input)
-    {
-        if(input.equals("\\bdeck show --all"))
-        {
-            deckController.showAllDecksOfTheUser();
-            return true;
-        }
-        return false;
-    }
-    public Boolean showDeckRegex(String input)
-    {
-        Matcher matcher = getCommandMatcher(input , "\\bdeck show --deck-name (\\S+)( --side)?$");
+    public Boolean buyItemRegex(String input ,  HashMap<String, String> enteredDetails)
+    { Matcher matcher = getCommandMatcher(input , "shop buy (\\S+)$");
         if(matcher.find())
-
-        {
-            //show a deck of the  user
-            return true;
-        }
-        return false;
-    }
-    public Boolean buyItemRegex(String input)
-    { Matcher matcher = getCommandMatcher(input , "\\bshop buy (\\S+)$");
-        if(matcher.find())
-        { shopController.buyItem(matcher.group(1));
+        { enteredDetails.put("name" ,matcher.group(1));
             return true;
         }
        return false;
     }
-    public Boolean showAllCards(String input)
-    {  if(input.equals("shop show --all"))
-    {
-        shopController.showAllCards();
-        return true;
-    }
-    return false;
-    }
 
 
 
-    public Boolean isAddCardToDeckValid(Matcher matcher , String input , String addOrRemove)
-    { boolean commandValidation = true;
+    public Boolean isAddOrRemoveCardValid(Matcher matcher, String sideOrMain, HashMap<String, String> enteredDetails)
+    {   boolean commandValidation = true;
         CommandCase commandCase;
         HashMap<String ,String> inputParameters  = new HashMap();
         inputParameters.put(matcher.group(2) , matcher.group(3));
@@ -244,19 +244,16 @@ public class RegexController {
             commandCase  = CommandCase.INVALID;
             commandValidation = false;
         }
-        String sideOrMain = "main";
-        if(input.endsWith("--side"))
-            sideOrMain = "side";
 
         if (commandCase.equals(CommandCase.LONG)) {
-            if(addOrRemove.equals("add"))
-            deckController.addCardToDeck(inputParameters.get("--card"), inputParameters.get("--deck"), sideOrMain);
-            else deckController.removeCardFromDeck(inputParameters.get("--card"), inputParameters.get("--deck"), sideOrMain);
+        enteredDetails.put("card" , inputParameters.get("--card"));
+        enteredDetails.put("deck" , inputParameters.get("--deck"));
+        enteredDetails.put("type" , sideOrMain);
         }
         else if(commandCase.equals(CommandCase.SHORT)) {
-            if(addOrRemove.equals("add"))
-            deckController.addCardToDeck(inputParameters.get("-c"), inputParameters.get("-d"), sideOrMain);
-            else deckController.removeCardFromDeck(inputParameters.get("-c"), inputParameters.get("-d"), sideOrMain);
+            enteredDetails.put("card" , inputParameters.get("-c"));
+            enteredDetails.put("deck" , inputParameters.get("-d"));
+            enteredDetails.put("type" , sideOrMain);
         }
         return commandValidation;
     }

@@ -1,21 +1,33 @@
 package controller;
 
+import controller.responses.LoginMenuResponses;
 import model.User;
 import view.MainMenu;
 
 public class LoginController extends MenuController{
-
+    JSONController jsonController = new JSONController();
     public LoginController() {
         super("Login Menu");
     }
-    public void registerUser(String userName , String nickName , String passWord) {
-        new User(userName,nickName,passWord);
+    public LoginMenuResponses registerUser(String userName , String nickName , String passWord) {
+        jsonController.refreshUsersFromFileJson();
+        if (User.getUserByUserName(userName)!=null)
+            return LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS;
+        else if (User.getUserByNickname(nickName)!=null)
+            return LoginMenuResponses.USER_NICKNAME_ALREADY_EXISTS;
+        else {
+            new User(userName, nickName, passWord);
+            jsonController.refreshUsersToFileJson();
+            return LoginMenuResponses.USER_CREATE_SUCCESSFUL;
+        }
     }
-    public void loginUser(String username, String password) {
-        //System.out.println(user.getUserName());
-        super.setUser(User.getUserByUserName(username));
-        //System.out.println(super.user.getUserName());
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.scanInput();
+    public LoginMenuResponses loginUser(String username, String password) {
+        jsonController.refreshUsersFromFileJson();
+        if (User.getUserByUserName(username)==null || !User.getUserByUserName(username).getPassWord().equals(password))
+            return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
+        else {
+            super.setUser(User.getUserByUserName(username));
+            return LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
+        }
     }
 }
