@@ -56,12 +56,32 @@ public class MagicCard extends Card{
     }
 
     enum CardIcon {
-        @SerializedName("Equip") EQUIP,
-        @SerializedName("Field") FIELD,
-        @SerializedName("Quick-play") QUICK_PLAY,
-        @SerializedName("Ritual") RITUAL,
-        @SerializedName("Continuous") CONTINUOUS,
-        @SerializedName("Counter") COUNTER,
-        @SerializedName("Normal") NORMAL
+        @SerializedName("Equip") EQUIP("Equip"),
+        @SerializedName("Field") FIELD("Field"),
+        @SerializedName("Quick-play") QUICK_PLAY("Quick-play"),
+        @SerializedName("Ritual") RITUAL("Ritual"),
+        @SerializedName("Continuous") CONTINUOUS("Continuous"),
+        @SerializedName("Counter") COUNTER("Counter"),
+        @SerializedName("Normal") NORMAL("Normal");
+        private String name;
+
+        CardIcon(String name) {
+            this.name = name;
+        }
+
+        public String getName()
+        {
+            return this.name;
+        }
+    }
+    public String toString() {
+        StringBuilder info = new StringBuilder();
+        info.append("Name: " + cardName + "\n");
+        info.append(magicType+"\n");
+        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
+        //a.value()
+        info.append("Type: " +  cardIcon.getName()+ "\n");
+        info.append("Description: " + cardDescription );
+        return info.toString();
     }
 }

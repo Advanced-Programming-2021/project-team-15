@@ -78,6 +78,7 @@ public class MonsterCard extends Card {
         this.monsterEffectType = monsterEffectType;
     }
 
+
     public Mode getMode() {
         return mode;
     }
@@ -93,21 +94,32 @@ public class MonsterCard extends Card {
     }
 
     enum MonsterType {
-        @SerializedName("Spellcaster") SPELL_CASTER,
-        @SerializedName("Warrior") WARRIOR,
-        @SerializedName("Beast-Warrior") BEAST_WARRIOR,
-        @SerializedName("Fiend") FIEND,
-        @SerializedName("Aqua") AQUA,
-        @SerializedName("Beast") BEAST,
-        @SerializedName("Pyro") PYRO,
-        @SerializedName("Thunder") THUNDER,
-        @SerializedName("Dragon") DRAGON,
-        @SerializedName("Machine") MACHINE,
-        @SerializedName("Rock") ROCK,
-        @SerializedName("Insect") INSECT,
-        @SerializedName("Cyber") CYBER,
-        @SerializedName("Fairy") FAIRY,
-        @SerializedName("Sea Serpent") SEA_SERPENT
+        @SerializedName("Spellcaster") SPELL_CASTER("Spellcaster"),
+        @SerializedName("Warrior") WARRIOR("Warrior"),
+        @SerializedName("Beast-Warrior") BEAST_WARRIOR("Beast-Warrior"),
+        @SerializedName("Fiend") FIEND("Fiend"),
+        @SerializedName("Aqua") AQUA("Aqua"),
+        @SerializedName("Beast") BEAST("Beast"),
+        @SerializedName("Pyro") PYRO("Pyro"),
+        @SerializedName("Thunder") THUNDER("Thunder"),
+        @SerializedName("Dragon") DRAGON("Dragon"),
+        @SerializedName("Machine") MACHINE("Machine"),
+        @SerializedName("Rock") ROCK("Rock"),
+        @SerializedName("Insect") INSECT("Insect"),
+        @SerializedName("Cyber") CYBER("Cyber"),
+        @SerializedName("Fairy") FAIRY("Fairy"),
+        @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
+        private String name;
+
+        MonsterType(String name) {
+            this.name = name;
+        }
+
+
+        public String getName()
+        {
+            return this.name;
+        }
     }
 
     enum Mode {
@@ -122,5 +134,15 @@ public class MonsterCard extends Card {
         @SerializedName("EARTH") EARTH,
         @SerializedName("WIND") WIND,
         @SerializedName("LIGHT") LIGHT
+    }
+    public String toString() {
+        StringBuilder cardInfo = new StringBuilder();
+        cardInfo.append("Name: " + cardName + "\n");
+        cardInfo.append("Level: " + level + "\n");
+        cardInfo.append("Type: " + monsterType.getName() + "\n");
+        cardInfo.append("ATK: " +attackPoint + "\n");
+        cardInfo.append("DEF: " + defensePoint + "\n");
+        cardInfo.append("Description: " + cardDescription);
+        return cardInfo.toString();
     }
 }
