@@ -11,6 +11,7 @@ public class Main {
         jsonController.MagicCardParseJson();
         LoginMenu loginMenu = LoginMenu.getInstance();
         loginMenu.scanInput();
+
 //        for (Card card : Card.getAllCards()) {
 //
 //            if (card.getCardType()== Card.CardType.MONSTER) {
