@@ -101,6 +101,10 @@ public class User {
         this.money = money;
     }
 
+    public void changeMoney(int amount) {
+        this.setMoney(this.getMoney()+amount);
+    }
+
     public Deck getDeckByName(String name)
     {   for (Deck  deck : allDecksOfUser)
     {

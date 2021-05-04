@@ -55,11 +55,11 @@ public class MainMenu extends Menu {
             System.out.println("invalid command");
         else {
             responses = mainMenuController.menuEnter(enteredDetails.get("menuName"));
-            printResponse(responses);
             if (responses == MainMenuResponses.MENU_ENTER_SUCCESSFUL) {
                 nextMenu = MainMenuController.getAllMenus().get(enteredDetails.get("menuName"));
                 isEnter = true;
             }
+            printResponse(responses);
         }
     }
 
@@ -73,7 +73,7 @@ public class MainMenu extends Menu {
                 output = "menu name you entered doesn't exist!";
                 break;
             case MENU_ENTER_SUCCESSFUL:
-                output = "entering...";
+                output = "entered menu"+nextMenu.menuName+"...";
                 break;
             case MENU_NAVIGATION_NOT_POSSIBLE:
                 output = "menu navigation is not possible";

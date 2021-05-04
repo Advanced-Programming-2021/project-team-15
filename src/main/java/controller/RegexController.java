@@ -221,8 +221,11 @@ public class RegexController {
         }
        return false;
     }
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> master
 
     public Boolean isAddOrRemoveCardValid(Matcher matcher, String sideOrMain, HashMap<String, String> enteredDetails)
     {   boolean commandValidation = true;

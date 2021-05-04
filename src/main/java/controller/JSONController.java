@@ -25,7 +25,7 @@ public class JSONController {
         }
     }
     public void refreshUsersToFileJson() {
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try(Writer writer = new FileWriter("Users.json")) {
             gson.toJson(User.getAllUsers(),writer);
         }
@@ -37,15 +37,26 @@ public class JSONController {
     public void refreshUsersFromFileJson() {
         Gson gson = new GsonBuilder().create();
         try (Reader reader = new FileReader("Users.json")) {
-//            Type founderListType = new TypeToken<ArrayList<Founder>>(){}.getType();
-//            List<Founder> founderList = gson.fromJson(founderJson, founderListType);
             Type usersListType = new TypeToken<ArrayList<User>>(){}.getType();
             User.setAllUsers(gson.fromJson(reader, usersListType));
-            //User.setAllUsers((ArrayList<User>)Arrays.asList(gson.fromJson(reader, ArrayList<User>.class)));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void refreshCardsFromFileJson() {
+        Gson gson = new GsonBuilder().create();
+        String[] filenames = {"Monster.json","Magic.json"};
+        ArrayList<Card> tempCardsList = new ArrayList<>();
+        for (String filename : filenames) {
+            try (Reader reader = new FileReader(filename)) {
+                Type cardsListType = new TypeToken<ArrayList<Card>>() {}.getType();
+                tempCardsList.addAll(gson.fromJson(reader, cardsListType));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Card.setAllCards(tempCardsList);
     }
 //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
 //        @Override
