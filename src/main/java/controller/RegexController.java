@@ -6,10 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexController {
-    LoginController loginController = new LoginController();
     MainMenuController mainMenuController =new MainMenuController();
-    ProfileController profileController = new ProfileController();
-    DeckController deckController = new DeckController();
     ShopController shopController = new ShopController();
 
     public Boolean createUserRegex(String input, HashMap<String,String> enteredDetails) {
@@ -216,10 +213,10 @@ public class RegexController {
             return true;}
         else return false;
     }
-    public Boolean buyItemRegex(String input)
-    { Matcher matcher = getCommandMatcher(input , "\\bshop buy (\\S+)$");
+    public Boolean buyItemRegex(String input ,  HashMap<String, String> enteredDetails)
+    { Matcher matcher = getCommandMatcher(input , "shop buy (\\S+)$");
         if(matcher.find())
-        { shopController.buyItem(matcher.group(1));
+        { enteredDetails.put("name" ,matcher.group(1));
             return true;
         }
        return false;
