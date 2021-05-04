@@ -99,10 +99,10 @@ public class RegexController {
 //                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
             return commandValidation;
         }
-        public Boolean enterMenuRegex(String input) {
-        Matcher matcher = getCommandMatcher(input , "menu enter (\\.+)$");
+        public Boolean enterMenuRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input , "menu enter (.+)$");
             if(matcher.find()) {
-                mainMenuController.menuEnter(matcher.group(1));
+                enteredDetails.put("menuName",matcher.group(1));
                 return true;
             }
             else return false;

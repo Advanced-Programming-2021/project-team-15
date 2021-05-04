@@ -18,6 +18,11 @@ public class MainMenuController extends MenuController {
     public MainMenuController() {
         super("Main Menu");
     }
+
+    public static HashMap<String, Menu> getAllMenus() {
+        return allMenus;
+    }
+
     public MainMenuResponses menuEnter(String menuName) {
         if (allMenus.containsKey(menuName))
             return MainMenuResponses.MENU_ENTER_SUCCESSFUL;

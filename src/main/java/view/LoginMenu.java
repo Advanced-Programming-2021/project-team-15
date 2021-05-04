@@ -8,12 +8,16 @@ import java.util.Scanner;
 
 public class LoginMenu extends Menu {
     private static LoginMenu loginMenu;
-    Menu nextMenu = MainMenu.getInstance();
     LoginController loginController = new LoginController();
     LoginMenuResponses responses;
     private String username;
     private String nickname;
     private String password;
+
+    {
+        nextMenu = MainMenu.getInstance();
+    }
+
     private LoginMenu() {
         super("Login Menu");
     }
@@ -65,14 +69,14 @@ public class LoginMenu extends Menu {
         else {
             responses = loginController.loginUser(enteredDetails.get("username"), enteredDetails.get("password"));
             printResponse(responses);
-            return true;
+            return responses == LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
         }
         return false;
     }
 
     protected void printResponse(LoginMenuResponses loginMenuResponses) {
         String output = "";
-        switch (responses) {
+        switch (loginMenuResponses) {
             case USER_CREATE_SUCCESSFUL:
                 output = "user created successfully!";
                 break;

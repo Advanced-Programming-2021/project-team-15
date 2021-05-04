@@ -10,6 +10,7 @@ public abstract class Menu {
     RegexController regexController = new RegexController();
     private final MenuController menuController;
     protected String menuName;
+    protected Menu nextMenu;
     protected boolean isExit = false;
     protected boolean isEnter = false;
     private MenuController.MenuResponse MenuControllerResponse;

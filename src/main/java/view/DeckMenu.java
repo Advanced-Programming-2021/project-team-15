@@ -33,9 +33,9 @@ public class DeckMenu extends Menu {
             else if(input.startsWith("deck set-active")) checkAndCallSetActiveDeck(input);
             else if(input.startsWith("deck add-card")) checkAndCallAddOrRemoveCard(input , "add");
             else if(input.startsWith("deck rm-card"))  checkAndCallAddOrRemoveCard(input ,"remove");
-            else if(input.equals("deck show --cards")
+//            else if(input.equals("deck show --cards")
                 //?
-                else if(input.equals("deck show --all"))
+//                else if(input.equals("deck show --all"))
                     //?
                     else if(input.startsWith("deck show")) checkAndCallShowThisDeck(input);
         else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
@@ -56,9 +56,9 @@ public class DeckMenu extends Menu {
                String deckName = enteredDetails.get("deck");
                String carName = enteredDetails.get("card");
                String deckType =enteredDetails.get("type");
-                if(addOrRemove.equals("add"))
+//                if(addOrRemove.equals("add"))
                //responses = deckController.addCardToDeck(carName ,deckName ,deckType);
-                    else if(addOrRemove.equals("remove"))
+//                    else if(addOrRemove.equals("remove"))
                //responses = deckController.removeCardFromDeck(carName ,deckName ,deckType);
                //printResponse(responses);
            }
