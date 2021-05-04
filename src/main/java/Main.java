@@ -4,6 +4,16 @@ import model.MagicCard;
 import model.MonsterCard;
 import view.LoginMenu;
 
+/*To Handle :
+menu entry from other menus
+giving other menus instructions
+shop buy item clone cards
+*/
+
+
+
+
+
 public class Main {
     public static void main(String[] args) {
         JSONController jsonController = new JSONController();

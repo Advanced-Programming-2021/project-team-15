@@ -9,7 +9,7 @@ public class MenuController {
             menuController = new MenuController("Menu");
         return menuController;
     }
-    public User user;
+    public static User user;
 
     private String menuName;
 
@@ -34,12 +34,12 @@ public class MenuController {
         this.menuName = menuName;
     }
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public static void setUser(User user) {
+        MenuController.user = user;
     }
 
     public enum MenuResponse {

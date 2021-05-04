@@ -74,7 +74,7 @@ public class LoginMenu extends Menu {
         return false;
     }
 
-    protected void printResponse(LoginMenuResponses loginMenuResponses) {
+    private void printResponse(LoginMenuResponses loginMenuResponses) {
         String output = "";
         switch (loginMenuResponses) {
             case USER_CREATE_SUCCESSFUL:

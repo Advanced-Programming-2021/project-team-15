@@ -221,16 +221,6 @@ public class RegexController {
         }
        return false;
     }
-    public Boolean showAllCards(String input)
-    {  if(input.equals("shop show --all"))
-    {
-        shopController.showAllCards();
-        return true;
-    }
-    return false;
-    }
-
-
 
     public Boolean isAddOrRemoveCardValid(Matcher matcher, String sideOrMain, HashMap<String, String> enteredDetails)
     {   boolean commandValidation = true;
