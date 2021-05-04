@@ -61,7 +61,7 @@ public class ProfileMenu extends Menu {
         }
 
     }
-    //public void  printResponse(ProfileMenuResponses responses)
+    //protected void printResponse(ProfileMenuResponses profileMenuResponses)
     //{
 
     //}
