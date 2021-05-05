@@ -9,6 +9,7 @@ menu entry from other menus
 giving other menus instructions
 shop buy item clone cards
 Import/Export Menu???
+card show (page 10)
 */
 
 

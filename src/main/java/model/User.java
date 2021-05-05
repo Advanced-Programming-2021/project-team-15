@@ -3,14 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class User {
-    private static ArrayList<User> allUsers ;
+    private static ArrayList<User> allUsers;
 
-    public Deck getActiveDeck() {
-        return activeDeck;
-    }
-
-    public void setActiveDeck(Deck activeDeck) {
-        this.activeDeck = activeDeck;
+    static {
+        allUsers = new ArrayList<>();
     }
 
     private Deck activeDeck;
@@ -21,9 +17,7 @@ public class User {
     private String nickName;
     private int score;
     private int money;
-    static {
-        allUsers = new ArrayList<>();
-    }
+
     public User(String userName, String nickName, String passWord) {
         this.userName = userName;
         this.nickName = nickName;
@@ -35,24 +29,38 @@ public class User {
 
     public static User getUserByUserName(String userName) {
         for (User user : allUsers) {
-            if(user.userName.equals(userName))
+            if (user.userName.equals(userName))
                 return user;
         }
         return null;
     }
+
     public static User getUserByNickname(String nickname) {
         for (User user : allUsers) {
-            if(user.nickName.equals(nickname))
+            if (user.nickName.equals(nickname))
                 return user;
         }
         return null;
     }
+
     public static ArrayList<User> getAllUsers() {
         return allUsers;
     }
 
     public static void setAllUsers(ArrayList<User> allUsers) {
         User.allUsers = allUsers;
+    }
+
+    public Card getCardByName(String cardName) {
+        for (Card card : allCardsOfUser) {
+            if (card.cardName.equals(cardName))
+                return card;
+        }
+        return null;
+    }
+
+    public void removeUserCardByName(String cardName) {
+        allCardsOfUser.removeIf(card -> card.cardName.equals(cardName));
     }
 
     public ArrayList<Deck> getAllDecksOfUser() {
@@ -69,6 +77,14 @@ public class User {
 
     public void setAllCardsOfUser(ArrayList<Card> allCardsOfUser) {
         this.allCardsOfUser = allCardsOfUser;
+    }
+
+    public void addCard(Card card) {
+        allCardsOfUser.add(card);
+    }
+
+    public void removeDeckByName(String deckName) {
+        allDecksOfUser.remove(getDeckByName(deckName));
     }
 
     public String getUserName() {
@@ -112,23 +128,30 @@ public class User {
     }
 
     public void changeMoney(int amount) {
-        this.setMoney(this.getMoney()+amount);
+        this.setMoney(this.getMoney() + amount);
     }
 
-    public Deck getDeckByName(String name)
-    {   for (Deck  deck : allDecksOfUser)
-    {
-        if(deck.getName().equals(name))
-            return deck;
+    public Deck getDeckByName(String name) {
+        for (Deck deck : allDecksOfUser) {
+            if (deck.getName().equals(name))
+                return deck;
+        }
+        return null;
     }
-    return null;
-    }
-    public void addDeck(Deck deck)
-    {
+
+    public void addDeck(Deck deck) {
         allDecksOfUser.add(deck);
     }
-    public void removeDeck(Deck deck)
-    {
+
+    public void removeDeck(Deck deck) {
         allDecksOfUser.remove(deck);
+    }
+
+    public Deck getActiveDeck() {
+        return activeDeck;
+    }
+
+    public void setActiveDeck(Deck activeDeck) {
+        this.activeDeck = activeDeck;
     }
 }

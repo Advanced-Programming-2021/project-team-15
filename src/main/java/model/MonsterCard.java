@@ -3,31 +3,38 @@ package model;
 import com.google.gson.annotations.SerializedName;
 
 public class MonsterCard extends Card {
-    @SerializedName("Atk")private int attackPoint;
-    @SerializedName("Def")private int defensePoint;
-    @SerializedName("Level") private int level;
-    @SerializedName("Monster Type") private MonsterType monsterType;
-    @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
-    @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
+    @SerializedName("Atk")
+    private int attackPoint;
+    @SerializedName("Def")
+    private int defensePoint;
+    @SerializedName("Level")
+    private int level;
+    @SerializedName("Monster Type")
+    private MonsterType monsterType;
+    @SerializedName("Attribute")
+    private MonsterAttribute monsterAttribute;
+    @SerializedName("Card Type")
+    private MonsterEffectType monsterEffectType;
     private Mode mode;
+
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
     }
 
     private void addAttackPoint(int point) {
-        this.setAttackPoint(this.getAttackPoint()+point);
+        this.setAttackPoint(this.getAttackPoint() + point);
     }
 
     private void addDefensePoint(int point) {
-        this.setDefensePoint(this.getDefensePoint()+point);
+        this.setDefensePoint(this.getDefensePoint() + point);
     }
 
     private void reduceAttackPoint(int point) {
-        this.setAttackPoint(this.getAttackPoint()-point);
+        this.setAttackPoint(this.getAttackPoint() - point);
     }
 
     private void reduceDefensePoint(int point) {
-        this.setDefensePoint(this.getDefensePoint()-point);
+        this.setDefensePoint(this.getDefensePoint() - point);
     }
 
     public int getAttackPoint() {
@@ -87,6 +94,17 @@ public class MonsterCard extends Card {
         this.mode = mode;
     }
 
+    public String toString() {
+        StringBuilder cardInfo = new StringBuilder();
+        cardInfo.append("Name: ").append(cardName).append("\n");
+        cardInfo.append("Level: ").append(level).append("\n");
+        cardInfo.append("Type: ").append(monsterType.getName()).append("\n");
+        cardInfo.append("ATK: ").append(attackPoint).append("\n");
+        cardInfo.append("DEF: ").append(defensePoint).append("\n");
+        cardInfo.append("Description: ").append(cardDescription);
+        return cardInfo.toString();
+    }
+
     enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
@@ -116,8 +134,7 @@ public class MonsterCard extends Card {
         }
 
 
-        public String getName()
-        {
+        public String getName() {
             return this.name;
         }
     }
@@ -134,15 +151,5 @@ public class MonsterCard extends Card {
         @SerializedName("EARTH") EARTH,
         @SerializedName("WIND") WIND,
         @SerializedName("LIGHT") LIGHT
-    }
-    public String toString() {
-        StringBuilder cardInfo = new StringBuilder();
-        cardInfo.append("Name: " + cardName + "\n");
-        cardInfo.append("Level: " + level + "\n");
-        cardInfo.append("Type: " + monsterType.getName() + "\n");
-        cardInfo.append("ATK: " +attackPoint + "\n");
-        cardInfo.append("DEF: " + defensePoint + "\n");
-        cardInfo.append("Description: " + cardDescription);
-        return cardInfo.toString();
     }
 }

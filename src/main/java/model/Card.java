@@ -31,13 +31,15 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardType = cardType;
     }
+
     public static Card getCardByName(String cardName) {
         for (Card card : allCards) {
-            if(card.getCardName().equals(cardName))
+            if (card.getCardName().equals(cardName))
                 return card;
         }
         return null;
     }
+
     public static void addCard(Card card) {
         allCards.add(card);
     }
@@ -118,4 +120,5 @@ public class Card {
         MONSTER(),
         MAGIC();
     }
+
 }

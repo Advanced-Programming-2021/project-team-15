@@ -2,11 +2,14 @@ package model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MagicCard extends Card{
+public class MagicCard extends Card {
 
-    @SerializedName("Type") private MagicType magicType;
-    @SerializedName("Status") private Status status;
-    @SerializedName("Icon (Property)") private CardIcon cardIcon;
+    @SerializedName("Type")
+    private MagicType magicType;
+    @SerializedName("Status")
+    private Status status;
+    @SerializedName("Icon (Property)")
+    private CardIcon cardIcon;
     private boolean isActive;
 
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
@@ -45,6 +48,17 @@ public class MagicCard extends Card{
         this.cardIcon = cardIcon;
     }
 
+    public String toString() {
+        StringBuilder info = new StringBuilder();
+        info.append("Name: " + cardName + "\n");
+        info.append(magicType + "\n");
+        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
+        //a.value()
+        info.append("Type: " + cardIcon.getName() + "\n");
+        info.append("Description: " + cardDescription);
+        return info.toString();
+    }
+
     public enum MagicType {
         @SerializedName("Spell") SPELL,
         @SerializedName("Trap") TRAP
@@ -69,19 +83,8 @@ public class MagicCard extends Card{
             this.name = name;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return this.name;
         }
-    }
-    public String toString() {
-        StringBuilder info = new StringBuilder();
-        info.append("Name: " + cardName + "\n");
-        info.append(magicType+"\n");
-        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
-        //a.value()
-        info.append("Type: " +  cardIcon.getName()+ "\n");
-        info.append("Description: " + cardDescription );
-        return info.toString();
     }
 }

@@ -54,10 +54,9 @@ public class ShopMenu extends Menu {
     private void checkAndCallShowAllCards() {
         HashMap<String, String> enteredDetails = new HashMap<>();
         responses = shopController.showAllCards(enteredDetails);
-        if (responses == ShopMenuResponses.SHOP_SHOW_ALL) {
+        if (responses == ShopMenuResponses.SHOP_SHOW_ALL)
             allCards = enteredDetails.get("allCards");
-            printResponse(responses);
-        }
+        printResponse(responses);
     }
 
     private void printResponse(ShopMenuResponses shopMenuResponses) {
