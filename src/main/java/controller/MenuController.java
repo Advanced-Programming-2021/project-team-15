@@ -10,7 +10,7 @@ public class MenuController {
         return menuController;
     }
     public static User user;
-
+    protected JSONController jsonController = new JSONController();
     private String menuName;
 
     public MenuController(String menuName) {

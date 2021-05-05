@@ -3,13 +3,10 @@ package controller;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import model.*;
-
-import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+
 
 public class JSONController {
     public void MonsterCardParseJson() {

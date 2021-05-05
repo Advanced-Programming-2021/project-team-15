@@ -2,10 +2,9 @@ package controller;
 
 import controller.responses.LoginMenuResponses;
 import model.User;
-import view.MainMenu;
 
 public class LoginController extends MenuController{
-    JSONController jsonController = new JSONController();
+    //JSONController jsonController = new JSONController();
     public LoginController() {
         super("Login Menu");
     }
@@ -26,7 +25,7 @@ public class LoginController extends MenuController{
         if (User.getUserByUserName(username)==null || !User.getUserByUserName(username).getPassWord().equals(password))
             return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
         else {
-            super.setUser(User.getUserByUserName(username));
+            MenuController.setUser(User.getUserByUserName(username));
             return LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
         }
     }

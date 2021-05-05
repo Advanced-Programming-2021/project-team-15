@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class ShopController extends MenuController {
-    JSONController jsonController = new JSONController();
+    //JSONController jsonController = new JSONController();
 
     public ShopController() {
         super("Shop Menu");
