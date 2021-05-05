@@ -1,6 +1,9 @@
 package model;
 
+import controller.GamePlayController;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class Hand extends NumericZone{
     public Hand() {
@@ -21,6 +24,14 @@ public class Hand extends NumericZone{
     public void removeCardFromHand(Card card)
     {
         //dont know
+    }
+    public int numberOfCardsInaHand() {
+        int count= 0 ;
+        for(Map.Entry<Integer,Card> entry : zoneCards.entrySet())
+        { if(entry!=null)
+            count++;
+        }
+        return count;
     }
 
 

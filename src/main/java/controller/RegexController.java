@@ -1,5 +1,8 @@
 package controller;
 
+import controller.responses.DuelMenuResponses;
+import model.Zone;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -192,9 +195,10 @@ public class RegexController {
             sideOrMain = "side";
             input = input.replaceAll(" --side", "");
         }
-            Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
-            if(deckMatcher.find())
-                return isAddOrRemoveCardValid(deckMatcher  , sideOrMain , enteredDetails);
+            Matcher deckMatcher = getCommandMatcher(input , "deck (\\S+) (--\\w{4}) ([\\w ]+) (--\\w{4}) ([\\w ]+)$");
+            if(deckMatcher.find()) {
+                return isAddOrRemoveCardValid(deckMatcher, sideOrMain, enteredDetails);
+            }
             else return false;
     }
 
@@ -214,7 +218,7 @@ public class RegexController {
         else return false;
     }
     public Boolean buyItemRegex(String input ,  HashMap<String, String> enteredDetails)
-    { Matcher matcher = getCommandMatcher(input , "shop buy (\\S+)$");
+    { Matcher matcher = getCommandMatcher(input , "shop buy ([\\w ]+)$");
         if(matcher.find())
         { enteredDetails.put("name" ,matcher.group(1));
             return true;
@@ -236,13 +240,22 @@ public class RegexController {
         shortCommandParameters.add("-c");
         shortCommandParameters.add("-d");
         if(inputParameters.keySet().containsAll(longCommandParameters) &&  longCommandParameters.containsAll(inputParameters.keySet()))
+        {   if(!inputParameters.get("--deck").contains(" "))
             commandCase = CommandCase.LONG;
+            else { commandCase  = CommandCase.INVALID;
+                commandValidation = false; }
+        }
         else if(inputParameters.keySet().containsAll(shortCommandParameters) &&  shortCommandParameters.containsAll(inputParameters.keySet()))
+        {  if(!inputParameters.get("--deck").contains(" "))
             commandCase = CommandCase.SHORT;
+        else { commandCase  = CommandCase.INVALID;
+            commandValidation = false; }
+        }
         else {
             commandCase  = CommandCase.INVALID;
             commandValidation = false;
         }
+
 
         if (commandCase.equals(CommandCase.LONG)) {
         enteredDetails.put("card" , inputParameters.get("--card"));
@@ -256,6 +269,100 @@ public class RegexController {
         }
         return commandValidation;
     }
+    public Boolean newDuelRegex(String input, HashMap<String, String> enteredDetails)
+    {   if(input.contains(" --new"))
+    {   input = input.replaceAll(" --new" , "");
+        Matcher matcher = getCommandMatcher(input , "\\bduel (\\S+) (\\S+) (\\S+) (\\S+)$");
+        if(matcher.find())
+            return isNewDuelCommandValid(matcher , enteredDetails);
+        else return false;
+    }
+    else return false;
+
+    }
+    public Boolean isNewDuelCommandValid(Matcher matcher,  HashMap<String, String> enteredDetails)
+    { boolean commandValidation = true;
+        CommandCase commandCase;
+        HashMap<String ,String> inputParameters  = new HashMap();
+        inputParameters.put(matcher.group(1) , matcher.group(2));
+        inputParameters.put(matcher.group(3) ,matcher.group(4));
+        ArrayList<String> longCommandParameters = new ArrayList<>();
+        longCommandParameters.add("--second-player");
+        longCommandParameters.add("--rounds");
+        ArrayList<String> shortCommandParameters = new ArrayList<>();
+        shortCommandParameters.add("-s");
+        shortCommandParameters.add("-r");
+        if( longCommandParameters.containsAll(inputParameters.keySet()) && inputParameters.keySet().containsAll(longCommandParameters))
+            commandCase = CommandCase.LONG;
+        else if(inputParameters.keySet().containsAll(shortCommandParameters) &&  shortCommandParameters.containsAll(inputParameters.keySet()))
+            commandCase = CommandCase.SHORT;
+        else {
+            commandCase  = CommandCase.INVALID;
+            commandValidation = false;
+        }
+        if (commandCase.equals(CommandCase.LONG))
+        { enteredDetails.put("rounds" , inputParameters.get("--rounds"));
+            enteredDetails.put("second player" , inputParameters.get("--second-player"));
+        }
+        else if(commandCase.equals(CommandCase.SHORT))
+        { enteredDetails.put("rounds" , inputParameters.get("-r"));
+            enteredDetails.put("second player" , inputParameters.get("-s"));
+        }
+        return commandValidation;
+    }
+    public Boolean newGameAiRegex(String input)
+    {
+        if(input.contains(" --new") && input.contains(" --ai"))
+        {
+            input =  input.replaceAll(" --new" , "");
+            input =  input.replaceAll(" --ai" ,"");
+            Matcher matcher  = getCommandMatcher(input , "\\bduel --rounds (\\d+)$");
+//            if(matcher.find())
+//            {
+//                // startNewAiGame()  ?
+//            }
+//            else
+            return false;
+        }
+        else return false;
+    }
+
+public  Boolean selectFromNumericZone(String input, HashMap<String, String> enteredDetails)
+{  String  opponentOrPlayer = "player";
+   if(input.contains(" --opponent"))
+   {  opponentOrPlayer = "opponent";
+       input  = input.replaceAll(" --opponent" ,"");
+   }
+   Matcher matcher = getCommandMatcher(input , "select --(\\w+) (\\d+)$");
+   if(matcher.find())
+   {  enteredDetails.put("zone type" , matcher.group(1));
+       enteredDetails.put("opponentOrPlayer", opponentOrPlayer);
+       enteredDetails.put("cardNumber",matcher.group(2));
+       return true;
+   }
+   else return false;
+   }
+
+
+
+public  Boolean selectFromNotNumericZone(String input, HashMap<String, String> enteredDetails)
+{   String  opponentOrPlayer = "player";
+    if(input.contains(" --opponent"))
+    {  opponentOrPlayer = "opponent";
+        input  = input.replaceAll(" --opponent" ,"");
+    }
+    Matcher matcher = getCommandMatcher(input , "select --(\\w+)");
+    if(matcher.find())
+    {
+        enteredDetails.put("zone type", matcher.group(1));
+        enteredDetails.put("opponentOrPlayer" , opponentOrPlayer);
+        return true;
+    }
+    else return false;
+}
+
+
+
 
 
 

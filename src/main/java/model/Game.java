@@ -3,8 +3,8 @@ package model;
 import java.util.HashMap;
 
 public class Game {
-    private User firstPlayer ;
-    private User secondPlayer;
+    private Player firstPlayer ;
+    private Player secondPlayer;
     private int roundNumber;
     private int roundCount;
     private static HashMap<Integer , Phase.PhaseLevel> phases;
@@ -17,7 +17,7 @@ public class Game {
           phases.put(i  , phaseLevel);
         }
     }
-    Game(User firstPlayer , User secondPlayer , int roundNumber)
+    public Game(Player firstPlayer, Player secondPlayer, int roundNumber)
     {
         this.roundNumber = roundNumber;
         this.firstPlayer = firstPlayer;
@@ -39,17 +39,13 @@ public class Game {
         return firstPlayer;
     }
 
-    public void setFirstPlayer(User firstPlayer) {
-        this.firstPlayer = firstPlayer;
-    }
+
 
     public User getSecondPlayer() {
         return secondPlayer;
     }
 
-    public void setSecondPlayer(User secondPlayer) {
-        this.secondPlayer = secondPlayer;
-    }
+
 
     public int getRoundNumber() {
         return roundNumber;
@@ -81,5 +77,21 @@ public class Game {
 
     public void setRoundWinner(Player roundWinner) {
         this.roundWinner = roundWinner;
+    }
+
+    public void setFirstPlayer(Player firstPlayer) {
+        this.firstPlayer = firstPlayer;
+    }
+
+    public void setSecondPlayer(Player secondPlayer) {
+        this.secondPlayer = secondPlayer;
+    }
+
+    public static HashMap<Integer, Phase.PhaseLevel> getPhases() {
+        return phases;
+    }
+
+    public static void setPhases(HashMap<Integer, Phase.PhaseLevel> phases) {
+        Game.phases = phases;
     }
 }

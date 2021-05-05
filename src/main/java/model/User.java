@@ -4,6 +4,16 @@ import java.util.ArrayList;
 
 public class User {
     private static ArrayList<User> allUsers ;
+
+    public Deck getActiveDeck() {
+        return activeDeck;
+    }
+
+    public void setActiveDeck(Deck activeDeck) {
+        this.activeDeck = activeDeck;
+    }
+
+    private Deck activeDeck;
     private ArrayList<Deck> allDecksOfUser;
     private ArrayList<Card> allCardsOfUser;
     private String userName;

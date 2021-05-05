@@ -9,7 +9,10 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
-
+    public Card getCardByPlaceNumber(int number)
+    {
+        return zoneCards.get(number);
+    }
 
     public HashMap getZoneCards() {
         return zoneCards;
