@@ -163,16 +163,7 @@ public class MonsterCard extends Card {
         @SerializedName("WIND") WIND,
         @SerializedName("LIGHT") LIGHT
     }
-    public String toString() {
-        StringBuilder cardInfo = new StringBuilder();
-        cardInfo.append("Name: " + cardName + "\n");
-        cardInfo.append("Level: " + level + "\n");
-        cardInfo.append("Type: " + monsterType.getName() + "\n");
-        cardInfo.append("ATK: " +attackPoint + "\n");
-        cardInfo.append("DEF: " + defensePoint + "\n");
-        cardInfo.append("Description: " + cardDescription);
-        return cardInfo.toString();
-    }
+
     public String toStringPosition()
     {  String first = "";
         String second= "";
