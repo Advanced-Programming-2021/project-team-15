@@ -13,11 +13,13 @@ public class GamePlayController extends MenuController{
 
     private int currentPhaseNumber =1;
     private static Card selectedCard;
-    public static Card summonedCard;
     public static Card setCard;
     private  Player currentPlayer;
     private  Player opponentPlayer;
-    protected ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
+    private  ArrayList<MonsterCard> summonedOrSetMonstersInTurn= new ArrayList<>();
+    private  ArrayList<MagicCard>  setSpellCardsInTurn = new ArrayList<>();
+    private  ArrayList<MagicCard>  setTrapCardsInTurn = new ArrayList<>();
+    private ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
 
     public GamePlayController() {
         super("Duel Menu");
@@ -32,13 +34,6 @@ public class GamePlayController extends MenuController{
         GamePlayController.game = game;
     }
 
-    public static Card getSummonedCard() {
-        return summonedCard;
-    }
-
-    public static void setSummonedCard(Card summonedCard) {
-        GamePlayController.summonedCard = summonedCard;
-    }
 
     public static Card getSetCard() {
         return setCard;
@@ -144,14 +139,14 @@ public class GamePlayController extends MenuController{
         else if((!selectedCard.getPlacedZone().equals(Zone.ZoneType.HAND)) ||
                 !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
-//        else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
-//             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
+      else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
+            return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
         else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
                  Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
              return DuelMenuResponses.NOT_ALLOWED_IN_THIS_PHASE;
         else if(currentPlayer.getMonsterCardZone().getNumberOfMonsterCard()==5)
              return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
-         else if(setCard != null || summonedCard != null)
+         else if(  !summonedOrSetMonstersInTurn.isEmpty() )
              return DuelMenuResponses.ALREADY_SUMMONED_SET;
          else if(((MonsterCard) selectedCard).getLevel() <=4) {
              doSummon();
@@ -200,11 +195,12 @@ public class GamePlayController extends MenuController{
      public DuelMenuResponses setMonster()
      {  if(opponentPlayer.getMonsterCardZone().getNumberOfMonsterCard()==5)
          return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
-         else if(setCard!=null || summonedCard!=null)
+         else if(!summonedOrSetMonstersInTurn.isEmpty() )
              return DuelMenuResponses.ALREADY_SUMMONED_SET;
          currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
          selectedCard.setSet(true);
          setSetCard(selectedCard);
+         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
          selectedCard.setAppearance(Card.Appearance.HIDDEN);
          ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.DEFENSE);
          return DuelMenuResponses.CART_SET_SUCCESSFULLY;
@@ -270,10 +266,13 @@ public class GamePlayController extends MenuController{
     {
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard , currentPlayer);
                    ((MonsterCard) selectedCard).setSummoned(true);
-                   setSummonedCard(selectedCard);
+        summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
     }
     public void refresh(){
         changedPositionCardsInTurn.clear();
+        summonedOrSetMonstersInTurn.clear();
+        setSpellCardsInTurn.clear();
+        setTrapCardsInTurn.clear();
         selectedCard = null;
     }
     public Boolean isSelectCardChangedBefore()
@@ -301,5 +300,37 @@ public class GamePlayController extends MenuController{
 
     public void setOpponentPlayer(Player opponentPlayer) {
         this.opponentPlayer = opponentPlayer;
+    }
+
+    public ArrayList<MonsterCard> getSummonedMonstersInTurn() {
+        return summonedOrSetMonstersInTurn;
+    }
+
+    public void setSummonedMonstersInTurn(ArrayList<MonsterCard> summonedMonstersInTurn) {
+        this.summonedOrSetMonstersInTurn= summonedMonstersInTurn;
+    }
+
+    public ArrayList<MagicCard> getSetSpellCardsInTurn() {
+        return setSpellCardsInTurn;
+    }
+
+    public void setSetSpellCardsInTurn(ArrayList<MagicCard> setSpellCardsInTurn) {
+        this.setSpellCardsInTurn = setSpellCardsInTurn;
+    }
+
+    public ArrayList<MagicCard> getSetTrapCardsInTurn() {
+        return setTrapCardsInTurn;
+    }
+
+    public void setSetTrapCardsInTurn(ArrayList<MagicCard> setTrapCardsInTurn) {
+        this.setTrapCardsInTurn = setTrapCardsInTurn;
+    }
+
+    public ArrayList<Card> getChangedPositionCardsInTurn() {
+        return changedPositionCardsInTurn;
+    }
+
+    public void setChangedPositionCardsInTurn(ArrayList<Card> changedPositionCardsInTurn) {
+        this.changedPositionCardsInTurn = changedPositionCardsInTurn;
     }
 }
