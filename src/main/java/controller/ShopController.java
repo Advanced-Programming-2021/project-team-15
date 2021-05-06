@@ -5,7 +5,6 @@ import model.Card;
 import model.User;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 public class ShopController extends MenuController {
@@ -23,7 +22,7 @@ public class ShopController extends MenuController {
         else if (user.getMoney() < Card.getCardByName(cardName).getPrice())
             return ShopMenuResponses.USER_MONEY_NOT_ENOUGH;
         else {
-            user.getAllCardsOfUser().add(Card.getCardByName(cardName));
+            user.getAllCardsOfUser().add(cloner.deepClone(Card.getCardByName(cardName)));
             user.changeMoney((-1) * Card.getCardByName(cardName).getPrice());
             return ShopMenuResponses.BUY_SUCCESSFUL;
         }
@@ -31,9 +30,7 @@ public class ShopController extends MenuController {
 
     public ShopMenuResponses showAllCards(HashMap<String, String> enteredDetails) {
         jsonController.refreshCardsFromFileJson();
-        System.out.println(Card.getAllCards().size());
         ArrayList<Card> sortedCards = sortCardsByName(Card.getAllCards());
-        System.out.println(sortedCards.size());
         StringBuilder stringBuilder = new StringBuilder();
         for (Card card : sortedCards) {
             stringBuilder.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
@@ -41,12 +38,5 @@ public class ShopController extends MenuController {
         enteredDetails.put("allCards", stringBuilder.toString());
         return ShopMenuResponses.SHOP_SHOW_ALL;
     }
-
-    private ArrayList<Card> sortCardsByName(ArrayList<Card> cards) {
-        ArrayList<Card> sortedCards = new ArrayList<>(cards);
-        sortedCards.sort(Comparator.comparing(Card::getCardName));
-        return sortedCards;
-    }
-
 
 }
