@@ -2,7 +2,7 @@ package model;
 
 public class Phase {
     private PhaseLevel phaseLevel;
-    enum PhaseLevel{
+    public enum PhaseLevel{
         DRAW,
         STANDBY,
         MAIN1,

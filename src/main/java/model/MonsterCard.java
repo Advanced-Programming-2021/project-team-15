@@ -9,10 +9,34 @@ public class MonsterCard extends Card {
     @SerializedName("Monster Type") private MonsterType monsterType;
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
     @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
+
+    private Boolean isSummoned = false;
     private Mode mode;
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
     }
+
+    public MonsterType getMonsterType() {
+        return monsterType;
+    }
+
+    public void setMonsterType(MonsterType monsterType) {
+        this.monsterType = monsterType;
+    }
+
+    public Boolean getSummoned() {
+        return isSummoned;
+    }
+
+    public void setSummoned(Boolean summoned) {
+        if(summoned)
+        {
+            setMode( Mode.ATTACK);
+            setAppearance(Appearance.OCCUPIED);
+        }
+        isSummoned = summoned;
+    }
+
 
     private void addAttackPoint(int point) {
         this.setAttackPoint(this.getAttackPoint()+point);
@@ -54,13 +78,6 @@ public class MonsterCard extends Card {
         this.level = level;
     }
 
-    public MonsterType getMonsterType() {
-        return monsterType;
-    }
-
-    public void setMonsterType(MonsterType monsterType) {
-        this.monsterType = monsterType;
-    }
 
     public MonsterAttribute getMonsterAttribute() {
         return monsterAttribute;
@@ -87,7 +104,7 @@ public class MonsterCard extends Card {
         this.mode = mode;
     }
 
-    enum MonsterEffectType {
+    public enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
         @SerializedName("Ritual") RITUAL
@@ -122,9 +139,9 @@ public class MonsterCard extends Card {
         }
     }
 
-    enum Mode {
+    public enum Mode {
         ATTACK,
-        DEFENSE
+        DEFENSE,
     }
 
     enum MonsterAttribute {
@@ -144,5 +161,16 @@ public class MonsterCard extends Card {
         cardInfo.append("DEF: " + defensePoint + "\n");
         cardInfo.append("Description: " + cardDescription);
         return cardInfo.toString();
+    }
+    public String toStringPosition()
+    {  String first = "";
+        String second= "";
+        if(appearance.equals(Appearance.OCCUPIED))
+            second = "O";
+        else second = "H";
+        if(mode.equals(Mode.ATTACK))
+            first = "O";
+        else first="D";
+        return first+second;
     }
 }

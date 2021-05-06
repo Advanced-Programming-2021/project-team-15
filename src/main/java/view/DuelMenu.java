@@ -88,8 +88,8 @@ public class DuelMenu extends Menu{
 
     }
     public void checkAndCallDeselect(String input)
-    {
-
+    { duelMenuResponses = gamePlayController.deSelect();
+      printResponse(duelMenuResponses);
     }
     private void printResponse(DuelMenuResponses duelMenuResponses) {
         String output = "";

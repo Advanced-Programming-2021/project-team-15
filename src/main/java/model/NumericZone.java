@@ -1,11 +1,14 @@
 package model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class NumericZone extends Zone {
-    protected HashMap<Integer, Card> zoneCards;
+    protected TreeMap<Integer, Card> zoneCards;
 
-    public NumericZone(ZoneType zoneType , HashMap<Integer , Card> zoneCards) {
+    public NumericZone(ZoneType zoneType , TreeMap<Integer , Card> zoneCards) {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
@@ -14,11 +17,11 @@ public class NumericZone extends Zone {
         return zoneCards.get(number);
     }
 
-    public HashMap getZoneCards() {
+    public TreeMap getZoneCards() {
         return zoneCards;
     }
 
-    public void setZoneCards(HashMap zoneCards) {
+    public void setZoneCards(TreeMap zoneCards) {
         this.zoneCards = zoneCards;
     }
 }

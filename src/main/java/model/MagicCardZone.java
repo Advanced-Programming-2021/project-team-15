@@ -1,15 +1,16 @@
 package model;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 public class MagicCardZone extends NumericZone{
 
     public MagicCardZone() {
-        super(ZoneType.MAGIC_CARD , new HashMap<>());
+        super(ZoneType.MAGIC_CARD , new TreeMap<>());
     }
     public void addCardToMagicCardZone(MagicCard magicCard)
-    { zoneCards.remove(magicCard);
-        //dont know
+    {
     }
     public void removeMagicCard(MagicCard magicCard)
     {

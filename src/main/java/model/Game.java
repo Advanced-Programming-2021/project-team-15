@@ -35,13 +35,13 @@ public class Game {
        // if(roundNumber>1)
            //******* to game play na bayad bashe??
     }
-    public User getFirstPlayer() {
+    public Player getFirstPlayer() {
         return firstPlayer;
     }
 
 
 
-    public User getSecondPlayer() {
+    public Player getSecondPlayer() {
         return secondPlayer;
     }
 
@@ -94,4 +94,5 @@ public class Game {
     public static void setPhases(HashMap<Integer, Phase.PhaseLevel> phases) {
         Game.phases = phases;
     }
+
 }

@@ -10,6 +10,7 @@ public class Zone {
         allZones = new HashMap<>();
     }
 
+
     public Zone(ZoneType zoneType) {
         this.zoneType = zoneType;
     }

@@ -21,7 +21,26 @@ public class Card {
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType;
-    protected Zone placedZone;
+    protected Zone.ZoneType placedZone = Zone.ZoneType.DECK;
+
+    public Appearance getAppearance() {
+        return appearance;
+    }
+
+    public void setAppearance(Appearance appearance) {
+        this.appearance = appearance;
+    }
+
+    protected Appearance appearance;
+
+//    public int getPlacedZoneNumber() {
+//        return placedZoneNumber;
+//    }
+//
+//    public void setPlacedZoneNumber(int placedZoneNumber) {
+//        this.placedZoneNumber = placedZoneNumber;
+//    }
+    //protected int placedZoneNumber = 0; //if ==0 means not numerical zone
     @SerializedName("Price")
     protected int price;
 
@@ -37,6 +56,13 @@ public class Card {
                 return card;
         }
         return null;
+    }
+    public Zone.ZoneType getPlacedZone() {
+        return placedZone;
+    }
+
+    public void setPlacedZone(Zone.ZoneType placedZone) {
+        this.placedZone = placedZone;
     }
     public static void addCard(Card card) {
         allCards.add(card);
@@ -98,13 +124,7 @@ public class Card {
         this.cardType = cardType;
     }
 
-    public Zone getPlacedZone() {
-        return placedZone;
-    }
 
-    public void setPlacedZone(Zone placedZone) {
-        this.placedZone = placedZone;
-    }
 
     public int getPrice() {
         return price;
@@ -117,5 +137,9 @@ public class Card {
     public enum CardType {
         MONSTER(),
         MAGIC();
+    }
+   public enum Appearance{
+        HIDDEN,
+        OCCUPIED;
     }
 }

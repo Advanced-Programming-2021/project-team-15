@@ -1,15 +1,13 @@
 package model;
 
-import controller.GamePlayController;
-
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Hand extends NumericZone{
     public Hand() {
-        super(ZoneType.HAND, new HashMap<Integer ,Card>());
+        super(ZoneType.HAND, new TreeMap<Integer ,Card>());
     }
-    public HashMap getCardsInHand()
+    public TreeMap getCardsInHand()
     {
         return zoneCards;
     }
@@ -19,19 +17,29 @@ public class Hand extends NumericZone{
     }
     public void addCardToHand(Card card)
     {
-        //dont know
+        //dont know yet
     }
     public void removeCardFromHand(Card card)
     {
-        //dont know
-    }
-    public int numberOfCardsInaHand() {
-        int count= 0 ;
-        for(Map.Entry<Integer,Card> entry : zoneCards.entrySet())
-        { if(entry!=null)
-            count++;
+
+        for(Map.Entry<Integer , Card> entry : zoneCards.entrySet()) {
+          if(entry.getValue() ==card)
+          { zoneCards.put(entry.getKey() , null);
+           break;
+          }
         }
-        return count;
+//        if(card.getPlacedZoneNumber()!=0)
+//        zoneCards.put(card.getPlacedZoneNumber(), null);
+//        card.setPlacedZoneNumber(0);
+    }
+
+    public int  getNumberOfCardsInHand()
+    {    int i =0 ;
+        for(Map.Entry entry : zoneCards.entrySet())
+        {   if(entry != null)
+            i++;
+        }
+        return i;
     }
 
 
