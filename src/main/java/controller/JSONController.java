@@ -38,7 +38,8 @@ public class JSONController {
             User.setAllUsers(gson.fromJson(reader, usersListType));
         }
         catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Welcome to this Game!\nFrom: Group15 AP- 2021 Spring");
+            //e.printStackTrace();
         }
     }
     public void refreshCardsFromFileJson() {

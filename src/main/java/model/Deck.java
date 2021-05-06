@@ -3,13 +3,13 @@ package model;
 import java.util.ArrayList;
 
 public class Deck {
-    public final int mainDeckMinCardCount = 40;
-    public final int mainDeckMaxCardCount = 60;
-    public final int sideDeckMinCardCount = 0;
-    public final int sideDeckMaxCardCount = 15;
-    public final int DeckMaxSpecifiedCardCount = 3;
+    public transient final int mainDeckMinCardCount = 40;
+    public transient final int mainDeckMaxCardCount = 60;
+    public transient final int sideDeckMinCardCount = 0;
+    public transient final int sideDeckMaxCardCount = 15;
+    public transient final int DeckMaxSpecifiedCardCount = 3;
     private String name;
-    private User owner;
+    private transient User owner;
     private ArrayList<Card> sideDeck;
     private ArrayList<Card> mainDeck;
     private boolean isActive;

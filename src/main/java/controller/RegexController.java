@@ -177,7 +177,7 @@ public class RegexController {
     }
 
     public Boolean setActiveDeckRegex(String input, HashMap<String, String> enteredDetails) {
-        Matcher matcher = getCommandMatcher(input, "deck set-active (\\S+)$");
+        Matcher matcher = getCommandMatcher(input, "deck set-activate (\\S+)$");
         if (matcher.find()) {
             enteredDetails.put("name", matcher.group(1));
             return true;

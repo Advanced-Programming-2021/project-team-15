@@ -59,6 +59,8 @@ public class DeckController extends MenuController {
         else {
             user.addCard(addingDeck.getCardByName(cardName, deckType));
             addingDeck.removeCardFromDeckByName(cardName, deckType);
+            if (addingDeck.getMainDeck().size()< addingDeck.mainDeckMinCardCount)
+                addingDeck.setValid(false);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_REMOVE_SUCCESSFUL;
         }
@@ -80,6 +82,8 @@ public class DeckController extends MenuController {
         else {
             addingDeck.addCardToDeck(cloner.deepClone(Card.getCardByName(cardName)), deckType);
             user.removeUserCardByName(cardName);
+            if (addingDeck.getMainDeck().size()>= addingDeck.mainDeckMinCardCount)
+                addingDeck.setValid(true);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_ADD_TO_DECK_SUCCESSFUL;
         }
@@ -134,9 +138,9 @@ public class DeckController extends MenuController {
         }
         otherDecks = sortDecks(otherDecks);
         allDecks.append("Decks :\n").append("Active Deck :\n");
-        allDecks.append(getDeckDetails(activeDeck)).append("\n").append("Other decks :\n");
+        allDecks.append(getDeckDetails(activeDeck)).append("Other decks :\n");
         for (Deck deck : otherDecks) {
-            allDecks.append(getDeckDetails(deck)).append("\n");
+            allDecks.append(getDeckDetails(deck));
         }
         return DeckMenuResponses.SHOW_ALL_DECKS;
     }
@@ -157,7 +161,7 @@ public class DeckController extends MenuController {
         if (deck.isValid()) validation = "valid";
         else validation = "invalid";
         return deck.getName() + " : main deck " + deck.getMainDeck().size() + " , side deck " +
-                deck.getSideDeck().size() + " , " + validation;
+                deck.getSideDeck().size() + " , " + validation+"\n";
     }
 
 }

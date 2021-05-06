@@ -144,8 +144,8 @@ public class GamePlayController extends MenuController{
         else if((!selectedCard.getPlacedZone().equals(Zone.ZoneType.HAND)) ||
                 !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
-        else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
-             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
+//        else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
+//             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
         else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
                  Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
              return DuelMenuResponses.NOT_ALLOWED_IN_THIS_PHASE;
@@ -190,10 +190,10 @@ public class GamePlayController extends MenuController{
          else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
              Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
              return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-         if(selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.SPELL))
-           return   setSpell();
-         else if(selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.TRAP))
-           return   setTrap();
+//         if(selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.SPELL))
+//           return setSpell();
+//         else if(selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.TRAP))
+//           return setTrap();
          else
            return   setMonster();
      }
@@ -233,15 +233,15 @@ public class GamePlayController extends MenuController{
            changedPositionCardsInTurn.add(selectedCard);
            return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
      }
-     public DuelMenuResponses setSpell()
-     {
-
-
-     }
-     public DuelMenuResponses setTrap()
-     {
-
-     }
+//     public DuelMenuResponses setSpell()
+//     {
+//
+//
+//     }
+//     public DuelMenuResponses setTrap()
+//     {
+//
+//     }
 
     public DuelMenuResponses changePhaseLevel()
     {

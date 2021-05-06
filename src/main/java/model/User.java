@@ -60,7 +60,19 @@ public class User {
     }
 
     public void removeUserCardByName(String cardName) {
-        allCardsOfUser.removeIf(card -> card.cardName.equals(cardName));
+        if (getCardIndexByName(cardName)==-1)
+            return;
+        allCardsOfUser.remove(getCardIndexByName(cardName));
+    }
+
+    private int getCardIndexByName(String cardName) {
+        int index = 0;
+        for (Card card : allCardsOfUser) {
+            if (card.getCardName().equals(cardName))
+                return index;
+            index++;
+        }
+        return -1;
     }
 
     public ArrayList<Deck> getAllDecksOfUser() {
