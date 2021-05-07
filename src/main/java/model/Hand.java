@@ -33,14 +33,5 @@ public class Hand extends NumericZone{
 //        card.setPlacedZoneNumber(0);
     }
 
-    public int  getNumberOfCardsInHand()
-    {    int i =0 ;
-        for(Map.Entry entry : zoneCards.entrySet())
-        {   if(entry != null)
-            i++;
-        }
-        return i;
-    }
-
 
 }

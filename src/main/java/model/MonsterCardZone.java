@@ -15,14 +15,8 @@ public class MonsterCardZone extends NumericZone{
     {
         return (MonsterCard) zoneCards.get(number);
     }
-    public int  getNumberOfMonsterCard()
-    {    int i =0 ;
-        for(Map.Entry entry : zoneCards.entrySet())
-        {   if(entry != null)
-            i++;
-        }
-        return i;
-    }
+
+
     public void summonOrSetMonster(MonsterCard monsterCard, Player currentPlayer)
     {
         currentPlayer.getHand().removeCardFromHand(monsterCard);
@@ -35,12 +29,5 @@ public class MonsterCardZone extends NumericZone{
           }
         }
     }
-    public void moveMonsterCardToGraveyard(int address ,Player player)
-    {
-        //zoneCards.get(address).setPlacedZoneNumber(0);
 
-        zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
-        player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
-        zoneCards.put(address , null);
-    }
 }

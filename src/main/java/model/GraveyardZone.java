@@ -9,7 +9,7 @@ public class GraveyardZone extends Zone {
         zoneCards = new ArrayList<>();
     }
     public void addCardToGraveyardZone(Card card)
-    {
+    {    card.setCardPlacedZone(this);
         zoneCards.add(card);
     }
     public void removeCardFromGraveyardZone(Card card)

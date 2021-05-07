@@ -9,6 +9,15 @@ public class FieldZone extends Zone{
         super(ZoneType.FIELD);
         zoneCards = new ArrayList<>();
     }
+    public void moveCardToFieldZone(MagicCard card , Player player)
+    {  if(zoneCards.isEmpty())
+        zoneCards.add(card);
+        else {
+        player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(0));
+        card.setCardPlacedZone(player.getFieldZone());
+    }
+
+    }
     public void addCardToFieldZone(MagicCard magicCard)
     {
         zoneCards.add(magicCard);

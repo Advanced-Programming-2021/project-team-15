@@ -19,6 +19,7 @@ public class GamePlayController extends MenuController{
     private  ArrayList<MonsterCard> summonedOrSetMonstersInTurn= new ArrayList<>();
     private  ArrayList<MagicCard>  setSpellCardsInTurn = new ArrayList<>();
     private  ArrayList<MagicCard>  setTrapCardsInTurn = new ArrayList<>();
+    private ArrayList<Card> activatedCardInTurn= new ArrayList<>();
     private ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
 
     public GamePlayController() {
@@ -97,7 +98,7 @@ public class GamePlayController extends MenuController{
         else return DuelMenuResponses.INVALID_SELECTION;
         if(cardNumber==0 || cardNumber >5)
             return DuelMenuResponses.INVALID_SELECTION;
-        if(zoneTypeEnum.equals(Zone.ZoneType.HAND) &&  cardNumber > currentPlayer.getHand().getNumberOfCardsInHand())
+        if(zoneTypeEnum.equals(Zone.ZoneType.HAND) &&  cardNumber > currentPlayer.getHand().getNumberOfCard())
             return DuelMenuResponses.INVALID_SELECTION;
          NumericZone zone =(NumericZone) player.getZoneByZoneType(zoneTypeEnum);
          if(zone.getCardByPlaceNumber(cardNumber)!=null)
@@ -135,7 +136,7 @@ public class GamePlayController extends MenuController{
     public DuelMenuResponses summon()
     {  if(selectedCard==null)
         return DuelMenuResponses.NO_CARD_SELECTED;
-        else if(selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.HAND) ||
+        else if(selectedCard.getCardPlacedZone() != currentPlayer.getHand() ||
                 !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
       else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
@@ -143,7 +144,7 @@ public class GamePlayController extends MenuController{
         else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
                  Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
              return DuelMenuResponses.NOT_ALLOWED_IN_THIS_PHASE;
-        else if(currentPlayer.getMonsterCardZone().getNumberOfMonsterCard()==5)
+        else if(currentPlayer.getMonsterCardZone().getNumberOfCard()==5)
              return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
          else if(  !summonedOrSetMonstersInTurn.isEmpty() )
              return DuelMenuResponses.ALREADY_SUMMONED_SET;
@@ -152,34 +153,34 @@ public class GamePlayController extends MenuController{
              return  DuelMenuResponses.CARD_SUMMONED;
          }
           if(((MonsterCard) selectedCard).getLevel()==5 ||((MonsterCard) selectedCard).getLevel()==6 )
-         { if (currentPlayer.getMonsterCardZone().getNumberOfMonsterCard()==0)
+         { if (currentPlayer.getMonsterCardZone().getNumberOfCard()==0)
                  return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
                 else return  GET_ONE_NUMBER_TO_BE_TRIBUTE;
          }
         else
-          { if (currentPlayer.getMonsterCardZone().getNumberOfMonsterCard()<2)
+          { if (currentPlayer.getMonsterCardZone().getNumberOfCard()<2)
                  return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
              else return GET_TWO_NUMBERS_TO_BE_TRIBUTE;}
     }
     public DuelMenuResponses oneMonsterTribute(int address)
     { if(currentPlayer.getMonsterCardZone().getCardByPlaceNumber(address)== null)
         return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
-      else  currentPlayer.getMonsterCardZone().moveMonsterCardToGraveyard(address,currentPlayer);
+      else  currentPlayer.getMonsterCardZone().moveCardToGraveyard(address,currentPlayer);
       doSummon();
       return DuelMenuResponses.CARD_SUMMONED;
     }
     public DuelMenuResponses twoMonsterTribute(int firstAddress , int secondAddress)
     {   if( currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress)== null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress)== null)
         return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;
-            currentPlayer.getMonsterCardZone().moveMonsterCardToGraveyard(firstAddress ,currentPlayer);
-            currentPlayer.getMonsterCardZone().moveMonsterCardToGraveyard(secondAddress ,currentPlayer);
+            currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress ,currentPlayer);
+            currentPlayer.getMonsterCardZone().moveCardToGraveyard(secondAddress ,currentPlayer);
             doSummon();
             return DuelMenuResponses.CARD_SUMMONED;
     }
      public DuelMenuResponses set()
      {  if(selectedCard ==null)
          return DuelMenuResponses.NO_CARD_SELECTED;
-         else if( selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.HAND))
+         else if( selectedCard.getCardPlacedZone() != currentPlayer.getHand())
              return DuelMenuResponses.CANT_SET_THIS_CARD;
          else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
              Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
@@ -192,7 +193,7 @@ public class GamePlayController extends MenuController{
            return   setMonster();
      }
      public DuelMenuResponses setMonster()
-     {  if(opponentPlayer.getMonsterCardZone().getNumberOfMonsterCard()==5)
+     {  if(opponentPlayer.getMonsterCardZone().getNumberOfCard()==5)
          return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
          else if(!summonedOrSetMonstersInTurn.isEmpty() )
              return DuelMenuResponses.ALREADY_SUMMONED_SET;
@@ -208,7 +209,7 @@ public class GamePlayController extends MenuController{
      public DuelMenuResponses setPosition(String wantedPosition)
      { if(selectedCard==null)
          return DuelMenuResponses.NO_CARD_SELECTED;
-         else if(selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.MONSTER_CARD)|| !(selectedCard instanceof MonsterCard))
+         else if(selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone()|| !(selectedCard instanceof MonsterCard))
              return DuelMenuResponses.CANT_CHANGE_THIS_CARD_POSITION;
          else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
              Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
@@ -240,7 +241,7 @@ public class GamePlayController extends MenuController{
     public DuelMenuResponses flipSummon() {
         if (selectedCard == null)
             return NO_CARD_SELECTED;
-        else if (selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.MONSTER_CARD))
+        else if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone())
             return CANT_CHANGE_THIS_CARD_POSITION;
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
@@ -250,6 +251,32 @@ public class GamePlayController extends MenuController{
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
         return FLIP_SUMMONED_SUCCESSFULLY;
+    }
+    public DuelMenuResponses activateSpellCard()
+    { if(selectedCard == null)
+        return NO_CARD_SELECTED;
+        else if( !(selectedCard instanceof MagicCard) || ((MagicCard)selectedCard).getMagicType()!= MagicCard.MagicType.SPELL)
+            return  ACTIVATE_EFFECT_ONLY_ON_SPELL;
+        else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
+            Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
+            return CANT_ACTIVATE_EFFECT_ON_THIS_TURN;
+        else if(((MagicCard) selectedCard).isActivated())
+            return YOU_ALREADY_ACTIVATED_THIS_CARD;
+        else if(((MagicCard)selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD &&
+            (currentPlayer.getMagicCardZone()).getNumberOfCard()==5 )
+            return SPELL_ZONE_CARD_IS_FULL;
+        else if(((MagicCard)selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
+            // special condition?
+        currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+        ((MagicCard) selectedCard).setActivated(true);
+    }
+        else {
+           // if()
+            // special condition?
+        currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceForActivation((MagicCard) selectedCard, currentPlayer);
+        ((MagicCard) selectedCard).setActivated(true);
+    }
+            return SPELL_ACTIVATED;
     }
 
     public Boolean isMonsterSummonedOrSetInThisTurn(MonsterCard monsterCard)
@@ -297,12 +324,20 @@ public class GamePlayController extends MenuController{
         summonedOrSetMonstersInTurn.clear();
         setSpellCardsInTurn.clear();
         setTrapCardsInTurn.clear();
+        activatedCardInTurn.clear();
         selectedCard = null;
     }
     public Boolean isSelectCardChangedBefore()
     {
         for (Card card : changedPositionCardsInTurn) {
             if ( selectedCard == card)
+                return true;
+        }
+        return false;
+    }
+    public Boolean isSelectedCardActivated() {
+        for (Card card : activatedCardInTurn) {
+            if (selectedCard == card)
                 return true;
         }
         return false;

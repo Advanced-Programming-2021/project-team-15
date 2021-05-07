@@ -10,7 +10,16 @@ public class MagicCard extends Card {
     private Status status;
     @SerializedName("Icon (Property)")
     private CardIcon cardIcon;
-    private boolean isActive;
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    private boolean isActivated;
 
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
@@ -24,13 +33,6 @@ public class MagicCard extends Card {
         this.magicType = magicType;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
     public Status getStatus() {
         return status;
@@ -69,7 +71,7 @@ public class MagicCard extends Card {
         @SerializedName("Unlimited") UNLIMITED
     }
 
-    enum CardIcon {
+    public enum CardIcon {
         @SerializedName("Equip") EQUIP("Equip"),
         @SerializedName("Field") FIELD("Field"),
         @SerializedName("Quick-play") QUICK_PLAY("Quick-play"),

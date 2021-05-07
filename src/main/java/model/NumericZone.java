@@ -12,6 +12,25 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
+
+
+    public void moveCardToGraveyard(int address ,Player player)
+    {
+        //zoneCards.get(address).setPlacedZoneNumber(0);
+
+        zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
+        player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
+        zoneCards.put(address , null);
+    }
+    public int  getNumberOfCard()
+    {    int i =0 ;
+        for(Map.Entry entry : zoneCards.entrySet())
+        {   if(entry != null)
+            i++;
+        }
+        return i;
+    }
+
     public Card getCardByPlaceNumber(int number)
     {
         return zoneCards.get(number);
