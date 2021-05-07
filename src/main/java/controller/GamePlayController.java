@@ -103,7 +103,6 @@ public class GamePlayController extends MenuController{
          if(zone.getCardByPlaceNumber(cardNumber)!=null)
          {   selectedCard = zone.getCardByPlaceNumber(cardNumber);
              selectedCard.setSelected(true);
-             selectedCard.setPlacedZone(zoneTypeEnum);
              return DuelMenuResponses.CARD_SELECTED;
          }
          else return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
@@ -136,7 +135,7 @@ public class GamePlayController extends MenuController{
     public DuelMenuResponses summon()
     {  if(selectedCard==null)
         return DuelMenuResponses.NO_CARD_SELECTED;
-        else if((!selectedCard.getPlacedZone().equals(Zone.ZoneType.HAND)) ||
+        else if(selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.HAND) ||
                 !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
       else if(((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
@@ -180,7 +179,7 @@ public class GamePlayController extends MenuController{
      public DuelMenuResponses set()
      {  if(selectedCard ==null)
          return DuelMenuResponses.NO_CARD_SELECTED;
-         else if(!selectedCard.getPlacedZone().equals(Zone.ZoneType.HAND))
+         else if( selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.HAND))
              return DuelMenuResponses.CANT_SET_THIS_CARD;
          else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
              Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
@@ -209,7 +208,7 @@ public class GamePlayController extends MenuController{
      public DuelMenuResponses setPosition(String wantedPosition)
      { if(selectedCard==null)
          return DuelMenuResponses.NO_CARD_SELECTED;
-         else if(!selectedCard.getPlacedZone().equals(Zone.ZoneType.MONSTER_CARD) || !(selectedCard instanceof MonsterCard))
+         else if(selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.MONSTER_CARD)|| !(selectedCard instanceof MonsterCard))
              return DuelMenuResponses.CANT_CHANGE_THIS_CARD_POSITION;
          else if(Game.getPhases().get(currentPhaseNumber)!= Phase.PhaseLevel.MAIN1 &&
              Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)

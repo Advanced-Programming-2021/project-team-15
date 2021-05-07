@@ -21,7 +21,25 @@ public class Card {
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType;
-    protected Zone.ZoneType placedZone = Zone.ZoneType.DECK;
+    protected Zone.ZoneType plaone = Zone.ZoneType.DECK;
+
+    public Zone.ZoneType getPlaone() {
+        return plaone;
+    }
+
+    public void setPlaone(Zone.ZoneType plaone) {
+        this.plaone = plaone;
+    }
+
+    public Zone getCardPlacedZone() {
+        return cardPlacedZone;
+    }
+
+    public void setCardPlacedZone(Zone cardPlacedZone) {
+        this.cardPlacedZone = cardPlacedZone;
+    }
+
+    protected Zone  cardPlacedZone ;
 
     public Appearance getAppearance() {
         return appearance;
@@ -57,13 +75,6 @@ public class Card {
                 return card;
         }
         return null;
-    }
-    public Zone.ZoneType getPlacedZone() {
-        return placedZone;
-    }
-
-    public void setPlacedZone(Zone.ZoneType placedZone) {
-        this.placedZone = placedZone;
     }
     public static void addCard(Card card) {
         allCards.add(card);
