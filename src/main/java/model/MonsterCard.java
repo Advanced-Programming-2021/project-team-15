@@ -39,19 +39,19 @@ public class MonsterCard extends Card {
     }
 
 
-    private void addAttackPoint(int point) {
+    public void addAttackPoint(int point) {
         this.setAttackPoint(this.getAttackPoint() + point);
     }
 
-    private void addDefensePoint(int point) {
+    public void addDefensePoint(int point) {
         this.setDefensePoint(this.getDefensePoint() + point);
     }
 
-    private void reduceAttackPoint(int point) {
+    public void reduceAttackPoint(int point) {
         this.setAttackPoint(this.getAttackPoint() - point);
     }
 
-    private void reduceDefensePoint(int point) {
+    public void reduceDefensePoint(int point) {
         this.setDefensePoint(this.getDefensePoint() - point);
     }
 

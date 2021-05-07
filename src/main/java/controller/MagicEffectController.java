@@ -1,6 +1,7 @@
 package controller;
 
 import model.Card;
+import model.MonsterCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,22 @@ public class MagicEffectController {
     }
 
     public void changeAttack(Card card, int amount) {
+        if(amount>0){
+            ((MonsterCard)card).addAttackPoint(amount);
+        }
+        else{
+            ((MonsterCard)card).reduceAttackPoint(amount);
+        }
 
     }
 
     public void changeDefence(Card card, int amount) {
-
-    }
-
-    public void changeAttackAndDefense(int amountAtk, int amountDef) {
+        if(amount>0){
+            ((MonsterCard)card).addDefensePoint(amount);
+        }
+        else{
+            ((MonsterCard)card).reduceDefensePoint(amount);
+        }
 
     }
 
