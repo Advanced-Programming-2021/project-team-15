@@ -116,7 +116,7 @@ public class MonsterCard extends Card {
         return cardInfo.toString();
     }
 
-    enum MonsterEffectType {
+    public enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
         @SerializedName("Ritual") RITUAL

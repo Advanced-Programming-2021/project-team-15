@@ -29,7 +29,7 @@ public class MonsterCardZone extends NumericZone{
         for(Integer key : zoneCards.keySet()) {
           if(zoneCards.get(key)==null) {
               zoneCards.put(key, monsterCard);
-              monsterCard.setPlacedZone(ZoneType.MONSTER_CARD);
+              monsterCard.setCardPlacedZone(currentPlayer.getZoneByZoneType(ZoneType.MONSTER_CARD));
               //monsterCard.setPlacedZoneNumber(key);
               break;
           }
@@ -38,7 +38,8 @@ public class MonsterCardZone extends NumericZone{
     public void moveMonsterCardToGraveyard(int address ,Player player)
     {
         //zoneCards.get(address).setPlacedZoneNumber(0);
-        zoneCards.get(address).setPlacedZone(ZoneType.GRAVEYARD);
+
+        zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         zoneCards.put(address , null);
     }
