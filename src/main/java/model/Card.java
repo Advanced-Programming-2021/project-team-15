@@ -21,15 +21,16 @@ public class Card {
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType;
-    protected Zone.ZoneType plaone = Zone.ZoneType.DECK;
 
-    public Zone.ZoneType getPlaone() {
-        return plaone;
+    public Boolean getHidden() {
+        return isHidden;
     }
 
-    public void setPlaone(Zone.ZoneType plaone) {
-        this.plaone = plaone;
+    public void setHidden(Boolean hidden) {
+        isHidden = hidden;
     }
+
+    protected Boolean isHidden = true ;
 
     public Zone getCardPlacedZone() {
         return cardPlacedZone;
@@ -41,15 +42,6 @@ public class Card {
 
     protected Zone  cardPlacedZone ;
 
-    public Appearance getAppearance() {
-        return appearance;
-    }
-
-    public void setAppearance(Appearance appearance) {
-        this.appearance = appearance;
-    }
-
-    protected Appearance appearance;
 
 //    public int getPlacedZoneNumber() {
 //        return placedZoneNumber;
@@ -149,9 +141,5 @@ public class Card {
     public enum CardType {
         MONSTER(),
         MAGIC();
-    }
-   public enum Appearance{
-        HIDDEN,
-        OCCUPIED;
     }
 }

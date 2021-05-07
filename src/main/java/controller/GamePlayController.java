@@ -200,7 +200,7 @@ public class GamePlayController extends MenuController{
          selectedCard.setSet(true);
          setSetCard(selectedCard);
          summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
-         selectedCard.setAppearance(Card.Appearance.HIDDEN);
+         selectedCard.setHidden(true);
          ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.DEFENSE);
          return DuelMenuResponses.CART_SET_SUCCESSFULLY;
      }
@@ -222,7 +222,7 @@ public class GamePlayController extends MenuController{
            if (wantedPosition.equals("defence"))
          ((MonsterCard)selectedCard).setMode(MonsterCard.Mode.DEFENSE);
            else if (wantedPosition.equals("attack"))
-           {  selectedCard.setAppearance(Card.Appearance.OCCUPIED);
+           { selectedCard.setHidden(false);
                ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
            }
            changedPositionCardsInTurn.add(selectedCard);
@@ -237,6 +237,31 @@ public class GamePlayController extends MenuController{
 //     {
 //
 //     }
+    public DuelMenuResponses flipSummon() {
+        if (selectedCard == null)
+            return NO_CARD_SELECTED;
+        else if (selectedCard.getCardPlacedZone() != currentPlayer.getZoneByZoneType(Zone.ZoneType.MONSTER_CARD))
+            return CANT_CHANGE_THIS_CARD_POSITION;
+        else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
+                Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
+            return CANT_DO_THIS_ACTION_IN_THIS_PHASE;
+        else if (!((MonsterCard) selectedCard).toStringPosition().equals("DH") || isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard))
+            return CANT_FLIP_SUMMON;
+        ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
+        selectedCard.setHidden(false);
+        return FLIP_SUMMONED_SUCCESSFULLY;
+    }
+
+    public Boolean isMonsterSummonedOrSetInThisTurn(MonsterCard monsterCard)
+    {
+        for(MonsterCard card : summonedOrSetMonstersInTurn)
+        {
+            if(card  == monsterCard)
+            return  true;
+        }
+        return false;
+    }
+
 
     public DuelMenuResponses changePhaseLevel()
     {

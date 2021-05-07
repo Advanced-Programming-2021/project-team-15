@@ -33,7 +33,7 @@ public class MonsterCard extends Card {
         if(summoned)
         {
             setMode( Mode.ATTACK);
-            setAppearance(Appearance.OCCUPIED);
+            setHidden(true);
         }
         isSummoned = summoned;
     }
@@ -167,7 +167,7 @@ public class MonsterCard extends Card {
     public String toStringPosition()
     {  String first = "";
         String second= "";
-        if(appearance.equals(Appearance.OCCUPIED))
+        if(!isHidden)
             second = "O";
         else second = "H";
         if(mode.equals(Mode.ATTACK))
