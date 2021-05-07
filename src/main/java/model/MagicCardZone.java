@@ -20,7 +20,7 @@ public class MagicCardZone extends NumericZone{
     {
         return (MagicCard) zoneCards.get(number);
     }
-    public void moveToFirstEmptyPlaceForActivation(MagicCard magicCard , Player  currentPlayer) {
+    public void moveToFirstEmptyPlaceFromHand(MagicCard magicCard , Player  currentPlayer) {
         currentPlayer.getHand().removeCardFromHand(magicCard);
         for (Integer key : zoneCards.keySet()) {
             if (zoneCards.get(key) == null) {
