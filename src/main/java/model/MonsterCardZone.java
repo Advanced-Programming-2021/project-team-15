@@ -29,5 +29,16 @@ public class MonsterCardZone extends NumericZone{
           }
         }
     }
+    public void removeCardFromMonsterCardZone(MonsterCard card)
+    {
+
+        for(Map.Entry<Integer , Card> entry : this.zoneCards.entrySet()) {
+            if(entry.getValue() ==card)
+            { zoneCards.put(entry.getKey() , null);
+                break;
+            }
+        }
+    }
+
 
 }

@@ -25,4 +25,20 @@ public class DeckZone extends Zone{
     public void setZoneCards(ArrayList<Card> zoneCards) {
         this.zoneCards = zoneCards;
     }
+    public MagicCard searchForMagicCardByIcon(MagicCard.CardIcon cardIcon){
+        for(Card card: zoneCards){
+            if(card instanceof MagicCard && ((MagicCard) card).getCardIcon()==cardIcon){
+                return (MagicCard)card;
+            }
+        }
+        return null;
+    }
+    public MonsterCard searchForMonsterCardByType(MonsterCard.MonsterType cardType){
+        for(Card card: zoneCards){
+            if(card instanceof MonsterCard && ((MonsterCard) card).getMonsterType()==cardType){
+                return (MonsterCard)card;
+            }
+        }
+        return null;
+    }
 }

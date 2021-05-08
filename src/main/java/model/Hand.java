@@ -17,7 +17,7 @@ public class Hand extends NumericZone{
     }
     public void addCardToHand(Card card)
     {
-        //dont know yet
+
     }
     public void removeCardFromHand(Card card)
     {

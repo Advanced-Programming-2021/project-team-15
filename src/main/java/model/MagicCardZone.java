@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class MagicCardZone extends NumericZone{
@@ -29,5 +30,15 @@ public class MagicCardZone extends NumericZone{
             }
         }
 
+    }
+    public void removeCardFromMagicCardZone(MagicCard card)
+    {
+
+        for(Map.Entry<Integer , Card> entry : this.zoneCards.entrySet()) {
+            if(entry.getValue() ==card)
+            { zoneCards.put(entry.getKey() , null);
+                break;
+            }
+        }
     }
 }

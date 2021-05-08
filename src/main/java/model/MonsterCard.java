@@ -135,7 +135,7 @@ public class MonsterCard extends Card {
         @SerializedName("Machine") MACHINE("Machine"),
         @SerializedName("Rock") ROCK("Rock"),
         @SerializedName("Insect") INSECT("Insect"),
-        @SerializedName("Cyber") CYBER("Cyber"),
+        @SerializedName("Cyberse") CYBERSE("Cyberse"),
         @SerializedName("Fairy") FAIRY("Fairy"),
         @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
         private String name;
