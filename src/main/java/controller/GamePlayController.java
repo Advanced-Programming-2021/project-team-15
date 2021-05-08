@@ -99,7 +99,7 @@ public class GamePlayController extends MenuController{
         else return DuelMenuResponses.INVALID_SELECTION;
         if(cardNumber==0 || cardNumber >5)
             return DuelMenuResponses.INVALID_SELECTION;
-        if(zoneTypeEnum.equals(Zone.ZoneType.HAND) &&  cardNumber > currentPlayer.getHand().getNumberOfCard())
+        if(zoneTypeEnum.equals(Zone.ZoneType.HAND) &&  cardNumber > currentPlayer.getHand().getCardsInHand().size())
             return DuelMenuResponses.INVALID_SELECTION;
         NumericZone zone =(NumericZone) player.getZoneByZoneType(zoneTypeEnum);
         if(zone.getCardByPlaceNumber(cardNumber)!=null)
