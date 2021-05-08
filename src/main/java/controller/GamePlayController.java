@@ -337,6 +337,7 @@ public class GamePlayController extends MenuController{
         setSpellCardsInTurn.clear();
         setTrapCardsInTurn.clear();
         activatedCardInTurn.clear();
+        setTrapAndSpellCardsInTurn.clear();
         selectedCard = null;
     }
     public Boolean isSelectCardChangedBefore()

@@ -23,6 +23,7 @@ public class Game {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
         roundCount = 0;
+
     }
     public void increaseRoundCount()
     {
