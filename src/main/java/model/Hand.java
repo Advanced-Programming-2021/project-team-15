@@ -1,13 +1,17 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Hand extends NumericZone{
+public class Hand extends Zone{
+    ArrayList<Card> zoneCards;
+
     public Hand() {
-        super(ZoneType.HAND, new TreeMap<Integer ,Card>());
+        super(ZoneType.HAND);
+        zoneCards = new ArrayList<>();
     }
-    public TreeMap getCardsInHand()
+    public ArrayList getCardsInHand()
     {
         return zoneCards;
     }
@@ -21,16 +25,7 @@ public class Hand extends NumericZone{
     }
     public void removeCardFromHand(Card card)
     {
-
-        for(Map.Entry<Integer , Card> entry : zoneCards.entrySet()) {
-          if(entry.getValue() ==card)
-          { zoneCards.put(entry.getKey() , null);
-           break;
-          }
-        }
-//        if(card.getPlacedZoneNumber()!=0)
-//        zoneCards.put(card.getPlacedZoneNumber(), null);
-//        card.setPlacedZoneNumber(0);
+       zoneCards.remove(card);
     }
 
 
