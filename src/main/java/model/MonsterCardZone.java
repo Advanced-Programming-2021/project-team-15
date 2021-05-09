@@ -29,5 +29,14 @@ public class MonsterCardZone extends NumericZone{
           }
         }
     }
+    public Boolean isEmpty()
+    {
+        for(Integer key : zoneCards.keySet()){
+            if(zoneCards.get(key)==null)
+                return false;
+        }
+        return true;
+    }
+
 
 }

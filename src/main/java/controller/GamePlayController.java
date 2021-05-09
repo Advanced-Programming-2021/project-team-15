@@ -356,6 +356,11 @@ public class GamePlayController extends MenuController {
         selectedCard=null;
         return responses;
     }
+    public DuelMenuResponses directAttack(){
+        DuelMenuResponses responses = attackController.directAttack();
+        selectedCard = null;
+        return responses;
+    }
 
 
     public Boolean isMonsterSummonedOrSetInThisTurn(MonsterCard monsterCard) {

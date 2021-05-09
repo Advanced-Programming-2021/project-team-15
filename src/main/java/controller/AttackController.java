@@ -5,6 +5,8 @@ import model.Game;
 import model.MonsterCard;
 import model.Phase;
 
+import static controller.responses.DuelMenuResponses.*;
+
 public class AttackController extends  GamePlayController {
     private static int damage;
 Game game;
@@ -17,8 +19,9 @@ Game game;
  public DuelMenuResponses normalAttack(int number) //TODO RESET CARD IN NEEDED PLACES
  {  if(selectedCard==null)
      return DuelMenuResponses.NO_CARD_SELECTED;
-     else if(!((MonsterCard)selectedCard).toStringPosition().equals("OO")|| !(selectedCard instanceof  MonsterCard))
-         return DuelMenuResponses.YOU_CANT_ATTACK_WITH_THIS_CARD;
+     else if(!((MonsterCard)selectedCard).toStringPosition().equals("OO")|| !(selectedCard instanceof  MonsterCard)
+ || !(selectedCard.getCardPlacedZone()!=currentPlayer.getMonsterCardZone()))
+         return YOU_CANT_ATTACK_WITH_THIS_CARD;
      else if(Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.BATTLE)
          return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
      else if(((MonsterCard) selectedCard).getHaveAttacked())
@@ -82,7 +85,20 @@ Game game;
      }
 
  }
-
+    public DuelMenuResponses directAttack()
+    { if(selectedCard==null)
+        return DuelMenuResponses.NO_CARD_SELECTED;
+        else if(!(selectedCard instanceof  MonsterCard) || !(selectedCard.getCardPlacedZone()!=currentPlayer.getMonsterCardZone()))
+            return YOU_CANT_ATTACK_WITH_THIS_CARD;
+            else if(Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.BATTLE)
+        return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
+            else if(((MonsterCard) selectedCard).getHaveAttacked())
+        return DuelMenuResponses.ALREADY_ATTACKED;
+            else if(opponentPlayer.getMonsterCardZone().getZoneCards().isEmpty())
+                return CANT_ATTACK_DIRECTLY;
+        opponentPlayer.reduceLifePoint(((MonsterCard) selectedCard).getAttackPoint());
+        return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
+    }
 
 
 
