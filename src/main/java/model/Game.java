@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -7,8 +8,11 @@ public class Game {
     private Player secondPlayer;
     private int roundNumber;
     private int roundCount;
+    private Player[] winnerOfEachRound = new Player[3];
+    private ArrayList<Integer> firstPlayerLifePointEachRound;
+    private ArrayList<Integer> secondPlayerLifePointEachRound;
     private static HashMap<Integer , Phase.PhaseLevel> phases;
-    private Player gameWinner;
+    private Player wholeGameWinner;
     private Player roundWinner;
     static {
         int i =0 ;
@@ -29,12 +33,13 @@ public class Game {
     {
         roundCount++;
     }
-    public void giveAwardToWinner()
-    {  // if(roundNumber==1)
-       // gameWinner.setScore(1000+gameWinner.getScore());
-       //gameWinner.setMoney(1000+gameWinner.getLifePoint()+gameWinner.getMoney());
-       // if(roundNumber>1)
-           //******* to game play na bayad bashe??
+    public void giveAwardThreeRounds(Player winner, Player loser)
+    {
+
+    }
+    public void giveAwardOneRound(Player winner, Player loser)
+    { winner.changeMoney(1000+winner.getLifePoint());
+        loser.changeMoney(100);
     }
     public Player getFirstPlayer() {
         return firstPlayer;
@@ -64,13 +69,6 @@ public class Game {
         this.roundCount = roundCount;
     }
 
-    public Player getGameWinner() {
-        return gameWinner;
-    }
-
-    public void setGameWinner(Player gameWinner) {
-        this.gameWinner = gameWinner;
-    }
 
     public Player getRoundWinner() {
         return roundWinner;
@@ -96,4 +94,35 @@ public class Game {
         Game.phases = phases;
     }
 
+    public Player[] getWinnerOfEachRound() {
+        return winnerOfEachRound;
+    }
+
+    public void setWinnerOfEachRound(Player[] winnerOfEachRound) {
+        this.winnerOfEachRound = winnerOfEachRound;
+    }
+
+    public ArrayList<Integer> getFirstPlayerLifePointEachRound() {
+        return firstPlayerLifePointEachRound;
+    }
+
+    public void setFirstPlayerLifePointEachRound(ArrayList<Integer> firstPlayerLifePointEachRound) {
+        this.firstPlayerLifePointEachRound = firstPlayerLifePointEachRound;
+    }
+
+    public ArrayList<Integer> getSecondPlayerLifePointEachRound() {
+        return secondPlayerLifePointEachRound;
+    }
+
+    public void setSecondPlayerLifePointEachRound(ArrayList<Integer> secondPlayerLifePointEachRound) {
+        this.secondPlayerLifePointEachRound = secondPlayerLifePointEachRound;
+    }
+
+    public Player getWholeGameWinner() {
+        return wholeGameWinner;
+    }
+
+    public void setWholeGameWinner(Player wholeGameWinner) {
+        this.wholeGameWinner = wholeGameWinner;
+    }
 }

@@ -8,13 +8,11 @@ public class Player extends User {
     private DeckZone deckZone;
     private MonsterCardZone monsterCardZone;
     private MagicCardZone magicCardZone;
-
     private Boolean haveSelectedCard;
     private int winCount;
 
     public Player( String userName, String passWord, String nickName) {
         super(userName, nickName, passWord);
-        lifePoint = 8000;
         fieldZone = new FieldZone();
         graveyardZone = new GraveyardZone();
         deckZone = new DeckZone();
@@ -22,7 +20,6 @@ public class Player extends User {
         monsterCardZone= new MonsterCardZone();
         hand = new Hand();
         haveSelectedCard = false;
-
     }
 
     public void reduceLifePoint(int point) {
