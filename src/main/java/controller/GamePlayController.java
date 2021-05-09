@@ -469,13 +469,14 @@ public class GamePlayController extends MenuController {
         this.changedPositionCardsInTurn = changedPositionCardsInTurn;
     }
 
-    public void reduceLifePoint(Player player, int amount) {
-        player.reduceLifePoint(amount);
 
-
+    public Boolean checkIfGameIsFinished()
+    {  return (currentPlayer.getLifePoint()<=0 || opponentPlayer.getLifePoint()<=0);
     }
 
-    public DuelMenuResponses checkIfGameIsFinished() {
+
+
+    public DuelMenuResponses defineWinner() {
         Player winner;
         Player loser;
         if(currentPlayer.getLifePoint()<=0)
