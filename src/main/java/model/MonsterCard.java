@@ -69,6 +69,9 @@ public class MonsterCard extends Card {
     }
 
     public void setAttackPoint(int attackPoint) {
+        if(attackPoint<0)
+            this.attackPoint = 0;
+        else
         this.attackPoint = attackPoint;
     }
 
@@ -131,7 +134,7 @@ public class MonsterCard extends Card {
         @SerializedName("Ritual") RITUAL
     }
 
-    enum MonsterType {
+    public  enum MonsterType {
         @SerializedName("Spellcaster") SPELL_CASTER("Spellcaster"),
         @SerializedName("Warrior") WARRIOR("Warrior"),
         @SerializedName("Beast-Warrior") BEAST_WARRIOR("Beast-Warrior"),

@@ -9,10 +9,15 @@ import static controller.responses.DuelMenuResponses.*;
 
 public class AttackController extends  GamePlayController {
     private static int damage;
-Game game;
- public AttackController(Game game){
-     this.game=game;
- }
+    public static int getDamage() {
+        return damage;
+    }
+
+    public static void setDamage(int damage) {
+        AttackController.damage = damage;
+    }
+
+
 
 
 

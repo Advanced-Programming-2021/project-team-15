@@ -10,7 +10,8 @@ import java.util.Collections;
 import static controller.responses.DuelMenuResponses.*;
 
 public class GamePlayController extends MenuController {
-    private static Game game;
+    EffectController effectController;
+    protected static Game game;
     protected int currentPhaseNumber = 1;
     protected static Card selectedCard;
     public static Card setCard;
@@ -80,7 +81,8 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.UNSUPPORTED_ROUND_NUMBER;
         else {
             game = new Game((Player) currentUser, (Player) secondUser, roundNum);
-            attackController = new AttackController(game);
+            attackController = new AttackController();
+            effectController = new EffectController();
             return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY; //TODO : agar dar view in return shod game sang kaghaz ..
         }
 

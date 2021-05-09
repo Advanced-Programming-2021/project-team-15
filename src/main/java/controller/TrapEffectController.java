@@ -1,4 +1,4 @@
 package controller;
 
-public class TrapEffectController {
+public class TrapEffectController extends GamePlayController{
 }
