@@ -37,12 +37,6 @@ public class DuelMenu extends Menu{
              else if(input.startsWith("select"))
                  checkAndCallSelectNotNumericZone(input);
              else if(input.equals("select -d")) checkAndCallDeselect(input);
-
-
-
-
-
-
         }
 
     }

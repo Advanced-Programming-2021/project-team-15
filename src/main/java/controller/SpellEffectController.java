@@ -46,20 +46,19 @@ public class SpellEffectController extends GamePlayController {
     }
     public void swordOfDarkDestruction()
     {   int i = 0 ;
-        int j= 0 ;
+
         Map<Integer , MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer , MonsterCard> entry :map.entrySet())
         {
-            if(entry.getValue().getMonsterType()== MonsterCard.MonsterType.FIEND && !entry.getValue().getHidden())
-                i++;
-            else if(entry.getValue().getMonsterType()==MonsterCard.MonsterType.SPELL_CASTER  && !entry.getValue().getHidden())
-                j++;
+            if((entry.getValue()!=null && entry.getValue().getMonsterType()== MonsterCard.MonsterType.FIEND && !entry.getValue().getHidden()) ||
+                    (entry.getValue()!=null && entry.getValue().getMonsterType()==MonsterCard.MonsterType.SPELL_CASTER  && !entry.getValue().getHidden() && entry.getValue()!=null))
+               i++;
         }
-        if(i==0 && j==0)
+        if(i==0 )
             duelMenu.printResponse(CANT_ACTIVATE_SPELL);
         else duelMenu.printResponse(ENTER_ONE_NUMBER);
     }
-    public DuelMenuResponses swordOfDarkDestructionChoosing(int num)
+    public DuelMenuResponses swordOfDarkDestructionChoose(int num)
     {  Map<Integer , MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
         if((map.get(num).getMonsterType()!= MonsterCard.MonsterType.FIEND) &&
                 (map.get(num).getMonsterType()!= MonsterCard.MonsterType.FAIRY) )
@@ -69,6 +68,10 @@ public class SpellEffectController extends GamePlayController {
             map.get(num).setDefensePoint(map.get(num).getDefensePoint()-200);
             return CARD_EQUIPPED;
         }
+    }
+    public void blackPendant()
+    {
+
     }
 
 
