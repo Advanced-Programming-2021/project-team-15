@@ -105,6 +105,7 @@ public class GamePlayController extends MenuController {
             opponentPlayer.getDeckZone().getZoneCards().remove(i);
 
         }
+        currentPlayer.setFirstTurn(true);
     }
     public void RPC(String firstPlayerMove ,String secondPlayerMove)
     {
@@ -374,10 +375,9 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public DuelMenuResponses changePhaseLevel() {
-        if (currentPhaseNumber == 6) {
-            currentPhaseNumber = 1;
-            changeTurn();
+    public DuelMenuResponses goNextPhase() {
+        if(currentPhaseNumber ==5)
+        {    currentPhaseNumber=1 ;
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
@@ -386,7 +386,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void changeTurn() {
-        if (game.getFirstPlayer().getUserName().equals(currentPlayer.getUserName())) {
+        if (game.getFirstPlayer() ==currentPlayer) {
             currentPlayer = game.getSecondPlayer();
             opponentPlayer = game.getFirstPlayer();
         } else {
@@ -408,6 +408,7 @@ public class GamePlayController extends MenuController {
         setTrapCardsInTurn.clear();
         activatedCardInTurn.clear();
         setTrapAndSpellCardsInTurn.clear();
+        currentPlayer.setFirstTurn(false);
         selectedCard = null;
     }
 

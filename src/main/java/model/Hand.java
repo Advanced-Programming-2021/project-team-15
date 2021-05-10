@@ -20,12 +20,13 @@ public class Hand extends Zone{
         return zoneCards.get(number);
     }
     public void addCardToHand(Card card)
-    {
-        //dont know yet
+    {   
+
     }
     public void removeCardFromHand(Card card)
     {
        zoneCards.remove(card);
+       zoneCards.add(null);
     }
 
 

@@ -11,6 +11,16 @@ public class Player extends User {
     private Boolean haveSelectedCard;
     private int winCount;
 
+    public Boolean getFirstTurn() {
+        return firstTurn;
+    }
+
+    public void setFirstTurn(Boolean firstTurn) {
+        this.firstTurn = firstTurn;
+    }
+
+    private Boolean firstTurn = false;
+
     public Player( String userName, String passWord, String nickName) {
         super(userName, nickName, passWord);
         fieldZone = new FieldZone();
