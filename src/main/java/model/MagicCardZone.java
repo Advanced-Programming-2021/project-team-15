@@ -8,6 +8,8 @@ public class MagicCardZone extends NumericZone{
 
     public MagicCardZone() {
         super(ZoneType.MAGIC_CARD , new TreeMap<>());
+        for (int i = 1 ; i<5; i++)
+            zoneCards.put(i, null);
     }
     public void addCardToMagicCardZone(MagicCard magicCard)
     {
@@ -26,6 +28,7 @@ public class MagicCardZone extends NumericZone{
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, magicCard);
                 magicCard.setCardPlacedZone(this);
+                return;
             }
         }
 

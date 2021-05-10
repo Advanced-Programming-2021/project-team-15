@@ -12,7 +12,11 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
-
+     public void reset()
+     {    zoneCards.clear();
+         for (int i = 1 ; i<5; i++)
+             zoneCards.put(i, null);
+     }
 
     public void moveCardToGraveyard(int address ,Player player)
     {

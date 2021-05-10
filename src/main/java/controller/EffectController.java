@@ -52,13 +52,13 @@ public class EffectController extends GamePlayController {
 
             for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
             {
-                if(entry.getValue().getMonsterType()==type)
+                if(entry.getValue()!=null && entry.getValue().getMonsterType()==type)
                     entry.getValue().setAttackPoint(entry.getValue().getAttackPoint()+amount);}
              if(both)
                         {  map =  opponentPlayer.getMonsterCardZone().getZoneCards();
                             for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
                             {
-                                if(entry.getValue().getMonsterType()==type)
+                                if(entry.getValue()!=null && entry.getValue().getMonsterType()==type)
                                     entry.getValue().setAttackPoint(entry.getValue().getAttackPoint()+amount);}
 
                         }
@@ -68,13 +68,13 @@ public class EffectController extends GamePlayController {
 
         for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
         {
-            if(entry.getValue().getMonsterType()==type)
+            if(entry.getValue()!=null &&entry.getValue().getMonsterType()==type)
                 entry.getValue().setDefensePoint(entry.getValue().getDefensePoint()+amount);}
         if(both)
         {  map =  opponentPlayer.getMonsterCardZone().getZoneCards();
             for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
             {
-                if(entry.getValue().getMonsterType()==type)
+                if(entry.getValue()!=null &&entry.getValue().getMonsterType()==type)
                     entry.getValue().setDefensePoint(entry.getValue().getDefensePoint()+amount);}
         }
     }

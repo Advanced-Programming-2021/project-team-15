@@ -9,6 +9,8 @@ public class MonsterCardZone extends NumericZone{
 
     public MonsterCardZone() {
         super(ZoneType.MONSTER_CARD , new TreeMap<>());
+        for (int i = 1 ; i<5; i++)
+            zoneCards.put(i, null);
     }
 
     public MonsterCard getCardByPlaceNumber(int number)
@@ -25,14 +27,14 @@ public class MonsterCardZone extends NumericZone{
               zoneCards.put(key, monsterCard);
               monsterCard.setCardPlacedZone(currentPlayer.getZoneByZoneType(ZoneType.MONSTER_CARD));
               //monsterCard.setPlacedZoneNumber(key);
-              break;
+              return;
           }
         }
     }
     public Boolean isEmpty()
     {
         for(Integer key : zoneCards.keySet()){
-            if(zoneCards.get(key)==null)
+            if(zoneCards.get(key)!=null)
                 return false;
         }
         return true;

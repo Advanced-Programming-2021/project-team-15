@@ -31,6 +31,15 @@ public class Player extends User {
         hand = new Hand();
         haveSelectedCard = false;
     }
+    public void startNewGame()
+    {    fieldZone = new FieldZone();
+        graveyardZone = new GraveyardZone();
+        deckZone = new DeckZone();
+        magicCardZone= new MagicCardZone();
+        monsterCardZone= new MonsterCardZone();
+        hand = new Hand();
+        haveSelectedCard = false;
+    }
 
     public void reduceLifePoint(int point) {
         this.lifePoint -= point;

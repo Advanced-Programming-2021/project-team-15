@@ -97,6 +97,8 @@ public class GamePlayController extends MenuController {
         currentPlayer.getDeckZone().setZoneCards( cloner.deepClone(currentPlayer.getActiveDeck().getMainDeck()));
         opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getActiveDeck().getMainDeck()));
         shuffle();
+        currentPlayer.startNewGame();
+        opponentPlayer.startNewGame();
         for(int i =0  ; i <4 ; i++)
         {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(i));

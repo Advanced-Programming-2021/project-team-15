@@ -8,6 +8,10 @@ public class GraveyardZone extends Zone {
         super(ZoneType.GRAVEYARD);
         zoneCards = new ArrayList<>();
     }
+    public void reset()
+    {
+        zoneCards.clear();
+    }
     public void addCardToGraveyardZone(Card card)
     {    card.setCardPlacedZone(this);
         zoneCards.add(card);
