@@ -91,7 +91,7 @@ public class DuelMenu extends Menu{
     { duelMenuResponses = gamePlayController.deSelect();
       printResponse(duelMenuResponses);
     }
-    private void printResponse(DuelMenuResponses duelMenuResponses) {
+    public void printResponse(DuelMenuResponses duelMenuResponses) {
         String output = "";
         switch (duelMenuResponses) {
             case NO_PLAYER_WITH_THIS_USERNAME_EXISTS:

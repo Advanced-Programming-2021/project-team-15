@@ -8,43 +8,43 @@ import java.util.Map;
 
 public class EffectController extends GamePlayController {
 
-    public int ATKChangeAmount(Card card) {  //TODO magnum shield Special
-        String name = card.getCardName();
-        if (name.equals("Yami"))
-            return 200;
-        else if (name.equals("Forest"))
-            return 200;
-        else if (name.equals("Closed Forest"))
-            return 100;
-        else if (name.equals("Umiiruka"))
-            return 500;
-        else if (name.equals("Sword of dark destruction"))
-            return 400;
-        else if (name.equals("Black Pendant"))
-            return 500;
-        else if (name.equals("United We Stand"))
-            return 800;
-        else if (name.equals("Command Knight"))
-            return 400;
-        else if (name.equals("The Calculator"))
-            return 300;
-        return 0;
-
-    }
-
-    public int DEFChangeAmount(Card card) {
-        String name = card.getCardName();
-        if (name.equals("Yami") || name.equals("Forest"))
-            return 200;
-        else if (name.equals("Umiiruka"))
-            return -400;
-        else if (name.equals("Sword of dark destruction"))
-            return -200;
-        else if (name.equals("United We Stand"))
-            return 800;
-        return 0;
-
-    }
+//    public int ATKChangeAmount(Card card) {  //TODO magnum shield Special
+//        String name = card.getCardName();
+//        if (name.equals("Yami"))
+//            return 200;
+//        else if (name.equals("Forest"))
+//            return 200;
+//        else if (name.equals("Closed Forest"))
+//            return 100;
+//        else if (name.equals("Umiiruka"))
+//            return 500;
+//        else if (name.equals("Sword of dark destruction"))
+//            return 400;
+//        else if (name.equals("Black Pendant"))
+//            return 500;
+//        else if (name.equals("United We Stand"))
+//            return 800;
+//        else if (name.equals("Command Knight"))
+//            return 400;
+//        else if (name.equals("The Calculator"))
+//            return 300;
+//        return 0;
+//
+//    }
+//
+//    public int DEFChangeAmount(Card card) {
+//        String name = card.getCardName();
+//        if (name.equals("Yami") || name.equals("Forest"))
+//            return 200;
+//        else if (name.equals("Umiiruka"))
+//            return -400;
+//        else if (name.equals("Sword of dark destruction"))
+//            return -200;
+//        else if (name.equals("United We Stand"))
+//            return 800;
+//        return 0;
+//
+//    }
 
 
     public void addATK(MonsterCard.MonsterType type, Boolean both, int amount ) {

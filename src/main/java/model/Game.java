@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Game {
@@ -34,11 +35,16 @@ public class Game {
         roundCount++;
     }
     public void giveAwardThreeRounds(Player winner, Player loser)
-    {
+    {   if(firstPlayer ==winner)
+    winner.changeMoney(3000 +(3* Collections.max(firstPlayerLifePointEachRound)));
+        else winner.changeMoney(3000+(3*Collections.max(secondPlayerLifePointEachRound)));
+        winner.setScore(winner.getScore()+3000);
+        loser.changeMoney(300);
 
     }
     public void giveAwardOneRound(Player winner, Player loser)
     { winner.changeMoney(1000+winner.getLifePoint());
+        winner.setScore(winner.getScore()+1000);
         loser.changeMoney(100);
     }
     public Player getFirstPlayer() {
