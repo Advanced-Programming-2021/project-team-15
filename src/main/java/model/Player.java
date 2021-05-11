@@ -1,6 +1,7 @@
 package model;
 
-public class Player extends User {
+public class Player  {
+    private  User user;
     private int lifePoint;
     private Hand hand;
     private FieldZone fieldZone;
@@ -9,7 +10,6 @@ public class Player extends User {
     private MonsterCardZone monsterCardZone;
     private MagicCardZone magicCardZone;
     private Boolean haveSelectedCard;
-    private int winCount;
 
     public Boolean getFirstTurn() {
         return firstTurn;
@@ -21,8 +21,8 @@ public class Player extends User {
 
     private Boolean firstTurn = false;
 
-    public Player( String userName, String passWord, String nickName) {
-        super(userName, nickName, passWord);
+    public Player( User user) {
+        this.user =user;
         fieldZone = new FieldZone();
         graveyardZone = new GraveyardZone();
         deckZone = new DeckZone();
@@ -49,10 +49,6 @@ public class Player extends User {
         this.lifePoint += point;
     }
 
-    public void increasePlayerWinCount(int number) {
-        winCount += number;
-    }
-
     public int getLifePoint() {
         return lifePoint;
     }
@@ -67,14 +63,6 @@ public class Player extends User {
 
     public void setHaveSelectedCard(Boolean haveSelectedCard) {
         this.haveSelectedCard = haveSelectedCard;
-    }
-
-    public int getWinCount() {
-        return winCount;
-    }
-
-    public void setWinCount(int winCount) {
-        this.winCount = winCount;
     }
 
     public Hand getHand() {
@@ -151,5 +139,13 @@ public class Player extends User {
                 break;
         }
         return zone;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

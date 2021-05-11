@@ -10,6 +10,7 @@ import java.util.Collections;
 import static controller.responses.DuelMenuResponses.*;
 
 public class GamePlayController extends MenuController {
+    private DuelMenu duelMenu = DuelMenu.getInstance();
     private static GamePlayController gamePlayController = null;
     public static GamePlayController getInstance() {
         if( gamePlayController==null)
@@ -86,7 +87,9 @@ public class GamePlayController extends MenuController {
         else if (roundNum != 1 && roundNum != 3)
             return DuelMenuResponses.UNSUPPORTED_ROUND_NUMBER;
         else {
-            game = new Game((Player) currentUser, (Player) secondUser, roundNum);
+            Player first  = new Player(currentUser);
+            Player second = new Player(secondUser);
+            game = new Game(first,second, roundNum);
             attackController = new AttackController();
             effectController = new EffectController();
             return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY; //TODO : agar dar view in return shod game sang kaghaz ..
@@ -103,8 +106,8 @@ public class GamePlayController extends MenuController {
         opponentPlayer.setLifePoint(8000);
         currentPlayer.startNewGame();
         opponentPlayer.startNewGame();
-        currentPlayer.getDeckZone().setZoneCards( cloner.deepClone(currentPlayer.getActiveDeck().getMainDeck()));
-        opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getActiveDeck().getMainDeck()));
+        currentPlayer.getDeckZone().setZoneCards( cloner.deepClone(currentPlayer.getUser().getActiveDeck().getMainDeck()));
+        opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck().getMainDeck()));
         shuffle();
         for(int i =0  ; i <=5 ; i++)
         {
@@ -124,10 +127,8 @@ public class GamePlayController extends MenuController {
     }
     public Boolean RPS(String firstPlayerMove ,String secondPlayerMove)
     {
-        int firstPlayerCount=0;
-        int secondPlayerCount=0;
-        Player winner = null;
-        Player loser = null;
+        Player winner;
+        Player loser ;
         if(firstPlayerMove.equals(secondPlayerMove))
             return false;
         else if((firstPlayerMove.equals("rock") && (secondPlayerMove.equals("scissors"))) ||
@@ -139,6 +140,7 @@ public class GamePlayController extends MenuController {
            winner=game.getSecondPlayer();}
         game.setFirstPlayer(winner);
         game.setSecondPlayer(loser);
+        start();
         return true;
 
     }
@@ -509,7 +511,7 @@ public class GamePlayController extends MenuController {
 
 
 
-    public DuelMenuResponses defineWinner() {
+    public void defineWinner() {
         Player winner;
         Player loser;
         if(currentPlayer.getLifePoint()<=0 || currentPlayer.getDeckZone().getZoneCards().size()==0)
@@ -523,22 +525,39 @@ public class GamePlayController extends MenuController {
         game.getWinnerOfEachRound()[game.getRoundCount()]=winner;
 
         if(game.getRoundNumber()==1)
-        {   game.giveAwardOneRound(winner, loser);
-            return END_GAME;
+        {   game.getWinnerOfEachRound()[0]=winner;
+            game.giveAwardOneRound(winner, loser);
+            duelMenu.printResponse(END_GAME);
         }
         else {
             if(game.getRoundCount()==1) //TODO ASK IF IT IS OK
-                return END_GAME_AND_RPC;
+            {    game.getWinnerOfEachRound()[0]=winner;
+                game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
+                game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
+                duelMenu.printResponse(END_GAME_AND_RPC);
+            }
             else if(game.getRoundCount()==2)
             {
                 if(game.getWinnerOfEachRound()[0]==winner)
-                { game.giveAwardThreeRounds(winner ,loser);
-                    return END_MATCH;}
-                else return END_GAME_AND_RPC;
+                {   game.getWinnerOfEachRound()[1]=winner;
+                    game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
+                    game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
+                    game.giveAwardThreeRounds(winner ,loser);
+                    duelMenu.printResponse(END_MATCH);
+                }
+                else
+                {   game.getWinnerOfEachRound()[1]=winner;
+                    game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
+                    game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
+                    duelMenu.printResponse(END_GAME_AND_RPC);
+                }
             }
             else {
+                game.getWinnerOfEachRound()[2]=winner;
+                game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
+                game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                 game.giveAwardThreeRounds(winner, loser);
-                 return END_MATCH;
+                duelMenu.printResponse(END_MATCH);
             }
         }
     }
