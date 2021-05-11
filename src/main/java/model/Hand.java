@@ -40,11 +40,20 @@ public class Hand extends Zone{
     zoneCards.add(card);
 
     }
+    public int getNumberOfCardsInHand()
+    {  int i = 0 ;
+        for(Card card : zoneCards){
+        if(card ==null)
+            i++;
+    }
+        return i;
+    }
     public void removeCardFromHand(Card card)
     {
        zoneCards.remove(card);
        zoneCards.add(null);
     }
+
 
 
 }
