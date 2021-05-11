@@ -47,35 +47,66 @@ public class EffectController extends GamePlayController {
 //    }
 
 
-    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount ) {
-        Map<Integer  , MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
+    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount) {
+        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
 
-            for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
-            {
-                if(entry.getValue()!=null && entry.getValue().getMonsterType()==type)
-                    entry.getValue().setAttackPoint(entry.getValue().getAttackPoint()+amount);}
-             if(both)
-                        {  map =  opponentPlayer.getMonsterCardZone().getZoneCards();
-                            for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
-                            {
-                                if(entry.getValue()!=null && entry.getValue().getMonsterType()==type)
-                                    entry.getValue().setAttackPoint(entry.getValue().getAttackPoint()+amount);}
+        for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
+                entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
+        }
+        if (both) {
+            map = opponentPlayer.getMonsterCardZone().getZoneCards();
+            for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+                if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
+                    entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
+            }
 
-                        }
+        }
     }
-    public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount ) {
-        Map<Integer  , MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
 
-        for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
-        {
-            if(entry.getValue()!=null &&entry.getValue().getMonsterType()==type)
-                entry.getValue().setDefensePoint(entry.getValue().getDefensePoint()+amount);}
-        if(both)
-        {  map =  opponentPlayer.getMonsterCardZone().getZoneCards();
-            for(Map.Entry<Integer , MonsterCard> entry :map.entrySet())
-            {
-                if(entry.getValue()!=null &&entry.getValue().getMonsterType()==type)
-                    entry.getValue().setDefensePoint(entry.getValue().getDefensePoint()+amount);}
+    public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount) {
+        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
+
+        for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+            if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
+                entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
+        }
+        if (both) {
+            map = opponentPlayer.getMonsterCardZone().getZoneCards();
+            for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+                if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
+                    entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
+            }
+        }
+    }
+
+    public void destroyCards(Card.CardType type, Boolean both) {
+        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
+
+        for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+            if (type == Card.CardType.MONSTER) {
+                if (entry.getValue() != null) {
+                    opponentPlayer.getMonsterCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
+                }
+            } else if(type== Card.CardType.MAGIC){
+                if (entry.getValue() != null) {
+                    opponentPlayer.getMagicCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
+                }
+            }
+        }
+        if (both) {
+            map = currentPlayer.getMonsterCardZone().getZoneCards();
+            for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
+                if (type == Card.CardType.MONSTER) {
+                    if (entry.getValue() != null) {
+                        currentPlayer.getMonsterCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
+                    }
+                } else if(type== Card.CardType.MAGIC){
+                    if (entry.getValue() != null) {
+                        currentPlayer.getMagicCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
+                    }
+                }
+            }
         }
     }
 

@@ -31,10 +31,12 @@ public class Hand extends Zone{
     {
         if(zoneCards.get(i) ==null)
         {
+            card.setCardPlacedZone(this);
             zoneCards.set(i , card);
             return;
         }
     }
+        card.setCardPlacedZone(this);
     zoneCards.add(card);
 
     }

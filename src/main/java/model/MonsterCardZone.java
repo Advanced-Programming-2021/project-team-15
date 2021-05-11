@@ -25,7 +25,7 @@ public class MonsterCardZone extends NumericZone{
         for(Integer key : zoneCards.keySet()) {
           if(zoneCards.get(key)==null) {
               zoneCards.put(key, monsterCard);
-              monsterCard.setCardPlacedZone(currentPlayer.getZoneByZoneType(ZoneType.MONSTER_CARD));
+              monsterCard.setCardPlacedZone(this);
               //monsterCard.setPlacedZoneNumber(key);
               return;
           }

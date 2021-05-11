@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class NumericZone extends Zone {
-    protected TreeMap<Integer, Card> zoneCards;
+    protected Map<Integer, Card> zoneCards;
 
     public NumericZone(ZoneType zoneType , TreeMap<Integer , Card> zoneCards) {
         super(zoneType);
@@ -17,18 +17,25 @@ public class NumericZone extends Zone {
          for (int i = 1 ; i<5; i++)
              zoneCards.put(i, null);
      }
+     public void moveCardToGraveyardWithoutAddress(Card card,Player player){
+        for(Map.Entry<Integer,Card> entry: zoneCards.entrySet()){
+            if(card==entry.getValue()){
+                zoneCards.put(entry.getKey(), null);
+                player.getGraveyardZone().addCardToGraveyardZone(card);
+            }
+        }
+     }
 
     public void moveCardToGraveyard(int address ,Player player)
     {
         //zoneCards.get(address).setPlacedZoneNumber(0);
-
         zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         zoneCards.put(address , null);
     }
     public int  getNumberOfCard()
     {    int i =0 ;
-        for(Map.Entry entry : zoneCards.entrySet())
+        for(Map.Entry<Integer,Card> entry : zoneCards.entrySet())
         {   if(entry != null)
             i++;
         }
@@ -40,7 +47,7 @@ public class NumericZone extends Zone {
         return zoneCards.get(number);
     }
 
-    public TreeMap getZoneCards() {
+    public Map getZoneCards() {
         return zoneCards;
     }
 

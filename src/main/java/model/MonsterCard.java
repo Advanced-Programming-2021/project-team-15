@@ -10,15 +10,6 @@ public class MonsterCard extends Card {
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
     @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
 
-    public Boolean getHaveAttacked() {
-        return haveAttacked;
-    }
-
-    public void setHaveAttacked(Boolean haveAttacked) {
-        this.haveAttacked = haveAttacked;
-    }
-
-    protected Boolean haveAttacked = false;
     private Boolean isSummoned = false;
     private Mode mode;
 
@@ -174,9 +165,6 @@ public class MonsterCard extends Card {
         @SerializedName("EARTH") EARTH,
         @SerializedName("WIND") WIND,
         @SerializedName("LIGHT") LIGHT
-    }
-    public void refreshCard()
-    {  setHaveAttacked(false);
     }
 
     public String toStringPosition()

@@ -99,15 +99,21 @@ public class GamePlayController extends MenuController {
         shuffle();
         currentPlayer.startNewGame();
         opponentPlayer.startNewGame();
-        for(int i =0  ; i <4 ; i++)
+        for(int i =0  ; i <=5 ; i++)
         {
-            currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(i));
-             currentPlayer.getDeckZone().getZoneCards().remove(i);
-            opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(i));
-            opponentPlayer.getDeckZone().getZoneCards().remove(i);
-
+            currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
+             currentPlayer.getDeckZone().getZoneCards().remove(0);
+          if(i<5) {
+              opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
+              opponentPlayer.getDeckZone().getZoneCards().remove(0);
+          }
         }
         currentPlayer.setFirstTurn(true);
+    }
+    public void drawPhase(){
+        changeTurn();
+        currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
+        currentPlayer.getDeckZone().getZoneCards().remove(0);
     }
     public void RPC(String firstPlayerMove ,String secondPlayerMove)
     {
@@ -122,7 +128,6 @@ public class GamePlayController extends MenuController {
         game.setSecondPlayer(loser);
         start();
     }
-
 
 
 
@@ -266,6 +271,8 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setPosition(String wantedPosition) {
         if (selectedCard == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
+        else if(isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard) || attackController.alreadyAttackedThisTurn((MonsterCard)selectedCard ))
+            return CANT_CHANGE_THIS_CARD_POSITION;
         else if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone() || !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_CHANGE_THIS_CARD_POSITION;
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
@@ -410,6 +417,7 @@ public class GamePlayController extends MenuController {
         setTrapCardsInTurn.clear();
         activatedCardInTurn.clear();
         setTrapAndSpellCardsInTurn.clear();
+        attackController.getAttackedCardsInTurn().clear();
         currentPlayer.setFirstTurn(false);
         selectedCard = null;
     }
