@@ -204,7 +204,7 @@ public class SpellEffectController {
         if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard() == 0)
             duelMenu.printResponse(CANT_ACTIVATE_SPELL);
         else {
-            gamePlayController.getOpponentPlayer().getMonsterCardZone().reset();
+            effectController.destroyCards(Card.CardType.MONSTER, false);
             gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
         }
     }
@@ -213,7 +213,7 @@ public class SpellEffectController {
         if (gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard() == 0)
             duelMenu.printResponse(CANT_ACTIVATE_SPELL);
         else {
-           gamePlayController.getOpponentPlayer().getMagicCardZone().reset();
+            effectController.destroyCards(Card.CardType.MAGIC, false);
             gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
         }
     }
@@ -223,8 +223,7 @@ public class SpellEffectController {
         if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard() == 0 && gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard()==0)
             duelMenu.printResponse(CANT_ACTIVATE_SPELL);
         else {
-           gamePlayController.getOpponentPlayer().getMonsterCardZone().reset();
-           gamePlayController.getCurrentPlayer().getMagicCardZone().reset();
+            effectController.destroyCards(Card.CardType.MONSTER, true);
             gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(),gamePlayController.getCurrentPlayer());
         }
     }
