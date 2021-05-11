@@ -6,56 +6,17 @@ import model.Player;
 
 import java.util.Map;
 
-public class EffectController extends GamePlayController {
-
-//    public int ATKChangeAmount(Card card) {  //TODO magnum shield Special
-//        String name = card.getCardName();
-//        if (name.equals("Yami"))
-//            return 200;
-//        else if (name.equals("Forest"))
-//            return 200;
-//        else if (name.equals("Closed Forest"))
-//            return 100;
-//        else if (name.equals("Umiiruka"))
-//            return 500;
-//        else if (name.equals("Sword of dark destruction"))
-//            return 400;
-//        else if (name.equals("Black Pendant"))
-//            return 500;
-//        else if (name.equals("United We Stand"))
-//            return 800;
-//        else if (name.equals("Command Knight"))
-//            return 400;
-//        else if (name.equals("The Calculator"))
-//            return 300;
-//        return 0;
-//
-//    }
-//
-//    public int DEFChangeAmount(Card card) {
-//        String name = card.getCardName();
-//        if (name.equals("Yami") || name.equals("Forest"))
-//            return 200;
-//        else if (name.equals("Umiiruka"))
-//            return -400;
-//        else if (name.equals("Sword of dark destruction"))
-//            return -200;
-//        else if (name.equals("United We Stand"))
-//            return 800;
-//        return 0;
-//
-//    }
-
-
+public class EffectController  {
+     GamePlayController gamePlayController= GamePlayController.getInstance();
     public void addATK(MonsterCard.MonsterType type, Boolean both, int amount) {
-        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
+        Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
 
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                 entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
         }
         if (both) {
-            map = opponentPlayer.getMonsterCardZone().getZoneCards();
+            map =gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                     entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
@@ -65,50 +26,32 @@ public class EffectController extends GamePlayController {
     }
 
     public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount) {
-        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
+        Map<Integer, MonsterCard> map =gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
 
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                 entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
         }
         if (both) {
-            map = opponentPlayer.getMonsterCardZone().getZoneCards();
+            map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                     entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
             }
         }
     }
-
-    public void destroyCards(Card.CardType type, Boolean both) {
-        Map<Integer, MonsterCard> map = currentPlayer.getMonsterCardZone().getZoneCards();
-
+    public int getNumberOfFaceUpMonstersOfCurrentPlayer() {
+        int i = 0;
+        Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
-            if (type == Card.CardType.MONSTER) {
-                if (entry.getValue() != null) {
-                    opponentPlayer.getMonsterCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
-                }
-            } else if(type== Card.CardType.MAGIC){
-                if (entry.getValue() != null) {
-                    opponentPlayer.getMagicCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
-                }
+            if (entry.getValue() != null && !entry.getValue().getHidden()) {
+                i++;
             }
         }
-        if (both) {
-            map = currentPlayer.getMonsterCardZone().getZoneCards();
-            for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
-                if (type == Card.CardType.MONSTER) {
-                    if (entry.getValue() != null) {
-                        currentPlayer.getMonsterCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
-                    }
-                } else if(type== Card.CardType.MAGIC){
-                    if (entry.getValue() != null) {
-                        currentPlayer.getMagicCardZone().moveCardToGraveyard(entry.getKey(), currentPlayer);
-                    }
-                }
-            }
-        }
+        return i;
     }
+
+
 
 
 //

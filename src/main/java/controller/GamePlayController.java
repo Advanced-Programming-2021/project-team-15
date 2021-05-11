@@ -10,32 +10,29 @@ import java.util.Collections;
 import static controller.responses.DuelMenuResponses.*;
 
 public class GamePlayController extends MenuController {
-    EffectController effectController;
-    protected static Game game;
-    protected int currentPhaseNumber = 1;
-    protected static Card selectedCard;
-    public static Card setCard;
-    protected Player currentPlayer;
-    protected Player opponentPlayer;
-    protected AttackController attackController;
-    protected ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
-    protected ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
-    protected ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
-    protected ArrayList<Card> activatedCardInTurn = new ArrayList<>();
-    protected ArrayList<MagicCard> setTrapAndSpellCardsInTurn = new ArrayList<>();
-    protected ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
+    private static GamePlayController gamePlayController = null;
+    public static GamePlayController getInstance() {
+        if( gamePlayController==null)
+           gamePlayController= new GamePlayController();
+        return gamePlayController;
+    }
+   private EffectController effectController;
+    private  Game game;
+    private int currentPhaseNumber = 1;
+    private Card selectedCard;
+    private static Card setCard;
+    private   Player currentPlayer;
+    private Player opponentPlayer;
+    private AttackController attackController;
+    private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
+    private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
+    private ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
+    private ArrayList<Card> activatedCardInTurn = new ArrayList<>();
+    private ArrayList<MagicCard> setTrapAndSpellCardsInTurn = new ArrayList<>();
+    private ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
 
     public GamePlayController() {
         super("Duel Menu");
-    }
-
-
-    public static Game getGame() {
-        return game;
-    }
-
-    public static void setGame(Game game) {
-        GamePlayController.game = game;
     }
 
 
@@ -47,6 +44,22 @@ public class GamePlayController extends MenuController {
         GamePlayController.setCard = setCard;
     }
 
+    public static GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public static void setGamePlayController(GamePlayController gamePlayController) {
+        GamePlayController.gamePlayController = gamePlayController;
+    }
+
+    public EffectController getEffectController() {
+        return effectController;
+    }
+
+    public void setEffectController(EffectController effectController) {
+        this.effectController = effectController;
+    }
+
     public int getCurrentPhaseNumber() {
         return currentPhaseNumber;
     }
@@ -55,13 +68,6 @@ public class GamePlayController extends MenuController {
         this.currentPhaseNumber = currentPhaseNumber;
     }
 
-    public static Card getSelectedCard() {
-        return selectedCard;
-    }
-
-    public static void setSelectedCard(Card selectedCard) {
-        GamePlayController.selectedCard = selectedCard;
-    }
 
 
     public DuelMenuResponses startNewGame(String secondPlayer, int roundNum) {
@@ -94,11 +100,11 @@ public class GamePlayController extends MenuController {
         opponentPlayer= game.getSecondPlayer();
         currentPlayer.setLifePoint(8000);
         opponentPlayer.setLifePoint(8000);
+        currentPlayer.startNewGame();
+        opponentPlayer.startNewGame();
         currentPlayer.getDeckZone().setZoneCards( cloner.deepClone(currentPlayer.getActiveDeck().getMainDeck()));
         opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getActiveDeck().getMainDeck()));
         shuffle();
-        currentPlayer.startNewGame();
-        opponentPlayer.startNewGame();
         for(int i =0  ; i <=5 ; i++)
         {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
@@ -115,7 +121,7 @@ public class GamePlayController extends MenuController {
         currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
         currentPlayer.getDeckZone().getZoneCards().remove(0);
     }
-    public void RPC(String firstPlayerMove ,String secondPlayerMove)
+    public void RPS(String firstPlayerMove ,String secondPlayerMove)
     {
         int firstPlayerCount=0;
         int secondPlayerCount=0;
@@ -123,7 +129,7 @@ public class GamePlayController extends MenuController {
         Player second=game.getSecondPlayer();
         Player winner = null;
         Player loser = null;
-        // TODO : ROCK AND PAPER ...
+
         game.setFirstPlayer(winner);
         game.setSecondPlayer(loser);
         start();
@@ -559,5 +565,21 @@ public class GamePlayController extends MenuController {
 
     public void setSetTrapAndSpellCardsInTurn(ArrayList<MagicCard> setTrapAndSpellCardsInTurn) {
         this.setTrapAndSpellCardsInTurn = setTrapAndSpellCardsInTurn;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Card getSelectedCard() {
+        return selectedCard;
+    }
+
+    public void setSelectedCard(Card selectedCard) {
+        this.selectedCard = selectedCard;
     }
 }

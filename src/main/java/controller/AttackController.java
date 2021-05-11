@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 import static controller.responses.DuelMenuResponses.*;
 
-public class AttackController extends GamePlayController {
+public class AttackController  {
+    private GamePlayController gamePlayController = GamePlayController.getInstance();
     private static int damage;
 
     public ArrayList<MonsterCard> getAttackedCardsInTurn() {
@@ -33,19 +34,19 @@ public class AttackController extends GamePlayController {
 
     public DuelMenuResponses normalAttack(int number) //TODO RESET CARD IN NEEDED PLACES
     {
-        if (selectedCard == null)
+        if (gamePlayController.getSelectedCard() == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
-        else if (!((MonsterCard) selectedCard).toStringPosition().equals("OO") || !(selectedCard instanceof MonsterCard)
-                || !(selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone()))
+        else if (!((MonsterCard) gamePlayController.getSelectedCard()).toStringPosition().equals("OO") || !(gamePlayController.getSelectedCard() instanceof MonsterCard)
+                || !(gamePlayController.getSelectedCard().getCardPlacedZone() !=gamePlayController.getCurrentPlayer().getMonsterCardZone()))
             return YOU_CANT_ATTACK_WITH_THIS_CARD;
-        else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.BATTLE)
+        else if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) != Phase.PhaseLevel.BATTLE)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-        else if (alreadyAttackedThisTurn((MonsterCard) selectedCard))
+        else if (alreadyAttackedThisTurn((MonsterCard) gamePlayController.getSelectedCard()))
             return DuelMenuResponses.ALREADY_ATTACKED;
-        else if (opponentPlayer.getMonsterCardZone().getCardByPlaceNumber(number) == null)
+        else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number) == null)
             return DuelMenuResponses.NO_CARD_TO_ATTACK;
-        String position = opponentPlayer.getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
-        MonsterCard target = opponentPlayer.getMonsterCardZone().getCardByPlaceNumber(number);
+        String position =gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
+        MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         if (position.equals("OO"))
             return attackAttackPos(target, number);
         else if (position.equals("DO"))
@@ -54,22 +55,22 @@ public class AttackController extends GamePlayController {
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard target, int number, Boolean hidden) {
-        int difference = ((MonsterCard) selectedCard).getAttackPoint() - target.getDefensePoint();
+        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint() - target.getDefensePoint();
         damage = difference;
         if (difference > 0) {
-            opponentPlayer.getMonsterCardZone().moveCardToGraveyard(number, opponentPlayer);
-            attackedCardsInTurn.add((MonsterCard) selectedCard);
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
+            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
             else return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED_WITH_NAME;
         } else if (difference == 0) {
-            attackedCardsInTurn.add((MonsterCard) selectedCard);
+            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED;
             else return DuelMenuResponses.NO_CARD_DESTROYED_WITH_NAME;
         } else {
-            currentPlayer.reduceLifePoint(-difference);
-            attackedCardsInTurn.add((MonsterCard) selectedCard);
+            gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
+            attackedCardsInTurn.add((MonsterCard)  gamePlayController.getSelectedCard());
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED;
             return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED_WITH_NAME;
@@ -77,20 +78,20 @@ public class AttackController extends GamePlayController {
     }
 
     public DuelMenuResponses attackAttackPos(MonsterCard target, int number) {
-        int difference = ((MonsterCard) selectedCard).getAttackPoint() - target.getAttackPoint();
+        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint() - target.getAttackPoint();
         damage = difference;
         if (difference > 0) {
-            opponentPlayer.reduceLifePoint(difference);
-            opponentPlayer.getMonsterCardZone().moveCardToGraveyard(number, opponentPlayer);
-            attackedCardsInTurn.add((MonsterCard) selectedCard);
+            gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
+            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
             return DuelMenuResponses.DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE;
         } else if (difference == 0) {
-            opponentPlayer.getMonsterCardZone().moveCardToGraveyard(number, opponentPlayer);
-            currentPlayer.getMonsterCardZone().moveCardToGraveyard(number, currentPlayer);
+           gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
+          gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(number,gamePlayController.getCurrentPlayer());
             return DuelMenuResponses.BOTH_MONSTERS_ARE_DESTROYED;
         } else {
-            currentPlayer.reduceLifePoint(-difference);
-            currentPlayer.getMonsterCardZone().moveCardToGraveyard(number, currentPlayer);
+            gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
+            gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getCurrentPlayer());
             return DuelMenuResponses.DESTROYED_CURRENT_MONSTER_AFTER_ATTACK;
         }
 
@@ -106,17 +107,17 @@ public class AttackController extends GamePlayController {
     }
 
     public DuelMenuResponses directAttack() {
-        if (selectedCard == null)
+        if (gamePlayController.getSelectedCard() == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
-        else if (!(selectedCard instanceof MonsterCard) || !(selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone()))
+        else if (!(gamePlayController.getSelectedCard() instanceof MonsterCard) || !(gamePlayController.getSelectedCard().getCardPlacedZone() != gamePlayController.getCurrentPlayer().getMonsterCardZone()))
             return YOU_CANT_ATTACK_WITH_THIS_CARD;
-        else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.BATTLE)
+        else if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) != Phase.PhaseLevel.BATTLE)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-        else if (alreadyAttackedThisTurn((MonsterCard) selectedCard))
+        else if (alreadyAttackedThisTurn((MonsterCard) gamePlayController.getSelectedCard()))
             return DuelMenuResponses.ALREADY_ATTACKED;
-        else if (opponentPlayer.getMonsterCardZone().getZoneCards().isEmpty())
+        else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
-        opponentPlayer.reduceLifePoint(((MonsterCard) selectedCard).getAttackPoint());
+        gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
     }
 

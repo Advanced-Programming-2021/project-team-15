@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class DuelMenu extends Menu{
     private static DuelMenu duelMenu;
     DuelMenuResponses duelMenuResponses;
-    GamePlayController gamePlayController = new GamePlayController();
+    GamePlayController gamePlayController = GamePlayController.getInstance();
     private DuelMenu() {
         super("Duel Menu");
     }
