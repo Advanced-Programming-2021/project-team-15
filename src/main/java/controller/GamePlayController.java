@@ -95,7 +95,8 @@ public class GamePlayController extends MenuController {
 
     }
     public void start()
-    {    game.setRoundCount(game.getRoundCount()+1);
+    {   refresh();
+        game.setRoundCount(game.getRoundCount()+1);
         currentPlayer = game.getFirstPlayer();
         opponentPlayer= game.getSecondPlayer();
         currentPlayer.setLifePoint(8000);
@@ -121,18 +122,25 @@ public class GamePlayController extends MenuController {
         currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
         currentPlayer.getDeckZone().getZoneCards().remove(0);
     }
-    public void RPS(String firstPlayerMove ,String secondPlayerMove)
+    public Boolean RPS(String firstPlayerMove ,String secondPlayerMove)
     {
         int firstPlayerCount=0;
         int secondPlayerCount=0;
-        Player first = game.getFirstPlayer();
-        Player second=game.getSecondPlayer();
         Player winner = null;
         Player loser = null;
-
+        if(firstPlayerMove.equals(secondPlayerMove))
+            return false;
+        else if((firstPlayerMove.equals("rock") && (secondPlayerMove.equals("scissors"))) ||
+                ( firstPlayerMove.equals("paper") && (secondPlayerMove.equals("rock"))) ||
+                ( firstPlayerMove.equals("scissors") && secondPlayerMove.equals("paper")))
+        {    winner = game.getFirstPlayer();
+            loser=game.getSecondPlayer();}
+        else {  loser = game.getFirstPlayer();
+           winner=game.getSecondPlayer();}
         game.setFirstPlayer(winner);
         game.setSecondPlayer(loser);
-        start();
+        return true;
+
     }
 
 
@@ -495,7 +503,8 @@ public class GamePlayController extends MenuController {
 
 
     public Boolean checkIfGameIsFinished()
-    {  return (currentPlayer.getLifePoint()<=0 || opponentPlayer.getLifePoint()<=0);
+    {  return (currentPlayer.getLifePoint()<=0 || opponentPlayer.getLifePoint()<=0 || currentPlayer.getDeckZone().getZoneCards().size()==0 ||
+            opponentPlayer.getDeckZone().getZoneCards().size()==0);
     }
 
 
@@ -503,7 +512,7 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses defineWinner() {
         Player winner;
         Player loser;
-        if(currentPlayer.getLifePoint()<=0)
+        if(currentPlayer.getLifePoint()<=0 || currentPlayer.getDeckZone().getZoneCards().size()==0)
         {
             winner = currentPlayer;
             loser  = opponentPlayer;
