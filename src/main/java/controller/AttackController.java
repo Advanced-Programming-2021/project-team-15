@@ -55,7 +55,7 @@ public class AttackController  {
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard target, int number, Boolean hidden) {
-        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint() - target.getDefensePoint();
+        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameDEF();
         damage = difference;
         if (difference > 0) {
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
@@ -78,7 +78,7 @@ public class AttackController  {
     }
 
     public DuelMenuResponses attackAttackPos(MonsterCard target, int number) {
-        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint() - target.getAttackPoint();
+        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameATK();
         damage = difference;
         if (difference > 0) {
             gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
@@ -117,7 +117,7 @@ public class AttackController  {
             return DuelMenuResponses.ALREADY_ATTACKED;
         else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
-        gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getAttackPoint());
+        gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
     }
 

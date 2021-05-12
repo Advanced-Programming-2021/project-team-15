@@ -9,18 +9,19 @@ import java.util.Map;
 public class EffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
 
+
     public void addATK(MonsterCard.MonsterType type, Boolean both, int amount) {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
 
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
-                entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
+                entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
         }
         if (both) {
             map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
-                    entry.getValue().setAttackPoint(entry.getValue().getAttackPoint() + amount);
+                    entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
             }
 
         }
@@ -31,13 +32,13 @@ public class EffectController {
 
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
-                entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
+                entry.getValue().setGameDEF(entry.getValue().getGameDEF() + amount);
         }
         if (both) {
             map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
-                    entry.getValue().setDefensePoint(entry.getValue().getDefensePoint() + amount);
+                    entry.getValue().setGameDEF(entry.getValue().getGameDEF() + amount);
             }
         }
     }
@@ -82,6 +83,15 @@ public class EffectController {
             }
         }
     }
+    public int numberOfDeadMonsters() {
+        int i = 0;
+        for (Card card : gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards()) {
+            if (card!=null && card instanceof MonsterCard)
+                i++;
+        }
+        return i;
+    }
+
 }
 
 

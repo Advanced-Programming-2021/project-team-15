@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class MonsterCard extends Card {
     @SerializedName("Atk")private int attackPoint;
+    private int gameATK = attackPoint;
     @SerializedName("Def")private int defensePoint;
+    private int gameDEF = defensePoint;
     @SerializedName("Level") private int level;
     @SerializedName("Monster Type") private MonsterType monsterType;
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
@@ -117,6 +119,22 @@ public class MonsterCard extends Card {
         cardInfo.append("DEF: ").append(defensePoint).append("\n");
         cardInfo.append("Description: ").append(cardDescription);
         return cardInfo.toString();
+    }
+
+    public int getGameATK() {
+        return gameATK;
+    }
+
+    public void setGameATK(int gameATK) {
+        this.gameATK = gameATK;
+    }
+
+    public int getGameDEF() {
+        return gameDEF;
+    }
+
+    public void setGameDEF(int gameDEF) {
+        this.gameDEF = gameDEF;
     }
 
     public enum MonsterEffectType {
