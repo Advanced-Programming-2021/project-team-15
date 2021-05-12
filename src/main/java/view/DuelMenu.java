@@ -82,12 +82,18 @@ public class DuelMenu extends Menu{
 
     }
 
-
+    //TODO : handle various uses of SCANNER
     public Integer scannerNum()
     {  Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         return Integer.parseInt(s);
     }
+    public String scannerLine()
+    {  Scanner scanner = new Scanner(System.in);
+        String s= scanner.nextLine();
+        return s;
+    }
+
     public void checkAndCallDeselect(String input)
     { duelMenuResponses = gamePlayController.deSelect();
       printResponse(duelMenuResponses);
