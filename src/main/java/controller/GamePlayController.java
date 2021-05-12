@@ -6,6 +6,7 @@ import view.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import static controller.responses.DuelMenuResponses.*;
 
@@ -212,6 +213,24 @@ public class GamePlayController extends MenuController {
     }
     }
 
+    public void showGameBoard()
+    {     StringBuilder board = new StringBuilder();
+        board.append(opponentPlayer.getUser().getNickName()).append("\n");
+        board.append("\tc ".repeat(opponentPlayer.getHand().getNumberOfCardsInHand()));
+        board.append("\n").append(opponentPlayer.getDeckZone().getZoneCards().size()).append("\n\t");
+        board.append(opponentPlayer.getMagicCardZone().toStringPos(4)).append("\t").append(opponentPlayer.getMagicCardZone().toStringPos(2)).append("\t").append(opponentPlayer.getMagicCardZone().toStringPos(1)).append("\t").append(opponentPlayer.getMagicCardZone().toStringPos(3)).append("\t").append(opponentPlayer.getMagicCardZone().toStringPos(5)).append("\n\t");
+        board.append(opponentPlayer.getMonsterCardZone().toStringPos(4)).append("\t").append(opponentPlayer.getMonsterCardZone().toStringPos(2)).append("\t").append(opponentPlayer.getMonsterCardZone().toStringPos(1)).append("\t").append(opponentPlayer.getMonsterCardZone().toStringPos(3)).append("\t").append(opponentPlayer.getMonsterCardZone().toStringPos(5)).append("\n");
+        board.append(opponentPlayer.getGraveyardZone().getZoneCards().size()).append("\t\t\t\t\t\t").append(opponentPlayer.getFieldZone().toStringPos()).append("\n");
+        board.append("\n----------------------------------------------------------\n\n");
+        board.append(currentPlayer.getFieldZone().toStringPos()).append("\t\t\t\t\t\t").append(currentPlayer.getGraveyardZone().getZoneCards().size()).append("\n\t");
+        board.append(currentPlayer.getMonsterCardZone().toStringPos(5)).append("\t").append(currentPlayer.getMonsterCardZone().toStringPos(3)).append("\t").append(currentPlayer.getMonsterCardZone().toStringPos(1)).append("\t").append(currentPlayer.getMonsterCardZone().toStringPos(2)).append("\t").append(currentPlayer.getMonsterCardZone().toStringPos(4)).append("\n\t");
+        board.append(currentPlayer.getMagicCardZone().toStringPos(5)).append("\t").append(currentPlayer.getMagicCardZone().toStringPos(3)).append("\t").append(currentPlayer.getMagicCardZone().toStringPos(1)).append("\t").append(currentPlayer.getMagicCardZone().toStringPos(2)).append("\t").append(currentPlayer.getMagicCardZone().toStringPos(4)).append("\n");
+        board.append("  \t\t\t\t\t\t").append(currentPlayer.getDeckZone().getZoneCards().size()).append("\n");
+        board.append("c \t".repeat(currentPlayer.getHand().getNumberOfCardsInHand()));
+        board.append("\n").append(currentPlayer.getUser().getNickName());
+        duelMenu.getInstance().printString(board.toString());
+    }
+
     public DuelMenuResponses summon() {
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand() ||
                 !(selectedCard instanceof MonsterCard))
@@ -390,37 +409,33 @@ public class GamePlayController extends MenuController {
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses activateSpellCard() { //TODO COMPLETE
+    public void activateSpellCard(Player player) { //TODO COMPLETE
         if (selectedCard == null)
-            return NO_CARD_SELECTED;
+            duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard) || ((MagicCard) selectedCard).getMagicType() != MagicCard.MagicType.SPELL)
-            return ACTIVATE_EFFECT_ONLY_ON_SPELL;
+            duelMenu.printResponse(ACTIVATE_EFFECT_ONLY_ON_SPELL);
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
-            return CANT_ACTIVATE_EFFECT_ON_THIS_TURN;
-        else if ( selectedCard.isActivated())
-            return YOU_ALREADY_ACTIVATED_THIS_CARD;
-        else if (((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD &&
-                (currentPlayer.getMagicCardZone()).getNumberOfCard() == 5)
-            return SPELL_ZONE_CARD_IS_FULL;
-        else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
-            // special condition?
-            currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
-            ((MagicCard) selectedCard).setActivated(true);
-        } else {
-            // if()
-            // special condition?
-            currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
-            ((MagicCard) selectedCard).setActivated(true);
-        }
-        selectedCard.setHidden(false);
-        selectedCard= null;
-        return SPELL_ACTIVATED;
+           duelMenu.printResponse( CANT_ACTIVATE_EFFECT_ON_THIS_TURN);
+        else if (selectedCard.isActivated())
+           duelMenu.printResponse(YOU_ALREADY_ACTIVATED_THIS_CARD);
+        else if (player.getHand().isExist(selectedCard) && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD
+                && player.getMagicCardZone().getNumberOfCard() == 5)
+            duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
+        else if(((MagicCard) selectedCard).getCardIcon()== MagicCard.CardIcon.FIELD)
+            player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
+            callMethodOfSpells(selectedCard);
     }
-
-    public void activateEffect()   //TODO : should be called in view whenever we get "SPELL_ACTIVATED"
+    public void setCardActive()
     {  selectedCard.setActivated(true);
     }
+
+
+    public void callMethodOfSpells(Card card)
+        {  //TODO
+
+        }
+
 
 
 

@@ -34,4 +34,9 @@ public class FieldZone extends Zone{
     public void setZoneCards(ArrayList<MagicCard> zoneCards) {
         this.zoneCards = zoneCards;
     }
+    public String toStringPos()
+    { if(zoneCards.get(0)==null)
+        return "E";
+        else return "O";
+    }
 }

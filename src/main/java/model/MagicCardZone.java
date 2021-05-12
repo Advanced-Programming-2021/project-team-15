@@ -33,4 +33,16 @@ public class MagicCardZone extends NumericZone{
         }
 
     }
+    public String toStringPos(int i )
+    {   if(zoneCards.get(i)==null)
+        return "E";
+        else if(zoneCards.get(i).getHidden())
+            return "H";
+        else return "O";
+    }
+
+
+
+
+
 }

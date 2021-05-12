@@ -39,6 +39,11 @@ public class MonsterCardZone extends NumericZone{
         }
         return true;
     }
+    public String toStringPos(int i)
+    {  if(zoneCards.get(i)==null)
+        return "E";
+        else return ((MonsterCard)zoneCards).toStringPosition();
+    }
 
 
 }

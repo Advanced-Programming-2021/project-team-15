@@ -125,7 +125,16 @@ public class DuelMenu extends Menu{
 
 
         }
+          if(duelMenuResponses==DuelMenuResponses.SPELL_ACTIVATED)
+              gamePlayController.setCardActive();
+
+
+
         System.out.println(output);
+        }
+        public  void printString(String string)
+        {
+            System.out.println(string);
         }
 
 }

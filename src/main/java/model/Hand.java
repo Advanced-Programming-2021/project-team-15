@@ -53,6 +53,15 @@ public class Hand extends Zone{
        zoneCards.remove(card);
        zoneCards.add(null);
     }
+    public Boolean isExist( Card card)
+    {  for(Card card1 : zoneCards)
+    {
+        if(card==card1)
+            return true;
+    }
+    return false;
+
+    }
 
 
 
