@@ -398,7 +398,7 @@ public class GamePlayController extends MenuController {
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
             return CANT_ACTIVATE_EFFECT_ON_THIS_TURN;
-        else if (((MagicCard) selectedCard).isActivated())
+        else if ( selectedCard.isActivated())
             return YOU_ALREADY_ACTIVATED_THIS_CARD;
         else if (((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD &&
                 (currentPlayer.getMagicCardZone()).getNumberOfCard() == 5)
@@ -417,6 +417,27 @@ public class GamePlayController extends MenuController {
         selectedCard= null;
         return SPELL_ACTIVATED;
     }
+
+    public void activateEffect()   //TODO : should be called in view whenever we get "SPELL_ACTIVATED"
+    {  selectedCard.setActivated(true);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public DuelMenuResponses normalAttack(int number) {
         DuelMenuResponses responses = attackController.normalAttack(number);
@@ -550,6 +571,7 @@ public class GamePlayController extends MenuController {
 
 
 
+
     public void defineWinner() {
         Player winner;
         Player loser;
@@ -599,6 +621,23 @@ public class GamePlayController extends MenuController {
                 duelMenu.printResponse(END_MATCH);
             }
         }
+    }
+    public Boolean isSpellSSetInThisTurn( MagicCard magicCard)
+    {   for(MagicCard magicCard1 : setSpellCardsInTurn)
+    {
+        if(magicCard==magicCard1)
+            return true;
+    }
+    return false;
+    }
+    public Boolean isTrapSetInThisTurn( MagicCard magicCard)
+    {
+        for(MagicCard magicCard1 : setTrapCardsInTurn)
+        {
+            if(magicCard1 ==magicCard)
+                return true;
+        }
+        return false;
     }
 
 

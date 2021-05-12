@@ -21,6 +21,16 @@ public class Card {
     protected Boolean isSet = false;
     protected Boolean isSelected = false;
     protected CardType cardType;
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    private boolean isActivated;
+
 
     public Boolean getHidden() {
         return isHidden;

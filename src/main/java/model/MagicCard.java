@@ -11,16 +11,6 @@ public class MagicCard extends Card {
     @SerializedName("Icon (Property)")
     private CardIcon cardIcon;
 
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    public void setActivated(boolean activated) {
-        isActivated = activated;
-    }
-
-    private boolean isActivated;
-
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
     }
