@@ -1,13 +1,18 @@
 package controller;
 
 import model.Card;
+import model.MagicCard;
 import model.MonsterCard;
 import model.Player;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class EffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
+    ArrayList<MonsterCard> monstersWeTookControl = new ArrayList<>();
+    HashMap<MagicCard, Card> equippedCardsBySpells = new HashMap<>();
 
 
     public void addATK(MonsterCard.MonsterType type, Boolean both, int amount) {
@@ -83,16 +88,74 @@ public class EffectController {
             }
         }
     }
+
     public int numberOfDeadMonsters() {
         int i = 0;
         for (Card card : gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards()) {
-            if (card!=null && card instanceof MonsterCard)
+            if (card != null && card instanceof MonsterCard)
                 i++;
         }
         return i;
     }
 
+    public int numberOfWholeMagicCards() {
+        return (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard() + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard());
+    }
+
+    public void getControl(MonsterCard monsterCard)
+    { gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+      gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+        monstersWeTookControl.add(monsterCard);
+    }
+    public void removeControl()
+    {   for( MonsterCard monsterCard : monstersWeTookControl)
+    {  gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+        monstersWeTookControl.remove(monsterCard);
+    }
+    }
+
+    public Player getOwnerOfMagicCard(Card card)
+    { if( gamePlayController.getCurrentPlayer().getMagicCardZone().isExist(card))
+        return gamePlayController.getCurrentPlayer();
+        else return gamePlayController.getOpponentPlayer();
+    }
+
+
+    public GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+    }
+
+    public ArrayList<MonsterCard> getMonstersWeTookControl() {
+        return monstersWeTookControl;
+    }
+
+    public void setMonstersWeTookControl(ArrayList<MonsterCard> monstersWeTookControl) {
+        this.monstersWeTookControl = monstersWeTookControl;
+    }
+
+    public HashMap<MagicCard, Card> getEquippedCardsBySpells() {
+        return equippedCardsBySpells;
+    }
+
+    public void setEquippedCardsBySpells(HashMap<MagicCard, Card> equippedCardsBySpells) {
+        this.equippedCardsBySpells = equippedCardsBySpells;
+    }
+
+    public Boolean askToBeActivatedInRivalsTurn()
+    {
+
+    }
 }
+
+
+
+
+
 
 
 

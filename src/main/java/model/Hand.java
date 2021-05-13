@@ -64,5 +64,11 @@ public class Hand extends Zone{
     }
 
 
+    public ArrayList<Card> getZoneCards() {
+        return zoneCards;
+    }
 
+    public void setZoneCards(ArrayList<Card> zoneCards) {
+        this.zoneCards = zoneCards;
+    }
 }

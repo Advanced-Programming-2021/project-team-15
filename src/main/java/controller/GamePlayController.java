@@ -6,6 +6,7 @@ import view.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static controller.responses.DuelMenuResponses.*;
@@ -29,7 +30,7 @@ public class GamePlayController extends MenuController {
     private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
-    private ArrayList<Card> activatedCardInTurn = new ArrayList<>();
+    private HashMap<Player , Card> activatedCards = new HashMap<>();
     private ArrayList<MagicCard> setTrapAndSpellCardsInTurn = new ArrayList<>();
     private ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
 
@@ -438,6 +439,15 @@ public class GamePlayController extends MenuController {
 
 
 
+        public void callCardWitchCanBeActivated()
+        {
+
+
+
+        }
+
+
+
 
 
 
@@ -506,7 +516,6 @@ public class GamePlayController extends MenuController {
         summonedOrSetMonstersInTurn.clear();
         setSpellCardsInTurn.clear();
         setTrapCardsInTurn.clear();
-        activatedCardInTurn.clear();
         setTrapAndSpellCardsInTurn.clear();
         attackController.getAttackedCardsInTurn().clear();
         currentPlayer.setFirstTurn(false);
@@ -522,8 +531,8 @@ public class GamePlayController extends MenuController {
     }
 
     public Boolean isSelectedCardActivated() {
-        for (Card card : activatedCardInTurn) {
-            if (selectedCard == card)
+        for (Map.Entry<Player, Card> card :activatedCards.entrySet()) {
+            if (selectedCard == card.getValue())
                 return true;
         }
         return false;
@@ -672,14 +681,6 @@ public class GamePlayController extends MenuController {
         this.summonedOrSetMonstersInTurn = summonedOrSetMonstersInTurn;
     }
 
-    public ArrayList<Card> getActivatedCardInTurn() {
-        return activatedCardInTurn;
-    }
-
-    public void setActivatedCardInTurn(ArrayList<Card> activatedCardInTurn) {
-        this.activatedCardInTurn = activatedCardInTurn;
-    }
-
     public ArrayList<MagicCard> getSetTrapAndSpellCardsInTurn() {
         return setTrapAndSpellCardsInTurn;
     }
@@ -703,4 +704,21 @@ public class GamePlayController extends MenuController {
     public void setSelectedCard(Card selectedCard) {
         this.selectedCard = selectedCard;
     }
+
+    public DuelMenu getDuelMenu() {
+        return duelMenu;
+    }
+
+    public void setDuelMenu(DuelMenu duelMenu) {
+        this.duelMenu = duelMenu;
+    }
+
+    public HashMap<Player, Card> getActivatedCards() {
+        return activatedCards;
+    }
+
+    public void setActivatedCards(HashMap<Player, Card> activatedCards) {
+        this.activatedCards = activatedCards;
+    }
+
 }

@@ -11,6 +11,16 @@ public class Player  {
     private MagicCardZone magicCardZone;
     private Boolean haveSelectedCard;
 
+    public Boolean getCanDraw() {
+        return canDraw;
+    }
+
+    public void setCanDraw(Boolean canDraw) {
+        this.canDraw = canDraw;
+    }
+
+    private Boolean canDraw= true;
+
     public Boolean getFirstTurn() {
         return firstTurn;
     }

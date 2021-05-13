@@ -12,6 +12,14 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
+    public void moveToFirstEmptyPlace(Card card) {
+        for (Integer key : zoneCards.keySet()) {
+            if (zoneCards.get(key) == null) {
+                zoneCards.put(key,card);
+                return;
+            }
+        }
+    }
      public void reset()
      {    zoneCards.clear();
          for (int i = 1 ; i<5; i++)
@@ -32,6 +40,14 @@ public class NumericZone extends Zone {
         zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         zoneCards.put(address , null);
+    }
+    public Boolean isExist(Card card)
+    { for(Map.Entry<Integer ,Card > entry : zoneCards.entrySet())
+    {  if(entry.getValue() ==card)
+        return true;
+    }
+    return false;
+
     }
     public int  getNumberOfCard()
     {    int i =0 ;
@@ -54,4 +70,7 @@ public class NumericZone extends Zone {
     public void setZoneCards(TreeMap zoneCards) {
         this.zoneCards = zoneCards;
     }
+
+
+
 }
