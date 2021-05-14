@@ -63,6 +63,7 @@ public enum DuelMenuResponses {
     INVALID_CELL_NUMBER,
     EFFECT_DONE_SUCCESSFULLY,
     ENTER_PLAYER,
+<<<<<<< HEAD
     WANNA_ADD_ANOTHER_CARD,
     DO_YOU_WANT_TO_ACTIVATE_THE_SPELL_CARD,
     PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET,
@@ -72,5 +73,8 @@ public enum DuelMenuResponses {
 =======
     PREPARATIONS_OF_THIS_TRAP_ARE_NOT_DONE_YET,
 >>>>>>> working_on_gamePlay
+=======
+    WANNA_ADD_ANOTHER_CARD;
+>>>>>>> parent of b627ff8... again fucking action and effects
 
 }

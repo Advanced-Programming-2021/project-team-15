@@ -90,20 +90,21 @@ public class TrapEffectController {
         if(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand()!=0) {
 =======
     public Boolean negateAttack() {
-        for (Map.Entry<Player, Card> entry : gamePlayController.getActivatedCards().entrySet()) {
-            if (entry.getValue().getCardName().equals("Negate Attack") && entry.getKey() == gamePlayController.getOpponentPlayer()) {
-                if (effectController.askToBeActivatedInRivalsTurn())
-                    return true;
+        for (Map.Entry<Player, Card> entry : gamePlayController.getActivatedCards().entrySet())
+        {
+            if(entry.getValue().getCardName().equals("Negate Attack") && entry.getKey()==gamePlayController.getOpponentPlayer())
+            {  if(effectController.askToBeActivatedInRivalsTurn())
+                return true;
 
             }
         }
-        return false;
+      return false;
     }
 
-    public void magicJammer() {
+    public void majicJammer() {
         Player player;
         for (Map.Entry<Player, Card> entry : gamePlayController.getActivatedCards().entrySet()) {
-            if (entry.getValue().getCardName().equals("Magic Jammer")) ;
+            if (entry.getValue().getCardName().equals("Majic Jammer")) ;
             player = entry.getKey();
 >>>>>>> working_on_gamePlay
             while (true) {
@@ -139,6 +140,7 @@ public class TrapEffectController {
                return;
 =======
 
+<<<<<<< HEAD
     public void canActivateCallOfTheHaunted() {
         int count = 0;
         for (int i = 0; i < gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size(); i++) {
@@ -158,25 +160,40 @@ public class TrapEffectController {
     public void callOfTheHunted() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
+=======
+    public void callOfHunted()
+    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
+        while (true)
+        {
+>>>>>>> parent of b627ff8... again fucking action and effects
             int num = duelMenu.scannerNum();
-            if (num <= gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size() &&
-                    (gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1) instanceof MonsterCard)) {
-                gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1), gamePlayController.getCurrentPlayer());
-                gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().remove(num - 1);
-                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-                return;
-            } else {
+            if(num <= gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size() &&
+                    ( gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard))
+            {   gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1), gamePlayController.getCurrentPlayer());
+                gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().remove(num-1);
+               duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+               return;
+            }
+            else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
             }
         }
     }
 
-    public void solemnWarning() {
-        gamePlayController.getCurrentPlayer().reduceLifePoint(2000);
-        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getOpponentPlayer());
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
-
-
