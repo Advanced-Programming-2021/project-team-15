@@ -18,8 +18,6 @@ public class Card {
     @SerializedName("Description")
     protected String cardDescription;
     protected String cardNumber;
-    protected Boolean isSet = false;
-    protected Boolean isSelected = false;
     protected CardType cardType;
     public boolean isActivated() {
         return isActivated;
@@ -114,21 +112,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public Boolean getSet() {
-        return isSet;
-    }
-
-    public void setSet(Boolean set) {
-        isSet = set;
-    }
-
-    public Boolean getSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(Boolean selected) {
-        isSelected = selected;
-    }
 
     public CardType getCardType() {
         return cardType;

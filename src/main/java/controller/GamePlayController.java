@@ -179,7 +179,6 @@ public class GamePlayController extends MenuController {
         NumericZone zone = (NumericZone) player.getZoneByZoneType(zoneTypeEnum);
         if (zone.getCardByPlaceNumber(cardNumber) != null) {
             selectedCard = zone.getCardByPlaceNumber(cardNumber);
-            selectedCard.setSelected(true);
             return DuelMenuResponses.CARD_SELECTED;
         } else return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
     }
@@ -196,7 +195,6 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
         else {
             selectedCard = player.getFieldZone().getZoneCards().get(0);
-            selectedCard.setSelected(true);
             return DuelMenuResponses.CARD_SELECTED;
         }
 
@@ -204,7 +202,6 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses deSelect() {
         if (selectedCard != null) {
-            selectedCard.setSelected(false);
             selectedCard = null;
             return DuelMenuResponses.CARD_DESELECTED;
         } else return DuelMenuResponses.NO_CARD_SELECTED;
@@ -294,7 +291,8 @@ public class GamePlayController extends MenuController {
         return DuelMenuResponses.CARD_SUMMONED;
     }
     public DuelMenuResponses setCommand()
-    {   if (selectedCard == null)
+    {
+        if (selectedCard == null)
         return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = set();
@@ -324,7 +322,6 @@ public class GamePlayController extends MenuController {
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
-        selectedCard.setSet(true);
         setSetCard(selectedCard);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
         selectedCard.setHidden(true);
@@ -372,7 +369,6 @@ public class GamePlayController extends MenuController {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
         currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
-        selectedCard.setSet(true);
         selectedCard.setHidden(true);
         setSpellCardsInTurn.add((MagicCard) selectedCard);
         setTrapAndSpellCardsInTurn.add((MagicCard) selectedCard);
@@ -384,7 +380,6 @@ public class GamePlayController extends MenuController {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
         currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
-        selectedCard.setSet(true);
         selectedCard.setHidden(true);
         setTrapCardsInTurn.add((MagicCard) selectedCard);
         setTrapAndSpellCardsInTurn.add((MagicCard) selectedCard);
@@ -511,8 +506,9 @@ public class GamePlayController extends MenuController {
     }
 
     public void doSummon() {
+        selectedCard.setHidden(false);
+        ((MonsterCard)selectedCard).setMode(MonsterCard.Mode.ATTACK);
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
-        ((MonsterCard) selectedCard).setSummoned(true);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
     }
 

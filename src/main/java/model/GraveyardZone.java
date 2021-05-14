@@ -24,15 +24,11 @@ public class GraveyardZone extends Zone {
               spellEffectController.forest(false);
 
 
-
-
-
         if(card instanceof  MonsterCard)
     {   ((MonsterCard)card).setGameDEF(((MonsterCard) card).getDefensePoint());
         ((MonsterCard)card).setGameATK(((MonsterCard) card).getAttackPoint());
 
     }
-
         card.setCardPlacedZone(this);
         zoneCards.add(card);
     }

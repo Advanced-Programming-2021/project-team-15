@@ -140,15 +140,6 @@ public class EffectController {
     }
 
 
-
-
-
-
-
-    public Boolean askToBeActivatedInRivalsTurn()
-    {
-
-    }
 }
 
 
