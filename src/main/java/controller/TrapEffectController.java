@@ -1,10 +1,11 @@
 package controller;
 
+import controller.EffectController;
+import controller.GamePlayController;
 import controller.responses.DuelMenuResponses;
 import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
-import model.Player;
 import view.DuelMenu;
 
 import java.util.Map;
@@ -47,8 +48,8 @@ public class TrapEffectController {
         {
             if(card.getCardName().equals(string))
             { gamePlayController.getOpponentPlayer().getHand().removeCardFromHand(card);
-              gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
-               did= true;
+                gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
+                did= true;
             }
         }
         if(!did)
@@ -78,35 +79,15 @@ public class TrapEffectController {
         gamePlayController.getOpponentPlayer().setCanDraw(false);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
 
-<<<<<<< HEAD
     }
 
     public void negateAttack(Card trap) {
-      gamePlayController.goNextPhase();
+        gamePlayController.goNextPhase();
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
     }
 
     public void magicJammer(Card trap) {
         if(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand()!=0) {
-=======
-    public Boolean negateAttack() {
-        for (Map.Entry<Player, Card> entry : gamePlayController.getActivatedCards().entrySet())
-        {
-            if(entry.getValue().getCardName().equals("Negate Attack") && entry.getKey()==gamePlayController.getOpponentPlayer())
-            {  if(effectController.askToBeActivatedInRivalsTurn())
-                return true;
-
-            }
-        }
-      return false;
-    }
-
-    public void majicJammer() {
-        Player player;
-        for (Map.Entry<Player, Card> entry : gamePlayController.getActivatedCards().entrySet()) {
-            if (entry.getValue().getCardName().equals("Majic Jammer")) ;
-            player = entry.getKey();
->>>>>>> working_on_gamePlay
             while (true) {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
                 int num = duelMenu.scannerNum();
@@ -125,75 +106,7 @@ public class TrapEffectController {
             }
         }
     }
-<<<<<<< HEAD
-     //TODO THIS
-    public void callOfHunted()
-    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
-        while (true)
-        {
-            int num = duelMenu.scannerNum();
-            if(num <= gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size() &&
-                    ( gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard))
-            {   gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1), gamePlayController.getCurrentPlayer());
-                gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().remove(num-1);
-               duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-               return;
-=======
-
-<<<<<<< HEAD
-    public void canActivateCallOfTheHaunted() {
-        int count = 0;
-        for (int i = 0; i < gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size(); i++) {
-            if (gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(i) instanceof MonsterCard) {
-                count++;
->>>>>>> working_on_gamePlay
-            }
-        }
-        if (count == 0)
-            duelMenu.printResponse(PREPARATIONS_OF_THIS_TRAP_ARE_NOT_DONE_YET);
-        else {
-            callOfTheHunted();
-        }
-    }
-
-    // TODO summon the monster here in attack mode
-    public void callOfTheHunted() {
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
-        while (true) {
-=======
-    public void callOfHunted()
-    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
-        while (true)
-        {
->>>>>>> parent of b627ff8... again fucking action and effects
-            int num = duelMenu.scannerNum();
-            if(num <= gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().size() &&
-                    ( gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard))
-            {   gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1), gamePlayController.getCurrentPlayer());
-                gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().remove(num-1);
-               duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-               return;
-            }
-            else {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+    //TODO THIS
+//    public void callOfHunted()
+//    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
+//        while (true)
