@@ -95,22 +95,23 @@ public class EffectController {
         return (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard() + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard());
     }
 
-    public void getControl(MonsterCard monsterCard)
-    { gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
-      gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+    public void getControl(MonsterCard monsterCard) {
+        gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
         monstersWeTookControl.add(monsterCard);
     }
-    public void removeControl()
-    {   for( MonsterCard monsterCard : monstersWeTookControl)
-    {  gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
-        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
-        monstersWeTookControl.remove(monsterCard);
-    }
+
+    public void removeControl() {
+        for (MonsterCard monsterCard : monstersWeTookControl) {
+            gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+            monstersWeTookControl.remove(monsterCard);
+        }
     }
 
-    public Player getOwnerOfMagicCard(Card card)
-    { if( gamePlayController.getCurrentPlayer().getMagicCardZone().isExist(card))
-        return gamePlayController.getCurrentPlayer();
+    public Player getOwnerOfMagicCard(Card card) {
+        if (gamePlayController.getCurrentPlayer().getMagicCardZone().isExist(card))
+            return gamePlayController.getCurrentPlayer();
         else return gamePlayController.getOpponentPlayer();
     }
 
