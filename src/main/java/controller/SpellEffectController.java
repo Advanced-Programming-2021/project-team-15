@@ -26,6 +26,8 @@ public class SpellEffectController {
     //TODO : FIRST 4 EFFECTS SHOULD HE CHECKED DUHHHHHHH
 
     public void yami(Boolean x) {
+        gamePlayController.getSelectedCard().setHidden(false);
+        duelMenu.printResponse(SPELL_ACTIVATED);
         int amount = 200;
         if (!x)
             amount = -amount;
@@ -50,6 +52,8 @@ public class SpellEffectController {
 
 
     public void forest(Boolean x) {
+        gamePlayController.getSelectedCard().setHidden(false);
+        duelMenu.printResponse(SPELL_ACTIVATED);
         int amount = 200;
         if (!x)
             amount = -amount;
@@ -71,6 +75,8 @@ public class SpellEffectController {
     }
 
     public void closedForest(Boolean x) {
+        gamePlayController.getSelectedCard().setHidden(false);
+        duelMenu.printResponse(SPELL_ACTIVATED);
         int i = effectController.numberOfDeadMonsters();
         if (!x)
             i = -i;
@@ -91,6 +97,8 @@ public class SpellEffectController {
 
 
     public void umiiruka(Boolean x) {
+        gamePlayController.getSelectedCard().setHidden(false);
+        duelMenu.printResponse(SPELL_ACTIVATED);
         if (!x) {
             effectController.addATK(MonsterCard.MonsterType.AQUA, true, -500);
             effectController.addATK(MonsterCard.MonsterType.AQUA, true, 400);
@@ -300,7 +308,7 @@ public class SpellEffectController {
 //
 //    }
 
-    public void mysticalSpaceTyphoon() {
+    public void mysticalSpaceTyphoon(MagicCard card) {
         Map<Integer, MagicCard> map;
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
@@ -318,7 +326,7 @@ public class SpellEffectController {
             if (map.get(num) != null) {
                 player.getMagicCardZone().moveCardToGraveyard(num, player);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(card, gamePlayController.getCurrentPlayer());
 
                 return;
             } else {
@@ -332,7 +340,7 @@ public class SpellEffectController {
 //        //TODO
 //    }
 
-    public void twinTwisters() {
+    public void twinTwisters(Card card) {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);  // of your hand !
         while (true) {
@@ -361,13 +369,13 @@ public class SpellEffectController {
                         continue;
                     } else {
                         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-                        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+                        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(card, gamePlayController.getCurrentPlayer());
 
                         break;
                     }
                 } else if (i == 2) {
                     duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(card, gamePlayController.getCurrentPlayer());
 
                     break;
                 }
@@ -392,6 +400,7 @@ public class SpellEffectController {
             if(map.get(num)!=null)
             {  effectController.getControl(map.get(num));
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard() ,gamePlayController.getCurrentPlayer());
                 return;
             }else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);

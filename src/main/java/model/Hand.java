@@ -10,12 +10,12 @@ public class Hand extends Zone{
     public Hand() {
         super(ZoneType.HAND);
         zoneCards = new ArrayList<>();
-        for(int i = 0 ; i <4 ; i ++)
+        for(int i = 0 ; i <=4 ; i ++)
             zoneCards.add(null);
     }
     public void reset()
     {  zoneCards.clear();
-        for(int i = 0 ; i <4 ; i ++)
+        for(int i = 0 ; i <=4 ; i ++)
             zoneCards.add(null);
     }
     public ArrayList getCardsInHand()

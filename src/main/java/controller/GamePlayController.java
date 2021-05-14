@@ -124,8 +124,13 @@ public class GamePlayController extends MenuController {
     }
     public void drawPhase(){
         changeTurn();
+        if(currentPlayer.getCanDraw()){
         currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-        currentPlayer.getDeckZone().getZoneCards().remove(0);
+        currentPlayer.getDeckZone().getZoneCards().remove(0);}
+         else {
+            currentPlayer.setCanDraw(false);
+            goNextPhase();
+        }
     }
     public Boolean RPS(String firstPlayerMove ,String secondPlayerMove)
     {

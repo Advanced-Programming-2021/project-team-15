@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import static controller.responses.DuelMenuResponses.*;
 
 public class AttackController  {
+    private ArrayList<MonsterCard> cantBeAttacked = new ArrayList<>();
     private GamePlayController gamePlayController = GamePlayController.getInstance();
     private static int damage;
 
@@ -122,4 +123,19 @@ public class AttackController  {
     }
 
 
+    public ArrayList<MonsterCard> getCantBeAttacked() {
+        return cantBeAttacked;
+    }
+
+    public void setCantBeAttacked(ArrayList<MonsterCard> cantBeAttacked) {
+        this.cantBeAttacked = cantBeAttacked;
+    }
+
+    public GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public void setGamePlayController(GamePlayController gamePlayController) {
+        this.gamePlayController = gamePlayController;
+    }
 }

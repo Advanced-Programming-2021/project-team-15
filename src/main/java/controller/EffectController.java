@@ -60,31 +60,24 @@ public class EffectController {
     }
 
     public void destroyCards(Card.CardType type, Boolean both) {
-        Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
+        Map<Integer, MonsterCard> monster = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
+        Map<Integer, MagicCard> magic = gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards();
+        for (int i = 1; i <= 5; i++) {
+            if (monster.get(i) != null && type == Card.CardType.MONSTER)
+                gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
+            if (magic.get(i) != null && type == Card.CardType.MAGIC)
+                gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
 
-        for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
-            if (type == Card.CardType.MONSTER) {
-                if (entry.getValue() != null) {
-                    gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(entry.getKey(), gamePlayController.getOpponentPlayer());
-                }
-            } else if (type == Card.CardType.MAGIC) {
-                if (entry.getValue() != null) {
-                    gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(entry.getKey(), gamePlayController.getOpponentPlayer());
-                }
-            }
         }
         if (both) {
-            map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
-            for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
-                if (type == Card.CardType.MONSTER) {
-                    if (entry.getValue() != null) {
-                        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(entry.getKey(), gamePlayController.getCurrentPlayer());
-                    }
-                } else if (type == Card.CardType.MAGIC) {
-                    if (entry.getValue() != null) {
-                        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(entry.getKey(), gamePlayController.getCurrentPlayer());
-                    }
-                }
+            Map<Integer, MonsterCard> monster2 = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
+            Map<Integer, MagicCard> magic2 = gamePlayController.getCurrentPlayer().getMagicCardZone().getZoneCards();
+            for (int j = 1; j < 6; j++) {
+                if (monster.get(j) != null && type == Card.CardType.MONSTER)
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
+                if (magic.get(j) != null && type == Card.CardType.MAGIC)
+                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
+
             }
         }
     }
@@ -145,6 +138,12 @@ public class EffectController {
     public void setEquippedCardsBySpells(HashMap<MagicCard, Card> equippedCardsBySpells) {
         this.equippedCardsBySpells = equippedCardsBySpells;
     }
+
+
+
+
+
+
 
     public Boolean askToBeActivatedInRivalsTurn()
     {
