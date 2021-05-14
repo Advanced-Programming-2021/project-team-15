@@ -32,62 +32,60 @@ public class TrapEffectController {
                 gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(entry.getKey(), gamePlayController.getCurrentPlayer());
         }
         duelMenu.printResponse(DuelMenuResponses.EFFECT_DONE_SUCCESSFULLY);
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap,gamePlayController.getCurrentPlayer());
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
-    public void  mindCrush(Card trap)
-    {   Boolean did = false;
-        String string =  duelMenu.scannerLine();
-        for(Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards())
-        {  if(card.getCardName().equals(string))
-        {   gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);
-            gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
-            did =true;
-        }
-        }
-        for(Card card : gamePlayController.getOpponentPlayer().getHand().getZoneCards())
-        {
-            if(card.getCardName().equals(string))
-            { gamePlayController.getOpponentPlayer().getHand().removeCardFromHand(card);
+
+    public void mindCrush(Card trap) {
+        Boolean did = false;
+        String string = duelMenu.scannerLine();
+        for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
+            if (card.getCardName().equals(string)) {
+                gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
-                did= true;
+                did = true;
             }
         }
-        if(!did)
-        {
-            Random random  = new Random();
+        for (Card card : gamePlayController.getOpponentPlayer().getHand().getZoneCards()) {
+            if (card.getCardName().equals(string)) {
+                gamePlayController.getOpponentPlayer().getHand().removeCardFromHand(card);
+                gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
+                did = true;
+            }
+        }
+        if (!did) {
+            Random random = new Random();
             int index = random.nextInt(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand());
             gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(index));
             gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(index));
         }
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap,gamePlayController.getCurrentPlayer());
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void trapHole(Card  trap) {
+    public void trapHole(Card trap) {
         gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
     public void torrentialTribute(Card trap) {
         effectController.destroyCards(Card.CardType.MONSTER, true);
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
 
     }
 
-    public void timeSeal(Card trap)
-    {
+    public void timeSeal(Card trap) {
         gamePlayController.getOpponentPlayer().setCanDraw(false);
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
 
     }
 
     public void negateAttack(Card trap) {
         gamePlayController.goNextPhase();
-        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap ,gamePlayController.getCurrentPlayer() );
+        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
     public void magicJammer(Card trap) {
-        if(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand()!=0) {
+        if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0) {
             while (true) {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
                 int num = duelMenu.scannerNum();
@@ -110,3 +108,4 @@ public class TrapEffectController {
 //    public void callOfHunted()
 //    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
 //        while (true)
+}
