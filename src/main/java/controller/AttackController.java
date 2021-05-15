@@ -1,19 +1,40 @@
 package controller;
 
 import controller.responses.DuelMenuResponses;
+import model.Card;
 import model.Game;
 import model.MonsterCard;
 import model.Phase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static controller.responses.DuelMenuResponses.*;
 
 public class AttackController  {
-    private ArrayList<MonsterCard> cantBeAttacked = new ArrayList<>();
     private GamePlayController gamePlayController = GamePlayController.getInstance();
+
+    public ArrayList<Card> getAttackStoppersInTurn() {
+        return attackStoppersInTurn;
+    }
+
+    public void setAttackStoppersInTurn(ArrayList<Card> attackStoppersInTurn) {
+        this.attackStoppersInTurn = attackStoppersInTurn;
+    }
+
+    private ArrayList<Card> attackStoppersInTurn = new ArrayList();
     private static int damage;
 
+
+    public ArrayList<MonsterCard> getCantBeAttacked() {
+        return cantBeAttacked;
+    }
+
+    public void setCantBeAttacked(ArrayList<MonsterCard> cantBeAttacked) {
+        this.cantBeAttacked = cantBeAttacked;
+    }
+
+    private ArrayList<MonsterCard> cantBeAttacked= new ArrayList<>();
     public ArrayList<MonsterCard> getAttackedCardsInTurn() {
         return attackedCardsInTurn;
     }
@@ -56,6 +77,10 @@ public class AttackController  {
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard target, int number, Boolean hidden) {
+        Boolean isFlipped= false;
+        if(hidden)
+            isFlipped =true;
+        target.setHidden(false);
         int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameDEF();
         damage = difference;
         if (difference > 0) {
@@ -79,6 +104,7 @@ public class AttackController  {
     }
 
     public DuelMenuResponses attackAttackPos(MonsterCard target, int number) {
+        target.setHidden(false);
         int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameATK();
         damage = difference;
         if (difference > 0) {
@@ -123,13 +149,6 @@ public class AttackController  {
     }
 
 
-    public ArrayList<MonsterCard> getCantBeAttacked() {
-        return cantBeAttacked;
-    }
-
-    public void setCantBeAttacked(ArrayList<MonsterCard> cantBeAttacked) {
-        this.cantBeAttacked = cantBeAttacked;
-    }
 
     public GamePlayController getGamePlayController() {
         return gamePlayController;
@@ -137,5 +156,20 @@ public class AttackController  {
 
     public void setGamePlayController(GamePlayController gamePlayController) {
         this.gamePlayController = gamePlayController;
+    }
+
+    public Boolean checkCanBeDestroyed()
+    {  //MASHAMLLON
+
+    }
+    public Boolean canBeaAttacked(){
+        //COMMAND KNIGHT
+    }
+    public Boolean haveBeenAttackStopper(Card card)
+    { for(Card card1 : attackStoppersInTurn)
+    { if(card1 ==card)
+            return  true;
+    }
+    return false;
     }
 }

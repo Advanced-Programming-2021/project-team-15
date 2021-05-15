@@ -507,8 +507,9 @@ public class SpellEffectController {
         while (true) {
             int num = duelMenu.scannerNum();
             if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num) instanceof MonsterCard)) {
+
                 player.getMonsterCardZone().summonOrSetMonster((MonsterCard) player.getGraveyardZone().getZoneCards().get(num - 1), player);
-                //?  pos?
+                (player.getGraveyardZone().getZoneCards().get(num - 1)).setHidden(true); //?
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
             } else {
@@ -592,6 +593,7 @@ public class SpellEffectController {
                         gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(i));
                         gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(out[i]);
                     }
+                    duelMenu.printResponse(ENTER_POS);
                     String ans = duelMenu.scannerLine();
                     if (ans.equals("ATK"))
                         getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setMode(MonsterCard.Mode.ATTACK);

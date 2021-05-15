@@ -113,6 +113,12 @@ public class EffectController {
         return gamePlayController.getCurrentPlayer();
         else return gamePlayController.getOpponentPlayer();
     }
+    public Player getOwnerOfMonster(Card card)
+    {  if(gamePlayController.getCurrentPlayer().getMonsterCardZone().isExist(card))
+        return gamePlayController.getCurrentPlayer();
+        else return gamePlayController.getOpponentPlayer();
+
+    }
 
 
     public GamePlayController getGamePlayController() {
@@ -138,6 +144,7 @@ public class EffectController {
     public void setEquippedCardsBySpells(HashMap<MagicCard, Card> equippedCardsBySpells) {
         this.equippedCardsBySpells = equippedCardsBySpells;
     }
+
 
 
 }

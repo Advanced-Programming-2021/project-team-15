@@ -11,7 +11,6 @@ public class MonsterCard extends Card {
     @SerializedName("Monster Type") private MonsterType monsterType;
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
     @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
-
     private Boolean isSummoned = false;
     private Mode mode;
 
@@ -156,7 +155,7 @@ public class MonsterCard extends Card {
         @SerializedName("Machine") MACHINE("Machine"),
         @SerializedName("Rock") ROCK("Rock"),
         @SerializedName("Insect") INSECT("Insect"),
-        @SerializedName("Cyber") CYBER("Cyber"),
+        @SerializedName("Cyberse") CYBER("Cyberse"),
         @SerializedName("Fairy") FAIRY("Fairy"),
         @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
         private String name;

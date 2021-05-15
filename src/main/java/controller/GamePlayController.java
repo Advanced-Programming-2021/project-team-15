@@ -19,6 +19,16 @@ public class GamePlayController extends MenuController {
             gamePlayController= new GamePlayController();
         return gamePlayController;
     }
+
+    public HashMap<MonsterCard, Integer> getSuijinVictims() {
+        return suijinVictims;
+    }
+
+    public void setSuijinVictims(HashMap<MonsterCard, Integer> suijinVictims) {
+        this.suijinVictims = suijinVictims;
+    }
+
+    private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
     private  Game game;
     private int currentPhaseNumber = 1;
@@ -123,6 +133,7 @@ public class GamePlayController extends MenuController {
         currentPlayer.setFirstTurn(true);
     }
     public void drawPhase(){
+        refresh();
         changeTurn();
         if(currentPlayer.getCanDraw()){
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
@@ -487,7 +498,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses goNextPhase() {
         if(currentPhaseNumber ==5)
-        {    currentPhaseNumber=1 ;
+        {    currentPhaseNumber=1;
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
@@ -513,6 +524,8 @@ public class GamePlayController extends MenuController {
     }
 
     public void refresh() {
+        suijinVictimsReset();
+        attackController.getAttackStoppersInTurn().clear();
         changedPositionCardsInTurn.clear();
         summonedOrSetMonstersInTurn.clear();
         setSpellCardsInTurn.clear();
@@ -720,6 +733,13 @@ public class GamePlayController extends MenuController {
 
     public void setActivatedCards(HashMap<Player, Card> activatedCards) {
         this.activatedCards = activatedCards;
+    }
+    public void suijinVictimsReset()
+    {
+        for(Map.Entry<MonsterCard, Integer> entry: suijinVictims.entrySet())
+        {  entry.getKey().setGameATK(entry.getValue()+entry.getKey().getGameATK());
+        }
+        suijinVictims.clear();
     }
 
 }
