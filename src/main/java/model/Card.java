@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.annotations.SerializedName;
+import controller.Limit;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,6 @@ public class Card {
     static {
         allCards = new ArrayList<>();
     }
-
     //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")
     protected String cardName;

@@ -1,5 +1,9 @@
 package model;
 
+import controller.Limit;
+
+import java.util.ArrayList;
+
 public class Player  {
     private  User user;
     private int lifePoint;
@@ -10,6 +14,16 @@ public class Player  {
     private MonsterCardZone monsterCardZone;
     private MagicCardZone magicCardZone;
     private Boolean haveSelectedCard;
+
+    public ArrayList<Limit> getLimits() {
+        return limits;
+    }
+
+    public void setLimits(ArrayList<Limit> limits) {
+        this.limits = limits;
+    }
+
+    private ArrayList<Limit> limits = new ArrayList<>();
 
     public Boolean getCanDraw() {
         return canDraw;

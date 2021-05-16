@@ -506,12 +506,19 @@ public class SpellEffectController {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int num = duelMenu.scannerNum();
-            if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num) instanceof MonsterCard)) {
-
-                player.getMonsterCardZone().summonOrSetMonster((MonsterCard) player.getGraveyardZone().getZoneCards().get(num - 1), player);
-                (player.getGraveyardZone().getZoneCards().get(num - 1)).setHidden(true); //?
-                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+            if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard)) {
+                Card card = player.getGraveyardZone().getZoneCards().get(num-1);
+                player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);
+                card.setHidden(false);
+                duelMenu.printResponse(ENTER_POS);
+                String ans = duelMenu.scannerLine();
+                //?  SPECIAL SUMMON
+                if (ans.equals("ATK"))
+                   ((MonsterCard) card).setMode(MonsterCard.Mode.ATTACK);
+                else
+                    ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);

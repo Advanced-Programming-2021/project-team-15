@@ -166,9 +166,10 @@ calculator.setGameATK(sum*300);
 }
 
 
-public void MirageDragon()
-{
-    //?
+//BE ROO DAR ZAMIN BASHAD MirageDragon()
+public void MirageDragon(Card card)
+{   if(card.getCardName().equals("Mirage Dragon"))
+      gamePlayController.getOpponentPlayer().getLimits().add(Limit.CANT_ACTIVATE_TRAP);
 }
 
 
@@ -222,6 +223,117 @@ public void checkFindAskTextChanger(ArrayList<Card> zoneCards)
         }
     }
 }
+public void doHeraldOfCreation()
+{     duelMenu.printResponse(ENTER_ONE_NUMBER);
+    while (true)
+    {   int n = duelMenu.scannerNum();
+        Card card=gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(n-1);
+        if(card != null)
+        {   gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
+            gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
+            duelMenu.printResponse(ENTER_ONE_NUMBER);
+            while (true)
+            {int num = duelMenu.scannerNum();
+                if(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) != null &&
+                        ( gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard) &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1)).getLevel()>=7)
+                {
+                    MonsterCard monsterCard = ((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1));
+                    gamePlayController.getCurrentPlayer().getGraveyardZone().removeCardFromGraveyardZone(monsterCard);
+                    gamePlayController.getCurrentPlayer().getHand().addCardToHand(monsterCard);
+                    duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                }
+                else {  duelMenu.printResponse(INVALID_CELL_NUMBER);
+                    duelMenu.printResponse(ENTER_ONE_NUMBER);
+                }
+            }
+
+        }
+        else {
+            duelMenu.printResponse(INVALID_CELL_NUMBER);
+            duelMenu.printResponse(ENTER_ONE_NUMBER);
+        }
+    }
+
+}
+public Boolean HeraldOfCreation(){
+
+       for (Card card : gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards())
+       {
+           if(card!=null && (card instanceof MonsterCard) && ((MonsterCard) card).getLevel()>=7  && gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand()!=0)
+               return true;
+       }
+       return false;
+}
+
+
+public void ExploderDragon()
+{
+   gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+    gamePlayController.getCurrentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
+    gamePlayController.getOpponentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
+}
+
+public Boolean TerratigertheEmpoweredWarrior()
+{  for (Card card : gamePlayController.getCurrentPlayer().getHand().getZoneCards())
+{  if(card!= null && (card instanceof MonsterCard) && ((MonsterCard) card).getLevel()<=4 && ((MonsterCard) card).getMonsterEffectType()== MonsterCard.MonsterEffectType.NORMAL)
+     return true;
+}
+return false;
+}
+
+public Boolean doTerratigertheEmpoweredWarrior()
+{   duelMenu.printResponse(ENTER_ONE_NUMBER);
+    while (true)
+    {
+        int num = duelMenu.scannerNum();
+        Card card= gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num-1);
+        if(card!= null&& (card instanceof MonsterCard ) && ((MonsterCard) card).getLevel()<=4 && ((MonsterCard) card).getMonsterEffectType()== MonsterCard.MonsterEffectType.NORMAL)
+        { gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) card, gamePlayController.getCurrentPlayer());
+            ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
+            duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY); }
+        else {   duelMenu.printResponse(INVALID_CELL_NUMBER);
+                  duelMenu.printResponse(ENTER_ONE_NUMBER);
+        }
+    }
+}
+
+public void TheTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
+{  duelMenu.printResponse(ENTER_ONE_NUMBER);
+    if(gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard()==5)
+    {
+        duelMenu.printResponse(MONSTER_ZONE_IS_FULL);
+        return;
+    }
+    while (true)
+    {
+        int num = duelMenu.scannerNum();
+        Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num-1);
+        if(card!=null)
+        {
+            gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
+            gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
+            gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster(theTricky, gamePlayController.getCurrentPlayer());
+            theTricky.setHidden(false);
+            duelMenu.printResponse(ENTER_POS);  //special summon?
+            String ans = duelMenu.scannerLine();
+            if (ans.equals("ATK"))
+               theTricky.setMode(MonsterCard.Mode.ATTACK);
+            else
+              theTricky.setMode(MonsterCard.Mode.DEFENSE);
+            duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+        } else {
+            duelMenu.printResponse(INVALID_CELL_NUMBER);
+            duelMenu.printResponse(ENTER_ONE_NUMBER);
+        }
+    }
+}
+
+
+
+
+
+
 }
 
 
