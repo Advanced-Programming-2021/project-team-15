@@ -15,7 +15,7 @@ public class LoginController extends MenuController {
         else if (User.getUserByNickname(nickName) != null)
             return LoginMenuResponses.USER_NICKNAME_ALREADY_EXISTS;
         else {
-            new User(userName, nickName, passWord);
+            User.getAllUsers().add(new User(userName, nickName, passWord));
             jsonController.refreshUsersToFileJson();
             return LoginMenuResponses.USER_CREATE_SUCCESSFUL;
         }
@@ -28,6 +28,16 @@ public class LoginController extends MenuController {
         else {
             MenuController.setUser(User.getUserByUserName(username));
             return LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
+        }
+    }
+
+    public boolean removeUser(String username) {
+        jsonController.refreshUsersFromFileJson();
+        if (User.getUserByUserName(username)==null) return false;
+        else{
+            User.removeUserByUsername(username);
+            jsonController.refreshUsersToFileJson();
+            return true;
         }
     }
 }

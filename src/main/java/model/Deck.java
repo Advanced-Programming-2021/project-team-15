@@ -1,5 +1,7 @@
 package model;
 
+import controller.MenuController;
+
 import java.util.ArrayList;
 
 public class Deck {

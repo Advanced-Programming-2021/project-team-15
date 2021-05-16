@@ -159,11 +159,12 @@ public class AttackController  {
     }
 
     public Boolean checkCanBeDestroyed()
-    {  //MASHAMLLON
-
+    {  //MASHAMLLON}
+        return true;
     }
     public Boolean canBeaAttacked(){
         //COMMAND KNIGHT
+        return true;
     }
     public Boolean haveBeenAttackStopper(Card card)
     { for(Card card1 : attackStoppersInTurn)

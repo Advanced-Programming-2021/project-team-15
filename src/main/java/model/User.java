@@ -9,7 +9,7 @@ public class User {
         allUsers = new ArrayList<>();
     }
 
-    private Deck activeDeck;
+    private transient Deck activeDeck;
     private ArrayList<Deck> allDecksOfUser;
     private ArrayList<Card> allCardsOfUser;
     private String userName;
@@ -24,7 +24,6 @@ public class User {
         this.passWord = passWord;
         allDecksOfUser = new ArrayList<>();
         allCardsOfUser = new ArrayList<>();
-        allUsers.add(this);
     }
 
     public static User getUserByUserName(String userName) {
@@ -33,6 +32,15 @@ public class User {
                 return user;
         }
         return null;
+    }
+
+    public static void removeUserByUsername(String username) {
+        for (User user : allUsers) {
+            if (user.userName.equals(username)) {
+                User.getAllUsers().remove(user);
+                return;
+            }
+        }
     }
 
     public static User getUserByNickname(String nickname) {

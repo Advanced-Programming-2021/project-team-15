@@ -59,7 +59,7 @@ public class DeckController extends MenuController {
         else {
             user.addCard(addingDeck.getCardByName(cardName, deckType));
             addingDeck.removeCardFromDeckByName(cardName, deckType);
-            if (addingDeck.getMainDeck().size()< addingDeck.mainDeckMinCardCount)
+            if (addingDeck.getMainDeck().size() < addingDeck.mainDeckMinCardCount)
                 addingDeck.setValid(false);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_REMOVE_SUCCESSFUL;
@@ -77,12 +77,13 @@ public class DeckController extends MenuController {
             return DeckMenuResponses.DECK_FULL;
         if (deckType == Deck.DeckType.SIDE && addingDeck.getSideDeck().size() == addingDeck.sideDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
-        else if (addingDeck.getSpecifiedCardCountInDeckByName(cardName) == addingDeck.DeckMaxSpecifiedCardCount)
+        else if (addingDeck.getSpecifiedCardCountInDeckByName(cardName) >= addingDeck.DeckMaxSpecifiedCardCount)
             return DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK;
         else {
+//            System.out.println("adding");
             addingDeck.addCardToDeck(cloner.deepClone(Card.getCardByName(cardName)), deckType);
             user.removeUserCardByName(cardName);
-            if (addingDeck.getMainDeck().size()>= addingDeck.mainDeckMinCardCount)
+            if (addingDeck.getMainDeck().size() >= addingDeck.mainDeckMinCardCount)
                 addingDeck.setValid(true);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_ADD_TO_DECK_SUCCESSFUL;
@@ -146,8 +147,7 @@ public class DeckController extends MenuController {
     }
 
     public DeckMenuResponses showAllCardsOfUser(StringBuilder allCards) {
-        ArrayList<Card> sortedAllUserCards = new ArrayList<>();
-        sortedAllUserCards = sortCardsByName(user.getAllCardsOfUser());
+        ArrayList<Card> sortedAllUserCards = sortCardsByName(user.getAllCardsOfUser());
         for (Card card : sortedAllUserCards) {
             allCards.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
         }
@@ -161,7 +161,7 @@ public class DeckController extends MenuController {
         if (deck.isValid()) validation = "valid";
         else validation = "invalid";
         return deck.getName() + " : main deck " + deck.getMainDeck().size() + " , side deck " +
-                deck.getSideDeck().size() + " , " + validation+"\n";
+                deck.getSideDeck().size() + " , " + validation + "\n";
     }
 
 }
