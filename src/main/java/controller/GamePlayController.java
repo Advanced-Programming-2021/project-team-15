@@ -461,16 +461,30 @@ public class GamePlayController extends MenuController {
 
 
 
+   public Boolean doPlayerHasThisCard(Player player, String name)
+   {   Map<Integer, MonsterCard>  monsterZone = player.getMonsterCardZone().getZoneCards();
+       Map<Integer, MagicCard>   magicZone= player.getMagicCardZone().getZoneCards();
+       for(int i = 1  ; i <=5 ;i ++)
+       {  if(magicZone.get(i).getCardName().equals(name))
+           return true;
+       else if(monsterZone.get(i).getCardName().equals(name))
+         return true;
+       }
+       return false;
+   }
 
 
-
-
-
-
-
-
-
-
+     public Card ifPlayerHasThisCardGiveIt(Player player, String name)
+     {  Map<Integer, MonsterCard>  monsterZone = player.getMonsterCardZone().getZoneCards();
+        Map<Integer, MagicCard>   magicZone= player.getMagicCardZone().getZoneCards();
+        for(int i = 1  ; i <=5 ;i ++)
+        {  if(magicZone.get(i).getCardName().equals(name))
+            return magicZone.get(i);
+            else if(monsterZone.get(i).getCardName().equals(name))
+                return magicZone.get(i);
+        }
+        return null;
+     }
 
 
 

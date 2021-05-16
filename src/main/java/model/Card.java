@@ -19,6 +19,26 @@ public class Card {
     protected String cardDescription;
     protected String cardNumber;
     protected CardType cardType;
+
+    public Boolean getSummoned() {
+        return isSummoned;
+    }
+
+    public void setSummoned(Boolean summoned) {
+        isSummoned = summoned;
+    }
+
+    public Boolean isSummoned =false;
+
+    public Boolean getSet() {
+        return isSet;
+    }
+
+    public void setSet(Boolean set) {
+        isSet = set;
+    }
+
+    protected Boolean isSet = false;
     public boolean isActivated() {
         return isActivated;
     }
