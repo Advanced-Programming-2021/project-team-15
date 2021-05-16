@@ -1,5 +1,6 @@
 [
   {
+    "activeDeckName": "gaavv",
     "allDecksOfUser": [
       {
         "name": "gav",
@@ -52,11 +53,6 @@
             "Price": 4300
           },
           {
-            "Name": "Yomi Ship",
-            "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
-            "Price": 1700
-          },
-          {
             "Name": "Yami",
             "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
             "Price": 4300
@@ -139,6 +135,11 @@
         "Price": 8700
       },
       {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
         "Name": "Fireyarou",
         "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
         "Price": 2500
@@ -257,6 +258,11 @@
         "Name": "Negate Attack",
         "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
         "Price": 3000
+      },
+      {
+        "Name": "Yomi Ship",
+        "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+        "Price": 1700
       }
         ],
         "isActive": true,
@@ -264,11 +270,11 @@
       }
     ],
     "allCardsOfUser": [
-          {
-            "Name": "Wattkid",
-            "Description": "A creature that electrocutes opponents with bolts of lightning.",
-            "Price": 1300
-          },
+      {
+        "Name": "Yomi Ship",
+        "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+        "Price": 1700
+      },
       {
         "Name": "Yami",
         "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
@@ -523,6 +529,11 @@
         "Name": "Negate Attack",
         "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
         "Price": 3000
+      },
+      {
+        "Name": "Wattkid",
+        "Description": "A creature that electrocutes opponents with bolts of lightning.",
+        "Price": 1300
       }
     ],
     "userName": "sagg",

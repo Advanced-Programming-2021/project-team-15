@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import controller.responses.DeckMenuResponses;
 import controller.responses.LoginMenuResponses;
 import model.Card;
+import model.Deck;
 import model.User;
 import org.testng.annotations.Test;
 
@@ -88,6 +89,45 @@ public class MenuTest {
         for (int i = 0; i < sortedUsersTested.size(); i++) {
             assertEquals(sortedUsersTested.get(i).getUserName(), sortingUsers.get(i).getUserName());
         }
+    }
+
+    @Test
+    public void createDeckTest() throws FileNotFoundException {
+        User user = readUsersFromFile("src/test/resources/toAddCardToDeckTest.json").get(0);
+        User.getAllUsers().add(user);
+        jsonController.refreshUsersToFileJson();
+        MenuController.setUser(user);
+        deckController.createDeck("Uh");
+        assertNotNull(user.getDeckByName("Uh"));
+        deckMenuResponses = deckController.createDeck("Uh");
+        assertEquals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS,deckMenuResponses);
+        deckController.removeDeck("Uh");
+        assertNull(user.getDeckByName("Uh"));
+        loginController.removeUser(user.getUserName());
+    }
+
+    @Test
+    public void addCardToDeckTest() throws FileNotFoundException {
+        User user = readUsersFromFile("src/test/resources/toAddCardToDeckTest.json").get(0);
+        User.getAllUsers().add(user);
+        jsonController.refreshUsersToFileJson();
+        MenuController.setUser(user);
+        jsonController.MonsterCardParseJson();
+        jsonController.MagicCardParseJson();
+        user.setActiveDeck(user.getDeckByName(user.getActiveDeckName()));
+        deckMenuResponses = deckController.addCardToDeck("Yami", "gav", Deck.DeckType.MAIN);
+        assertEquals(DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK, deckMenuResponses);
+        deckMenuResponses = deckController.addCardToDeck("Yami", "ga", Deck.DeckType.MAIN);
+        assertEquals(DeckMenuResponses.CARD_ADD_TO_DECK_SUCCESSFUL, deckMenuResponses);
+        deckMenuResponses = deckController.addCardToDeck("Yomi Ship", "gaavv", Deck.DeckType.MAIN);
+        assertEquals(DeckMenuResponses.CARD_ADD_TO_DECK_SUCCESSFUL, deckMenuResponses);
+        deckMenuResponses = deckController.removeCardFromDeck("Wattkid", "ga", Deck.DeckType.SIDE);
+        assertEquals(DeckMenuResponses.CARD_REMOVE_SUCCESSFUL, deckMenuResponses);
+        deckMenuResponses = deckController.setActiveDeck("gaavv");
+        assertEquals(DeckMenuResponses.DECK_ACTIVATE_SUCCESSFUL, deckMenuResponses);
+        User testedUser = readUsersFromFile("src/test/resources/addedCardToDeckTest.json").get(0);
+        assertEquals(user, testedUser);
+        loginController.removeUser(user.getUserName());
     }
 
     private ArrayList<User> readUsersFromFile(String path) throws FileNotFoundException {

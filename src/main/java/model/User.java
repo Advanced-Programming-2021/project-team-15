@@ -9,6 +9,7 @@ public class User {
         allUsers = new ArrayList<>();
     }
 
+    private String activeDeckName;
     private transient Deck activeDeck;
     private ArrayList<Deck> allDecksOfUser;
     private ArrayList<Card> allCardsOfUser;
@@ -24,6 +25,19 @@ public class User {
         this.passWord = passWord;
         allDecksOfUser = new ArrayList<>();
         allCardsOfUser = new ArrayList<>();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof User)) return false;
+        User user = (User) object;
+        if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
+        || user.money!=money || user.score!=score || !user.activeDeckName.equals(activeDeckName)) return false;
+        return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
     }
 
     public static User getUserByUserName(String userName) {
@@ -165,6 +179,14 @@ public class User {
 
     public void removeDeck(Deck deck) {
         allDecksOfUser.remove(deck);
+    }
+
+    public String getActiveDeckName() {
+        return activeDeckName;
+    }
+
+    public void setActiveDeckName(String activeDeckName) {
+        this.activeDeckName = activeDeckName;
     }
 
     public Deck getActiveDeck() {

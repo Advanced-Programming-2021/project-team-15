@@ -1,5 +1,6 @@
 [
 {
+    "activeDeckName": "ga",
     "allDecksOfUser": [
       {
         "name": "gav",
@@ -122,6 +123,11 @@
         "Name": "Silver Fang",
         "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
         "Price": 1700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
       },
       {
         "Name": "Suijin",

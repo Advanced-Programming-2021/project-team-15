@@ -46,6 +46,8 @@ public class DeckController extends MenuController {
             if (user.getActiveDeck() != null) user.getActiveDeck().setActive(false);
             user.setActiveDeck(user.getDeckByName(deckName));
             user.getDeckByName(deckName).setActive(true);
+            user.setActiveDeckName(user.getActiveDeck().getName());
+            jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.DECK_ACTIVATE_SUCCESSFUL;
         }
     }
