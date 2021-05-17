@@ -35,8 +35,6 @@ public class Card {
     protected int price;
     private boolean isActivated;
 
-    public boolean isHasBeenUsedInThisTurn() {
-        return hasBeenUsedInThisTurn;
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -79,13 +77,9 @@ public class Card {
         return isSummoned;
     }
 
-    public void setHasBeenUsedInThisTurn(boolean hasBeenUsedInThisTurn) {
-        this.hasBeenUsedInThisTurn = hasBeenUsedInThisTurn;
+    public void setSummoned(Boolean summoned) {
+        isSummoned = summoned;
     }
-
-    protected boolean hasBeenUsedInThisTurn = false;
-
-
 
     public Boolean getSet() {
         return isSet;
@@ -162,7 +156,7 @@ public class Card {
     }
 
     public enum CardType {
-        MONSTER,
-        MAGIC;
+        MONSTER(),
+        MAGIC();
     }
 }
