@@ -4,6 +4,8 @@ import controller.responses.DuelMenuResponses;
 import model.*;
 import view.DuelMenu;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +14,15 @@ import java.util.Map;
 import static controller.responses.DuelMenuResponses.*;
 
 public class GamePlayController extends MenuController {
+    public ArrayList<Card> getChainCards() {
+        return chainCards;
+    }
+
+    public void setChainCards(ArrayList<Card> chainCards) {
+        this.chainCards = chainCards;
+    }
+
+    private ArrayList<Card> chainCards=  new ArrayList<>();
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private static GamePlayController gamePlayController = null;
     public static GamePlayController getInstance() {
@@ -227,7 +238,7 @@ public class GamePlayController extends MenuController {
     }
     }
 
-    public void showGameBoard()
+    public String showGameBoard()
     {     StringBuilder board = new StringBuilder();
         board.append(opponentPlayer.getUser().getNickName()).append("\n");
         board.append("\tc ".repeat(opponentPlayer.getHand().getNumberOfCardsInHand()));
@@ -243,6 +254,7 @@ public class GamePlayController extends MenuController {
         board.append("c \t".repeat(currentPlayer.getHand().getNumberOfCardsInHand()));
         board.append("\n").append(currentPlayer.getUser().getNickName());
         duelMenu.getInstance().printString(board.toString());
+        return board.toString();
     }
 
     public DuelMenuResponses summon() {
@@ -424,7 +436,7 @@ public class GamePlayController extends MenuController {
     public void activateSpellCard(Player player) { //TODO COMPLETE
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
-        else if (!(selectedCard instanceof MagicCard) || ((MagicCard) selectedCard).getMagicType() != MagicCard.MagicType.SPELL)
+        else if (!(selectedCard instanceof MagicCard))
             duelMenu.printResponse(ACTIVATE_EFFECT_ONLY_ON_SPELL);
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
@@ -437,10 +449,35 @@ public class GamePlayController extends MenuController {
         else if(((MagicCard) selectedCard).getCardIcon()== MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
         callMethodOfSpells(selectedCard);
+        //checker
     }
-    public void setCardActive()
-    {  selectedCard.setActivated(true);
+
+    public boolean canChainBeMade(Player player)  throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    ArrayList<String> cardNames = new ArrayList<>();
+        cardNames.add("Mind Crush");
+        cardNames.add("Twin Twisters");
+        cardNames.add("Mystical space typhoon");
+        cardNames.add("Ring of defense");
+        cardNames.add("Time Seal");
+        cardNames.add("Call of The Haunted");
+        for (String card : cardNames) {
+        if (player.getMagicCardZone().isSpellOrTrapISet(card)!= null)
+        {
+        }
     }
+        return false;
+}
+
+
+public void chainMaker(Player currentPlayer , Player opponentPlayer){
+
+
+}
+
+
+
+
+
 
 
     public void callMethodOfSpells(Card card)
@@ -449,13 +486,26 @@ public class GamePlayController extends MenuController {
     }
 
 
-
-    public void callCardWitchCanBeActivated()
-    {
-
-
-
+public void askToActivateInRivalsTurn(MagicCard spellOrTrap)
+{   changeTurn();
+    duelMenu.setCantDoThisKindsOfMove(true);
+    duelMenu.showRivalTurn(currentPlayer.getUser().getUserName() ,showGameBoard());
+    duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
+    String ans = duelMenu.scannerLine();
+    if(ans.equals("no"))
+    { changeTurn();
+        duelMenu.showRivalTurn(currentPlayer.getUser().getUserName() ,showGameBoard());
+        duelMenu.setCantDoThisKindsOfMove(false);
+        return;
     }
+    spellOrTrap.setActivated(true);
+    if(spellOrTrap.getMagicType() == MagicCard.MagicType.SPELL)
+        duelMenu.printResponse(SPELL_ACTIVATED);
+    else if(spellOrTrap.getMagicType() == MagicCard.MagicType.TRAP)
+        duelMenu.printResponse(TRAP_ACTIVATED);
+}
+
+
 
 
 
@@ -539,6 +589,7 @@ public class GamePlayController extends MenuController {
 
     public void refresh() {
         suijinVictimsReset();
+        chainCards.clear();
         attackController.getAttackStoppersInTurn().clear();
         changedPositionCardsInTurn.clear();
         summonedOrSetMonstersInTurn.clear();

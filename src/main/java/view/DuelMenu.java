@@ -5,6 +5,7 @@ import controller.MenuController;
 import controller.responses.DuelMenuResponses;
 import model.Zone;
 
+import javax.security.sasl.SaslServer;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -22,13 +23,24 @@ public class DuelMenu extends Menu{
     }
     private String secondUsername;
 
+    public Boolean getCantDoThisKindsOfMove() {
+        return cantDoThisKindsOfMove;
+    }
+
+    public void setCantDoThisKindsOfMove(Boolean cantDoThisKindsOfMove) {
+        this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
+    }
+
+    private Boolean cantDoThisKindsOfMove= false;
+
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true){
-            String input  =  scanner.nextLine();
-             if(input.startsWith("duel") && input.contains(" --ai"))
+            String input  = scannerLine();
+            if(cantDoThisKindsOfMove)
+                printString("it's not your turn to play this kind of moves");
+            else if(input.startsWith("duel") && input.contains(" --ai"))
                  checkAndCallNewAiDuel(input);
              else if(input.startsWith("duel"))
                  checkAndCallNewDuel(input);
@@ -37,8 +49,8 @@ public class DuelMenu extends Menu{
              else if(input.startsWith("select"))
                  checkAndCallSelectNotNumericZone(input);
              else if(input.equals("select -d")) checkAndCallDeselect(input);
+             //continue
         }
-
     }
 
     public void checkAndCallNewDuel(String input) {
@@ -119,22 +131,41 @@ public class DuelMenu extends Menu{
             case GAME_STARTED_SUCCESSFULLY:
                 output = "GAME STARTED SUCCESSFULLY !";
                 break;
-
-
-
-
-
         }
-          if(duelMenuResponses==DuelMenuResponses.SPELL_ACTIVATED)
-              gamePlayController.setCardActive();
 
 
 
         System.out.println(output);
         }
+    public void revealCard(String cardName) {
+        System.out.print("opponent’s monster card was " + cardName + " and ");
+    }
+
+    public void lostInDefense(int damage) {
+        System.out.println("no card is destroyed and you received " + damage + " battle damage");
+    }
+
+    public void lostInAttack(int damage) {
+        System.out.println("Your monster card is destroyed and you received " + damage + " battle damage");
+    }
+    public void wonAttackInAttack(int damage) {
+        System.out.println("your opponent’s monster is destroyed and your opponent receives " + damage + " battle damage");
+    }
+    public void receivedDamage(int damage) {
+        System.out.println("you opponent receives " + damage + " battle damage");
+    }
+    public void showRivalTurn(String userName, String board)
+    {
+        System.out.println("now it will be " + userName+ "'s turn");
+        System.out.println(board);
+
+    }
+
+
         public  void printString(String string)
         {
             System.out.println(string);
         }
+
 
 }

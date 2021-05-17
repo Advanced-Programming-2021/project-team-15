@@ -165,6 +165,7 @@ public class Player  {
         return zone;
     }
 
+
     public User getUser() {
         return user;
     }

@@ -11,8 +11,14 @@ public class MagicCardZone extends NumericZone{
         for (int i = 1 ; i<5; i++)
             zoneCards.put(i, null);
     }
-    public void addCardToMagicCardZone(MagicCard magicCard)
+    public MagicCard isSpellOrTrapISet(String name)
+    {    for (int key =1 ; key <=5   ; key++)
     {
+        if (zoneCards.get(key) != null && zoneCards.get(key).getCardName().equals(name))
+            return (MagicCard) zoneCards.get(key);
+    }
+    return null;
+
     }
     public void removeMagicCard(MagicCard magicCard)
     {
@@ -24,7 +30,7 @@ public class MagicCardZone extends NumericZone{
     }
     public void moveToFirstEmptyPlaceFromHand(MagicCard magicCard , Player  currentPlayer) {
         currentPlayer.getHand().removeCardFromHand(magicCard);
-        for (Integer key : zoneCards.keySet()) {
+        for (int key = 1; key <=5  ; key++) {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, magicCard);
                 magicCard.setCardPlacedZone(this);

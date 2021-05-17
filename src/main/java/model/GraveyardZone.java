@@ -26,9 +26,16 @@ public class GraveyardZone extends Zone {
     {   ((MonsterCard)card).setGameDEF(((MonsterCard) card).getDefensePoint());
         ((MonsterCard)card).setGameATK(((MonsterCard) card).getAttackPoint());
     }
-        card.setActivated(false);
+        resetCard(card);
         card.setCardPlacedZone(this);
         zoneCards.add(card);
+    }
+    public void resetCard(Card card)
+    {   if(card instanceof MonsterCard)
+        ((MonsterCard) card).setSummoned(false);
+        card.setSet(false);
+        card.setActivated(false);
+
     }
     public void removeCardFromGraveyardZone(Card card)
     {

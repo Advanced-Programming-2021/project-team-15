@@ -20,15 +20,17 @@ public class Card {
     protected String cardNumber;
     protected CardType cardType;
 
-    public Boolean getSummoned() {
-        return isSummoned;
+    public boolean isHasBeenUsedInThisTurn() {
+        return hasBeenUsedInThisTurn;
     }
 
-    public void setSummoned(Boolean summoned) {
-        isSummoned = summoned;
+    public void setHasBeenUsedInThisTurn(boolean hasBeenUsedInThisTurn) {
+        this.hasBeenUsedInThisTurn = hasBeenUsedInThisTurn;
     }
 
-    public Boolean isSummoned =false;
+    protected boolean hasBeenUsedInThisTurn = false;
+
+
 
     public Boolean getSet() {
         return isSet;
@@ -152,7 +154,7 @@ public class Card {
     }
 
     public enum CardType {
-        MONSTER(),
-        MAGIC();
+        MONSTER,
+        MAGIC;
     }
 }

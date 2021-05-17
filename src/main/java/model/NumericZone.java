@@ -13,7 +13,7 @@ public class NumericZone extends Zone {
         this.zoneCards = zoneCards;
     }
     public void moveToFirstEmptyPlace(Card card) {
-        for (Integer key : zoneCards.keySet()) {
+        for (int key= 1; key <=5  ; key ++) {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key,card);
                 return;
