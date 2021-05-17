@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 
 public class JSONController {
+
     public void MonsterCardParseJson() {
         Gson gson = new Gson();
-        try (Reader reader = new FileReader("Monster.json")) {
+        try (Reader reader = new FileReader("src/main/resources/Monster.json")) {
             MonsterCard[] monsterCardArray = gson.fromJson(reader, MonsterCard[].class);
             for(MonsterCard monsterCard : monsterCardArray) {
                 monsterCard.setCardType(Card.CardType.MONSTER);
@@ -23,7 +24,7 @@ public class JSONController {
     }
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try(Writer writer = new FileWriter("Users.json")) {
+        try(Writer writer = new FileWriter("src/main/resources/Users.json")) {
             gson.toJson(User.getAllUsers(),writer);
         }
         catch (IOException e) {
@@ -33,7 +34,7 @@ public class JSONController {
 
     public void refreshUsersFromFileJson() {
         Gson gson = new GsonBuilder().create();
-        try (Reader reader = new FileReader("Users.json")) {
+        try (Reader reader = new FileReader("src/main/resources/Users.json")) {
             Type usersListType = new TypeToken<ArrayList<User>>(){}.getType();
             User.setAllUsers(gson.fromJson(reader, usersListType));
         }
@@ -44,7 +45,7 @@ public class JSONController {
     }
     public void refreshCardsFromFileJson() {
         Gson gson = new GsonBuilder().create();
-        String[] filenames = {"Monster.json","Magic.json"};
+        String[] filenames = {"src/main/resources/Monster.json","src/main/resources/Magic.json"};
         ArrayList<Card> tempCardsList = new ArrayList<>();
         for (String filename : filenames) {
             try (Reader reader = new FileReader(filename)) {
@@ -56,7 +57,7 @@ public class JSONController {
         }
         Card.setAllCards(tempCardsList);
     }
-//    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
+    //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
 //        @Override
 //        public MagicCard deserialize(JsonElement json, Type typeof, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
 //            JsonObject jsonObject = json.getAsJsonObject();
@@ -78,9 +79,8 @@ public class JSONController {
 //    }
     public void MagicCardParseJson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-//        gsonBuilder.registerTypeAdapter(MagicCard.class, new MagicCardDeserializer());
         Gson gson = gsonBuilder.create();
-        try (Reader reader = new FileReader("Magic.json")) {
+        try (Reader reader = new FileReader("src/main/resources/Magic.json")) {
             MagicCard[] magicCardArray = gson.fromJson(reader, MagicCard[].class);
             for (MagicCard magicCard : magicCardArray) {
                 magicCard.setCardType(Card.CardType.MAGIC);

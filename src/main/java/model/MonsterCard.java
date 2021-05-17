@@ -11,8 +11,8 @@ public class MonsterCard extends Card {
     @SerializedName("Monster Type") private MonsterType monsterType;
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
     @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
-    private Boolean isSummoned = false;
-    private Mode mode;
+    private transient Boolean isSummoned = false;
+    private transient Mode mode;
 
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);

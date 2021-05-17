@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ShopController extends MenuController {
-    //JSONController jsonController = new JSONController();
 
     public ShopController() {
         super("Shop Menu");
@@ -24,6 +23,7 @@ public class ShopController extends MenuController {
         else {
             user.getAllCardsOfUser().add(cloner.deepClone(Card.getCardByName(cardName)));
             user.changeMoney((-1) * Card.getCardByName(cardName).getPrice());
+            jsonController.refreshUsersToFileJson();
             return ShopMenuResponses.BUY_SUCCESSFUL;
         }
     }

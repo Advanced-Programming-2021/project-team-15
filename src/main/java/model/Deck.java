@@ -1,13 +1,15 @@
 package model;
 
+import controller.MenuController;
+
 import java.util.ArrayList;
 
 public class Deck {
-    public transient final int mainDeckMinCardCount = 40;
-    public transient final int mainDeckMaxCardCount = 60;
-    public transient final int sideDeckMinCardCount = 0;
-    public transient final int sideDeckMaxCardCount = 15;
-    public transient final int DeckMaxSpecifiedCardCount = 3;
+    public static transient final int mainDeckMinCardCount = 40;
+    public static transient final int mainDeckMaxCardCount = 60;
+    public static transient final int sideDeckMinCardCount = 0;
+    public static transient final int sideDeckMaxCardCount = 15;
+    public static transient final int DeckMaxSpecifiedCardCount = 3;
     private String name;
     private transient User owner;
     private ArrayList<Card> sideDeck;
@@ -23,6 +25,17 @@ public class Deck {
         this.owner.addDeck(this);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof Deck)) return false;
+        Deck deck = (Deck) object;
+        if (!deck.name.equals(name) || !deck.isValid==isValid || !deck.isActive==isActive) return false;
+        return deck.mainDeck.equals(mainDeck) && deck.sideDeck.equals(sideDeck);
+    }
     public void addCardToDeck(Card card, DeckType deckType) {
         if (deckType == DeckType.MAIN)
             mainDeck.add(card);

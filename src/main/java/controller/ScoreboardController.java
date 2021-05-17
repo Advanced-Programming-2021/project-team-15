@@ -12,7 +12,7 @@ public class ScoreboardController extends MenuController {
 
     public ScoreboardMenuResponses showScoreboard(StringBuilder usersListStringBuilder) {
         jsonController.refreshUsersFromFileJson();
-        TreeMap<Integer, ArrayList<User>> sortedUsers = sortUsersByScore();
+        Map<Integer, ArrayList<User>> sortedUsers = sortUsersByScore(User.getAllUsers());
         int rank = 1;
         int fakeRank=0;
         for (Integer score : sortedUsers.keySet()) {
@@ -27,22 +27,21 @@ public class ScoreboardController extends MenuController {
         return ScoreboardMenuResponses.SHOW_SCOREBOARD;
     }
 
-    private TreeMap<Integer, ArrayList<User>> sortUsersByScore() {
-        ArrayList<User> users = new ArrayList<>(User.getAllUsers());
+    public Map<Integer, ArrayList<User>> sortUsersByScore(ArrayList<User> users) {
         ArrayList<Integer> scores = new ArrayList<>();
         for (User user : users) {
             if (!scores.contains(user.getScore()))
                 scores.add(user.getScore());
         }
         users.sort(Comparator.comparing(User::getNickName));
-        TreeMap<Integer, ArrayList<User>> sortedUsers = new TreeMap<>();
+        TreeMap<Integer, ArrayList<User>> sortingUsers = new TreeMap<>();
         for (Integer score : scores) {
             ArrayList<User> tempUsersWithScore = new ArrayList<>();
             for (User user : users)
                 if (user.getScore() == score)
                     tempUsersWithScore.add(user);
-            sortedUsers.put(score, tempUsersWithScore);
+            sortingUsers.put(score, tempUsersWithScore);
         }
-        return sortedUsers;
+        return sortingUsers.descendingMap();
     }
 }

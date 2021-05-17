@@ -1,7 +1,6 @@
 package model;
 
 import com.google.gson.annotations.SerializedName;
-import controller.Limit;
 
 import java.util.ArrayList;
 
@@ -12,6 +11,8 @@ public class Card {
     static {
         allCards = new ArrayList<>();
     }
+
+    public Boolean isSummoned = false;
     //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")
     protected String cardName;
@@ -19,9 +20,63 @@ public class Card {
     protected String cardDescription;
     protected String cardNumber;
     protected CardType cardType;
+    protected Boolean isSet = false;
+    protected Boolean isHidden = true;
+    protected Zone cardPlacedZone;
+    //    public int getPlacedZoneNumber() {
+//        return placedZoneNumber;
+//    }
+//
+//    public void setPlacedZoneNumber(int placedZoneNumber) {
+//        this.placedZoneNumber = placedZoneNumber;
+//    }
+    //protected int placedZoneNumber = 0; //if ==0 means not numerical zone
+    @SerializedName("Price")
+    protected int price;
+    private boolean isActivated;
 
     public boolean isHasBeenUsedInThisTurn() {
         return hasBeenUsedInThisTurn;
+    public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
+        this.cardDescription = cardDescription;
+        this.cardName = cardName;
+        this.cardNumber = cardNumber;
+        this.cardType = cardType;
+    }
+
+    public static Card getCardByName(String cardName) {
+        for (Card card : allCards) {
+            if (card.getCardName().equals(cardName))
+                return card;
+        }
+        return null;
+    }
+
+    public static void addCard(Card card) {
+        allCards.add(card);
+    }
+
+    public static ArrayList<Card> getAllCards() {
+        return allCards;
+    }
+
+    public static void setAllCards(ArrayList<Card> allCards) {
+        Card.allCards = allCards;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof Card)) return false;
+        Card card = (Card) object;
+        return card.cardName.equals(cardName);
+    }
+
+    public Boolean getSummoned() {
+        return isSummoned;
     }
 
     public void setHasBeenUsedInThisTurn(boolean hasBeenUsedInThisTurn) {
@@ -40,7 +95,6 @@ public class Card {
         isSet = set;
     }
 
-    protected Boolean isSet = false;
     public boolean isActivated() {
         return isActivated;
     }
@@ -48,9 +102,6 @@ public class Card {
     public void setActivated(boolean activated) {
         isActivated = activated;
     }
-
-    private boolean isActivated;
-
 
     public Boolean getHidden() {
         return isHidden;
@@ -60,54 +111,12 @@ public class Card {
         isHidden = hidden;
     }
 
-    protected Boolean isHidden = true ;
-
     public Zone getCardPlacedZone() {
         return cardPlacedZone;
     }
 
     public void setCardPlacedZone(Zone cardPlacedZone) {
         this.cardPlacedZone = cardPlacedZone;
-    }
-
-    protected Zone  cardPlacedZone ;
-
-
-//    public int getPlacedZoneNumber() {
-//        return placedZoneNumber;
-//    }
-//
-//    public void setPlacedZoneNumber(int placedZoneNumber) {
-//        this.placedZoneNumber = placedZoneNumber;
-//    }
-    //protected int placedZoneNumber = 0; //if ==0 means not numerical zone
-    @SerializedName("Price")
-    protected int price;
-
-    public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
-        this.cardDescription = cardDescription;
-        this.cardName = cardName;
-        this.cardNumber = cardNumber;
-        this.cardType = cardType;
-    }
-
-    public static Card getCardByName(String cardName) {
-        for (Card card : allCards) {
-            if (card.getCardName().equals(cardName))
-                return card;
-        }
-        return null;
-    }
-    public static void addCard(Card card) {
-        allCards.add(card);
-    }
-
-    public static ArrayList<Card> getAllCards() {
-        return allCards;
-    }
-
-    public static void setAllCards(ArrayList<Card> allCards) {
-        Card.allCards = allCards;
     }
 
     public String getCardName() {
@@ -142,7 +151,6 @@ public class Card {
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
     }
-
 
 
     public int getPrice() {

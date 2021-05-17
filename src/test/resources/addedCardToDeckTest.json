@@ -1,0 +1,545 @@
+[
+  {
+    "activeDeckName": "gaavv",
+    "allDecksOfUser": [
+      {
+        "name": "gav",
+        "sideDeck": [
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          }
+	],
+        "mainDeck": [
+          {
+            "Name": "Yomi Ship",
+            "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+            "Price": 1700
+          },
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          },
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          }
+        ],
+        "isActive": false,
+        "isValid": false
+      },
+      {
+        "name": "ga",
+        "sideDeck": [],
+        "mainDeck": [
+      {
+        "Name": "Yami",
+        "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+        "Price": 4300
+      }
+	],
+        "isActive": false,
+        "isValid": false
+      },
+      {
+        "name": "gaavv",
+        "sideDeck": [
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          },
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          },
+          {
+            "Name": "Yami",
+            "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+            "Price": 4300
+          }
+	],
+        "mainDeck": [
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Yomi Ship",
+        "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+        "Price": 1700
+      }
+        ],
+        "isActive": true,
+        "isValid": true
+      }
+    ],
+    "allCardsOfUser": [
+      {
+        "Name": "Yomi Ship",
+        "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+        "Price": 1700
+      },
+      {
+        "Name": "Yami",
+        "Description": "All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.",
+        "Price": 4300
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "Price": 2900
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Axe Raider",
+        "Description": "An axe-wielding monster of tremendous strength and agility.",
+        "Price": 3100
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Horn Imp",
+        "Description": "A small fiend that dwells in the dark, its single horn makes it a formidable opponent.",
+        "Price": 2500
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Silver Fang",
+        "Description": "A snow wolf that\u0027s beautiful to the eye, but absolutely vicious in battle.",
+        "Price": 1700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "Price": 8700
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "Price": 2500
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Feral Imp",
+        "Description": "A playful little fiend that lurks in the dark, waiting to attack an unwary enemy.",
+        "Price": 2800
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Magic Cylinder",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, and if you do, inflict damage to your opponent equal to its ATK.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Mind Crush",
+        "Description": "Declare 1 card name; if that card is in your opponent\u0027s hand, they must discard all copies of it, otherwise you discard 1 random card.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Time Seal",
+        "Description": "Skip the Draw Phase of your opponent\u0027s next turn.",
+        "Price": 2000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Negate Attack",
+        "Description": "When an opponent\u0027s monster declares an attack: Target the attacking monster; negate the attack, then end the Battle Phase.",
+        "Price": 3000
+      },
+      {
+        "Name": "Wattkid",
+        "Description": "A creature that electrocutes opponents with bolts of lightning.",
+        "Price": 1300
+      }
+    ],
+    "userName": "sagg",
+    "passWord": "pa",
+    "nickName": "saggi",
+    "score": 5,
+    "money": 71200
+  }
+]
