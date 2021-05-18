@@ -6,6 +6,25 @@ import java.util.ArrayList;
 
 public class Player  {
     private  User user;
+    private  boolean canDraw;
+
+    public boolean isCanDraw() {
+        return canDraw;
+    }
+
+    public void setCanDraw(boolean canDraw) {
+        this.canDraw = canDraw;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    private  boolean canAttack;
     private int lifePoint;
     private Hand hand;
     private FieldZone fieldZone;
@@ -33,17 +52,7 @@ public class Player  {
         this.canDraw = canDraw;
     }
 
-    private Boolean canDraw= true;
 
-    public Boolean getFirstTurn() {
-        return firstTurn;
-    }
-
-    public void setFirstTurn(Boolean firstTurn) {
-        this.firstTurn = firstTurn;
-    }
-
-    private Boolean firstTurn = false;
 
     public Player( User user) {
         this.user =user;

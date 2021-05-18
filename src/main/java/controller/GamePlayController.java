@@ -136,21 +136,19 @@ public class GamePlayController extends MenuController {
         {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);
-            if(i<5) {
-                opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
-                opponentPlayer.getDeckZone().getZoneCards().remove(0);
-            }
+            opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
+            opponentPlayer.getDeckZone().getZoneCards().remove(0);
+            currentPlayer.setCanDraw(false);
+            currentPhaseNumber= 1;
+            drawPhase();
         }
-        currentPlayer.setFirstTurn(true);
     }
     public void drawPhase(){
         refresh();
-        changeTurn();
         if(currentPlayer.getCanDraw()){
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);}
         else {
-            currentPlayer.setCanDraw(false);
             goNextPhase();
         }
     }
@@ -563,6 +561,7 @@ public void askToActivateInRivalsTurn(MagicCard spellOrTrap)
     public DuelMenuResponses goNextPhase() {
         if(currentPhaseNumber ==5)
         {    currentPhaseNumber=1;
+              changeTurn();
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
@@ -597,7 +596,6 @@ public void askToActivateInRivalsTurn(MagicCard spellOrTrap)
         setTrapCardsInTurn.clear();
         setTrapAndSpellCardsInTurn.clear();
         attackController.getAttackedCardsInTurn().clear();
-        currentPlayer.setFirstTurn(false);
         selectedCard = null;
     }
 
