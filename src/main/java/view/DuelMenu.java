@@ -161,11 +161,19 @@ public class DuelMenu extends Menu {
             case GAME_STARTED_SUCCESSFULLY: {
                 playRPS();
             }
+            case INVALID_SELECTION:
+                System.out.println("invalid selection");
+            case CARD_SELECTED: System.out.println("card selected");
+            case SELECTION_NO_CARD_FOUND:
+                System.out.println("no card found in the given position");
+            case NO_CARD_SELECTED:
+                System.out.println("no card is selected yet");
+            case CARD_DESELECTED:
+                System.out.println("card deselected");
             break;
+            default:
+                break;
         }
-
-
-        System.out.println(output);
     }
 
 
