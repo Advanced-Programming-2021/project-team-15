@@ -145,9 +145,14 @@ public class GamePlayController extends MenuController {
     }
     public void drawPhase(){
         refresh();
-        if(currentPlayer.getCanDraw()){
+        if(checkIfGameIsFinished())
+            defineWinner();
+       else if(currentPlayer.getCanDraw()){
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-            currentPlayer.getDeckZone().getZoneCards().remove(0);}
+            Card card =  currentPlayer.getDeckZone().getZoneCards().get(0);
+            currentPlayer.getDeckZone().getZoneCards().remove(0);
+            duelMenu.newCardAddInDrawPhase(card.getCardName());
+            }
         else {
             goNextPhase();
         }

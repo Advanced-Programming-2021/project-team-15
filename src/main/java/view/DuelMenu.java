@@ -158,19 +158,33 @@ public class DuelMenu extends Menu {
             case INVALID_CURRENT_PLAYER_DECK:
                 System.out.println(MenuController.getUser().getUserName() + "'s deck is invalid");
                 break;
-            case GAME_STARTED_SUCCESSFULLY: {
+            case GAME_STARTED_SUCCESSFULLY:
                 playRPS();
-            }
+               break;
             case INVALID_SELECTION:
                 System.out.println("invalid selection");
-            case CARD_SELECTED: System.out.println("card selected");
+                break;
+            case CARD_SELECTED:
+                System.out.println("card selected");
+            break;
             case SELECTION_NO_CARD_FOUND:
                 System.out.println("no card found in the given position");
+                break;
             case NO_CARD_SELECTED:
                 System.out.println("no card is selected yet");
+                break;
             case CARD_DESELECTED:
                 System.out.println("card deselected");
             break;
+            case   RIVALS_TURN_AND_SHOW_DRAW_PHASE:
+            {
+                System.out.println("phase : end phase");
+                System.out.println("it's "+gamePlayController.getCurrentPlayer()+"'s turn");
+                System.out.println("phase : draw phase");
+                gamePlayController.drawPhase();
+            }
+            break;
+
             default:
                 break;
         }
@@ -189,6 +203,10 @@ public class DuelMenu extends Menu {
                 break;
             }
         }
+    }
+    public void newCardAddInDrawPhase(String cardName)
+    {
+        System.out.println("new card added to hand : " + cardName);
     }
 
     public void revealCard(String cardName) {
