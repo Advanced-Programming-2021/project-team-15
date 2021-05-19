@@ -226,7 +226,7 @@ public class DuelMenu extends Menu {
             case TWO_TRIBUTE_NO_MONSTER:
                 System.out.println("there is no monster on one of these addresses");
                 break;
-
+           
 
 
             default:
