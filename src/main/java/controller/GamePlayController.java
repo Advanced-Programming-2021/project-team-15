@@ -296,6 +296,7 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses oneMonsterTribute() {
+        duelMenu.printResponse(ENTER_ONE_NUMBER);
         int num = duelMenu.scannerNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
@@ -306,7 +307,9 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses twoMonsterTribute() {
+       duelMenu.printResponse(ENTER_FIRST_NUMBER);
         int firstAddress = duelMenu.scannerNum();
+       duelMenu.printResponse(ENTER_SECOND_NUMBER);
         int secondAddress = duelMenu.scannerNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
             return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;

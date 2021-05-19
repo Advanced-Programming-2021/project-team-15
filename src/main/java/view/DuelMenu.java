@@ -73,6 +73,10 @@ public class DuelMenu extends Menu {
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
+            else if(input.equals("summon"))   printResponse(gamePlayController.summonCommand());
+            else if(input.equals("set"))  printResponse(gamePlayController.setCommand());
+
+
             else System.out.println("invalid command");
         }
     }
@@ -141,7 +145,6 @@ public class DuelMenu extends Menu {
     }
 
     public void printResponse(DuelMenuResponses duelMenuResponses) {
-        String output = "";
         switch (duelMenuResponses) {
             case NO_PLAYER_WITH_THIS_USERNAME_EXISTS:
                 System.out.println("there is no player with this username");
@@ -184,6 +187,47 @@ public class DuelMenu extends Menu {
                 gamePlayController.drawPhase();
             }
             break;
+            case CANT_SUMMON_THIS_CARD:
+                System.out.println("you can't summon this card");
+                break;
+            case NOT_ALLOWED_IN_THIS_PHASE:
+                System.out.println("action not allowed in this phase");
+                break;
+            case MONSTER_ZONE_IS_FULL:
+                System.out.println("monster card zone is full");
+                break;
+            case ALREADY_SUMMONED_SET:
+                System.out.println("you already summoned/set on this turn");
+                break;
+            case CARD_SUMMONED:
+                System.out.println("summoned successfully");
+                break;
+            case GET_ONE_NUMBER_TO_BE_TRIBUTE:
+                System.out.println("this card needs one tribute");
+                break;
+            case GET_TWO_NUMBERS_TO_BE_TRIBUTE:
+                System.out.println("this card needs two tributes");
+                break;
+            case ENTER_ONE_NUMBER:
+                System.out.println("enter one number : ");
+                break;
+            case ENTER_FIRST_NUMBER:
+                System.out.println("enter first number : ");
+                break;
+            case ENTER_SECOND_NUMBER:
+                System.out.println("enter second number : ");
+                break;
+            case NOT_ENOUGH_CARD_TO_BE_TRIBUTE:
+                System.out.println("there are not enough cards for tribute");
+                break;
+            case ONE_TRIBUTE_NO_MONSTER:
+                System.out.println("there no monsters one this address");
+                break;
+            case TWO_TRIBUTE_NO_MONSTER:
+                System.out.println("there is no monster on one of these addresses");
+                break;
+           
+
 
             default:
                 break;
