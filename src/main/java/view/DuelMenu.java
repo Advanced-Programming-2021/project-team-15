@@ -5,6 +5,7 @@ import controller.MenuController;
 import controller.responses.DuelMenuResponses;
 import model.Game;
 import model.Zone;
+import utility.Utility;
 
 import javax.security.sasl.SaslServer;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class DuelMenu extends Menu {
     @Override
     public void scanInput() {
         while (true) {
-            String input = scannerLine();
+            String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
             else if (input.startsWith("duel")) {
@@ -66,7 +67,7 @@ public class DuelMenu extends Menu {
             }
         }
         while (true) {
-            String input = scannerLine();
+            String input = Utility.getNextLine();
             if (cantDoThisKindsOfMove) System.out.println("it's not your turn to play this kind of moves");
             else if (input.matches("select(.*)(\\d)(.*)"))
                 checkAndCallSelectNumericZone(input);
@@ -124,19 +125,6 @@ public class DuelMenu extends Menu {
             printResponse(duelMenuResponses);
         }
 
-    }
-
-    //TODO : handle various uses of SCANNER
-    public Integer scannerNum() {
-        Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        return Integer.parseInt(s);
-    }
-
-    public String scannerLine() {
-        Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        return s;
     }
 
     public void checkAndCallDeselect(String input) {
@@ -226,9 +214,6 @@ public class DuelMenu extends Menu {
             case TWO_TRIBUTE_NO_MONSTER:
                 System.out.println("there is no monster on one of these addresses");
                 break;
-           
-
-
             default:
                 break;
         }
@@ -239,8 +224,8 @@ public class DuelMenu extends Menu {
         while (true) {
             System.out.println("let's play rock paper scissors!");
             System.out.println(gamePlayController.getGame().getFirstPlayer() + " please choose rock, paper or scissors");
-            String firstPlayerMove = scannerLine();
-            String secondPlayerMove = scannerLine();
+            String firstPlayerMove = Utility.getNextLine();
+            String secondPlayerMove = Utility.getNextLine();
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " + gamePlayController.getGame().getFirstPlayer() + "'s turn");

@@ -286,7 +286,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
-        int num = duelMenu.scannerNum();
+        int num = Integer.parseInt(Utility.getNextLine());
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
@@ -297,9 +297,9 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses twoMonsterTribute() {
        duelMenu.printResponse(ENTER_FIRST_NUMBER);
-        int firstAddress = duelMenu.scannerNum();
+        int firstAddress = Integer.parseInt(Utility.getNextLine());
        duelMenu.printResponse(ENTER_SECOND_NUMBER);
-        int secondAddress = duelMenu.scannerNum();
+        int secondAddress = Integer.parseInt(Utility.getNextLine());
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
             return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;
         currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress, currentPlayer);
