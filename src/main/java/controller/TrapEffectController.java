@@ -89,7 +89,7 @@ public class TrapEffectController {
         if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0) {
             while (true) {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
-                int num = duelMenu.scannerNum();
+                int num = Integer.parseInt(Utility.getNextLine());
                 if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num) != null) {
                     gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
                     gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));

@@ -137,7 +137,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if ((map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FIEND) &&
                     (map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FAIRY)) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 400);
@@ -165,7 +165,7 @@ public class SpellEffectController {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (map.get(num) != null && !map.get(num).getHidden()) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 500);
                 effectController.getEquippedCardsBySpells().put((MagicCard) gamePlayController.getSelectedCard(), map.get(num));
@@ -190,7 +190,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         int amount = effectController.getNumberOfFaceUpMonstersOfCurrentPlayer();
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (map.get(num) != null) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + amount * 800);
                 map.get(num).setGameDEF(map.get(num).getGameDEF() + amount * 800);
@@ -222,7 +222,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (map.get(num) != null && map.get(num).getMonsterType() == MonsterCard.MonsterType.WARRIOR && !map.get(num).getHidden()) {
                 if (map.get(num).getMode() == MonsterCard.Mode.ATTACK) {
                     map.get(num).setGameATK(map.get(num).getGameATK() + map.get(num).getDefensePoint());
@@ -343,7 +343,7 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (num <= 5 && map.get(num) != null) {
                 player.getMagicCardZone().moveCardToGraveyard(num, player);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -373,7 +373,7 @@ public class SpellEffectController {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);  // of your hand !
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() >= num) {
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
                 break;
@@ -384,7 +384,7 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (num <= 5 && gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards().get(num) != null) {
                 gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(num, gamePlayController.getCurrentPlayer());
                 i++;
@@ -427,7 +427,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (map.get(num) != null) {
                 effectController.getControl(map.get(num));
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -479,7 +479,7 @@ public class SpellEffectController {
         else player = gamePlayController.getCurrentPlayer();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard)) {
                 Card card = player.getGraveyardZone().getZoneCards().get(num-1);
                 player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);

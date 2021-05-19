@@ -65,7 +65,7 @@ public class MonsterEffectController {
         else victim = gamePlayController.getCurrentPlayer();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true)
-        {  int  num =  duelMenu.scannerNum();
+        {  int  num =  Integer.parseInt(Utility.getNextLine());
            if(victim.getMonsterCardZone().getZoneCards().get(num) != null)
            {  victim.getMonsterCardZone().moveCardToGraveyard(num, victim);
                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -129,7 +129,7 @@ public class MonsterEffectController {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true)
         {
-            int num = duelMenu.scannerNum();
+            int num = Integer.parseInt(Utility.getNextLine());
             if(gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(num)==null)
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
             else {
@@ -204,7 +204,7 @@ public Boolean isNormalCyberseExists(ArrayList<Card> zoneCards)
 public void checkFindAskTextChanger(ArrayList<Card> zoneCards)
 { duelMenu.printResponse(ENTER_ONE_NUMBER);
     while (true) {
-        int num= duelMenu.scannerNum();
+        int num= Integer.parseInt(Utility.getNextLine());
         Card card= zoneCards.get(num-1);
         if(card==null || !(card instanceof MonsterCard) || ((MonsterCard) card).getMonsterType()!= MonsterCard.MonsterType.CYBER
                 || ((MonsterCard) card).getMonsterEffectType()!= MonsterCard.MonsterEffectType.NORMAL)
@@ -227,14 +227,14 @@ public void checkFindAskTextChanger(ArrayList<Card> zoneCards)
 public void doHeraldOfCreation()
 {     duelMenu.printResponse(ENTER_ONE_NUMBER);
     while (true)
-    {   int n = duelMenu.scannerNum();
+    {   int n = Integer.parseInt(Utility.getNextLine());
         Card card=gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(n-1);
         if(card != null)
         {   gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
             gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
             duelMenu.printResponse(ENTER_ONE_NUMBER);
             while (true)
-            {int num = duelMenu.scannerNum();
+            {int num = Integer.parseInt(Utility.getNextLine());
                 if(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) != null &&
                         ( gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard) &&
                         ((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num-1)).getLevel()>=7)
@@ -287,7 +287,7 @@ public Boolean doTerratigertheEmpoweredWarrior()
 {   duelMenu.printResponse(ENTER_ONE_NUMBER);
     while (true)
     {
-        int num = duelMenu.scannerNum();
+        int num = Integer.parseInt(Utility.getNextLine());
         Card card= gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num-1);
         if(card!= null&& (card instanceof MonsterCard ) && ((MonsterCard) card).getLevel()<=4 && ((MonsterCard) card).getMonsterEffectType()== MonsterCard.MonsterEffectType.NORMAL)
         { gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) card, gamePlayController.getCurrentPlayer());
@@ -308,7 +308,7 @@ public void TheTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
     }
     while (true)
     {
-        int num = duelMenu.scannerNum();
+        int num = Integer.parseInt(Utility.getNextLine());
         Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num-1);
         if(card!=null)
         {
