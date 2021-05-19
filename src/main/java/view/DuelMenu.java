@@ -3,19 +3,15 @@ package view;
 import controller.GamePlayController;
 import controller.MenuController;
 import controller.responses.DuelMenuResponses;
-<<<<<<< Updated upstream
 import model.Game;
 import model.Zone;
-=======
-import utility.Utility;
->>>>>>> Stashed changes
 
+import javax.security.sasl.SaslServer;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class DuelMenu extends Menu {
     private static DuelMenu duelMenu;
-<<<<<<< Updated upstream
 
     public boolean isWeAreOnGame() {
         return weAreOnGame;
@@ -28,17 +24,6 @@ public class DuelMenu extends Menu {
     private boolean weAreOnGame = false;
     DuelMenuResponses duelMenuResponses;
     GamePlayController gamePlayController = GamePlayController.getInstance();
-=======
-    private static GamePlayController gamePlayController;
-
-    static {
-        GamePlayController.getInstance();
-    }
-
-    DuelMenuResponses duelMenuResponses;
-    private String secondUsername;
-    private Boolean cantDoThisKindsOfMove = false;
->>>>>>> Stashed changes
 
     private DuelMenu() {
         super("Duel Menu");
@@ -49,11 +34,8 @@ public class DuelMenu extends Menu {
             duelMenu = new DuelMenu();
         return duelMenu;
     }
-<<<<<<< Updated upstream
 
     private String secondUsername;
-=======
->>>>>>> Stashed changes
 
     public Boolean getCantDoThisKindsOfMove() {
         return cantDoThisKindsOfMove;
@@ -63,53 +45,39 @@ public class DuelMenu extends Menu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-<<<<<<< Updated upstream
     private Boolean cantDoThisKindsOfMove = false;
 
 
     @Override
     public void scanInput() {
-            while (true) {
-                String input = scannerLine();
-                if (input.equals("menu exit")) checkAndCallMenuExit();
-                if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
-                else if (input.startsWith("duel")) {
-                    checkAndCallNewDuel(input);
-                     if(weAreOnGame) break;
-                }
-                else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
-                else System.out.println("invalid command");
-                if (super.isExit) {
-                    super.isExit = false;
-                    return;
-                }
+        while (true) {
+            String input = scannerLine();
+            if (input.equals("menu exit")) checkAndCallMenuExit();
+            if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
+            else if (input.startsWith("duel")) {
+                checkAndCallNewDuel(input);
+                if(weAreOnGame) break;
             }
+            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+            else System.out.println("invalid command");
+            if (super.isExit) {
+                super.isExit = false;
+                return;
+            }
+        }
         while (true) {
             String input = scannerLine();
             if (cantDoThisKindsOfMove) System.out.println("it's not your turn to play this kind of moves");
             else if (input.matches("select(.*)(\\d)(.*)"))
-=======
-    @Override
-    public void scanInput() {
-        while (true) {
-            String input = Utility.getNextLine();
-            if (cantDoThisKindsOfMove)
-                printString("it's not your turn to play this kind of moves");
-            else if (input.startsWith("duel") && input.contains(" --ai"))
-                checkAndCallNewAiDuel(input);
-            else if (input.startsWith("duel"))
-                checkAndCallNewDuel(input);
-            if (input.matches("select(.*)(\\d)(.*)"))
->>>>>>> Stashed changes
                 checkAndCallSelectNumericZone(input);
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
-<<<<<<< Updated upstream
+            else if(input.equals("summon"))   printResponse(gamePlayController.summonCommand());
+            else if(input.equals("set"))  printResponse(gamePlayController.setCommand());
+
+
             else System.out.println("invalid command");
-=======
-            //continue
->>>>>>> Stashed changes
         }
     }
 
@@ -164,15 +132,12 @@ public class DuelMenu extends Menu {
         String s = scanner.nextLine();
         return Integer.parseInt(s);
     }
-<<<<<<< Updated upstream
 
     public String scannerLine() {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         return s;
     }
-=======
->>>>>>> Stashed changes
 
     public void checkAndCallDeselect(String input) {
         duelMenuResponses = gamePlayController.deSelect();
@@ -180,40 +145,31 @@ public class DuelMenu extends Menu {
     }
 
     public void printResponse(DuelMenuResponses duelMenuResponses) {
-        String output = "";
         switch (duelMenuResponses) {
             case NO_PLAYER_WITH_THIS_USERNAME_EXISTS:
                 System.out.println("there is no player with this username");
                 break;
             case OPPONENT_PLAYER_HAS_NO_ACTIVE_DECK:
-<<<<<<< Updated upstream
                 System.out.println(secondUsername + " has no active deck");
-=======
-                output = secondUsername + " has no active deck";
->>>>>>> Stashed changes
                 break;
             case CURRENT_PLAYER_HAS_NO_ACTIVE_DECK:
                 System.out.println(MenuController.getUser().getUserName() + " has no active deck");
                 break;
             case INVALID_OPPONENT_PLAYER_DECK:
-<<<<<<< Updated upstream
                 System.out.println(secondUsername + "'s deck is invalid");
-=======
-                output = secondUsername + "'s deck is invalid";
->>>>>>> Stashed changes
                 break;
             case INVALID_CURRENT_PLAYER_DECK:
                 System.out.println(MenuController.getUser().getUserName() + "'s deck is invalid");
                 break;
             case GAME_STARTED_SUCCESSFULLY:
                 playRPS();
-               break;
+                break;
             case INVALID_SELECTION:
                 System.out.println("invalid selection");
                 break;
             case CARD_SELECTED:
                 System.out.println("card selected");
-            break;
+                break;
             case SELECTION_NO_CARD_FOUND:
                 System.out.println("no card found in the given position");
                 break;
@@ -222,7 +178,7 @@ public class DuelMenu extends Menu {
                 break;
             case CARD_DESELECTED:
                 System.out.println("card deselected");
-            break;
+                break;
             case   RIVALS_TURN_AND_SHOW_DRAW_PHASE:
             {
                 System.out.println("phase : end phase");
@@ -231,6 +187,47 @@ public class DuelMenu extends Menu {
                 gamePlayController.drawPhase();
             }
             break;
+            case CANT_SUMMON_THIS_CARD:
+                System.out.println("you can't summon this card");
+                break;
+            case NOT_ALLOWED_IN_THIS_PHASE:
+                System.out.println("action not allowed in this phase");
+                break;
+            case MONSTER_ZONE_IS_FULL:
+                System.out.println("monster card zone is full");
+                break;
+            case ALREADY_SUMMONED_SET:
+                System.out.println("you already summoned/set on this turn");
+                break;
+            case CARD_SUMMONED:
+                System.out.println("summoned successfully");
+                break;
+            case GET_ONE_NUMBER_TO_BE_TRIBUTE:
+                System.out.println("this card needs one tribute");
+                break;
+            case GET_TWO_NUMBERS_TO_BE_TRIBUTE:
+                System.out.println("this card needs two tributes");
+                break;
+            case ENTER_ONE_NUMBER:
+                System.out.println("enter one number : ");
+                break;
+            case ENTER_FIRST_NUMBER:
+                System.out.println("enter first number : ");
+                break;
+            case ENTER_SECOND_NUMBER:
+                System.out.println("enter second number : ");
+                break;
+            case NOT_ENOUGH_CARD_TO_BE_TRIBUTE:
+                System.out.println("there are not enough cards for tribute");
+                break;
+            case ONE_TRIBUTE_NO_MONSTER:
+                System.out.println("there no monsters one this address");
+                break;
+            case TWO_TRIBUTE_NO_MONSTER:
+                System.out.println("there is no monster on one of these addresses");
+                break;
+
+
 
             default:
                 break;
@@ -238,7 +235,6 @@ public class DuelMenu extends Menu {
     }
 
 
-<<<<<<< Updated upstream
     public void playRPS() {
         while (true) {
             System.out.println("let's play rock paper scissors!");
@@ -255,9 +251,6 @@ public class DuelMenu extends Menu {
     public void newCardAddInDrawPhase(String cardName)
     {
         System.out.println("new card added to hand : " + cardName);
-=======
-        System.out.println(output);
->>>>>>> Stashed changes
     }
 
     public void revealCard(String cardName) {

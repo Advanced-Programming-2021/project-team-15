@@ -75,8 +75,7 @@ public enum DuelMenuResponses {
     ENTER_POS,
     DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD,
     DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP,
-    
-
+    ;
 
 
 }
