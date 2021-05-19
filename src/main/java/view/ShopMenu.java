@@ -2,6 +2,7 @@ package view;
 
 import controller.ShopController;
 import controller.responses.ShopMenuResponses;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,9 +25,8 @@ public class ShopMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
             else if (input.equals("shop show --all")) checkAndCallShowAllCards();

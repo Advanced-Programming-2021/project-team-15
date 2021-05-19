@@ -4,6 +4,7 @@ import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
 import model.Player;
+import utility.Utility;
 import view.DuelMenu;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class MonsterEffectController {
     public void BeastKingBarbaros(Boolean isSummon)
     {   if(isSummon) {
         duelMenu.printResponse(DO_YOU_WANNA_TRIBUTE);
-        String string = duelMenu.scannerLine();
+        String string = Utility.getNextLine();;
         if(string.equals("yes")) {
             chooseThreeMonsterAndTribute();
             for(int i =  1; i<=5 ; i++)
@@ -146,7 +147,7 @@ public class MonsterEffectController {
         attackController.getAttackStoppersInTurn().add(textChanger);
         gamePlayController.changeTurn();
         duelMenu.printResponse(DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD);
-        String string = duelMenu.scannerLine();
+        String string = Utility.getNextLine();
         if(string.equals("no"))
             return;                 // OR WE CAN DONT CHANGE TURN AND USER GET OWNER OF .. METHOD
         if(isNormalCyberseExists(gamePlayController.getCurrentPlayer().getHand().getZoneCards()))
@@ -213,7 +214,7 @@ public void checkFindAskTextChanger(ArrayList<Card> zoneCards)
         }else {
             gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster((MonsterCard) card ,gamePlayController.getCurrentPlayer());
             duelMenu.printResponse(ENTER_POS);
-            String ans = duelMenu.scannerLine();
+            String ans = Utility.getNextLine();
             if (ans.equals("ATK"))
                 ((MonsterCard)card).setMode(MonsterCard.Mode.ATTACK);
             else
@@ -316,7 +317,7 @@ public void TheTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
             gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster(theTricky, gamePlayController.getCurrentPlayer());
             theTricky.setHidden(false);
             duelMenu.printResponse(ENTER_POS);  //special summon?
-            String ans = duelMenu.scannerLine();
+            String ans = Utility.getNextLine();
             if (ans.equals("ATK"))
                theTricky.setMode(MonsterCard.Mode.ATTACK);
             else

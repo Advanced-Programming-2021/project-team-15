@@ -2,6 +2,7 @@ package view;
 
 import controller.MainMenuController;
 import controller.responses.MainMenuResponses;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -22,9 +23,8 @@ public class MainMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.equals("user logout")) checkAndCallLogout(input);
             else if (input.startsWith("menu enter")) checkAndCallMenuEnter(input);

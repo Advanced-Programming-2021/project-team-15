@@ -68,6 +68,13 @@ public class RegexController {
         } else return false;
     }
 
+    public Boolean removeUserRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "user remove (\\S+) (\\S+) (\\S+) (\\S+)$");
+        if (matcher.find()) {
+            return isLoginUserCommandValid(matcher, enteredDetails);
+        } else return false;
+    }
+
     public Boolean isLoginUserCommandValid(Matcher matcher, HashMap<String, String> enteredDetails) {
         boolean commandValidation = true;
         CommandCase commandCase;
@@ -92,12 +99,10 @@ public class RegexController {
             enteredDetails.put("username", inputParameters.get("--username"));
             enteredDetails.put("password", inputParameters.get("--password"));
         }
-//                loginController.loginUser(inputParameters.get("--username") , inputParameters.get("--password"));
         else if (commandCase.equals(CommandCase.SHORT)) {
             enteredDetails.put("username", inputParameters.get("-u"));
             enteredDetails.put("password", inputParameters.get("-p"));
         }
-//                loginController.loginUser(inputParameters.get("-u") , inputParameters.get("-p"));
         return commandValidation;
     }
 

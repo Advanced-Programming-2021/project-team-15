@@ -2,6 +2,7 @@ package view;
 
 import controller.ProfileController;
 import controller.responses.ProfileMenuResponses;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -23,9 +24,8 @@ public class ProfileMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.startsWith("profile change --nickname")) checkAndCallChangeNickname(input);
             else if (input.startsWith("profile change")) checkAndCallChangePassword(input);
             else if (input.equals("menu exit")) checkAndCallMenuExit();

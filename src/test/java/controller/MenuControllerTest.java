@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 
-public class MenuTest {
+public class MenuControllerTest {
     LoginController loginController = new LoginController();
     ShopController shopController = new ShopController();
     ScoreboardController scoreboardController = new ScoreboardController("Scoreboard Menu");
@@ -37,20 +37,19 @@ public class MenuTest {
         assertEquals(LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS, loginMenuResponses);
         loginMenuResponses = loginController.registerUser("pedaresh", "bale", "babat");
         assertEquals(LoginMenuResponses.USER_NICKNAME_ALREADY_EXISTS, loginMenuResponses);
-        loginController.removeUser("pedaret");
+        loginController.removeUser("pedaret","babat");
     }
 
     @Test
     public void loginUserTest() {
         loginController.registerUser("pedaret", "bale", "babat");
-        assertNull(MenuController.user);
         loginMenuResponses = loginController.loginUser("pedaresh", "babat");
         assertEquals(LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED, loginMenuResponses);
         loginMenuResponses = loginController.loginUser("pedaret", "babash");
         assertEquals(LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED, loginMenuResponses);
         loginController.loginUser("pedaret", "babat");
         assertEquals(User.getUserByUserName("pedaret"), MenuController.user);
-        loginController.removeUser("pedaret");
+        loginController.removeUser("pedaret","babat");
     }
 
     @Test
@@ -74,7 +73,7 @@ public class MenuTest {
         ArrayList<String> userCardsName = new ArrayList<>();
         for (Card card : user.getAllCardsOfUser()) userCardsName.add(card.getCardName());
         assertEquals(Arrays.asList(cardNames), userCardsName);
-        loginController.removeUser("pedaret");
+        loginController.removeUser("pedaret","babat");
     }
 
     @Test
@@ -103,7 +102,7 @@ public class MenuTest {
         assertEquals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS,deckMenuResponses);
         deckController.removeDeck("Uh");
         assertNull(user.getDeckByName("Uh"));
-        loginController.removeUser(user.getUserName());
+        loginController.removeUser(user.getUserName(), user.getPassWord());
     }
 
     @Test
@@ -127,7 +126,7 @@ public class MenuTest {
         assertEquals(DeckMenuResponses.DECK_ACTIVATE_SUCCESSFUL, deckMenuResponses);
         User testedUser = readUsersFromFile("src/test/resources/addedCardToDeckTest.json").get(0);
         assertEquals(user, testedUser);
-        loginController.removeUser(user.getUserName());
+        loginController.removeUser(user.getUserName(),user.getPassWord());
     }
 
     private ArrayList<User> readUsersFromFile(String path) throws FileNotFoundException {

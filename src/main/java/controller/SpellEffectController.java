@@ -6,6 +6,7 @@ import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
 import model.Player;
+import utility.Utility;
 import view.DuelMenu;
 
 import java.util.ArrayList;
@@ -332,7 +333,7 @@ public class SpellEffectController {
         Map<Integer, MagicCard> map;
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
-        String rivalOrNot = duelMenu.scannerLine();
+        String rivalOrNot = Utility.getNextLine();;
         if (rivalOrNot.equals("rival")) {
             map = gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards();
             player = gamePlayController.getOpponentPlayer();
@@ -393,7 +394,7 @@ public class SpellEffectController {
                 i++;
                 if (i == 1) {
                     duelMenu.printResponse(WANNA_ADD_ANOTHER_CARD);
-                    String ans = duelMenu.scannerLine();
+                    String ans = Utility.getNextLine();;
                     if (ans.equals("yes")) {
                         duelMenu.printResponse(ENTER_ONE_NUMBER);
                         continue;
@@ -472,7 +473,7 @@ public class SpellEffectController {
     public void doMonsterReborn() {
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
-        String rivalOrNot = duelMenu.scannerLine();
+        String rivalOrNot = Utility.getNextLine();;
         if (rivalOrNot.equals("rival"))
             player = gamePlayController.getOpponentPlayer();
         else player = gamePlayController.getCurrentPlayer();
@@ -484,7 +485,7 @@ public class SpellEffectController {
                 player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);
                 card.setHidden(false);
                 duelMenu.printResponse(ENTER_POS);
-                String ans = duelMenu.scannerLine();
+                String ans = Utility.getNextLine();;
                 //?  SPECIAL SUMMON
                 if (ans.equals("ATK"))
                    ((MonsterCard) card).setMode(MonsterCard.Mode.ATTACK);
@@ -561,7 +562,7 @@ public class SpellEffectController {
         int[] out;
         duelMenu.printResponse(ENTER_SOME_NUMBERS);
         while (true) {
-            String string = duelMenu.scannerLine().trim();
+            String string = Utility.getNextLine().trim();
             if (!string.matches("(\\d+\\s)+\\d+"))
                 duelMenu.printResponse(SHOULD_RIVAL_SUMMON_RIGHT_NOW);
             else {
@@ -573,7 +574,7 @@ public class SpellEffectController {
                         gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(out[i]);
                     }
                     duelMenu.printResponse(ENTER_POS);
-                    String ans = duelMenu.scannerLine();
+                    String ans = Utility.getNextLine();;
                     if (ans.equals("ATK"))
                         getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setMode(MonsterCard.Mode.ATTACK);
                     else

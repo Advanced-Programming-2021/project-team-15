@@ -31,13 +31,14 @@ public class LoginController extends MenuController {
         }
     }
 
-    public boolean removeUser(String username) {
+    public LoginMenuResponses removeUser(String username, String password) {
         jsonController.refreshUsersFromFileJson();
-        if (User.getUserByUserName(username)==null) return false;
+        if (User.getUserByUserName(username)==null) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
+        else if (!User.getUserByUserName(username).getPassWord().equals(password)) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
         else{
             User.removeUserByUsername(username);
             jsonController.refreshUsersToFileJson();
-            return true;
+            return LoginMenuResponses.USER_REMOVE_SUCCESSFUL;
         }
     }
 }

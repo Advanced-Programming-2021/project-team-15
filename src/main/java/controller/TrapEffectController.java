@@ -6,6 +6,7 @@ import controller.responses.DuelMenuResponses;
 import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
+import utility.Utility;
 import view.DuelMenu;
 
 import java.util.Map;
@@ -37,7 +38,7 @@ public class TrapEffectController {
 
     public void mindCrush(Card trap) {
         Boolean did = false;
-        String string = duelMenu.scannerLine();
+        String string = Utility.getNextLine();;
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
             if (card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);

@@ -2,6 +2,7 @@ package view;
 
 import controller.LoginController;
 import controller.responses.LoginMenuResponses;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -30,11 +31,11 @@ public class LoginMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.startsWith("user create ")) checkAndCallRegister(input);
             else if (input.startsWith("user login ")) this.isEnter = checkAndCallLogin(input);
+            else if (input.startsWith("user remove ")) checkAndCallRemove(input);
             else if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
             else System.out.println("invalid command");
@@ -74,6 +75,16 @@ public class LoginMenu extends Menu {
         return false;
     }
 
+    private void checkAndCallRemove(String input) {
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.removeUserRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+            responses = loginController.removeUser(enteredDetails.get("username"), enteredDetails.get("password"));
+            printResponse(responses);
+        }
+    }
+
     private void printResponse(LoginMenuResponses loginMenuResponses) {
         String output = "";
         switch (loginMenuResponses) {
@@ -94,6 +105,9 @@ public class LoginMenu extends Menu {
                 break;
             case USER_LOGOUT_SUCCESSFUL:
                 output = "user logged out successfully!";
+                break;
+            case USER_REMOVE_SUCCESSFUL:
+                output = "user removed successfully!";
                 break;
             default:
                 break;

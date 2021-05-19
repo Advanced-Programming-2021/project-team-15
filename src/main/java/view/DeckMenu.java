@@ -3,6 +3,7 @@ package view;
 import controller.DeckController;
 import controller.responses.DeckMenuResponses;
 import model.Deck;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -30,9 +31,8 @@ public class DeckMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("deck create")) checkAndCallCreateDeck(input);
             else if (input.startsWith("deck delete")) checkAndCallDeleteDeck(input);

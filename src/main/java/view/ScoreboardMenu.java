@@ -2,6 +2,7 @@ package view;
 
 import controller.ScoreboardController;
 import controller.responses.ScoreboardMenuResponses;
+import utility.Utility;
 
 import java.util.Scanner;
 
@@ -22,9 +23,8 @@ public class ScoreboardMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.equals("scoreboard show")) checkAndCallShowScoreboard();
             else if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
