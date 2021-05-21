@@ -50,14 +50,6 @@ public class GamePlayController extends MenuController {
         GamePlayController.setCard = setCard;
     }
 
-    public static GamePlayController getGamePlayController() {
-        return gamePlayController;
-    }
-
-    public static void setGamePlayController(GamePlayController gamePlayController) {
-        GamePlayController.gamePlayController = gamePlayController;
-    }
-
     public ArrayList<Card> getChainCards() {
         return chainCards;
     }

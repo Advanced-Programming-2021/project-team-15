@@ -111,8 +111,8 @@ public class MenuControllerTest {
         User.getAllUsers().add(user);
         jsonController.refreshUsersToFileJson();
         MenuController.setUser(user);
-        jsonController.MonsterCardParseJson();
-        jsonController.MagicCardParseJson();
+        jsonController.monsterCardParseJson();
+        jsonController.magicCardParseJson();
         user.setActiveDeck(user.getDeckByName(user.getActiveDeckName()));
         deckMenuResponses = deckController.addCardToDeck("Yami", "gav", Deck.DeckType.MAIN);
         assertEquals(DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK, deckMenuResponses);

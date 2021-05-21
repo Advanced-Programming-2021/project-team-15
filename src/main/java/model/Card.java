@@ -146,7 +146,6 @@ public class Card {
         this.cardType = cardType;
     }
 
-
     public int getPrice() {
         return price;
     }
@@ -156,7 +155,7 @@ public class Card {
     }
 
     public enum CardType {
-        MONSTER(),
-        MAGIC();
+        MONSTER,
+        MAGIC;
     }
 }

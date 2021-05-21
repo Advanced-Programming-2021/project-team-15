@@ -28,6 +28,7 @@ public class MainMenu extends Menu {
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.equals("user logout")) checkAndCallLogout(input);
             else if (input.startsWith("menu enter")) checkAndCallMenuEnter(input);
+            else if (input.startsWith("increase ")) checkAndCallIncreaseMoneyCheat(input);
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
             else System.out.println("invalid command");
             if (isEnter) {
@@ -46,6 +47,16 @@ public class MainMenu extends Menu {
         printResponse(responses);
         if (responses == MainMenuResponses.USER_LOGOUT_SUCCESSFUL) {
             super.isExit = true;
+        }
+    }
+
+    private void checkAndCallIncreaseMoneyCheat(String input) {
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.increaseMoneyRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+            responses = mainMenuController.increaseMoneyCheat(Integer.parseInt(enteredDetails.get("amount")));
+            printResponse(responses);
         }
     }
 
@@ -77,6 +88,9 @@ public class MainMenu extends Menu {
                 break;
             case MENU_NAVIGATION_NOT_POSSIBLE:
                 output = "menu navigation is not possible";
+                break;
+            case INCREASED_MONEY_SUCCESSFULLY:
+                output = "CHEAT ACTIVATED!";
                 break;
             default:
                 break;

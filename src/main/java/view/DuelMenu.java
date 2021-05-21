@@ -3,28 +3,22 @@ package view;
 import controller.GamePlayController;
 import controller.MenuController;
 import controller.responses.DuelMenuResponses;
-import model.Game;
-import model.Zone;
 import utility.Utility;
 
-import javax.security.sasl.SaslServer;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class DuelMenu extends Menu {
     private static DuelMenu duelMenu;
+    private static GamePlayController gamePlayController;
 
-    public boolean isWeAreOnGame() {
-        return weAreOnGame;
+    static {
+        gamePlayController = GamePlayController.getInstance();
     }
 
-    public void setWeAreOnGame(boolean weAreOnGame) {
-        this.weAreOnGame = weAreOnGame;
-    }
-
-    private boolean weAreOnGame = false;
     DuelMenuResponses duelMenuResponses;
-    GamePlayController gamePlayController = GamePlayController.getInstance();
+    private boolean weAreOnGame = false;
+    private String secondUsername;
+    private Boolean cantDoThisKindsOfMove = false;
 
     private DuelMenu() {
         super("Duel Menu");
@@ -36,7 +30,13 @@ public class DuelMenu extends Menu {
         return duelMenu;
     }
 
-    private String secondUsername;
+    public boolean isWeAreOnGame() {
+        return weAreOnGame;
+    }
+
+    public void setWeAreOnGame(boolean weAreOnGame) {
+        this.weAreOnGame = weAreOnGame;
+    }
 
     public Boolean getCantDoThisKindsOfMove() {
         return cantDoThisKindsOfMove;
@@ -46,9 +46,6 @@ public class DuelMenu extends Menu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-    private Boolean cantDoThisKindsOfMove = false;
-
-
     @Override
     public void scanInput() {
         while (true) {
@@ -57,9 +54,8 @@ public class DuelMenu extends Menu {
             if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
             else if (input.startsWith("duel")) {
                 checkAndCallNewDuel(input);
-                if(weAreOnGame) break;
-            }
-            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+                if (weAreOnGame) break;
+            } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
@@ -74,8 +70,8 @@ public class DuelMenu extends Menu {
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
-            else if(input.equals("summon"))   printResponse(gamePlayController.summonCommand());
-            else if(input.equals("set"))  printResponse(gamePlayController.setCommand());
+            else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
+            else if (input.equals("set")) printResponse(gamePlayController.setCommand());
 
 
             else System.out.println("invalid command");
@@ -167,10 +163,9 @@ public class DuelMenu extends Menu {
             case CARD_DESELECTED:
                 System.out.println("card deselected");
                 break;
-            case   RIVALS_TURN_AND_SHOW_DRAW_PHASE:
-            {
+            case RIVALS_TURN_AND_SHOW_DRAW_PHASE: {
                 System.out.println("phase : end phase");
-                System.out.println("it's "+gamePlayController.getCurrentPlayer()+"'s turn");
+                System.out.println("it's " + gamePlayController.getCurrentPlayer() + "'s turn");
                 System.out.println("phase : draw phase");
                 gamePlayController.drawPhase();
             }
@@ -233,8 +228,8 @@ public class DuelMenu extends Menu {
             }
         }
     }
-    public void newCardAddInDrawPhase(String cardName)
-    {
+
+    public void newCardAddInDrawPhase(String cardName) {
         System.out.println("new card added to hand : " + cardName);
     }
 

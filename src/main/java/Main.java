@@ -1,7 +1,4 @@
 import controller.JSONController;
-import model.Card;
-import model.MagicCard;
-import model.MonsterCard;
 import view.LoginMenu;
 
 /*To Handle :
@@ -19,8 +16,8 @@ card show (page 10)
 public class Main {
     public static void main(String[] args) {
         JSONController jsonController = new JSONController();
-        jsonController.MonsterCardParseJson();
-        jsonController.MagicCardParseJson();
+        jsonController.monsterCardParseJson();
+        jsonController.magicCardParseJson();
         LoginMenu loginMenu = LoginMenu.getInstance();
         loginMenu.scanInput();
 

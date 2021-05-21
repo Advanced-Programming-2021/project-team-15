@@ -61,7 +61,7 @@ public class DeckController extends MenuController {
         else {
             user.addCard(addingDeck.getCardByName(cardName, deckType));
             addingDeck.removeCardFromDeckByName(cardName, deckType);
-            if (addingDeck.getMainDeck().size() < addingDeck.mainDeckMinCardCount)
+            if (addingDeck.getMainDeck().size() < Deck.mainDeckMinCardCount)
                 addingDeck.setValid(false);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_REMOVE_SUCCESSFUL;
@@ -75,17 +75,16 @@ public class DeckController extends MenuController {
         else if (user.getDeckByName(deckName) == null)
             return DeckMenuResponses.DECK_NAME_NOT_EXIST;
         Deck addingDeck = user.getDeckByName(deckName);
-        if (deckType == Deck.DeckType.MAIN && addingDeck.getMainDeck().size() == addingDeck.mainDeckMaxCardCount)
+        if (deckType == Deck.DeckType.MAIN && addingDeck.getMainDeck().size() == Deck.mainDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
-        if (deckType == Deck.DeckType.SIDE && addingDeck.getSideDeck().size() == addingDeck.sideDeckMaxCardCount)
+        if (deckType == Deck.DeckType.SIDE && addingDeck.getSideDeck().size() == Deck.sideDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
-        else if (addingDeck.getSpecifiedCardCountInDeckByName(cardName) >= addingDeck.DeckMaxSpecifiedCardCount)
+        else if (addingDeck.getSpecifiedCardCountInDeckByName(cardName) >= Deck.DeckMaxSpecifiedCardCount)
             return DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK;
         else {
-//            System.out.println("adding");
             addingDeck.addCardToDeck(cloner.deepClone(Card.getCardByName(cardName)), deckType);
             user.removeUserCardByName(cardName);
-            if (addingDeck.getMainDeck().size() >= addingDeck.mainDeckMinCardCount)
+            if (addingDeck.getMainDeck().size() >= Deck.mainDeckMinCardCount)
                 addingDeck.setValid(true);
             jsonController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_ADD_TO_DECK_SUCCESSFUL;
@@ -118,14 +117,16 @@ public class DeckController extends MenuController {
             }
             magicCards = sortCardsByName(magicCards);
             monsterCards = sortCardsByName(monsterCards);
-            deckDetails.append("Deck : ").append(toPrintDeck.getName()).append("\n");
-            deckDetails.append(deckType.toString()).append("deck :\n").append("Monsters :\n");
+            deckDetails.append("* ").append("Deck : ").append(toPrintDeck.getName()).append("\n");
+            deckDetails.append("* ").append(deckType.toString()).append("deck :\n");
+            deckDetails.append("* ").append("Monsters :\n");
             for (Card card : monsterCards) {
-                deckDetails.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
+                deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
             }
-            deckDetails.deleteCharAt(deckDetails.lastIndexOf("\n"));
+            //if (monsterCards.size()!=0)deckDetails.deleteCharAt(deckDetails.lastIndexOf("\n"));
+            deckDetails.append("* ").append("Magics :\n");
             for (Card card : magicCards) {
-                deckDetails.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
+                deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
             }
             return DeckMenuResponses.SHOW_DECK;
         }
@@ -140,8 +141,8 @@ public class DeckController extends MenuController {
             else activeDeck = deck;
         }
         otherDecks = sortDecks(otherDecks);
-        allDecks.append("Decks :\n").append("Active Deck :\n");
-        allDecks.append(getDeckDetails(activeDeck)).append("Other decks :\n");
+        allDecks.append("* ").append("Decks :\n").append("* ").append("Active Deck :\n");
+        allDecks.append("* ").append(getDeckDetails(activeDeck)).append("Other decks :\n");
         for (Deck deck : otherDecks) {
             allDecks.append(getDeckDetails(deck));
         }
@@ -150,6 +151,7 @@ public class DeckController extends MenuController {
 
     public DeckMenuResponses showAllCardsOfUser(StringBuilder allCards) {
         ArrayList<Card> sortedAllUserCards = sortCardsByName(user.getAllCardsOfUser());
+        allCards.append("* All cards of user : \n");
         for (Card card : sortedAllUserCards) {
             allCards.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
         }

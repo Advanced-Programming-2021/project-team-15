@@ -15,7 +15,7 @@ public class MenuTest {
     private static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Test
-    public void LoginCommandsTest() throws IOException {
+    public void loginCommandsTest() throws IOException {
         String allCommands = Files.readString(Path.of("src/test/resources/inputTests/userBuildTestInput.txt"),
                 StandardCharsets.US_ASCII);
         String responses = Files.readString(Path.of("src/test/resources/inputTests/userBuildTestOutput.txt"),
@@ -24,6 +24,18 @@ public class MenuTest {
         System.setIn(new ByteArrayInputStream(allCommands.getBytes()));
         LoginMenu.getInstance().scanInput();
         assertEquals(responses,outContent.toString().trim());
+    }
+
+    @Test
+    public void shopDeckCommandsTest() throws IOException {
+        String allCommands = Files.readString(Path.of("src/test/resources/inputTests/userBuyCardsBuildDeckTestInput.txt"),
+                StandardCharsets.UTF_8);
+        String responses = Files.readString(Path.of("src/test/resources/inputTests/userBuyCardsBuildDeckTestOutput.txt"),
+                StandardCharsets.UTF_8);
+        System.setOut(new PrintStream(outContent));
+        System.setIn(new ByteArrayInputStream(allCommands.getBytes()));
+        LoginMenu.getInstance().scanInput();
+        assertEquals(responses.replaceAll("\r",""),outContent.toString().trim().replaceAll("\r",""));
     }
 
     @AfterEach

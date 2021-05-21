@@ -63,16 +63,16 @@ public class ShopMenu extends Menu {
         String output = "";
         switch (shopMenuResponses) {
             case SHOP_SHOW_ALL:
-                System.out.println(allCards);
+                output = allCards;
                 break;
             case BUY_SUCCESSFUL:
-                System.out.println("bought item successfully!");
+                output = "bought item successfully!";
                 break;
             case CARD_NAME_NOT_EXIST:
-                System.out.println("there is no card with this name");
+                output = "there is no card with this name";
                 break;
             case USER_MONEY_NOT_ENOUGH:
-                System.out.println("not enough money");
+                output = "not enough money";
                 break;
             default:
                 break;

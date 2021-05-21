@@ -122,6 +122,14 @@ public class RegexController {
         } else return false;
     }
 
+    public Boolean increaseMoneyRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "increase --money ([\\d]+)$");
+        if (matcher.find()) {
+            enteredDetails.put("amount", matcher.group(1));
+            return true;
+        } else return false;
+    }
+
     public Boolean changePasswordRegex(String input, HashMap<String, String> enteredDetails) {
         if (input.contains(" --password")) {
             input = input.replaceAll(" --password", "");
@@ -182,7 +190,7 @@ public class RegexController {
     }
 
     public Boolean setActiveDeckRegex(String input, HashMap<String, String> enteredDetails) {
-        Matcher matcher = getCommandMatcher(input, "deck set-activate (\\S+)$");
+        Matcher matcher = getCommandMatcher(input, "deck set-active (\\S+)$");
         if (matcher.find()) {
             enteredDetails.put("name", matcher.group(1));
             return true;
@@ -196,7 +204,7 @@ public class RegexController {
             sideOrMain = "side";
             input = input.replaceAll(" --side", "");
         }
-        Matcher deckMatcher = getCommandMatcher(input, "deck (\\S+) (--\\w{4}) ([\\w ]+) (--\\w{4}) ([\\w ]+)$");
+        Matcher deckMatcher = getCommandMatcher(input, "deck (\\S+) (--\\w{4}) ([\\w'\\-, ]+) (--\\w{4}) ([\\w ]+)$");
         if (deckMatcher.find()) {
             return isAddOrRemoveCardValid(deckMatcher, sideOrMain, enteredDetails);
         } else return false;
@@ -218,7 +226,7 @@ public class RegexController {
     }
 
     public Boolean buyItemRegex(String input, HashMap<String, String> enteredDetails) {
-        Matcher matcher = getCommandMatcher(input, "shop buy ([\\w ]+)$");
+        Matcher matcher = getCommandMatcher(input, "shop buy ([\\w'\\-, ]+)$");
         if (matcher.find()) {
             enteredDetails.put("name", matcher.group(1));
             return true;

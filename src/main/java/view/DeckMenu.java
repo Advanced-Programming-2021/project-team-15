@@ -36,7 +36,7 @@ public class DeckMenu extends Menu {
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("deck create")) checkAndCallCreateDeck(input);
             else if (input.startsWith("deck delete")) checkAndCallDeleteDeck(input);
-            else if (input.startsWith("deck set-activate")) checkAndCallSetActiveDeck(input);
+            else if (input.startsWith("deck set-active")) checkAndCallSetActiveDeck(input);
             else if (input.startsWith("deck add-card")) checkAndCallAddOrRemoveCard(input, "add");
             else if (input.startsWith("deck rm-card")) checkAndCallAddOrRemoveCard(input, "remove");
             else if (input.equals("deck show --all")) checkAndCallShowAllDecks();

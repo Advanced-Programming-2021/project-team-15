@@ -3,14 +3,17 @@ package controller;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import model.*;
+
+import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class JSONController {
 
-    public void MonsterCardParseJson() {
+    public void monsterCardParseJson() {
         Gson gson = new Gson();
         try (Reader reader = new FileReader("src/main/resources/Monster.json")) {
             MonsterCard[] monsterCardArray = gson.fromJson(reader, MonsterCard[].class);
@@ -22,6 +25,22 @@ public class JSONController {
             e.printStackTrace();
         }
     }
+
+    public void magicCardParseJson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        try (Reader reader = new FileReader("src/main/resources/Magic.json")) {
+            MagicCard[] magicCardArray = gson.fromJson(reader, MagicCard[].class);
+            for (MagicCard magicCard : magicCardArray) {
+                magicCard.setCardType(Card.CardType.MAGIC);
+                Card.addCard(magicCard);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try(Writer writer = new FileWriter("src/main/resources/Users.json")) {
@@ -44,18 +63,28 @@ public class JSONController {
         }
     }
     public void refreshCardsFromFileJson() {
-        Gson gson = new GsonBuilder().create();
-        String[] filenames = {"src/main/resources/Monster.json","src/main/resources/Magic.json"};
-        ArrayList<Card> tempCardsList = new ArrayList<>();
-        for (String filename : filenames) {
-            try (Reader reader = new FileReader(filename)) {
-                Type cardsListType = new TypeToken<ArrayList<Card>>() {}.getType();
-                tempCardsList.addAll(gson.fromJson(reader, cardsListType));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Card.setAllCards(tempCardsList);
+        Card.getAllCards().removeAll(Card.getAllCards());
+        monsterCardParseJson();
+        magicCardParseJson();
+//        Gson gson = new GsonBuilder().create();
+//        String[] filenames = {"src/main/resources/Monster.json","src/main/resources/Magic.json"};
+//        ArrayList<Card> tempCardsList = new ArrayList<>();
+//        int fileCounter = 0;
+//        for (String filename : filenames) {
+//            try (Reader reader = new FileReader(filename)) {
+//                Type cardsListType = new TypeToken<ArrayList<Card>>() {}.getType();
+//                tempCardsList.addAll(gson.fromJson(reader, cardsListType));
+//                for (Card card : tempCardsList) {
+//                    if (fileCounter==0)
+//                        card.setCardType(Card.CardType.MONSTER);
+//                    else if (fileCounter==1) card.setCardType(Card.CardType.MAGIC);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            fileCounter++;
+//        }
+//        Card.setAllCards(tempCardsList);
     }
     //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
 //        @Override
@@ -77,19 +106,5 @@ public class JSONController {
 //            return magicCard;
 //        }
 //    }
-    public void MagicCardParseJson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        try (Reader reader = new FileReader("src/main/resources/Magic.json")) {
-            MagicCard[] magicCardArray = gson.fromJson(reader, MagicCard[].class);
-            for (MagicCard magicCard : magicCardArray) {
-                magicCard.setCardType(Card.CardType.MAGIC);
-                Card.addCard(magicCard);
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
