@@ -17,7 +17,15 @@ public class MonsterCardZone extends NumericZone{
     {
         return (MonsterCard) zoneCards.get(number);
     }
-
+    public void moveToFirstEmptyPlace(Card card) {
+        for (int key= 1; key <=5  ; key ++) {
+            if (zoneCards.get(key) == null) {
+                zoneCards.get(key).setCardPlacedZone(this);
+                zoneCards.put(key,card);
+                return;
+            }
+        }
+    }
 
     public void summonOrSetMonster(MonsterCard monsterCard, Player currentPlayer)
     {

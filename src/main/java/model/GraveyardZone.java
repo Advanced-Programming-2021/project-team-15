@@ -1,5 +1,6 @@
 package model;
 
+import controller.GamePlayController;
 import controller.SpellEffectController;
 
 import java.util.ArrayList;
@@ -16,12 +17,15 @@ public class GraveyardZone extends Zone {
         zoneCards.clear();
     }
     public void addCardToGraveyardZone(Card card)
-    {  if(card.getCardName().equals("Yami") && !card.getHidden())
+    {  if(card.getCardName().equals("Yami") && card.isActivated())
            spellEffectController.yami(false);
-        else if(card.getCardName().equals("Forest") && !card.getHidden())
+        else if(card.getCardName().equals("Forest") &&  card.isActivated())
             spellEffectController.forest(false);
-          else if(card.getCardName().equals("Umiiruka") && !card.getHidden())
+        else if(card.getCardName().equals("Closed Forest") &&  card.isActivated())
+            spellEffectController.closedForest(false);
+          else if(card.getCardName().equals("Umiiruka") &&  card.isActivated())
               spellEffectController.forest(false);
+        GamePlayController.getInstance().getActivatedCards().values().remove(card);
         if(card instanceof  MonsterCard)
     {   ((MonsterCard)card).setGameDEF(((MonsterCard) card).getDefensePoint());
         ((MonsterCard)card).setGameATK(((MonsterCard) card).getAttackPoint());

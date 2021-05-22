@@ -28,6 +28,7 @@ public class SpellEffectController {
     //TODO : FIRST 4 EFFECTS SHOULD HE CHECKED DUHHHHHHH
 
     public void yami(Boolean x) {
+        if(x)  gamePlayController.activateSelectedCard();
         int amount = 200;
         if (!x)
             amount = -amount;
@@ -60,6 +61,7 @@ public class SpellEffectController {
 
 
     public void forest(Boolean x) {
+        if(x)  gamePlayController.activateSelectedCard();
         int amount = 200;
         if (!x)
             amount = -amount;
@@ -81,6 +83,7 @@ public class SpellEffectController {
     }
 
     public void closedForest(Boolean x) {
+        if(x) gamePlayController.activateSelectedCard();
         int i = effectController.numberOfDeadMonsters();
         if (!x)
             i = -i;
@@ -101,6 +104,7 @@ public class SpellEffectController {
 
 
     public void umiiruka(Boolean x) {
+        if(x)  gamePlayController.activateSelectedCard();
         if (!x) {
             effectController.addATK(MonsterCard.MonsterType.AQUA, true, -500);
             effectController.addATK(MonsterCard.MonsterType.AQUA, true, 400);
@@ -120,7 +124,7 @@ public class SpellEffectController {
     // TODO check magnum shield to be sure
 
 
-    public boolean SwordOfDarkDestruction() {
+    public boolean checkSwordOfDarkDestruction() {
         int i = 0;
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
@@ -133,11 +137,13 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void doSwordOfDarkDestruction() {
+    public void swordOfDarkDestruction() {
+        if(checkSwordOfDarkDestruction()) gamePlayController.activateSelectedCard();
+        else return;
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if ((map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FIEND) &&
                     (map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FAIRY)) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 400);
@@ -154,18 +160,20 @@ public class SpellEffectController {
 
 
     //TODO : handle death !
-    public Boolean BlackPendant() {
+    public Boolean checkBlackPendant() {
         if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() == 0)
             return false;
         else return true;
     }
 
 
-    public void doBlackPendant() {
+    public void blackPendant() {
+        if(checkBlackPendant())  gamePlayController.activateSelectedCard();
+        else return;
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (map.get(num) != null && !map.get(num).getHidden()) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 500);
                 effectController.getEquippedCardsBySpells().put((MagicCard) gamePlayController.getSelectedCard(), map.get(num));
@@ -178,19 +186,21 @@ public class SpellEffectController {
         }
     }
 
-    public Boolean UnitedWeStand() {
+    public Boolean checkUnitedWeStand() {
         if (effectController.getNumberOfFaceUpMonstersOfCurrentPlayer() == 0)
             return false;
         else return true;
     }
 
 
-    public void doUnitedWeStand() {
+    public void unitedWeStand() {
+        if(checkUnitedWeStand())  gamePlayController.activateSelectedCard();
+        else return;
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         int amount = effectController.getNumberOfFaceUpMonstersOfCurrentPlayer();
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (map.get(num) != null) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + amount * 800);
                 map.get(num).setGameDEF(map.get(num).getGameDEF() + amount * 800);
@@ -206,7 +216,7 @@ public class SpellEffectController {
     }
 
 
-    public Boolean MagnumShield() {
+    public Boolean checkMagnumShield() {
         int i = 0;
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
@@ -218,11 +228,13 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void doMagnumShield() {
+    public void magnumShield() {
+        if(checkMagnumShield()) gamePlayController.activateSelectedCard();
+        else return;
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (map.get(num) != null && map.get(num).getMonsterType() == MonsterCard.MonsterType.WARRIOR && !map.get(num).getHidden()) {
                 if (map.get(num).getMode() == MonsterCard.Mode.ATTACK) {
                     map.get(num).setGameATK(map.get(num).getGameATK() + map.get(num).getDefensePoint());
@@ -243,7 +255,7 @@ public class SpellEffectController {
 
     }
 
-    public Boolean Terraforming() {
+    public Boolean checkTerraforming() {
         ArrayList<Card> deck = gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards();
         for (Card card : deck) {
             if (card instanceof MagicCard && ((MagicCard) card).getMagicType() == MagicCard.MagicType.SPELL
@@ -254,12 +266,12 @@ public class SpellEffectController {
     }
 
 
-    public void doTerraforming() {  //TODO WTF  WHY DON'T WE CHOOSE ANY CARD?
+    public void terraforming() {
+        if(checkTerraforming()) gamePlayController.activateSelectedCard();
+        else return;
         for (Card card : gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards()) {
             if (card instanceof MagicCard && ((MagicCard) card).getMagicType() == MagicCard.MagicType.SPELL
                     && ((MagicCard) card).getCardIcon() == MagicCard.CardIcon.FIELD) {
-                gamePlayController.getSelectedCard().setHidden(false);
-                duelMenu.printResponse(SPELL_ACTIVATED);
                 gamePlayController.getCurrentPlayer().getHand().addCardToHand(card);
                 gamePlayController.getCurrentPlayer().getDeckZone().removeCardFromDeckZone(card);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
@@ -269,13 +281,15 @@ public class SpellEffectController {
         }
     }
 
-    public Boolean PotOfGReed() {
+    public Boolean checkPotOfGReed() {
         if (gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().size() < 2)
             return false;
         else return true;
     }
 
-    public void doPotOfGReed() {
+    public void potOfGReed() {
+        if(checkPotOfGReed())   gamePlayController.activateSelectedCard();
+        else return;
         for (int i = 0; i < 2; i++) {
             gamePlayController.getCurrentPlayer().getHand().addCardToHand(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(0));
             gamePlayController.getCurrentPlayer().getDeckZone().removeCardFromDeckZone(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(0));
@@ -284,37 +298,43 @@ public class SpellEffectController {
 
     }
 
-    public Boolean Raigeki() {
+    public Boolean checkRaigeki() {
         if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard() == 0)
             return true;
         else return false;
     }
 
-    public void doRaigeki() {
+    public void raigeki() {
+        if(checkRaigeki()) gamePlayController.activateSelectedCard();
+        else return;
         effectController.destroyCards(Card.CardType.MONSTER, false);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
     }
 
-    public Boolean HarpiesFeatherDuster() {
+    public Boolean checkHarpiesFeatherDuster() {
         if (gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard() == 0)
             return true;
         else return false;
     }
 
-    public void doHarpiesFeatherDuster() {
+    public void harpiesFeatherDuster() {
+        if(checkHarpiesFeatherDuster()) gamePlayController.activateSelectedCard();
+        else return;
         effectController.destroyCards(Card.CardType.MAGIC, false);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
     }
 
-    public Boolean DarkHole() {
+    public Boolean checkDarkHole() {
         if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard() == 0 && gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() == 0)
             return true;
         else return false;
     }
 
 
-    public void doDarkHole() {
+    public void darkHole() {
+        if(checkDarkHole()) gamePlayController.activateSelectedCard();
+        else return;
         effectController.destroyCards(Card.CardType.MONSTER, true);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
@@ -333,7 +353,7 @@ public class SpellEffectController {
         Map<Integer, MagicCard> map;
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
-        String rivalOrNot = Utility.getNextLine();;
+        String rivalOrNot = duelMenu.getString();
         if (rivalOrNot.equals("rival")) {
             map = gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards();
             player = gamePlayController.getOpponentPlayer();
@@ -343,7 +363,7 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (num <= 5 && map.get(num) != null) {
                 player.getMagicCardZone().moveCardToGraveyard(num, player);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -373,7 +393,7 @@ public class SpellEffectController {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);  // of your hand !
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() >= num) {
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
                 break;
@@ -384,7 +404,7 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (num <= 5 && gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards().get(num) != null) {
                 gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(num, gamePlayController.getCurrentPlayer());
                 i++;
@@ -394,7 +414,7 @@ public class SpellEffectController {
                 i++;
                 if (i == 1) {
                     duelMenu.printResponse(WANNA_ADD_ANOTHER_CARD);
-                    String ans = Utility.getNextLine();;
+                    String ans =duelMenu.getString();
                     if (ans.equals("yes")) {
                         duelMenu.printResponse(ENTER_ONE_NUMBER);
                         continue;
@@ -427,7 +447,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (map.get(num) != null) {
                 effectController.getControl(map.get(num));
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -473,19 +493,19 @@ public class SpellEffectController {
     public void doMonsterReborn() {
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
-        String rivalOrNot = Utility.getNextLine();;
+        String rivalOrNot = duelMenu.getString();
         if (rivalOrNot.equals("rival"))
             player = gamePlayController.getOpponentPlayer();
         else player = gamePlayController.getCurrentPlayer();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = Integer.parseInt(Utility.getNextLine());
+            int num = duelMenu.getNum();
             if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num-1) instanceof MonsterCard)) {
                 Card card = player.getGraveyardZone().getZoneCards().get(num-1);
                 player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);
                 card.setHidden(false);
                 duelMenu.printResponse(ENTER_POS);
-                String ans = Utility.getNextLine();;
+                String ans = duelMenu.getString();
                 //?  SPECIAL SUMMON
                 if (ans.equals("ATK"))
                    ((MonsterCard) card).setMode(MonsterCard.Mode.ATTACK);
@@ -562,7 +582,7 @@ public class SpellEffectController {
         int[] out;
         duelMenu.printResponse(ENTER_SOME_NUMBERS);
         while (true) {
-            String string = Utility.getNextLine().trim();
+            String string = duelMenu.getString();
             if (!string.matches("(\\d+\\s)+\\d+"))
                 duelMenu.printResponse(SHOULD_RIVAL_SUMMON_RIGHT_NOW);
             else {
@@ -574,7 +594,7 @@ public class SpellEffectController {
                         gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(out[i]);
                     }
                     duelMenu.printResponse(ENTER_POS);
-                    String ans = Utility.getNextLine();;
+                    String ans =duelMenu.getString();
                     if (ans.equals("ATK"))
                         getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setMode(MonsterCard.Mode.ATTACK);
                     else

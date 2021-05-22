@@ -11,14 +11,15 @@ public class MagicCardZone extends NumericZone{
         for (int i = 1 ; i<5; i++)
             zoneCards.put(i, null);
     }
-    public MagicCard isSpellOrTrapISet(String name)
-    {    for (int key =1 ; key <=5   ; key++)
-    {
-        if (zoneCards.get(key) != null && zoneCards.get(key).getCardName().equals(name))
-            return (MagicCard) zoneCards.get(key);
-    }
-    return null;
 
+    public void moveToFirstEmptyPlace(Card card) {
+        for (int key= 1; key <=5  ; key ++) {
+            if (zoneCards.get(key) == null) {
+                zoneCards.get(key).setCardPlacedZone(this);
+                zoneCards.put(key,card);
+                return;
+            }
+        }
     }
     public void removeMagicCard(MagicCard magicCard)
     {

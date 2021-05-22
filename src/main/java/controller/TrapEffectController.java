@@ -38,7 +38,7 @@ public class TrapEffectController {
 
     public void mindCrush(Card trap) {
         Boolean did = false;
-        String string = Utility.getNextLine();;
+        String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
             if (card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);
@@ -89,7 +89,7 @@ public class TrapEffectController {
         if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0) {
             while (true) {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
-                int num = Integer.parseInt(Utility.getNextLine());
+                int num = duelMenu.getNum();
                 if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num) != null) {
                     gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
                     gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
@@ -99,7 +99,6 @@ public class TrapEffectController {
                     return;
                 } else {
                     duelMenu.printResponse(INVALID_CELL_NUMBER);
-                    duelMenu.printResponse(ENTER_ONE_NUMBER);
                 }
 
             }

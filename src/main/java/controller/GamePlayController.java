@@ -25,7 +25,11 @@ public class GamePlayController extends MenuController {
     private Card selectedCard;
     private Player currentPlayer;
     private Player opponentPlayer;
+    private boolean preparationNotDoneYet= false;
     private AttackController attackController;
+    private TrapEffectController trapEffectController  = new TrapEffectController();
+    private SpellEffectController spellEffectController =new SpellEffectController();
+    private MonsterEffectController monsterEffectController = new MonsterEffectController();
     private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
@@ -103,6 +107,7 @@ public class GamePlayController extends MenuController {
             game = new Game(first, second, roundNum);
             attackController = new AttackController();
             effectController = new EffectController();
+            spellEffectController =new SpellEffectController();
             return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY; //TODO : agar dar view in return shod game sang kaghaz ..
         }
     }
@@ -136,7 +141,7 @@ public class GamePlayController extends MenuController {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);
         } else {
-            currentPlayer.setCanDraw(false);
+            currentPlayer.setCanDraw(true);
             goNextPhase();
         }
     }
@@ -278,7 +283,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
-        int num = Integer.parseInt(Utility.getNextLine());
+        int num duelMenu.getNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
@@ -289,9 +294,9 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses twoMonsterTribute() {
        duelMenu.printResponse(ENTER_FIRST_NUMBER);
-        int firstAddress = Integer.parseInt(Utility.getNextLine());
+        int firstAddress = duelMenu.getNum();
        duelMenu.printResponse(ENTER_SECOND_NUMBER);
-        int secondAddress = Integer.parseInt(Utility.getNextLine());
+        int secondAddress = duelMenu.getNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
             return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;
         currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress, currentPlayer);
@@ -340,18 +345,18 @@ public class GamePlayController extends MenuController {
         return DuelMenuResponses.CARD_SET_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses setPosCommand() {
+    public DuelMenuResponses setPosCommand(String wantedPosition) {
         if (selectedCard == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
-            DuelMenuResponses duelMenuResponses = setPosition();
+            DuelMenuResponses duelMenuResponses = setPosition(wantedPosition);
             selectedCard = null;
             return duelMenuResponses;
         }
     }
 
-    public DuelMenuResponses setPosition() {
-        String wantedPosition = Utility.getNextLine();
+    public DuelMenuResponses setPosition(String wantedPosition) {
+        // kiarash goft
         if (isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard) || attackController.alreadyAttackedThisTurn((MonsterCard) selectedCard))
             return CANT_CHANGE_THIS_CARD_POSITION;
         else if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone() || !(selectedCard instanceof MonsterCard))
@@ -437,9 +442,59 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
-        callMethodOfSpells(selectedCard);
-        //checker
+             MagicCard majicJammer  = ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer")
+                     if(majicJammer!=null) trapEffectController.magicJammer(majicJammer);
+           spellEffectController.spellAbsorption();
+            callSpellOrTrap((MagicCard) selectedCard);
+            if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
     }
+
+    public void activateSelectedCard()
+    {  selectedCard.setHidden(false);
+        selectedCard.setActivated(true);
+       activatedCards.put(currentPlayer,selectedCard);
+       duelMenu.printResponse(SPELL_ACTIVATED);
+    }
+
+    public void   callSpellOrTrap(Card card) {  //TODO
+        String cardName = card.getCardName();
+        switch (cardName) {
+            case "Yami": spellEffectController.yami(true);
+                break;
+            case "Forset": spellEffectController.forest(true);
+                break;
+            case "Closed Forest" : spellEffectController.closedForest(true);
+            break;
+            case "Umiiruka" : spellEffectController.umiiruka(true);
+            break;
+            case "Sword of Dark Destruction" : spellEffectController.swordOfDarkDestruction();
+            break;
+            case "Black Pendant" : spellEffectController.blackPendant();
+            break;
+            case "United We Stand" : spellEffectController.unitedWeStand();
+            break;
+            case "Magnum Shield" : spellEffectController.magnumShield();
+            break;
+            case "Terraforming" : spellEffectController.terraforming();
+            break;
+            case "Pot of Greed" :  spellEffectController.potOfGReed();
+            break;
+            case "Raigeki" : spellEffectController.raigeki();
+            break;
+            case "Harpie's Feather Duster" : spellEffectController.harpiesFeatherDuster();
+            break;
+            case "Dark Hole" : spellEffectController.darkHole();
+            break;
+
+
+
+
+
+
+
+        }
+    }
+
 
     public boolean canChainBeMade(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         ArrayList<String> cardNames = new ArrayList<>();
@@ -461,27 +516,24 @@ public class GamePlayController extends MenuController {
 
     }
 
-    public void callMethodOfSpells(Card card) {  //TODO
-
-    }
-
-    public void askToActivateInRivalsTurn(MagicCard spellOrTrap) {
+    public Boolean askToActivateInRivalsTurn(MagicCard spellOrTrap) {
         changeTurn();
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
-        String ans = Utility.getNextLine();;
+        String ans = duelMenu.getString();
         if (ans.equals("no")) {
             changeTurn();
             duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
             duelMenu.setCantDoThisKindsOfMove(false);
-            return;
+            return false;
         }
         spellOrTrap.setActivated(true);
         if (spellOrTrap.getMagicType() == MagicCard.MagicType.SPELL)
             duelMenu.printResponse(SPELL_ACTIVATED);
         else if (spellOrTrap.getMagicType() == MagicCard.MagicType.TRAP)
             duelMenu.printResponse(TRAP_ACTIVATED);
+        return true;
     }
 
     public Boolean doPlayerHasThisCard(Player player, String name) {
@@ -557,6 +609,7 @@ public class GamePlayController extends MenuController {
 
     public void refresh() {
         suijinVictimsReset();
+
         chainCards.clear();
         attackController.getAttackStoppersInTurn().clear();
         changedPositionCardsInTurn.clear();
@@ -766,4 +819,7 @@ public class GamePlayController extends MenuController {
         suijinVictims.clear();
     }
 
+
+
 }
+

@@ -12,14 +12,23 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
-    public void moveToFirstEmptyPlace(Card card) {
-        for (int key= 1; key <=5  ; key ++) {
-            if (zoneCards.get(key) == null) {
-                zoneCards.put(key,card);
-                return;
-            }
-        }
+    public Card getThisCardActivated(String name)
+    {    for (int key =1 ; key <=5   ; key++)
+    {
+        if (zoneCards.get(key) != null && zoneCards.get(key).getCardName().equals(name) && zoneCards.get(key).isActivated())
+            return  zoneCards.get(key);
     }
+        return null;
+    }
+    public Card getThisCardByName(String name)
+    {    for (int key =1 ; key <=5   ; key++)
+    {
+        if (zoneCards.get(key) != null && zoneCards.get(key).getCardName().equals(name))
+            return  zoneCards.get(key);
+    }
+        return null;
+    }
+
      public void reset()
      {    zoneCards.clear();
          for (int i = 1 ; i<5; i++)
@@ -36,8 +45,6 @@ public class NumericZone extends Zone {
 
     public void moveCardToGraveyard(int address ,Player player)
     {
-        //zoneCards.get(address).setPlacedZoneNumber(0);
-        zoneCards.get(address).setCardPlacedZone(player.getZoneByZoneType(ZoneType.GRAVEYARD));
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         zoneCards.put(address , null);
     }
