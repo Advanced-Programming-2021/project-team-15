@@ -443,7 +443,10 @@ public class GamePlayController extends MenuController {
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
              MagicCard majicJammer  = ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer")
-                     if(majicJammer!=null) trapEffectController.magicJammer(majicJammer);
+                     if(majicJammer!=null) {
+                        if(askToActivateInRivalsTurn(majicJammer))
+                         trapEffectController.magicJammer(majicJammer);
+                     }
            spellEffectController.spellAbsorption();
             callSpellOrTrap((MagicCard) selectedCard);
             if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
