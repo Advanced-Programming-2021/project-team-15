@@ -27,9 +27,9 @@ public class GamePlayController extends MenuController {
     private Player opponentPlayer;
     private boolean preparationNotDoneYet= false;
     private AttackController attackController;
-    private TrapEffectController trapEffectController  = new TrapEffectController();
-    private SpellEffectController spellEffectController =new SpellEffectController();
-    private MonsterEffectController monsterEffectController = new MonsterEffectController();
+    private static TrapEffectController trapEffectController  = new TrapEffectController();
+    private static SpellEffectController spellEffectController =new SpellEffectController();
+    private static MonsterEffectController monsterEffectController = new MonsterEffectController();
     private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
@@ -242,7 +242,7 @@ public class GamePlayController extends MenuController {
         board.append("  \t\t\t\t\t\t").append(currentPlayer.getDeckZone().getZoneCards().size()).append("\n");
         board.append("c \t".repeat(currentPlayer.getHand().getNumberOfCardsInHand()));
         board.append("\n").append(currentPlayer.getUser().getNickName());
-        duelMenu.getInstance().printString(board.toString());
+        DuelMenu.getInstance().printString(board.toString());
         return board.toString();
     }
 
@@ -283,7 +283,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
-        int num duelMenu.getNum();
+        int num =  duelMenu.getNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
@@ -442,7 +442,7 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
-             MagicCard majicJammer  = ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer")
+             MagicCard majicJammer  = (MagicCard) ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer");
                      if(majicJammer!=null) {
                         if(askToActivateInRivalsTurn(majicJammer))
                          trapEffectController.magicJammer(majicJammer);
@@ -499,20 +499,20 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public boolean canChainBeMade(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        ArrayList<String> cardNames = new ArrayList<>();
-        cardNames.add("Mind Crush");
-        cardNames.add("Twin Twisters");
-        cardNames.add("Mystical space typhoon");
-        cardNames.add("Ring of defense");
-        cardNames.add("Time Seal");
-        cardNames.add("Call of The Haunted");
-        for (String card : cardNames) {
-            if (player.getMagicCardZone().isSpellOrTrapISet(card) != null) {
-            }
-        }
-        return false;
-    }
+//    public boolean canChainBeMade(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+//        ArrayList<String> cardNames = new ArrayList<>();
+//        cardNames.add("Mind Crush");
+//        cardNames.add("Twin Twisters");
+//        cardNames.add("Mystical space typhoon");
+//        cardNames.add("Ring of defense");
+//        cardNames.add("Time Seal");
+//        cardNames.add("Call of The Haunted");
+//        for (String card : cardNames) {
+//            if (player.getMagicCardZone().isSpellOrTrapISet(card) != null) {
+//            }
+//        }
+//        return false;
+//    }
 
     public void chainMaker(Player currentPlayer, Player opponentPlayer) {
 

@@ -8,6 +8,8 @@ shop buy item clone cards
 Import/Export Menu???
 card show (page 10)
 */
+//TODO check:
+//attack controller line 102 - attackToDefencePos return
 
 
 
