@@ -99,6 +99,7 @@ public class AttackController  {
                 return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED;
             else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyedWithDamage(target.getCardName());
         }
+        return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }
 
     public DuelMenuResponses attackAttackPos(MonsterCard target, int number) {

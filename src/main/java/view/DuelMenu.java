@@ -84,7 +84,7 @@ public class DuelMenu extends Menu {
             { Matcher matcher  = Pattern.compile("attack (\\d+)").matcher(input);
                 if(matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1)))); }
             else if(input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-            else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard(););
+            //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
 
 
 

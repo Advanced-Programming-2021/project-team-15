@@ -38,6 +38,18 @@ public class MenuTest {
         assertEquals(responses.replaceAll("\r",""),outContent.toString().trim().replaceAll("\r",""));
     }
 
+    @Test
+    public void startGameTest() throws IOException {
+        String allCommands = Files.readString(Path.of("src/test/resources/inputTests/startGameTestInput.txt"),
+                StandardCharsets.UTF_8);
+        String responses = Files.readString(Path.of("src/test/resources/inputTests/startGameTestOutput.txt"),
+                StandardCharsets.UTF_8);
+        System.setOut(new PrintStream(outContent));
+        System.setIn(new ByteArrayInputStream(allCommands.getBytes()));
+        LoginMenu.getInstance().scanInput();
+        assertEquals(responses.replaceAll("\r",""),outContent.toString().trim().replaceAll("\r",""));
+    }
+
     @AfterEach
     public void resetUpStreams() {
         outContent.reset();
