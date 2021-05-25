@@ -44,21 +44,17 @@ public class RegexController {
             enteredDetails.put("nickname", inputParameters.get("--nickname"));
             enteredDetails.put("password", inputParameters.get("--password"));
         }
-        //loginController.registerUser(inputParameters.get("--username") , inputParameters.get("--nickname") , inputParameters.get("--password"));
         else if (commandCase.equals(CommandCase.SHORT)) {
             enteredDetails.put("username", inputParameters.get("-u"));
             enteredDetails.put("nickname", inputParameters.get("-n"));
             enteredDetails.put("password", inputParameters.get("-p"));
         }
-        //loginController.registerUser(inputParameters.get("-u") , inputParameters.get("-n") , inputParameters.get("-p"));
         return commandValidation;
     }
 
     public Boolean showMenuRegex(String input) {
         Matcher matcher = getCommandMatcher(input, "menu ((show-current)|(current-show))$");
-        if (matcher.find())
-            return true;
-        else return false;
+        return matcher.find();
     }
 
     public Boolean loginUserRegex(String input, HashMap<String, String> enteredDetails) {

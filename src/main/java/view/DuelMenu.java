@@ -98,12 +98,12 @@ public class DuelMenu extends Menu {
         if (!regexController.newDuelRegex(input, enteredDetails))
             System.out.println("invalid command");
         else {
-            weAreOnGame = true;
             String secondPlayer = enteredDetails.get("second player");
             secondUsername = secondPlayer;
             int rounds = Integer.parseInt(enteredDetails.get("rounds"));
             duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
             printResponse(duelMenuResponses);
+            if (duelMenuResponses==DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) weAreOnGame=true;
         }
     }
 

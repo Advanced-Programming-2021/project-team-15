@@ -16,7 +16,7 @@ public class DeckController extends MenuController {
         if (user.getDeckByName(deckName) != null)
             return DeckMenuResponses.DECK_NAME_ALREADY_EXISTS;
         else {
-            new Deck(user, deckName);
+            new Deck(user.getUserName(), deckName);
             return DeckMenuResponses.DECK_CREATE_SUCCESSFUL;
         }
     }
@@ -138,11 +138,12 @@ public class DeckController extends MenuController {
         for (Deck deck : user.getAllDecksOfUser()) {
             if (!deck.isActive())
                 otherDecks.add(deck);
-            else activeDeck = deck;
+            //else activeDeck = deck;
         }
+        activeDeck = user.getActiveDeck();
         otherDecks = sortDecks(otherDecks);
         allDecks.append("* ").append("Decks :\n").append("* ").append("Active Deck :\n");
-        allDecks.append("* ").append(getDeckDetails(activeDeck)).append("Other decks :\n");
+        allDecks.append(getDeckDetails(activeDeck)).append("* ").append("Other decks :\n");
         for (Deck deck : otherDecks) {
             allDecks.append(getDeckDetails(deck));
         }

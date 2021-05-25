@@ -259,8 +259,8 @@ card added to deck successfully
 side deck is full
 * Decks :
 * Active Deck :
-* pedaret : main deck 40 , side deck 5 , valid
-Other decks :
+pedaret : main deck 40 , side deck 5 , valid
+* Other decks :
 sag : main deck 0 , side deck 15 , invalid
 
 * Deck : sag

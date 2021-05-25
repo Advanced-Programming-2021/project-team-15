@@ -10,7 +10,7 @@ public class User {
     }
 
     private String activeDeckName;
-    private transient Deck activeDeck;
+    private Deck activeDeck;
     private ArrayList<Deck> allDecksOfUser;
     private ArrayList<Card> allCardsOfUser;
     private String userName;

@@ -42,12 +42,12 @@ public class MagicCard extends Card {
 
     public String toString() {
         StringBuilder info = new StringBuilder();
-        info.append("Name: " + cardName + "\n");
-        info.append(magicType + "\n");
+        info.append("Name: ").append(cardName).append("\n");
+        info.append(magicType).append("\n");
         //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
         //a.value()
-        info.append("Type: " + cardIcon.getName() + "\n");
-        info.append("Description: " + cardDescription);
+        info.append("Type: ").append(cardIcon.getName()).append("\n");
+        info.append("Description: ").append(cardDescription);
         return info.toString();
     }
 

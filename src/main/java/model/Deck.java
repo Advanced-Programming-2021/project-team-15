@@ -11,18 +11,19 @@ public class Deck {
     public static transient final int sideDeckMaxCardCount = 15;
     public static transient final int DeckMaxSpecifiedCardCount = 3;
     private String name;
-    private transient User owner;
+    //private transient User owner;
+    private String ownerUsername;
     private ArrayList<Card> sideDeck;
     private ArrayList<Card> mainDeck;
     private boolean isActive;
     private boolean isValid;
 
-    public Deck(User owner, String name) {
+    public Deck(String ownerUsername, String name) {
         this.name = name;
-        this.owner = owner;
+        this.ownerUsername = ownerUsername;
         sideDeck = new ArrayList<>();
         mainDeck = new ArrayList<>();
-        this.owner.addDeck(this);
+        User.getUserByUserName(this.ownerUsername).addDeck(this);
     }
 
     @Override
@@ -74,13 +75,13 @@ public class Deck {
         this.mainDeck = mainDeck;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+//    public User getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(User owner) {
+//        this.owner = owner;
+//    }
 
     public boolean isActive() {
         return isActive;
