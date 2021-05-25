@@ -448,7 +448,7 @@ public class GamePlayController extends MenuController {
                          trapEffectController.magicJammer(majicJammer);
                      }
            spellEffectController.spellAbsorption();
-            callSpellOrTrap((MagicCard) selectedCard);
+            callSpellOrTrap(selectedCard);
             if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
     }
 
@@ -457,6 +457,10 @@ public class GamePlayController extends MenuController {
         selectedCard.setActivated(true);
        activatedCards.put(currentPlayer,selectedCard);
        duelMenu.printResponse(SPELL_ACTIVATED);
+    }
+    public void makeChain()
+    {
+
     }
 
     public void   callSpellOrTrap(Card card) {  //TODO
@@ -488,6 +492,7 @@ public class GamePlayController extends MenuController {
             break;
             case "Dark Hole" : spellEffectController.darkHole();
             break;
+
 
 
 

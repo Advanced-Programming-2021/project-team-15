@@ -341,7 +341,7 @@ public class SpellEffectController {
     }
 
 
-    public Boolean MysticalSpaceTyphoon() {
+    public Boolean checkMysticalSpaceTyphoon() {
         int num = gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard();
         num += gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard();
         if (num == 1)
@@ -349,7 +349,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void doMysticalSpaceTyphoon(MagicCard card) {
+    public void mysticalSpaceTyphoon(MagicCard card) {
         Map<Integer, MagicCard> map;
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
