@@ -442,13 +442,13 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
-             MagicCard majicJammer  = ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer")
-                     if(majicJammer!=null) {
-                        if(askToActivateInRivalsTurn(majicJammer))
-                         trapEffectController.magicJammer(majicJammer);
+             MagicCard magicJammer  = ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer");
+                     if(magicJammer!=null) {
+                        if(askToActivateInRivalsTurn(magicJammer))
+                         trapEffectController.magicJammer(magicJammer);
                      }
            spellEffectController.spellAbsorption();
-            callSpellOrTrap((MagicCard) selectedCard);
+            callSpellOrTrap(selectedCard);
             if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
     }
 
@@ -457,6 +457,10 @@ public class GamePlayController extends MenuController {
         selectedCard.setActivated(true);
        activatedCards.put(currentPlayer,selectedCard);
        duelMenu.printResponse(SPELL_ACTIVATED);
+    }
+    public void makeChain()
+    {
+
     }
 
     public void   callSpellOrTrap(Card card) {  //TODO
@@ -488,6 +492,7 @@ public class GamePlayController extends MenuController {
             break;
             case "Dark Hole" : spellEffectController.darkHole();
             break;
+
 
 
 

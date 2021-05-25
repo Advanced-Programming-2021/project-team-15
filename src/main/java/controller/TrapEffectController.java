@@ -102,7 +102,7 @@ public class TrapEffectController {
                 }
 
             }
-        }
+
     }
     //TODO THIS
 //    public void callOfHunted()
