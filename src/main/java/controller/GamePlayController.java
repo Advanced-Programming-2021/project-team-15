@@ -156,9 +156,15 @@ public class GamePlayController extends MenuController {
                 (firstPlayerMove.equals("scissors") && secondPlayerMove.equals("paper"))) {
             winner = game.getFirstPlayer();
             loser = game.getSecondPlayer();
-        } else {
+        } else if ((firstPlayerMove.equals("scissors") && (secondPlayerMove.equals("rock"))) ||
+                (firstPlayerMove.equals("rock") && (secondPlayerMove.equals("paper"))) ||
+                (firstPlayerMove.equals("paper") && secondPlayerMove.equals("scissors"))){
             loser = game.getFirstPlayer();
             winner = game.getSecondPlayer();
+        }
+        else {
+            System.out.println("try putting valid word!");
+            return false;
         }
         game.setFirstPlayer(winner);
         game.setSecondPlayer(loser);

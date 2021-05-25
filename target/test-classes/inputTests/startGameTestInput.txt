@@ -91,7 +91,6 @@ shop buy Bitron
 menu exit
 menu enter Deck
 deck create pedaret
-deck set-active pedaret
 deck add-card --card Call of The Haunted --deck pedaret
 deck add-card --card Vanity's Emptiness --deck pedaret
 deck add-card --card Wall of Revealing Light --deck pedaret
@@ -153,8 +152,6 @@ deck add-card --card Flame manipulator --deck sag --side
 deck add-card --card Blue-Eyes white dragon --deck sag --side
 deck add-card --card Crab Turtle --deck sag --side
 deck add-card --card Skull Guardian --deck sag --side
-deck show --all
-deck set-active pedaret
 deck show --all
 menu exit
 user logout
@@ -248,7 +245,6 @@ shop buy Bitron
 menu exit
 menu enter Deck
 deck create pedaret
-deck set-active pedaret
 deck add-card --card Call of The Haunted --deck pedaret
 deck add-card --card Vanity's Emptiness --deck pedaret
 deck add-card --card Wall of Revealing Light --deck pedaret
@@ -313,7 +309,50 @@ deck add-card --card Skull Guardian --deck sag --side
 deck show --all
 menu exit
 menu enter Duel
+duel --new --second-player mehra --rounds 1
 duel --new --second-player mehrad --rounds 1
+menu exit
+menu enter Deck
+deck set-activate sa
+deck set-activate sag
+menu exit
+menu enter Duel
+duel --new --second-player mehrad --rounds 1
+menu exit
+menu enter Deck
+deck set-activate pedaret
+menu exit
+menu enter Duel
+duel --new --second-player mehrad --rounds 1
+menu exit
+user logout
+user login --username mehrad --password m
+menu enter Deck
+deck set-activate sag
+menu exit
+user logout
+user login --username parnian --password p
+menu enter Duel
+duel --new --second-player mehrad --rounds 1
+menu exit
+user logout
+user login --username mehrad --password m
+menu enter Deck
+deck set-activate pedaret
+menu exit
+user logout
+user login --username parnian --password p
+menu enter Duel
+duel --new --second-player mehrad --rounds 2
+duel --new --second-player mehrad --rounds 1
+roc
+paper
+rock
+rock
+rock
+paper
+menu exit
+menu exit
 user remove --username mehrad --password m
 user remove --username kiarash --password k
 user remove --username parnian --password p
