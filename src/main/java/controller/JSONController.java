@@ -80,6 +80,7 @@ public class JSONController {
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try(Writer writer = new FileWriter("src/main/resources/Users.json")) {
+            setAllCardsType();
             gson.toJson(User.getAllUsers(),writer);
         }
         catch (IOException e) {
@@ -87,11 +88,38 @@ public class JSONController {
         }
     }
 
+    private void setAllCardsType() {
+        for (User user : User.getAllUsers()) {
+            for (Card card : user.getAllCardsOfUser())
+                setType(card);
+            for (Deck deck : user.getAllDecksOfUser())
+                for (Card card : deck.getMainDeck())
+                    setType(card);
+            for (Deck deck : user.getAllDecksOfUser())
+                for (Card card : deck.getSideDeck())
+                    setType(card);
+            if (user.getActiveDeck()!=null) {
+                for (Card card : user.getActiveDeck().getMainDeck())
+                    setType(card);
+                for (Card card : user.getActiveDeck().getSideDeck())
+                    setType(card);
+            }
+        }
+    }
+
+    private void setType(Card card) {
+        if (card instanceof MonsterCard) {
+            card.setType("MONSTER");
+        } else if (card instanceof MagicCard) {
+            card.setType("MAGIC");
+        } else card.setType("NULL");
+    }
+
     public void refreshUsersFromFileJson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         try (Reader reader = new FileReader("src/main/resources/Users.json")) {
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                    .of(Card.class, "Card Type").
+                    .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
             Type usersListType = new TypeToken<ArrayList<User>>(){}.getType();

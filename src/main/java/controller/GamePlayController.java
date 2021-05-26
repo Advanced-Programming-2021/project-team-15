@@ -88,13 +88,6 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses startNewGame(String secondPlayer, int roundNum) {
         User currentUser = MenuController.getUser();
         User secondUser = User.getUserByUserName(secondPlayer);
-        for (Card card : secondUser.getActiveDeck().getMainDeck())
-        {
-            if (card instanceof MonsterCard) System.out.println("monster");
-            else if (card instanceof MagicCard) System.out.println("magic");
-            else if (card != null) System.out.println("card");
-        }
-        System.out.println("kiiiibr");
         if (User.getUserByUserName(secondPlayer) == null)
             return DuelMenuResponses.NO_PLAYER_WITH_THIS_USERNAME_EXISTS;
         else if (secondUser.getActiveDeck() == null)
@@ -167,26 +160,6 @@ public class GamePlayController extends MenuController {
                 (firstPlayerMove.equals("paper") && secondPlayerMove.equals("scissors"))) {
             loser = game.getFirstPlayer();
             winner = game.getSecondPlayer();
-            for (Card card : game.getFirstPlayer().getUser().getActiveDeck().getMainDeck())
-            {
-                if (card instanceof MonsterCard) System.out.println("monster");
-                else if (card instanceof MagicCard) System.out.println("magic");
-                else if (card != null) System.out.println("card");
-            }
-            System.out.println("wwwwwwiiiiiiinnneerrrr");
-            for (Card card : game.getSecondPlayer().getUser().getActiveDeck().getMainDeck())
-            {
-                if (card instanceof MonsterCard) System.out.println("monster");
-                else if (card instanceof MagicCard) System.out.println("magic");
-                else if (card != null) System.out.println("card");
-            }
-            System.out.println("mameeeeeeeeee");
-            for (Card card : loser.getUser().getActiveDeck().getMainDeck())
-            {
-                if (card instanceof MonsterCard) System.out.println("monster");
-                else if (card instanceof MagicCard) System.out.println("magic");
-                else if (card != null) System.out.println("card");
-            }
         } else {
             System.out.println("try putting valid word!");
             return false;

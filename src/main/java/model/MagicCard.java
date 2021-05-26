@@ -13,6 +13,7 @@ public class MagicCard extends Card {
 
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
+        super.type = "MAGIC";
         this.cardType = CardType.MAGIC;
     }
 
@@ -23,7 +24,6 @@ public class MagicCard extends Card {
     public void setMagicType(MagicType magicType) {
         this.magicType = magicType;
     }
-
 
     public Status getStatus() {
         return status;

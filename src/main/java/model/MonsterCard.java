@@ -18,6 +18,7 @@ public class MonsterCard extends Card {
 
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
+        super.type = "MONSTER";
         this.cardType = CardType.MONSTER;
     }
 

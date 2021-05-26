@@ -21,6 +21,7 @@ public class Card {
     protected String cardNumber;
     @SerializedName("Card Type")
     protected CardType cardType;
+    protected String type = "type";
     protected Boolean isSet = false;
     protected Boolean isHidden = true;
     protected Zone cardPlacedZone;
@@ -145,6 +146,14 @@ public class Card {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public enum CardType {

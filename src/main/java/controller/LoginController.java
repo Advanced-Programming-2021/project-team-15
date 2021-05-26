@@ -32,7 +32,7 @@ public class LoginController extends MenuController {
     }
 
     public LoginMenuResponses removeUser(String username, String password) {
-        //jsonController.refreshUsersFromFileJson();
+        jsonController.refreshUsersFromFileJson();
         if (User.getUserByUserName(username)==null) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
         else if (!User.getUserByUserName(username).getPassWord().equals(password)) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
         else{
