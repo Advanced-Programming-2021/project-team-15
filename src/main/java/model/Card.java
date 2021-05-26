@@ -19,18 +19,11 @@ public class Card {
     @SerializedName("Description")
     protected String cardDescription;
     protected String cardNumber;
+    @SerializedName("Card Type")
     protected CardType cardType;
     protected Boolean isSet = false;
     protected Boolean isHidden = true;
     protected Zone cardPlacedZone;
-    //    public int getPlacedZoneNumber() {
-//        return placedZoneNumber;
-//    }
-//
-//    public void setPlacedZoneNumber(int placedZoneNumber) {
-//        this.placedZoneNumber = placedZoneNumber;
-//    }
-    //protected int placedZoneNumber = 0; //if ==0 means not numerical zone
     @SerializedName("Price")
     protected int price;
     private boolean isActivated;

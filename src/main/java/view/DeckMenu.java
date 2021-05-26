@@ -28,7 +28,6 @@ public class DeckMenu extends Menu {
         return deckMenu;
     }
 
-
     @Override
     public void scanInput() {
         while (true) {
@@ -48,9 +47,7 @@ public class DeckMenu extends Menu {
                 super.isExit = false;
                 return;
             }
-
         }
-
     }
 
     public void checkAndCallAddOrRemoveCard(String input, String addOrRemove) {
@@ -69,8 +66,6 @@ public class DeckMenu extends Menu {
                 responses = deckController.removeCardFromDeck(cardName, deckName, deckTypeEnum);
             printResponse(responses);
         }
-
-
     }
 
     public void checkAndCallShowAllCardsOfUser() {

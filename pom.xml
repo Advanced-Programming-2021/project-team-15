@@ -49,6 +49,16 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.danilopianini</groupId>
+            <artifactId>gson-extras</artifactId>
+            <version>0.2.2-dev1n+f8657bfc</version>
+        </dependency>
     </dependencies>
 
     <properties>

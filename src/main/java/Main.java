@@ -1,5 +1,11 @@
+import com.opencsv.exceptions.CsvValidationException;
 import controller.JSONController;
+import model.Card;
+import model.MagicCard;
+import model.MonsterCard;
 import view.LoginMenu;
+
+import java.io.IOException;
 
 /*To Handle :
 menu entry from other menus
@@ -16,11 +22,15 @@ card show (page 10)
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, CsvValidationException {
         JSONController jsonController = new JSONController();
-        jsonController.monsterCardParseJson();
-        jsonController.magicCardParseJson();
+        jsonController.loadGameCards();
         LoginMenu loginMenu = LoginMenu.getInstance();
+//        for (Card card : Card.getAllCards()) {
+//            if (card instanceof MonsterCard) System.out.println("monster");
+//            else if (card instanceof MagicCard) System.out.println("magic");
+//            else System.out.println("card");
+//        }
         loginMenu.scanInput();
 
 //        for (Card card : Card.getAllCards()) {

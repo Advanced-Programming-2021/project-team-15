@@ -1,9 +1,11 @@
 package view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import controller.MenuController;
 import controller.RegexController;
 import utility.Utility;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +27,7 @@ public abstract class Menu {
         menuController = new MenuController("Menu");
     }
 
-    public abstract void scanInput();
+    public abstract void scanInput() throws IOException, CsvValidationException;
 
     public void checkAndCallShowCurrentMenu() {
         MenuControllerResponse = menuController.showCurrentMenu();

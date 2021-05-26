@@ -13,6 +13,7 @@ public class MagicCard extends Card {
 
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
+        this.cardType = CardType.MAGIC;
     }
 
     public MagicType getMagicType() {
@@ -53,12 +54,28 @@ public class MagicCard extends Card {
 
     public enum MagicType {
         @SerializedName("Spell") SPELL,
-        @SerializedName("Trap") TRAP
+        @SerializedName("Trap") TRAP;
+
+        public static MagicType getMagicType(String magicType) {
+            switch (magicType) {
+                case "Spell" : return SPELL;
+                case "Trap" : return TRAP;
+                default:return null;
+            }
+        }
     }
 
-    enum Status {
+    public enum Status {
         @SerializedName("Limited") LIMITED,
-        @SerializedName("Unlimited") UNLIMITED
+        @SerializedName("Unlimited") UNLIMITED;
+
+        public static Status getMagicType(String status) {
+            switch (status) {
+                case "Limited" : return LIMITED;
+                case "unLimited" : return UNLIMITED;
+                default:return null;
+            }
+        }
     }
 
     public enum CardIcon {
@@ -69,7 +86,28 @@ public class MagicCard extends Card {
         @SerializedName("Continuous") CONTINUOUS("Continuous"),
         @SerializedName("Counter") COUNTER("Counter"),
         @SerializedName("Normal") NORMAL("Normal");
-        private String name;
+        private final String name;
+
+        public static CardIcon getCardIcon(String cardIcon) {
+            switch (cardIcon) {
+                case "Normal":
+                    return NORMAL;
+                case "Counter":
+                    return COUNTER;
+                case "Continuous":
+                    return CONTINUOUS;
+                case "Quick-play":
+                    return QUICK_PLAY;
+                case "Field":
+                    return FIELD;
+                case "Equip":
+                    return EQUIP;
+                case "Ritual":
+                    return RITUAL;
+                default:
+                    return null;
+            }
+        }
 
         CardIcon(String name) {
             this.name = name;

@@ -1,65 +1,64 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class Hand extends Zone{
+public class Hand extends Zone {
     ArrayList<Card> zoneCards;
 
     public Hand() {
         super(ZoneType.HAND);
         zoneCards = new ArrayList<>();
-        for(int i = 0 ; i <=4 ; i ++)
+        for (int i = 0; i <= 4; i++)
             zoneCards.add(null);
     }
-    public void reset()
-    {  zoneCards.clear();
-        for(int i = 0 ; i <=4 ; i ++)
+
+    public void reset() {
+        zoneCards.clear();
+        for (int i = 0; i <= 4; i++)
             zoneCards.add(null);
     }
-    public ArrayList getCardsInHand()
-    {
+
+    public ArrayList getCardsInHand() {
         return zoneCards;
     }
-    public Card getCardByPlaceNumber(int number)
-    {
+
+    public Card getCardByPlaceNumber(int number) {
         return zoneCards.get(number);
     }
-    public void addCardToHand(Card card)
-    {   for(int i=0 ;  i < zoneCards.size() ; i ++)
-    {
-        if(zoneCards.get(i) ==null)
-        {
-            card.setCardPlacedZone(this);
-            zoneCards.set(i , card);
-            return;
+
+    public void addCardToHand(Card card) {
+        for (int i = 0; i < zoneCards.size(); i++) {
+            if (zoneCards.get(i) == null) {
+                card.setCardPlacedZone(this);
+                zoneCards.set(i, card);
+                return;
+            }
         }
-    }
         card.setCardPlacedZone(this);
-    zoneCards.add(card);
+        zoneCards.add(card);
 
     }
-    public int getNumberOfCardsInHand()
-    {  int i = 0 ;
-        for(Card card : zoneCards){
-        if(card ==null)
-            i++;
-    }
+
+    public int getNumberOfCardsInHand() {
+        int i = 0;
+        for (Card card : zoneCards) {
+            if (card != null)
+                i++;
+        }
         return i;
     }
-    public void removeCardFromHand(Card card)
-    {
-       zoneCards.remove(card);
-       zoneCards.add(null);
+
+    public void removeCardFromHand(Card card) {
+        zoneCards.remove(card);
+        zoneCards.add(null);
     }
-    public Boolean isExist( Card card)
-    {  for(Card card1 : zoneCards)
-    {
-        if(card==card1)
-            return true;
-    }
-    return false;
+
+    public Boolean isExist(Card card) {
+        for (Card card1 : zoneCards) {
+            if (card == card1)
+                return true;
+        }
+        return false;
 
     }
 

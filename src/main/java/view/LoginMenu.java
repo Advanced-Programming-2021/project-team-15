@@ -1,9 +1,11 @@
 package view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import controller.LoginController;
 import controller.responses.LoginMenuResponses;
 import utility.Utility;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -30,7 +32,7 @@ public class LoginMenu extends Menu {
     }
 
     @Override
-    public void scanInput() {
+    public void scanInput() throws IOException, CsvValidationException {
         while (true) {
             String input = Utility.getNextLine();
             if (input.startsWith("user create ")) checkAndCallRegister(input);

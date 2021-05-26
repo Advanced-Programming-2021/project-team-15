@@ -2,10 +2,8 @@ package controller;
 
 import controller.responses.DuelMenuResponses;
 import model.*;
-import utility.Utility;
 import view.DuelMenu;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +14,9 @@ import static controller.responses.DuelMenuResponses.*;
 public class GamePlayController extends MenuController {
     private static GamePlayController gamePlayController = null;
     private static Card setCard;
+    private static TrapEffectController trapEffectController = new TrapEffectController();
+    private static SpellEffectController spellEffectController = new SpellEffectController();
+    private static MonsterEffectController monsterEffectController = new MonsterEffectController();
     private ArrayList<Card> chainCards = new ArrayList<>();
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
@@ -25,17 +26,15 @@ public class GamePlayController extends MenuController {
     private Card selectedCard;
     private Player currentPlayer;
     private Player opponentPlayer;
-    private boolean preparationNotDoneYet= false;
+    private boolean preparationNotDoneYet = false;
     private AttackController attackController;
-    private static TrapEffectController trapEffectController  = new TrapEffectController();
-    private static SpellEffectController spellEffectController =new SpellEffectController();
-    private static MonsterEffectController monsterEffectController = new MonsterEffectController();
     private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setTrapCardsInTurn = new ArrayList<>();
     private HashMap<Player, Card> activatedCards = new HashMap<>();
     private ArrayList<MagicCard> setTrapAndSpellCardsInTurn = new ArrayList<>();
     private ArrayList<Card> changedPositionCardsInTurn = new ArrayList<>();
+
     public GamePlayController() {
         super("Duel Menu");
     }
@@ -89,6 +88,13 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses startNewGame(String secondPlayer, int roundNum) {
         User currentUser = MenuController.getUser();
         User secondUser = User.getUserByUserName(secondPlayer);
+        for (Card card : secondUser.getActiveDeck().getMainDeck())
+        {
+            if (card instanceof MonsterCard) System.out.println("monster");
+            else if (card instanceof MagicCard) System.out.println("magic");
+            else if (card != null) System.out.println("card");
+        }
+        System.out.println("kiiiibr");
         if (User.getUserByUserName(secondPlayer) == null)
             return DuelMenuResponses.NO_PLAYER_WITH_THIS_USERNAME_EXISTS;
         else if (secondUser.getActiveDeck() == null)
@@ -107,7 +113,7 @@ public class GamePlayController extends MenuController {
             game = new Game(first, second, roundNum);
             attackController = new AttackController();
             effectController = new EffectController();
-            spellEffectController =new SpellEffectController();
+            spellEffectController = new SpellEffectController();
             return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY; //TODO : agar dar view in return shod game sang kaghaz ..
         }
     }
@@ -158,11 +164,30 @@ public class GamePlayController extends MenuController {
             loser = game.getSecondPlayer();
         } else if ((firstPlayerMove.equals("scissors") && (secondPlayerMove.equals("rock"))) ||
                 (firstPlayerMove.equals("rock") && (secondPlayerMove.equals("paper"))) ||
-                (firstPlayerMove.equals("paper") && secondPlayerMove.equals("scissors"))){
+                (firstPlayerMove.equals("paper") && secondPlayerMove.equals("scissors"))) {
             loser = game.getFirstPlayer();
             winner = game.getSecondPlayer();
-        }
-        else {
+            for (Card card : game.getFirstPlayer().getUser().getActiveDeck().getMainDeck())
+            {
+                if (card instanceof MonsterCard) System.out.println("monster");
+                else if (card instanceof MagicCard) System.out.println("magic");
+                else if (card != null) System.out.println("card");
+            }
+            System.out.println("wwwwwwiiiiiiinnneerrrr");
+            for (Card card : game.getSecondPlayer().getUser().getActiveDeck().getMainDeck())
+            {
+                if (card instanceof MonsterCard) System.out.println("monster");
+                else if (card instanceof MagicCard) System.out.println("magic");
+                else if (card != null) System.out.println("card");
+            }
+            System.out.println("mameeeeeeeeee");
+            for (Card card : loser.getUser().getActiveDeck().getMainDeck())
+            {
+                if (card instanceof MonsterCard) System.out.println("monster");
+                else if (card instanceof MagicCard) System.out.println("magic");
+                else if (card != null) System.out.println("card");
+            }
+        } else {
             System.out.println("try putting valid word!");
             return false;
         }
@@ -182,22 +207,32 @@ public class GamePlayController extends MenuController {
         if (opponentOrPlayer.equals("player")) player = currentPlayer;
         else player = opponentPlayer;
         Zone.ZoneType zoneTypeEnum;
-        if (zoneType.equals("monster"))
-            zoneTypeEnum = Zone.ZoneType.MONSTER_CARD;
-        else if (zoneType.equals("spell"))
-            zoneTypeEnum = Zone.ZoneType.MAGIC_CARD;
-        else if (zoneType.equals("hand"))
-            zoneTypeEnum = Zone.ZoneType.HAND;
-        else return DuelMenuResponses.INVALID_SELECTION;
+        switch (zoneType) {
+            case "monster":
+                zoneTypeEnum = Zone.ZoneType.MONSTER_CARD;
+                break;
+            case "spell":
+                zoneTypeEnum = Zone.ZoneType.MAGIC_CARD;
+                break;
+            case "hand":
+                zoneTypeEnum = Zone.ZoneType.HAND;
+                break;
+            default:
+                return DuelMenuResponses.INVALID_SELECTION;
+        }
         if (cardNumber == 0 || cardNumber > 5)
             return DuelMenuResponses.INVALID_SELECTION;
         if (zoneTypeEnum.equals(Zone.ZoneType.HAND) && cardNumber > currentPlayer.getHand().getNumberOfCardsInHand())
             return DuelMenuResponses.INVALID_SELECTION;
-        NumericZone zone = (NumericZone) player.getZoneByZoneType(zoneTypeEnum);
-        if (zone.getCardByPlaceNumber(cardNumber) != null) {
-            selectedCard = zone.getCardByPlaceNumber(cardNumber);
-            return DuelMenuResponses.CARD_SELECTED;
-        } else return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
+        Zone zone = player.getZoneByZoneType(zoneTypeEnum);
+        if (zone instanceof Hand && ((Hand) zone).getZoneCards().get(cardNumber - 1) != null) {
+            selectedCard = ((Hand) zone).getZoneCards().get(cardNumber - 1);
+            return CARD_SELECTED;
+        } else if (zone instanceof NumericZone && ((NumericZone) zone).getZoneCards().get(cardNumber - 1) != null) {
+            selectedCard = ((NumericZone) zone).getCardByPlaceNumber(cardNumber);
+            return CARD_SELECTED;
+        }
+        return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
     }
 
     public DuelMenuResponses selectNotNumericZone(String zoneType, String opponentOrPlayer) {
@@ -253,6 +288,9 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses summon() {
+//        if (selectedCard instanceof MonsterCard) System.out.println("monster");
+//        else if (selectedCard instanceof  MagicCard) System.out.println("magic");
+//        else System.out.println("what");
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand() ||
                 !(selectedCard instanceof MonsterCard))
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
@@ -289,7 +327,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
-        int num =  duelMenu.getNum();
+        int num = duelMenu.getNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
@@ -299,9 +337,9 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses twoMonsterTribute() {
-       duelMenu.printResponse(ENTER_FIRST_NUMBER);
+        duelMenu.printResponse(ENTER_FIRST_NUMBER);
         int firstAddress = duelMenu.getNum();
-       duelMenu.printResponse(ENTER_SECOND_NUMBER);
+        duelMenu.printResponse(ENTER_SECOND_NUMBER);
         int secondAddress = duelMenu.getNum();
         if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
             return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;
@@ -448,62 +486,69 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
             player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
-             MagicCard majicJammer  = (MagicCard) ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer");
-                     if(majicJammer!=null) {
-                        if(askToActivateInRivalsTurn(majicJammer))
-                         trapEffectController.magicJammer(majicJammer);
-                     }
-           spellEffectController.spellAbsorption();
-            callSpellOrTrap(selectedCard);
-            if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+        MagicCard majicJammer = (MagicCard) ifPlayerHasThisCardGiveIt(opponentPlayer, "Magic jammer");
+        if (majicJammer != null) {
+            if (askToActivateInRivalsTurn(majicJammer))
+                trapEffectController.magicJammer(majicJammer);
+        }
+        spellEffectController.spellAbsorption();
+        callSpellOrTrap(selectedCard);
+        if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
     }
 
-    public void activateSelectedCard()
-    {  selectedCard.setHidden(false);
+    public void activateSelectedCard() {
+        selectedCard.setHidden(false);
         selectedCard.setActivated(true);
-       activatedCards.put(currentPlayer,selectedCard);
-       duelMenu.printResponse(SPELL_ACTIVATED);
+        activatedCards.put(currentPlayer, selectedCard);
+        duelMenu.printResponse(SPELL_ACTIVATED);
     }
-    public void makeChain()
-    {
+
+    public void makeChain() {
 
     }
 
-    public void   callSpellOrTrap(Card card) {  //TODO
+    public void callSpellOrTrap(Card card) {  //TODO
         String cardName = card.getCardName();
         switch (cardName) {
-            case "Yami": spellEffectController.yami(true);
+            case "Yami":
+                spellEffectController.yami(true);
                 break;
-            case "Forset": spellEffectController.forest(true);
+            case "Forset":
+                spellEffectController.forest(true);
                 break;
-            case "Closed Forest" : spellEffectController.closedForest(true);
-            break;
-            case "Umiiruka" : spellEffectController.umiiruka(true);
-            break;
-            case "Sword of Dark Destruction" : spellEffectController.swordOfDarkDestruction();
-            break;
-            case "Black Pendant" : spellEffectController.blackPendant();
-            break;
-            case "United We Stand" : spellEffectController.unitedWeStand();
-            break;
-            case "Magnum Shield" : spellEffectController.magnumShield();
-            break;
-            case "Terraforming" : spellEffectController.terraforming();
-            break;
-            case "Pot of Greed" :  spellEffectController.potOfGReed();
-            break;
-            case "Raigeki" : spellEffectController.raigeki();
-            break;
-            case "Harpie's Feather Duster" : spellEffectController.harpiesFeatherDuster();
-            break;
-            case "Dark Hole" : spellEffectController.darkHole();
-            break;
-
-
-
-
-
-
+            case "Closed Forest":
+                spellEffectController.closedForest(true);
+                break;
+            case "Umiiruka":
+                spellEffectController.umiiruka(true);
+                break;
+            case "Sword of Dark Destruction":
+                spellEffectController.swordOfDarkDestruction();
+                break;
+            case "Black Pendant":
+                spellEffectController.blackPendant();
+                break;
+            case "United We Stand":
+                spellEffectController.unitedWeStand();
+                break;
+            case "Magnum Shield":
+                spellEffectController.magnumShield();
+                break;
+            case "Terraforming":
+                spellEffectController.terraforming();
+                break;
+            case "Pot of Greed":
+                spellEffectController.potOfGReed();
+                break;
+            case "Raigeki":
+                spellEffectController.raigeki();
+                break;
+            case "Harpie's Feather Duster":
+                spellEffectController.harpiesFeatherDuster();
+                break;
+            case "Dark Hole":
+                spellEffectController.darkHole();
+                break;
 
 
         }
@@ -832,7 +877,6 @@ public class GamePlayController extends MenuController {
         }
         suijinVictims.clear();
     }
-
 
 
 }

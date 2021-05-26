@@ -1,9 +1,11 @@
 package view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import controller.MainMenuController;
 import controller.responses.MainMenuResponses;
 import utility.Utility;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -22,7 +24,7 @@ public class MainMenu extends Menu {
     }
 
     @Override
-    public void scanInput() {
+    public void scanInput() throws IOException, CsvValidationException {
         while (true) {
             String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();

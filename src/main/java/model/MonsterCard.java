@@ -2,20 +2,23 @@ package model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class MonsterCard extends Card {
-    @SerializedName("Atk")private int attackPoint;
+    @SerializedName("Attack")private int attackPoint;
     private int gameATK = attackPoint;
-    @SerializedName("Def")private int defensePoint;
+    @SerializedName("Defence")private int defensePoint;
     private int gameDEF = defensePoint;
     @SerializedName("Level") private int level;
     @SerializedName("Monster Type") private MonsterType monsterType;
-    @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
-    @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
+    @SerializedName("Monster Attribute") private MonsterAttribute monsterAttribute;
+    @SerializedName("Monster Effect Type") private MonsterEffectType monsterEffectType;
     private transient Boolean isSummoned = false;
     private transient Mode mode;
 
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
+        this.cardType = CardType.MONSTER;
     }
 
     public MonsterType getMonsterType() {
@@ -139,10 +142,19 @@ public class MonsterCard extends Card {
     public enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
-        @SerializedName("Ritual") RITUAL
+        @SerializedName("Ritual") RITUAL;
+
+        public static MonsterEffectType getMonsterEffectType(String monsterEffectType) {
+            switch (monsterEffectType) {
+                case "Normal" : return NORMAL;
+                case "Effect" : return EFFECT;
+                case "Ritual" : return RITUAL;
+                default:return null;
+            }
+        }
     }
 
-    public  enum MonsterType {
+    public enum MonsterType {
         @SerializedName("Spellcaster") SPELL_CASTER("Spellcaster"),
         @SerializedName("Warrior") WARRIOR("Warrior"),
         @SerializedName("Beast-Warrior") BEAST_WARRIOR("Beast-Warrior"),
@@ -158,12 +170,32 @@ public class MonsterCard extends Card {
         @SerializedName("Cyberse") CYBER("Cyberse"),
         @SerializedName("Fairy") FAIRY("Fairy"),
         @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
-        private String name;
+        private final String name;
+
+        public static MonsterType getMonsterTypeByName(String monsterType) {
+            switch (monsterType) {
+                case "Spellcaster" : return SPELL_CASTER;
+                case "Warrior" : return WARRIOR;
+                case "Beast-Warrior" : return BEAST_WARRIOR;
+                case "Fiend" : return FIEND;
+                case "Aqua" : return AQUA;
+                case "Beast" : return BEAST;
+                case "Pyro" : return PYRO;
+                case "Thunder" : return THUNDER;
+                case "Dragon" : return DRAGON;
+                case "Machine" : return MACHINE;
+                case "Rock" : return ROCK;
+                case "Insect" : return INSECT;
+                case "Cyberse" : return CYBER;
+                case "Fairy" : return FAIRY;
+                case "Sea Serpent" : return SEA_SERPENT;
+                default: return null;
+            }
+        }
 
         MonsterType(String name) {
             this.name = name;
         }
-
 
         public String getName() {
             return this.name;
@@ -175,13 +207,32 @@ public class MonsterCard extends Card {
         DEFENSE,
     }
 
-    enum MonsterAttribute {
+    public enum MonsterAttribute {
         @SerializedName("DARK") DARK,
         @SerializedName("WATER") WATER,
         @SerializedName("FIRE") FIRE,
         @SerializedName("EARTH") EARTH,
         @SerializedName("WIND") WIND,
-        @SerializedName("LIGHT") LIGHT
+        @SerializedName("LIGHT") LIGHT;
+
+        public static MonsterAttribute getAttribute(String attribute) {
+            switch (attribute) {
+                case "EARTH":
+                    return EARTH;
+                case "WATER":
+                    return WATER;
+                case "DARK":
+                    return DARK;
+                case "LIGHT":
+                    return LIGHT;
+                case "FIRE":
+                    return FIRE;
+                case "WIND":
+                    return WIND;
+                default:
+                    return null;
+            }
+        }
     }
 
     public String toStringPosition()

@@ -76,23 +76,20 @@ public class DuelMenu extends Menu {
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
             else if (input.equals("set")) printResponse(gamePlayController.setCommand());
-            else if(input.matches("set --position (attack|defense)"))
-            {
-                Matcher matcher  = Pattern.compile("set --position (attack|defense)").matcher(input);
-                if(matcher.find())  printResponse(gamePlayController.setPosCommand(matcher.group(1))); }
-            else if(input.equals("flip-summon"))  printResponse(gamePlayController.flipSummonCommand());
-            else if(input.matches("attack (\\d+)"))
-            { Matcher matcher  = Pattern.compile("attack (\\d+)").matcher(input);
-                if(matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1)))); }
-            else if(input.equals("attack direct")) printResponse(gamePlayController.directAttack());
+            else if (input.matches("set --position (attack|defense)")) {
+                Matcher matcher = Pattern.compile("set --position (attack|defense)").matcher(input);
+                if (matcher.find()) printResponse(gamePlayController.setPosCommand(matcher.group(1)));
+            } else if (input.equals("flip-summon")) printResponse(gamePlayController.flipSummonCommand());
+            else if (input.matches("attack (\\d+)")) {
+                Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
+                if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
+            } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
             //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
+            else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
                 return;
             }
-
-
-            else System.out.println("invalid command");
         }
     }
 
@@ -106,8 +103,8 @@ public class DuelMenu extends Menu {
             int rounds = Integer.parseInt(enteredDetails.get("rounds"));
             duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
             printResponse(duelMenuResponses);
-            if (duelMenuResponses==DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
-                weAreOnGame=true;
+            if (duelMenuResponses == DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
+                weAreOnGame = true;
                 playRPS();
             }
         }
@@ -230,7 +227,7 @@ public class DuelMenu extends Menu {
             case TWO_TRIBUTE_NO_MONSTER:
                 System.out.println("there is no monster on one of these addresses");
                 break;
-            case CANT_SET_THIS_CARD :
+            case CANT_SET_THIS_CARD:
                 System.out.println("you can't set this card");
                 break;
             case CANT_DO_THIS_ACTION_IN_THIS_PHASE:
@@ -249,8 +246,8 @@ public class DuelMenu extends Menu {
                 System.out.println("monster card position changed successfully");
                 break;
             case CANT_FLIP_SUMMON:
-                    System.out.println("you can't flip summon this card");
-                    break;
+                System.out.println("you can't flip summon this card");
+                break;
             case FLIP_SUMMONED_SUCCESSFULLY:
                 System.out.println("flip summoned successfully");
                 break;
@@ -263,31 +260,31 @@ public class DuelMenu extends Menu {
             case NO_CARD_TO_ATTACK:
                 System.out.println("there is no card to attack here");
                 break;
-            case  DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE:
-             System.out.println("your opponent's monster is destroyed and your opponent receives "+ AttackController.getDamage()+ " battle damage");
-             break;
+            case DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE:
+                System.out.println("your opponent's monster is destroyed and your opponent receives " + AttackController.getDamage() + " battle damage");
+                break;
             case BOTH_MONSTERS_ARE_DESTROYED:
                 System.out.println("both you and your opponent monster cards are destroyed and no one receives damage");
                 break;
             case DESTROYED_CURRENT_MONSTER_AFTER_ATTACK:
-                System.out.println("your monster card is destroyed and you received "+AttackController.getDamage()+" battle damage");
+                System.out.println("your monster card is destroyed and you received " + AttackController.getDamage() + " battle damage");
                 break;
             case DEFENCE_POSITION_MONSTER_DESTROYED:
                 System.out.println("the defense position monster is destroyed");
                 break;
-            case NO_CARD_DESTROYED :
+            case NO_CARD_DESTROYED:
                 System.out.println("no card is destroyed ");
                 break;
             case NO_CARD_DESTROYED_CURRENT_DAMAGED:
-                System.out.println("no card is destroyed and you received "+AttackController.getDamage()+" battle damage");
+                System.out.println("no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
                 break;
-            case  CANT_ATTACK_DIRECTLY:
+            case CANT_ATTACK_DIRECTLY:
                 System.out.println("you can't attack the opponent directly");
                 break;
             case YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK:
-                System.out.println("your opponent receives "+AttackController.getDamage()+" battle damage");
+                System.out.println("your opponent receives " + AttackController.getDamage() + " battle damage");
                 break;
-            case  ACTIVATE_EFFECT_ONLY_ON_SPELL:
+            case ACTIVATE_EFFECT_ONLY_ON_SPELL:
                 System.out.println("activate effect is only for spell cards");
                 break;
             case CANT_ACTIVATE_EFFECT_ON_THIS_TURN:
@@ -307,28 +304,22 @@ public class DuelMenu extends Menu {
                 break;
 
 
-
-
-
             default:
                 break;
         }
     }
 
-
-    public void hiddenDefensePositionMonsterDestroyed(String name)
-    {
-        System.out.println("opponent's monster card was "+name+" and the defense position monster is destroyed");
-    }
-    public void hiddenDefensePosNoCardDestroyed(String name)
-    {
-        System.out.println("opponent's monster card was "+name+" and no card is destroyed");
-    }
-    public void hiddenDefensePosNoCardDestroyedWithDamage(String name)
-    {
-        System.out.println("opponent's monster card was "+name+" no card is destroyed and you received "+AttackController.getDamage()+" battle damage");
+    public void hiddenDefensePositionMonsterDestroyed(String name) {
+        System.out.println("opponent's monster card was " + name + " and the defense position monster is destroyed");
     }
 
+    public void hiddenDefensePosNoCardDestroyed(String name) {
+        System.out.println("opponent's monster card was " + name + " and no card is destroyed");
+    }
+
+    public void hiddenDefensePosNoCardDestroyedWithDamage(String name) {
+        System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
+    }
 
     public void playRPS() {
         while (true) {
@@ -348,26 +339,22 @@ public class DuelMenu extends Menu {
         System.out.println("new card added to hand : " + cardName);
     }
 
-
-
     public void showRivalTurn(String userName, String board) {
         System.out.println("now it will be " + userName + "'s turn");
         System.out.println(board);
 
     }
 
-
     public void printString(String string) {
         System.out.println(string);
     }
-    public int getNum()
-    {
+
+    public int getNum() {
         return Integer.parseInt(Utility.getNextLine());
     }
-    public String getString()
-    {
+
+    public String getString() {
         return Utility.getNextLine();
     }
-
 
 }

@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.opencsv.exceptions.CsvValidationException;
 import controller.responses.DeckMenuResponses;
 import controller.responses.LoginMenuResponses;
 import model.Card;
@@ -53,7 +54,7 @@ public class MenuControllerTest {
     }
 
     @Test
-    public void shopBuyItemTest() {
+    public void shopBuyItemTest() throws IOException, CsvValidationException {
         loginMenuResponses = loginController.registerUser("pedaret", "bale", "babat");
         loginMenuResponses = loginController.loginUser("pedaret", "babat");
         assertNotNull(MenuController.user);
@@ -106,13 +107,12 @@ public class MenuControllerTest {
     }
 
     @Test
-    public void addCardToDeckTest() throws FileNotFoundException {
+    public void addCardToDeckTest() throws IOException, CsvValidationException {
         User user = readUsersFromFile("src/test/resources/toAddCardToDeckTest.json").get(0);
         User.getAllUsers().add(user);
         jsonController.refreshUsersToFileJson();
         MenuController.setUser(user);
-        jsonController.monsterCardParseJson();
-        jsonController.magicCardParseJson();
+        jsonController.loadGameCards();
         user.setActiveDeck(user.getDeckByName(user.getActiveDeckName()));
         deckMenuResponses = deckController.addCardToDeck("Yami", "gav", Deck.DeckType.MAIN);
         assertEquals(DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK, deckMenuResponses);

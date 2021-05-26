@@ -1,9 +1,11 @@
 package view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import controller.ShopController;
 import controller.responses.ShopMenuResponses;
 import utility.Utility;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -24,7 +26,7 @@ public class ShopMenu extends Menu {
     }
 
     @Override
-    public void scanInput() {
+    public void scanInput() throws IOException, CsvValidationException {
         while (true) {
             String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
@@ -40,7 +42,7 @@ public class ShopMenu extends Menu {
         }
     }
 
-    private void checkAndCallBuyItem(String input) {
+    private void checkAndCallBuyItem(String input) throws IOException, CsvValidationException {
         HashMap<String, String> enteredDetails = new HashMap<>();
         if (!regexController.buyItemRegex(input, enteredDetails))
             System.out.println("invalid command");
@@ -51,7 +53,7 @@ public class ShopMenu extends Menu {
         }
     }
 
-    private void checkAndCallShowAllCards() {
+    private void checkAndCallShowAllCards() throws IOException, CsvValidationException {
         HashMap<String, String> enteredDetails = new HashMap<>();
         responses = shopController.showAllCards(enteredDetails);
         if (responses == ShopMenuResponses.SHOP_SHOW_ALL)

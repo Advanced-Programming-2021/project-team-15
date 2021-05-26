@@ -1,5 +1,6 @@
 package view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import org.junit.jupiter.api.*;
 import org.testng.annotations.Test;
 import java.io.*;
@@ -15,7 +16,7 @@ public class MenuTest {
     private static ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Test
-    public void loginCommandsTest() throws IOException {
+    public void loginCommandsTest() throws IOException, CsvValidationException {
         String allCommands = Files.readString(Path.of("src/test/resources/inputTests/userBuildTestInput.txt"),
                 StandardCharsets.US_ASCII);
         String responses = Files.readString(Path.of("src/test/resources/inputTests/userBuildTestOutput.txt"),
@@ -27,7 +28,7 @@ public class MenuTest {
     }
 
     @Test
-    public void shopDeckCommandsTest() throws IOException {
+    public void shopDeckCommandsTest() throws IOException, CsvValidationException {
         String allCommands = Files.readString(Path.of("src/test/resources/inputTests/userBuyCardsBuildDeckTestInput.txt"),
                 StandardCharsets.UTF_8);
         String responses = Files.readString(Path.of("src/test/resources/inputTests/userBuyCardsBuildDeckTestOutput.txt"),
@@ -39,10 +40,22 @@ public class MenuTest {
     }
 
     @Test
-    public void startGameTest() throws IOException {
+    public void startGameTest() throws IOException, CsvValidationException {
         String allCommands = Files.readString(Path.of("src/test/resources/inputTests/startGameTestInput.txt"),
                 StandardCharsets.UTF_8);
         String responses = Files.readString(Path.of("src/test/resources/inputTests/startGameTestOutput.txt"),
+                StandardCharsets.UTF_8);
+        System.setOut(new PrintStream(outContent));
+        System.setIn(new ByteArrayInputStream(allCommands.getBytes()));
+        LoginMenu.getInstance().scanInput();
+        assertEquals(responses.replaceAll("\r",""),outContent.toString().trim().replaceAll("\r",""));
+    }
+
+    @Test
+    public void duelCommandsTest() throws IOException, CsvValidationException {
+        String allCommands = Files.readString(Path.of("src/test/resources/inputTests/duelCommandsTestInput.txt"),
+                StandardCharsets.UTF_8);
+        String responses = Files.readString(Path.of("src/test/resources/inputTests/duelCommandsTestOutput.txt"),
                 StandardCharsets.UTF_8);
         System.setOut(new PrintStream(outContent));
         System.setIn(new ByteArrayInputStream(allCommands.getBytes()));
