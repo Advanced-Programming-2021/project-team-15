@@ -12,18 +12,28 @@ public class Card {
         allCards = new ArrayList<>();
     }
 
+    public Boolean isSummoned = false;
     //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")
     protected String cardName;
     @SerializedName("Description")
     protected String cardDescription;
     protected String cardNumber;
-    protected Boolean isSet = false;
-    protected Boolean isSelected = false;
     protected CardType cardType;
-    protected Zone placedZone;
+    protected Boolean isSet = false;
+    protected Boolean isHidden = true;
+    protected Zone cardPlacedZone;
+    //    public int getPlacedZoneNumber() {
+//        return placedZoneNumber;
+//    }
+//
+//    public void setPlacedZoneNumber(int placedZoneNumber) {
+//        this.placedZoneNumber = placedZoneNumber;
+//    }
+    //protected int placedZoneNumber = 0; //if ==0 means not numerical zone
     @SerializedName("Price")
     protected int price;
+    private boolean isActivated;
 
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
@@ -31,13 +41,15 @@ public class Card {
         this.cardNumber = cardNumber;
         this.cardType = cardType;
     }
+
     public static Card getCardByName(String cardName) {
         for (Card card : allCards) {
-            if(card.getCardName().equals(cardName))
+            if (card.getCardName().equals(cardName))
                 return card;
         }
         return null;
     }
+
     public static void addCard(Card card) {
         allCards.add(card);
     }
@@ -48,6 +60,57 @@ public class Card {
 
     public static void setAllCards(ArrayList<Card> allCards) {
         Card.allCards = allCards;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof Card)) return false;
+        Card card = (Card) object;
+        return card.cardName.equals(cardName);
+    }
+
+    public Boolean getSummoned() {
+        return isSummoned;
+    }
+
+    public void setSummoned(Boolean summoned) {
+        isSummoned = summoned;
+    }
+
+    public Boolean getSet() {
+        return isSet;
+    }
+
+    public void setSet(Boolean set) {
+        isSet = set;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
+    }
+
+    public Boolean getHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        isHidden = hidden;
+    }
+
+    public Zone getCardPlacedZone() {
+        return cardPlacedZone;
+    }
+
+    public void setCardPlacedZone(Zone cardPlacedZone) {
+        this.cardPlacedZone = cardPlacedZone;
     }
 
     public String getCardName() {
@@ -74,21 +137,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public Boolean getSet() {
-        return isSet;
-    }
-
-    public void setSet(Boolean set) {
-        isSet = set;
-    }
-
-    public Boolean getSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(Boolean selected) {
-        isSelected = selected;
-    }
 
     public CardType getCardType() {
         return cardType;
@@ -96,14 +144,6 @@ public class Card {
 
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
-    }
-
-    public Zone getPlacedZone() {
-        return placedZone;
-    }
-
-    public void setPlacedZone(Zone placedZone) {
-        this.placedZone = placedZone;
     }
 
     public int getPrice() {
@@ -115,7 +155,7 @@ public class Card {
     }
 
     public enum CardType {
-        MONSTER(),
-        MAGIC();
+        MONSTER,
+        MAGIC;
     }
 }

@@ -2,17 +2,22 @@ package view;
 
 import controller.MenuController;
 import controller.RegexController;
+import utility.Utility;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Menu {
-    RegexController regexController = new RegexController();
+    static {
+        Utility.initializeScanner();
+    }
+
     private final MenuController menuController;
     protected String menuName;
     protected Menu nextMenu;
     protected boolean isExit = false;
     protected boolean isEnter = false;
+    RegexController regexController = new RegexController();
     private MenuController.MenuResponse MenuControllerResponse;
 
     public Menu(String menuName) {

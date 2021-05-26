@@ -1,14 +1,15 @@
 import controller.JSONController;
-import model.Card;
-import model.MagicCard;
-import model.MonsterCard;
 import view.LoginMenu;
 
 /*To Handle :
 menu entry from other menus
 giving other menus instructions
 shop buy item clone cards
+Import/Export Menu???
+card show (page 10)
 */
+//TODO check:
+//attack controller line 102 - attackToDefencePos return
 
 
 
@@ -17,8 +18,8 @@ shop buy item clone cards
 public class Main {
     public static void main(String[] args) {
         JSONController jsonController = new JSONController();
-        jsonController.MonsterCardParseJson();
-        jsonController.MagicCardParseJson();
+        jsonController.monsterCardParseJson();
+        jsonController.magicCardParseJson();
         LoginMenu loginMenu = LoginMenu.getInstance();
         loginMenu.scanInput();
 

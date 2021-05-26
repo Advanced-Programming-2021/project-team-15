@@ -1,12 +1,24 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class Hand extends NumericZone{
+public class Hand extends Zone{
+    ArrayList<Card> zoneCards;
+
     public Hand() {
-        super(ZoneType.HAND, new HashMap<Integer ,Card>());
+        super(ZoneType.HAND);
+        zoneCards = new ArrayList<>();
+        for(int i = 0 ; i <=4 ; i ++)
+            zoneCards.add(null);
     }
-    public HashMap getCardsInHand()
+    public void reset()
+    {  zoneCards.clear();
+        for(int i = 0 ; i <=4 ; i ++)
+            zoneCards.add(null);
+    }
+    public ArrayList getCardsInHand()
     {
         return zoneCards;
     }
@@ -15,13 +27,48 @@ public class Hand extends NumericZone{
         return zoneCards.get(number);
     }
     public void addCardToHand(Card card)
+    {   for(int i=0 ;  i < zoneCards.size() ; i ++)
     {
-        //dont know
+        if(zoneCards.get(i) ==null)
+        {
+            card.setCardPlacedZone(this);
+            zoneCards.set(i , card);
+            return;
+        }
+    }
+        card.setCardPlacedZone(this);
+    zoneCards.add(card);
+
+    }
+    public int getNumberOfCardsInHand()
+    {  int i = 0 ;
+        for(Card card : zoneCards){
+        if(card ==null)
+            i++;
+    }
+        return i;
     }
     public void removeCardFromHand(Card card)
     {
-        //dont know
+       zoneCards.remove(card);
+       zoneCards.add(null);
+    }
+    public Boolean isExist( Card card)
+    {  for(Card card1 : zoneCards)
+    {
+        if(card==card1)
+            return true;
+    }
+    return false;
+
     }
 
 
+    public ArrayList<Card> getZoneCards() {
+        return zoneCards;
+    }
+
+    public void setZoneCards(ArrayList<Card> zoneCards) {
+        this.zoneCards = zoneCards;
+    }
 }

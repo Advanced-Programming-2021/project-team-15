@@ -2,12 +2,14 @@ package model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MagicCard extends Card{
+public class MagicCard extends Card {
 
-    @SerializedName("Type") private MagicType magicType;
-    @SerializedName("Status") private Status status;
-    @SerializedName("Icon (Property)") private CardIcon cardIcon;
-    private boolean isActive;
+    @SerializedName("Type")
+    private MagicType magicType;
+    @SerializedName("Status")
+    private Status status;
+    @SerializedName("Icon (Property)")
+    private CardIcon cardIcon;
 
     public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
@@ -21,13 +23,6 @@ public class MagicCard extends Card{
         this.magicType = magicType;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 
     public Status getStatus() {
         return status;
@@ -45,6 +40,17 @@ public class MagicCard extends Card{
         this.cardIcon = cardIcon;
     }
 
+    public String toString() {
+        StringBuilder info = new StringBuilder();
+        info.append("Name: ").append(cardName).append("\n");
+        info.append(magicType).append("\n");
+        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
+        //a.value()
+        info.append("Type: ").append(cardIcon.getName()).append("\n");
+        info.append("Description: ").append(cardDescription);
+        return info.toString();
+    }
+
     public enum MagicType {
         @SerializedName("Spell") SPELL,
         @SerializedName("Trap") TRAP
@@ -55,7 +61,7 @@ public class MagicCard extends Card{
         @SerializedName("Unlimited") UNLIMITED
     }
 
-    enum CardIcon {
+    public enum CardIcon {
         @SerializedName("Equip") EQUIP("Equip"),
         @SerializedName("Field") FIELD("Field"),
         @SerializedName("Quick-play") QUICK_PLAY("Quick-play"),
@@ -69,19 +75,8 @@ public class MagicCard extends Card{
             this.name = name;
         }
 
-        public String getName()
-        {
+        public String getName() {
             return this.name;
         }
-    }
-    public String toString() {
-        StringBuilder info = new StringBuilder();
-        info.append("Name: " + cardName + "\n");
-        info.append(magicType+"\n");
-        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
-        //a.value()
-        info.append("Type: " +  cardIcon.getName()+ "\n");
-        info.append("Description: " + cardDescription );
-        return info.toString();
     }
 }

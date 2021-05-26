@@ -4,30 +4,56 @@ import com.google.gson.annotations.SerializedName;
 
 public class MonsterCard extends Card {
     @SerializedName("Atk")private int attackPoint;
+    private int gameATK = attackPoint;
     @SerializedName("Def")private int defensePoint;
+    private int gameDEF = defensePoint;
     @SerializedName("Level") private int level;
     @SerializedName("Monster Type") private MonsterType monsterType;
     @SerializedName("Attribute") private MonsterAttribute monsterAttribute;
     @SerializedName("Card Type") private MonsterEffectType monsterEffectType;
-    private Mode mode;
+    private transient Boolean isSummoned = false;
+    private transient Mode mode;
+
     public MonsterCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         super(cardDescription, cardName, cardNumber, cardType);
     }
 
+    public MonsterType getMonsterType() {
+        return monsterType;
+    }
+
+    public void setMonsterType(MonsterType monsterType) {
+        this.monsterType = monsterType;
+    }
+
+    public Boolean getSummoned() {
+        return isSummoned;
+    }
+
+    public void setSummoned(Boolean summoned) {
+        if(summoned)
+        {
+            setMode( Mode.ATTACK);
+            setHidden(true);
+        }
+        isSummoned = summoned;
+    }
+
+
     private void addAttackPoint(int point) {
-        this.setAttackPoint(this.getAttackPoint()+point);
+        this.setAttackPoint(this.getAttackPoint() + point);
     }
 
     private void addDefensePoint(int point) {
-        this.setDefensePoint(this.getDefensePoint()+point);
+        this.setDefensePoint(this.getDefensePoint() + point);
     }
 
     private void reduceAttackPoint(int point) {
-        this.setAttackPoint(this.getAttackPoint()-point);
+        this.setAttackPoint(this.getAttackPoint() - point);
     }
 
     private void reduceDefensePoint(int point) {
-        this.setDefensePoint(this.getDefensePoint()-point);
+        this.setDefensePoint(this.getDefensePoint() - point);
     }
 
     public int getAttackPoint() {
@@ -35,6 +61,9 @@ public class MonsterCard extends Card {
     }
 
     public void setAttackPoint(int attackPoint) {
+        if(attackPoint<0)
+            this.attackPoint = 0;
+        else
         this.attackPoint = attackPoint;
     }
 
@@ -54,13 +83,6 @@ public class MonsterCard extends Card {
         this.level = level;
     }
 
-    public MonsterType getMonsterType() {
-        return monsterType;
-    }
-
-    public void setMonsterType(MonsterType monsterType) {
-        this.monsterType = monsterType;
-    }
 
     public MonsterAttribute getMonsterAttribute() {
         return monsterAttribute;
@@ -87,13 +109,40 @@ public class MonsterCard extends Card {
         this.mode = mode;
     }
 
-    enum MonsterEffectType {
+    public String toString() {
+        StringBuilder cardInfo = new StringBuilder();
+        cardInfo.append("Name: ").append(cardName).append("\n");
+        cardInfo.append("Level: ").append(level).append("\n");
+        cardInfo.append("Type: ").append(monsterType.getName()).append("\n");
+        cardInfo.append("ATK: ").append(attackPoint).append("\n");
+        cardInfo.append("DEF: ").append(defensePoint).append("\n");
+        cardInfo.append("Description: ").append(cardDescription);
+        return cardInfo.toString();
+    }
+
+    public int getGameATK() {
+        return gameATK;
+    }
+
+    public void setGameATK(int gameATK) {
+        this.gameATK = gameATK;
+    }
+
+    public int getGameDEF() {
+        return gameDEF;
+    }
+
+    public void setGameDEF(int gameDEF) {
+        this.gameDEF = gameDEF;
+    }
+
+    public enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
         @SerializedName("Ritual") RITUAL
     }
 
-    enum MonsterType {
+    public  enum MonsterType {
         @SerializedName("Spellcaster") SPELL_CASTER("Spellcaster"),
         @SerializedName("Warrior") WARRIOR("Warrior"),
         @SerializedName("Beast-Warrior") BEAST_WARRIOR("Beast-Warrior"),
@@ -106,7 +155,7 @@ public class MonsterCard extends Card {
         @SerializedName("Machine") MACHINE("Machine"),
         @SerializedName("Rock") ROCK("Rock"),
         @SerializedName("Insect") INSECT("Insect"),
-        @SerializedName("Cyber") CYBER("Cyber"),
+        @SerializedName("Cyberse") CYBER("Cyberse"),
         @SerializedName("Fairy") FAIRY("Fairy"),
         @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
         private String name;
@@ -116,15 +165,14 @@ public class MonsterCard extends Card {
         }
 
 
-        public String getName()
-        {
+        public String getName() {
             return this.name;
         }
     }
 
-    enum Mode {
+    public enum Mode {
         ATTACK,
-        DEFENSE
+        DEFENSE,
     }
 
     enum MonsterAttribute {
@@ -135,14 +183,16 @@ public class MonsterCard extends Card {
         @SerializedName("WIND") WIND,
         @SerializedName("LIGHT") LIGHT
     }
-    public String toString() {
-        StringBuilder cardInfo = new StringBuilder();
-        cardInfo.append("Name: " + cardName + "\n");
-        cardInfo.append("Level: " + level + "\n");
-        cardInfo.append("Type: " + monsterType.getName() + "\n");
-        cardInfo.append("ATK: " +attackPoint + "\n");
-        cardInfo.append("DEF: " + defensePoint + "\n");
-        cardInfo.append("Description: " + cardDescription);
-        return cardInfo.toString();
+
+    public String toStringPosition()
+    {  String first = "";
+        String second= "";
+        if(!isHidden)
+            second = "O";
+        else second = "H";
+        if(mode.equals(Mode.ATTACK))
+            first = "O";
+        else first="D";
+        return first+second;
     }
 }

@@ -30,7 +30,7 @@ public class Zone {
         this.zoneType = zoneType;
     }
 
-    enum ZoneType{
+   public enum ZoneType{
         HAND,
         MONSTER_CARD,
         MAGIC_CARD,

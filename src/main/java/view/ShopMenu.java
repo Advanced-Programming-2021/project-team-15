@@ -2,6 +2,7 @@ package view;
 
 import controller.ShopController;
 import controller.responses.ShopMenuResponses;
+import utility.Utility;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -24,9 +25,8 @@ public class ShopMenu extends Menu {
 
     @Override
     public void scanInput() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
+            String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
             else if (input.equals("shop show --all")) checkAndCallShowAllCards();
@@ -54,26 +54,25 @@ public class ShopMenu extends Menu {
     private void checkAndCallShowAllCards() {
         HashMap<String, String> enteredDetails = new HashMap<>();
         responses = shopController.showAllCards(enteredDetails);
-        if (responses == ShopMenuResponses.SHOP_SHOW_ALL) {
+        if (responses == ShopMenuResponses.SHOP_SHOW_ALL)
             allCards = enteredDetails.get("allCards");
-            printResponse(responses);
-        }
+        printResponse(responses);
     }
 
     private void printResponse(ShopMenuResponses shopMenuResponses) {
         String output = "";
         switch (shopMenuResponses) {
             case SHOP_SHOW_ALL:
-                System.out.println(allCards);
+                output = allCards;
                 break;
             case BUY_SUCCESSFUL:
-                System.out.println("bought item successfully!");
+                output = "bought item successfully!";
                 break;
             case CARD_NAME_NOT_EXIST:
-                System.out.println("there is no card with this name");
+                output = "there is no card with this name";
                 break;
             case USER_MONEY_NOT_ENOUGH:
-                System.out.println("not enough money");
+                output = "not enough money";
                 break;
             default:
                 break;
