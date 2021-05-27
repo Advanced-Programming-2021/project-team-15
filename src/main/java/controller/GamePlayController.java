@@ -12,11 +12,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static controller.responses.DuelMenuResponses.*;
+import static model.MagicCard.CardIcon.COUNTER;
+import static model.MagicCard.CardIcon.QUICK_PLAY;
 
 public class GamePlayController extends MenuController {
     private static GamePlayController gamePlayController = null;
     private static Card setCard;
-    private ArrayList<Card> chainCards = new ArrayList<>();
+
+    public ArrayList<MagicCard> getChainCards() {
+        return chainCards;
+    }
+
+    public void setChainCards(ArrayList<MagicCard> chainCards) {
+        this.chainCards = chainCards;
+    }
+
+    private ArrayList<MagicCard> chainCards = new ArrayList<>();
+
+    public ArrayList<Player> getChainPlayers() {
+        return chainPlayers;
+    }
+
+    public void setChainPlayers(ArrayList<Player> chainPlayers) {
+        this.chainPlayers = chainPlayers;
+    }
+
+    private ArrayList<Player> chainPlayers = new ArrayList<>();
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
@@ -52,14 +73,6 @@ public class GamePlayController extends MenuController {
 
     public static void setSetCard(Card setCard) {
         GamePlayController.setCard = setCard;
-    }
-
-    public ArrayList<Card> getChainCards() {
-        return chainCards;
-    }
-
-    public void setChainCards(ArrayList<Card> chainCards) {
-        this.chainCards = chainCards;
     }
 
     public HashMap<MonsterCard, Integer> getSuijinVictims() {
@@ -108,36 +121,35 @@ public class GamePlayController extends MenuController {
             attackController = new AttackController();
             effectController = new EffectController();
             spellEffectController =new SpellEffectController();
-            return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY; //TODO : agar dar view in return shod game sang kaghaz ..
+            return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY;
         }
     }
 
     public void startRound() {
         refresh();
         game.setRoundCount(game.getRoundCount() + 1);
-        currentPlayer = game.getFirstPlayer();
-        opponentPlayer = game.getSecondPlayer();
-        currentPlayer.setLifePoint(8000);
-        opponentPlayer.setLifePoint(8000);
-        currentPlayer.startNewGame();
-        opponentPlayer.startNewGame();
-        currentPlayer.getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck().getMainDeck()));
-        opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck().getMainDeck()));
+        game.getFirstPlayer().setLifePoint(8000);
+        game.getSecondPlayer().setLifePoint(8000);
+        game.getFirstPlayer().startNewGame();
+        game.getSecondPlayer().startNewGame();
+        game.getFirstPlayer().getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
+        game.getSecondPlayer().getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
         shuffle();
-        for (int i = 0; i <= 5; i++) {
+         currentPhaseNumber = 1;
+        for (int i = 0; i < 5; i++) {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);
-            if (i < 5) {
-                opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
-                opponentPlayer.getDeckZone().getZoneCards().remove(0);
-            }
+            opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
+            opponentPlayer.getDeckZone().getZoneCards().remove(0);
         }
+        currentPlayer.setCanDraw(false);
     }
 
     public void drawPhase() {
         refresh();
         changeTurn();
         if (currentPlayer.getCanDraw()) {
+            shuffle();
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);
         } else {
@@ -187,12 +199,15 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.INVALID_SELECTION;
         if (zoneTypeEnum.equals(Zone.ZoneType.HAND) && cardNumber > currentPlayer.getHand().getNumberOfCardsInHand())
             return DuelMenuResponses.INVALID_SELECTION;
-        NumericZone zone = (NumericZone) player.getZoneByZoneType(zoneTypeEnum);
-        if (zone.getCardByPlaceNumber(cardNumber) != null) {
-            selectedCard = zone.getCardByPlaceNumber(cardNumber);
+        Zone zone = player.getZoneByZoneType(zoneTypeEnum);
+        if ( zone  instanceof Hand && ((Hand) zone).getZoneCards().get(cardNumber-1)!=null)
+        {selectedCard = ((Hand) zone).getZoneCards().get(cardNumber-1);
+            return DuelMenuResponses.CARD_SELECTED;}
+        else if(zone instanceof NumericZone && ((NumericZone) zone).getCardByPlaceNumber(cardNumber)!=null)
+        { selectedCard = ((NumericZone) zone).getCardByPlaceNumber(cardNumber);
             return DuelMenuResponses.CARD_SELECTED;
-        } else return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
-    }
+        }
+          return DuelMenuResponses.SELECTION_NO_CARD_FOUND; }
 
     public DuelMenuResponses selectNotNumericZone(String zoneType, String opponentOrPlayer) {
         Player player;
@@ -427,7 +442,7 @@ public class GamePlayController extends MenuController {
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
 
-    public void activateSpellCard(Player player) { //TODO COMPLETE
+    public void activateSpellCard() { //TODO COMPLETE
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -437,33 +452,108 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(CANT_ACTIVATE_EFFECT_ON_THIS_TURN);
         else if (selectedCard.isActivated())
             duelMenu.printResponse(YOU_ALREADY_ACTIVATED_THIS_CARD);
-        else if (player.getHand().isExist(selectedCard) && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD
-                && player.getMagicCardZone().getNumberOfCard() == 5)
+        else if (selectedCard.getCardPlacedZone()==currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD
+                && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
-            player.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, player);
-             MagicCard majicJammer  = (MagicCard) ifPlayerHasThisCardGiveIt(opponentPlayer,"Magic jammer");
-                     if(majicJammer!=null) {
-                        if(askToActivateInRivalsTurn(majicJammer))
-                         trapEffectController.magicJammer(majicJammer);
-                     }
-           spellEffectController.spellAbsorption();
-            callSpellOrTrap(selectedCard);
-            if (!selectedCard.isActivated()) duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+       currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard,currentPlayer);
+//        if(chainCards.isEmpty())
+//        chainCards.add((MagicCard) selectedCard);
+//        else if(canContinueTheChain())
+//            chainCards.add((MagicCard) selectedCard);
+//        else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
+//               selectedCard =null;
+//                  return;}
+//        spellEffectController.setDoIt(false);
+//        trapEffectController.setDoIt(false);
+//            callSpellOrTrap(selectedCard,currentPlayer);
+//            if (!selectedCard.isActivated()) {duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+//                return;}
+//        spellEffectController.spellAbsorption();
+//            addSelectedCardToChain();
+//
+//         if(!canMakeChain(currentPlayer)&& !canMakeChain(opponentPlayer))
+//             doChainActions();
+//         else if(canMakeChain(opponentPlayer))
+//           askToActivateInRivalsTurn();
+        spellEffectController.setDoIt(false);
+        trapEffectController.setDoIt(false);
+        callSpellOrTrap((MagicCard) selectedCard,currentPlayer);
+        if(!selectedCard.isActivated())
+        { duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+            return; }
+    if(chainCards.isEmpty())
+        addSelectedCardToChain();
+        else if(canContinueTheChain())
+          addSelectedCardToChain();
+    else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
+        selectedCard =null;
+                  return;}
+    if(!canMakeChain(opponentPlayer) && !canMakeChain(currentPlayer))
+    {   if(chainPlayers.get(0)!=currentPlayer)
+    { changeTurn();
+        duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard()); }
+        doChainActions();}
+    else if(canMakeChain(opponentPlayer))
+       askToActivateInRivalsTurn();
+    }
+
+
+    public void addSelectedCardToChain()
+    { chainCards.add((MagicCard) selectedCard);
+        chainPlayers.add(currentPlayer);
+    }
+    public boolean canContinueTheChain()
+    { int lastSpeed = getMagicCardSpeed(chainCards.get(chainCards.size()-1));
+        int selectedCardSpeed =  getMagicCardSpeed((MagicCard) selectedCard);
+        if( selectedCardSpeed != 1 && selectedCardSpeed>=lastSpeed)
+            return true;
+      else return false;
+    }
+
+    public void doChainActions()
+    {     for(int i  = chainCards.size()-1 ; i>=0 ; i--)
+    {     spellEffectController.setDoIt(true);
+          trapEffectController.setDoIt(true);
+          callSpellOrTrap(chainCards.get(i),chainPlayers.get(i));
+    }
+
+    }
+
+
+    public Boolean canMakeChain(Player player)
+    {   Map<Integer,MagicCard>  magics = player.getMagicCardZone().getZoneCards();
+        for(int i  = 1 ; i<=5; i++)
+        { if(getMagicCardSpeed(magics.get(i))!=1)
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+    public int getMagicCardSpeed(MagicCard card)
+    {   if(card.getMagicType()== MagicCard.MagicType.TRAP && card.getCardIcon()== COUNTER)
+        return 3;
+    else if(card.getMagicType()== MagicCard.MagicType.TRAP)
+        return 2;
+    else if(card.getMagicType()== MagicCard.MagicType.SPELL && card.getCardIcon()==QUICK_PLAY)
+        return 2;
+    else return 1;
     }
 
     public void activateSelectedCard()
     {  selectedCard.setHidden(false);
         selectedCard.setActivated(true);
        activatedCards.put(currentPlayer,selectedCard);
-       duelMenu.printResponse(SPELL_ACTIVATED);
-    }
-    public void makeChain()
-    {
-
+       if(selectedCard.getCardPlacedZone()== currentPlayer.getHand())
+           currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard,currentPlayer);
+        duelMenu.printResponse(SPELL_ACTIVATED);
     }
 
-    public void   callSpellOrTrap(Card card) {  //TODO
+    public void   callSpellOrTrap(MagicCard card, Player player) {  //TODO
         String cardName = card.getCardName();
         switch (cardName) {
             case "Yami": spellEffectController.yami(true);
@@ -474,73 +564,57 @@ public class GamePlayController extends MenuController {
             break;
             case "Umiiruka" : spellEffectController.umiiruka(true);
             break;
-            case "Sword of Dark Destruction" : spellEffectController.swordOfDarkDestruction();
+            case "Sword of Dark Destruction" : spellEffectController.swordOfDarkDestruction(card);
             break;
-            case "Black Pendant" : spellEffectController.blackPendant();
+            case "Black Pendant" : spellEffectController.blackPendant(card);
             break;
-            case "United We Stand" : spellEffectController.unitedWeStand();
+            case "United We Stand" : spellEffectController.unitedWeStand(card);
             break;
-            case "Magnum Shield" : spellEffectController.magnumShield();
+            case "Magnum Shield" : spellEffectController.magnumShield(card);
             break;
-            case "Terraforming" : spellEffectController.terraforming();
+            case "Terraforming" : spellEffectController.terraforming(card);
             break;
-            case "Pot of Greed" :  spellEffectController.potOfGReed();
+            case "Pot of Greed" :  spellEffectController.potOfGReed(card);
             break;
-            case "Raigeki" : spellEffectController.raigeki();
+            case "Raigeki" : spellEffectController.raigeki(card);
             break;
-            case "Harpie's Feather Duster" : spellEffectController.harpiesFeatherDuster();
+            case "Harpie's Feather Duster" : spellEffectController.harpiesFeatherDuster(card);
             break;
-            case "Dark Hole" : spellEffectController.darkHole();
+            case "Dark Hole" : spellEffectController.darkHole(card);
             break;
-
-
-
-
-
-
-
-
+            case" Mystical Space Typhoon" : spellEffectController.mysticalSpaceTyphoon(card,player);
+            break;
+            case "Ring of defense" : spellEffectController.ringOfDefense(card);
+            break;
+            case  "Twin Twisters" : spellEffectController.twinTwisters(card,player);
+            break;
+            case "Change of Heart" : spellEffectController.changeOfHeart(card);
+            break;
+            case "Monster Reborn" : spellEffectController.monsterReborn(card);
+            break;
+            case "Advanced Ritual Art" : spellEffectController.advancedRitualArt(card);
+            break;
+            default:
+                break;
         }
     }
 
 
-//    public boolean canChainBeMade(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-//        ArrayList<String> cardNames = new ArrayList<>();
-//        cardNames.add("Mind Crush");
-//        cardNames.add("Twin Twisters");
-//        cardNames.add("Mystical space typhoon");
-//        cardNames.add("Ring of defense");
-//        cardNames.add("Time Seal");
-//        cardNames.add("Call of The Haunted");
-//        for (String card : cardNames) {
-//            if (player.getMagicCardZone().isSpellOrTrapISet(card) != null) {
-//            }
-//        }
-//        return false;
-//    }
-
-    public void chainMaker(Player currentPlayer, Player opponentPlayer) {
-
-
-    }
-
-    public Boolean askToActivateInRivalsTurn(MagicCard spellOrTrap) {
+    public Boolean askToActivateInRivalsTurn() {
         changeTurn();
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
         String ans = duelMenu.getString();
         if (ans.equals("no")) {
+            if(currentPlayer==chainPlayers.get(0))
+             doChainActions();
+            else {
             changeTurn();
             duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
             duelMenu.setCantDoThisKindsOfMove(false);
-            return false;
+            return false;}
         }
-        spellOrTrap.setActivated(true);
-        if (spellOrTrap.getMagicType() == MagicCard.MagicType.SPELL)
-            duelMenu.printResponse(SPELL_ACTIVATED);
-        else if (spellOrTrap.getMagicType() == MagicCard.MagicType.TRAP)
-            duelMenu.printResponse(TRAP_ACTIVATED);
         return true;
     }
 
@@ -617,7 +691,7 @@ public class GamePlayController extends MenuController {
 
     public void refresh() {
         suijinVictimsReset();
-
+        effectController.removeControl();
         chainCards.clear();
         attackController.getAttackStoppersInTurn().clear();
         changedPositionCardsInTurn.clear();
@@ -825,6 +899,13 @@ public class GamePlayController extends MenuController {
             entry.getKey().setGameATK(entry.getValue() + entry.getKey().getGameATK());
         }
         suijinVictims.clear();
+    }
+
+    public Player getTheOtherPlayer(Player player)
+    { if(player== currentPlayer)
+        return opponentPlayer;
+        else return currentPlayer;
+
     }
 
 

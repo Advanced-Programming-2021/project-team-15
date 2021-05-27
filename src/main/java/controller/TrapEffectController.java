@@ -18,6 +18,7 @@ public class TrapEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
     DuelMenu duelMenu = DuelMenu.getInstance();
     EffectController effectController = gamePlayController.getEffectController();
+    private boolean doIt = false;
 
 
     public void magicCylinder(MagicCard trap) {
@@ -100,12 +101,18 @@ public class TrapEffectController {
                 } else {
                     duelMenu.printResponse(INVALID_CELL_NUMBER);
                 }
-
             }
-
     }
     //TODO THIS
 //    public void callOfHunted()
 //    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
 //        while (true)
 }
+
+    public boolean isDoIt() {
+        return doIt;
+    }
+
+    public void setDoIt(boolean doIt) {
+        this.doIt = doIt;
+    }

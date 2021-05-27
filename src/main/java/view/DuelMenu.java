@@ -4,6 +4,7 @@ import controller.AttackController;
 import controller.GamePlayController;
 import controller.MenuController;
 import controller.responses.DuelMenuResponses;
+import model.Game;
 import utility.Utility;
 
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class DuelMenu extends Menu {
         }
         while (true) {
             String input = Utility.getNextLine();
-            if (cantDoThisKindsOfMove) System.out.println("it's not your turn to play this kind of moves");
+            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select")) System.out.println("it's not your turn to play this kind of moves");
             else if (input.matches("select(.*)(\\d)(.*)"))
                 checkAndCallSelectNumericZone(input);
             else if (input.startsWith("select"))
@@ -84,11 +85,8 @@ public class DuelMenu extends Menu {
             { Matcher matcher  = Pattern.compile("attack (\\d+)").matcher(input);
                 if(matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1)))); }
             else if(input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-            //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
-
-
-
-
+            else if(input.equals("activate effect")) gamePlayController.activateSpellCard();
+             else if(input.equals("next phase")) gamePlayController.goNextPhase();
             else System.out.println("invalid command");
         }
     }
@@ -299,10 +297,15 @@ public class DuelMenu extends Menu {
             case SPELL_ACTIVATED:
                 System.out.println("spell activated");
                 break;
-
-
-
-
+            case CANT_BE_ADDED_TO_CHAIN:
+                System.out.println("youu can't add this card ro chain");
+                break;
+            case EFFECT_DONE_SUCCESSFULLY:
+                System.out.println("effect done successfully");
+                break;
+            case SHOW_NEW_PHASE:
+                System.out.println("phase :"+" "+ Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
+                break;
 
             default:
                 break;
@@ -333,6 +336,7 @@ public class DuelMenu extends Menu {
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " + gamePlayController.getGame().getFirstPlayer() + "'s turn");
+                System.out.println("phase : draw phase");
                 break;
             }
         }

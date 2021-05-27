@@ -12,6 +12,13 @@ public class NumericZone extends Zone {
         super(zoneType);
         this.zoneCards = zoneCards;
     }
+    public void removeCardFromZone(Card card)
+    {  for(int key = 1; key<=5 ; key++)
+      { if(zoneCards.get(key)==card)
+      { zoneCards.put(key,null);
+        return; }
+      }
+    }
     public Card getThisCardActivated(String name)
     {    for (int key =1 ; key <=5   ; key++)
     {

@@ -96,13 +96,14 @@ public class EffectController {
     }
 
     public void getControl(MonsterCard monsterCard)
-    { gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+    {
+        gamePlayController.getOpponentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
       gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
         monstersWeTookControl.add(monsterCard);
     }
     public void removeControl()
     {   for( MonsterCard monsterCard : monstersWeTookControl)
-    {  gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().remove(monsterCard);
+    {  gamePlayController.getCurrentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
         gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
         monstersWeTookControl.remove(monsterCard);
     }
