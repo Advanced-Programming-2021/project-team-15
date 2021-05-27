@@ -67,8 +67,10 @@ public class EffectController {
                 gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
             if (magic.get(i) != null && type == Card.CardType.MAGIC) {
                 gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
-                if (gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) != null)
+                if (gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) != null) {
+                    gamePlayController.getOpponentPlayer().getGraveyardZone().getZoneCards().add(gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0));
                     gamePlayController.getOpponentPlayer().getFieldZone().removeCardFromFieldZone(gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0));
+                }
             }
         }
         if (both) {
@@ -79,9 +81,10 @@ public class EffectController {
                     gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
                 if (magic2.get(j) != null && type == Card.CardType.MAGIC) {
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
-                    if(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0)!=null)
+                    if(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0)!=null){
+                        gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().add(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0));
                         gamePlayController.getCurrentPlayer().getFieldZone().removeCardFromFieldZone(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0));
-
+                    }
                 }
             }
         }
