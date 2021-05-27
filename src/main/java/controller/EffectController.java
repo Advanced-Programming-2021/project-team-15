@@ -65,19 +65,24 @@ public class EffectController {
         for (int i = 1; i <= 5; i++) {
             if (monster.get(i) != null && type == Card.CardType.MONSTER)
                 gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
-            if (magic.get(i) != null && type == Card.CardType.MAGIC)
+            if (magic.get(i) != null && type == Card.CardType.MAGIC) {
                 gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(i, gamePlayController.getOpponentPlayer());
-
+                if (gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) != null)
+                    gamePlayController.getOpponentPlayer().getFieldZone().removeCardFromFieldZone(gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0));
+            }
         }
         if (both) {
             Map<Integer, MonsterCard> monster2 = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
             Map<Integer, MagicCard> magic2 = gamePlayController.getCurrentPlayer().getMagicCardZone().getZoneCards();
             for (int j = 1; j < 6; j++) {
-                if (monster.get(j) != null && type == Card.CardType.MONSTER)
+                if (monster2.get(j) != null && type == Card.CardType.MONSTER)
                     gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
-                if (magic.get(j) != null && type == Card.CardType.MAGIC)
+                if (magic2.get(j) != null && type == Card.CardType.MAGIC) {
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
+                    if(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0)!=null)
+                        gamePlayController.getCurrentPlayer().getFieldZone().removeCardFromFieldZone(gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0));
 
+                }
             }
         }
     }

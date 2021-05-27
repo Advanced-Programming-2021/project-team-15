@@ -342,11 +342,13 @@ public class SpellEffectController {
 
 
     public Boolean checkMysticalSpaceTyphoon() {
-        int num = gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard();
-        num += gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard();
-        if (num == 1)
+        if (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard()
+                + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard()==0 &&
+                gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0) == null &&
+                gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) == null)
             return false;
-        else return true;
+        else
+            return true;
     }
 
     public void mysticalSpaceTyphoon(MagicCard card) {
@@ -381,11 +383,12 @@ public class SpellEffectController {
 
     public Boolean TwinTwisters() {
         if (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard()
-                + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard() <= 1 &&
-                gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0) != null &&
-                gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) != null)
+                + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard()==0 &&
+                gamePlayController.getCurrentPlayer().getFieldZone().getZoneCards().get(0) == null &&
+                gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) == null)
             return false;
-        else return true;
+        else
+            return true;
 
     }
 
@@ -395,7 +398,7 @@ public class SpellEffectController {
         while (true) {
             int num = duelMenu.getNum();
             if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() >= num) {
-                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(num,gamePlayController.getCurrentPlayer());
                 break;
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
@@ -406,7 +409,7 @@ public class SpellEffectController {
         while (true) {
             int num = duelMenu.getNum();
             if (num <= 5 && gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards().get(num) != null) {
-                gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(num, gamePlayController.getCurrentPlayer());
+                gamePlayController.getOpponentPlayer().getMagicCardZone().moveCardToGraveyard(num, gamePlayController.getOpponentPlayer());
                 i++;
             } else if (num == 6 && gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0) != null) {
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getOpponentPlayer().getFieldZone().getZoneCards().get(0));
@@ -511,6 +514,7 @@ public class SpellEffectController {
                    ((MonsterCard) card).setMode(MonsterCard.Mode.ATTACK);
                 else
                     ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
+                card.setHidden(false);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
             } else {
@@ -553,7 +557,7 @@ public class SpellEffectController {
     public boolean doesSumExist(int sum, int n, Player player) {
         if (sum > 0 && n == 0)
             return false;
-        if (sum == 0)
+        if (sum <= 0)
             return true;
         return doesSumExist(sum, n - 1, player) ||
                 doesSumExist(sum - getWholeMonsters(player).get(n - 1).getLevel(), n - 1, player);
