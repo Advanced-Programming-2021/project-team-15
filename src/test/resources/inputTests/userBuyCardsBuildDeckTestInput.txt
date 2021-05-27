@@ -107,8 +107,8 @@ deck create pedaret
 deck add-card --card Bitron --deck pedaret
 deck add-card --card Bitro --deck pedaret
 deck add-card --card Bitron --deck pedare
-deck set-active pedaret
-deck set-active pedaresh
+deck set-activate pedaret
+deck set-activate pedaresh
 deck add-card --card Bitron --deck pedaret --side
 deck add-card --card Bitron --deck pedaret
 deck rm-card --card Wattkid --deck pedaret
@@ -116,7 +116,7 @@ deck add-card --card Wattkid --deck pedaret
 deck rm-card --card Bitron --deck pedaret
 deck delete pedaret
 deck create pedaret
-deck set-active pedaret
+deck set-activate pedaret
 deck add-card --card Call of The Haunted --deck pedaret
 deck add-card --card Vanity's Emptiness --deck pedaret
 deck add-card --card Wall of Revealing Light --deck pedaret
@@ -185,7 +185,7 @@ deck show --deck-name sag
 deck show --deck-name sag --side
 deck show --deck-name pedaret
 deck show --cards
-deck set-active sag
+deck set-activate sag
 menu exit
 user logout
 user remove --username mehrad --password m

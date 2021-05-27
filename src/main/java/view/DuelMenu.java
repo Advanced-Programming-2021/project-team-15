@@ -55,7 +55,7 @@ public class DuelMenu extends Menu {
         while (true) {
             String input = Utility.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
-            if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
+            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
             else if (input.startsWith("duel")) {
                 checkAndCallNewDuel(input);
                 if (weAreOnGame) break;
@@ -68,6 +68,7 @@ public class DuelMenu extends Menu {
         }
         while (true) {
             String input = Utility.getNextLine();
+            if (input.equals("menu exit")) checkAndCallMenuExit();
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select")) System.out.println("it's not your turn to play this kind of moves");
             else if (input.matches("select(.*)(\\d)(.*)"))
                 checkAndCallSelectNumericZone(input);
@@ -85,8 +86,11 @@ public class DuelMenu extends Menu {
             { Matcher matcher  = Pattern.compile("attack (\\d+)").matcher(input);
                 if(matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1)))); }
             else if(input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-            else if(input.equals("activate effect")) gamePlayController.activateSpellCard();
-             else if(input.equals("next phase")) gamePlayController.goNextPhase();
+            //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
+
+
+
+
             else System.out.println("invalid command");
         }
     }
@@ -101,7 +105,10 @@ public class DuelMenu extends Menu {
             int rounds = Integer.parseInt(enteredDetails.get("rounds"));
             duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
             printResponse(duelMenuResponses);
-            if (duelMenuResponses==DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) weAreOnGame=true;
+            if (duelMenuResponses==DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
+                weAreOnGame=true;
+                playRPS();
+            }
         }
     }
 
@@ -159,7 +166,7 @@ public class DuelMenu extends Menu {
                 System.out.println(MenuController.getUser().getUserName() + "'s deck is invalid");
                 break;
             case GAME_STARTED_SUCCESSFULLY:
-                playRPS();
+                System.out.println("let's play rock paper scissors!");
                 break;
             case INVALID_SELECTION:
                 System.out.println("invalid selection");
@@ -240,7 +247,7 @@ public class DuelMenu extends Menu {
             case MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY:
                 System.out.println("monster card position changed successfully");
                 break;
-            case  CANT_FLIP_SUMMON:
+            case CANT_FLIP_SUMMON:
                     System.out.println("you can't flip summon this card");
                     break;
             case FLIP_SUMMONED_SUCCESSFULLY:
@@ -329,14 +336,13 @@ public class DuelMenu extends Menu {
 
     public void playRPS() {
         while (true) {
-            System.out.println("let's play rock paper scissors!");
-            System.out.println(gamePlayController.getGame().getFirstPlayer() + " please choose rock, paper or scissors");
+            System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
             String firstPlayerMove = Utility.getNextLine();
+            System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
             String secondPlayerMove = Utility.getNextLine();
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " + gamePlayController.getGame().getFirstPlayer() + "'s turn");
-                System.out.println("phase : draw phase");
                 break;
             }
         }
