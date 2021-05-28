@@ -27,6 +27,7 @@ public class GamePlayController extends MenuController {
     protected ArrayList<Card> sortCardsByName(ArrayList<Card> cards) {
         return super.sortCardsByName(cards);
     }
+    private int i=1;
 
 
     private int currentPhaseNumber = 1;
