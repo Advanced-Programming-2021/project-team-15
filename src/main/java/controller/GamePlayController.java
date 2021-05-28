@@ -22,6 +22,13 @@ public class GamePlayController extends MenuController {
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
     private Game game;
+
+    @Override
+    protected ArrayList<Card> sortCardsByName(ArrayList<Card> cards) {
+        return super.sortCardsByName(cards);
+    }
+
+
     private int currentPhaseNumber = 1;
     private Card selectedCard;
     private Player currentPlayer;
@@ -144,6 +151,7 @@ public class GamePlayController extends MenuController {
             goNextPhase();
         }
     }
+
 
     public Boolean RPS(String firstPlayerMove, String secondPlayerMove) {
         Player winner;
