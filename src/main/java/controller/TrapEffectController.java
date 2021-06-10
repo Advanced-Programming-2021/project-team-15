@@ -108,11 +108,3 @@ public class TrapEffectController {
 //        while (true)
     }
 }
-
-    public boolean isDoIt() {
-        return doIt;
-    }
-
-    public void setDoIt(boolean doIt) {
-        this.doIt = doIt;
-    }
