@@ -463,25 +463,6 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
        currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard,currentPlayer);
-//        if(chainCards.isEmpty())
-//        chainCards.add((MagicCard) selectedCard);
-//        else if(canContinueTheChain())
-//            chainCards.add((MagicCard) selectedCard);
-//        else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
-//               selectedCard =null;
-//                  return;}
-//        spellEffectController.setDoIt(false);
-//        trapEffectController.setDoIt(false);
-//            callSpellOrTrap(selectedCard,currentPlayer);
-//            if (!selectedCard.isActivated()) {duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
-//                return;}
-//        spellEffectController.spellAbsorption();
-//            addSelectedCardToChain();
-//
-//         if(!canMakeChain(currentPlayer)&& !canMakeChain(opponentPlayer))
-//             doChainActions();
-//         else if(canMakeChain(opponentPlayer))
-//           askToActivateInRivalsTurn();
         spellEffectController.setDoIt(false);
         trapEffectController.setDoIt(false);
         callSpellOrTrap((MagicCard) selectedCard,currentPlayer);

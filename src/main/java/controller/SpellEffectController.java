@@ -468,7 +468,6 @@ public class SpellEffectController {
                     } else {
                         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                      ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(twinTwisters, ownerOfCard);
-
                         break;
                     }
                 } else if (i == 2) {
@@ -561,6 +560,7 @@ public class SpellEffectController {
                     ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(monsterReborn, gamePlayController.getCurrentPlayer());
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                break;
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
@@ -620,6 +620,11 @@ public class SpellEffectController {
         int out[] = numbers;
         int sum = 0;
         for (int i = 0; i < out.length; i++) {
+            if(out[i]>=5) {
+                duelMenu.printResponse(INVALID_CELL_NUMBER);
+                return false;
+            }
+
             sum = sum + ((MonsterCard) player.getDeckZone().getZoneCards().get(out[i])).getLevel();
         }
         return sum == level;
@@ -631,14 +636,18 @@ public class SpellEffectController {
             if(checkAdvancedRitualArt()) gamePlayController.activateSelectedCard();
             else return;}
         int[] out;
-        duelMenu.printResponse(ENTER_SOME_NUMBERS);
         while (true) {
+            duelMenu.printResponse(ENTER_SOME_NUMBERS);
             String string = duelMenu.getString();
             if (!string.matches("(\\d+\\s)+\\d+"))
-                duelMenu.printResponse(SHOULD_RIVAL_SUMMON_RIGHT_NOW);
+             duelMenu.printResponse(SHOULD_RIVAL_SUMMON_RIGHT_NOW);
             else {
-                String nums[] = string.split(" ");
+                String nums[] = string.trim().split(" ");
                 out = new int[nums.length];
+                for (int i  = 0 ; i<nums.length ; i++)
+                {
+                    out[i] = Integer.parseInt(nums[i]);
+                }
                 if (checkSummon(out, gamePlayController.getCurrentPlayer(), getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).getLevel())) {
                     for (int i = 0; i < out.length; i++) {
                         gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(i));
@@ -654,9 +663,9 @@ public class SpellEffectController {
                     getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setHidden(false);
                     duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(advancedRitualArt, gamePlayController.getCurrentPlayer());
+                    break;
                 } else {
                     duelMenu.printResponse(LEVELS_DONT_MATCH);
-                    duelMenu.printResponse(ENTER_SOME_NUMBERS);
                 }
 
             }

@@ -15,11 +15,10 @@ import java.util.Random;
 import static controller.responses.DuelMenuResponses.*;
 
 public class TrapEffectController {
+    private boolean doIt = false;
     GamePlayController gamePlayController = GamePlayController.getInstance();
     DuelMenu duelMenu = DuelMenu.getInstance();
     EffectController effectController = gamePlayController.getEffectController();
-    private boolean doIt = false;
-
 
     public void magicCylinder(MagicCard trap) {
         gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
