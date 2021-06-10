@@ -312,6 +312,33 @@ public class DuelMenu extends Menu {
             case SHOW_NEW_PHASE:
                 System.out.println("phase :"+" "+ Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
                 break;
+            case CARD_EQUIPPED:
+                System.out.println("card equipped!");
+                break;
+            case INVALID_CELL_NUMBER:
+                System.out.println("invalid cell number!");
+                break;
+            case WANNA_ADD_ANOTHER_CARD:
+                System.out.println("wanna add another card to be destroyed?");
+                break;
+            case NO_WAY_TO_RITUAL_SUMMON:
+                System.out.println("there is no way you could ritual summon a monster");
+                break;
+            case SHOULD_RIVAL_SUMMON_RIGHT_NOW:
+                System.out.println("you should ritual summon right now");
+                break;
+            case ENTER_POS:
+                System.out.println("choose position? (ATK/DEF)");
+                break;
+            case ENTER_SOME_NUMBERS:
+                System.out.println("enter numbers of monsters to be destroyed. (e.g :1 2 3)");
+            break;
+            case LEVELS_DONT_MATCH:
+                System.out.println("selected monsters levels don't match with ritual monster");
+                break;
+            case ENTER_PLAYER:
+                System.out.println("enter player (rival/current player)");
+
 
             default:
                 break;

@@ -44,6 +44,7 @@ public class AttackController  {
         this.attackedCardsInTurn = attackedCardsInTurn;
     }
 
+
     private ArrayList<MonsterCard> attackedCardsInTurn = new ArrayList<>();
 
     public static int getDamage() {
@@ -70,31 +71,32 @@ public class AttackController  {
             return DuelMenuResponses.NO_CARD_TO_ATTACK;
         String position =gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
+        MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
         if (position.equals("OO"))
-            return attackAttackPos(target, number);
+            return attackAttackPos(attacker,target, number);
         else if (position.equals("DO"))
-            return attackToDefencePos(target, number, false);
-        else return attackToDefencePos(target, number, true);
+            return attackToDefencePos(attacker,target, number, false);
+        else return attackToDefencePos(attacker,target, number, true);
     }
 
-    public DuelMenuResponses attackToDefencePos(MonsterCard target, int number, Boolean hidden) {
+    public DuelMenuResponses attackToDefencePos(MonsterCard attacker,MonsterCard target, int number, Boolean hidden) {
         target.setHidden(false);
-        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameDEF();
+        int difference = attacker.getGameATK() - target.getGameDEF();
         damage = difference;
         if (difference > 0) {
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
-            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
+            attackedCardsInTurn.add(attacker);
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
             else DuelMenu.getInstance().hiddenDefensePositionMonsterDestroyed(target.getCardName());
         } else if (difference == 0) {
-            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
+            attackedCardsInTurn.add(attacker);
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED;
             else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyed(target.getCardName());
         } else {
             gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
-            attackedCardsInTurn.add((MonsterCard)  gamePlayController.getSelectedCard());
+            attackedCardsInTurn.add(attacker);
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED;
             else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyedWithDamage(target.getCardName());
@@ -102,22 +104,22 @@ public class AttackController  {
         return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses attackAttackPos(MonsterCard target, int number) {
+    public DuelMenuResponses attackAttackPos(MonsterCard attacker,MonsterCard target, int number) {
         target.setHidden(false);
-        int difference = ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK() - target.getGameATK();
+        int difference = attacker.getGameATK() - target.getGameATK();
         damage = difference;
         if (difference > 0) {
             gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
-            attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
+            attackedCardsInTurn.add(attacker);
             return DuelMenuResponses.DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE;
         } else if (difference == 0) {
            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
-          gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(),gamePlayController.getCurrentPlayer());
+          gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker,gamePlayController.getCurrentPlayer());
             return DuelMenuResponses.BOTH_MONSTERS_ARE_DESTROYED;
         } else {
             gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
-            gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(),gamePlayController.getCurrentPlayer());
+            gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker,gamePlayController.getCurrentPlayer());
             return DuelMenuResponses.DESTROYED_CURRENT_MONSTER_AFTER_ATTACK;
         }
 

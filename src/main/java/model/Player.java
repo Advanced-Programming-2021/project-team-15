@@ -23,8 +23,17 @@ public class Player  {
     public void setCanAttack(boolean canAttack) {
         this.canAttack = canAttack;
     }
-
     private  boolean canAttack;
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
+
+    private boolean isAttacking;
     private int lifePoint;
     private Hand hand;
     private FieldZone fieldZone;
