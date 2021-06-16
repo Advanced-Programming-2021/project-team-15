@@ -370,6 +370,11 @@ public class DuelMenu extends Menu {
             }
         }
     }
+    public void doYouWannaActivateSpecialCard(String name)
+    {
+        System.out.println("do you wanna activate your "+name+" ?");
+    }
+
 
     public void newCardAddInDrawPhase(String cardName) {
         System.out.println("new card added to hand : " + cardName);

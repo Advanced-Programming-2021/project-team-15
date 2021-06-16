@@ -107,4 +107,6 @@ public class TrapEffectController {
 //    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
 //        while (true)
     }
+    public void setDoIt(boolean b) {
+    }
 }

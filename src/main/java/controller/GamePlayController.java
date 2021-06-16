@@ -19,17 +19,16 @@ public class GamePlayController extends MenuController {
     private static TrapEffectController trapEffectController = new TrapEffectController();
     private static SpellEffectController spellEffectController = new SpellEffectController();
     private static MonsterEffectController monsterEffectController = new MonsterEffectController();
-    private ArrayList<Card> chainCards = new ArrayList<>();
-
+    private ArrayList<MagicCard> chainCards = new ArrayList<>();
     public ArrayList<MagicCard> getChainCards() {
         return chainCards;
     }
-
+    public Player mainCurrentPlayer;
     public void setChainCards(ArrayList<MagicCard> chainCards) {
         this.chainCards = chainCards;
     }
 
-    private ArrayList<MagicCard> chainCards = new ArrayList<>();
+
 
     public ArrayList<Player> getChainPlayers() {
         return chainPlayers;
@@ -476,16 +475,16 @@ public class GamePlayController extends MenuController {
         callSpellOrTrap((MagicCard) selectedCard,currentPlayer);
         if(!selectedCard.isActivated())
         { duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
-            return; }
+            return;}
     if(chainCards.isEmpty())
         addSelectedCardToChain();
         else if(canContinueTheChain())
           addSelectedCardToChain();
     else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
-        selectedCard =null;
+           selectedCard =null;
                   return;}
     if(!canMakeChain(opponentPlayer) && !canMakeChain(currentPlayer))
-    {   if(chainPlayers.get(0)!=currentPlayer)
+    { if(chainPlayers.get(0)!=currentPlayer)
     { changeTurn();
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard()); }
         doChainActions();}
@@ -519,7 +518,7 @@ public class GamePlayController extends MenuController {
     public Boolean canMakeChain(Player player)
     {   Map<Integer,MagicCard>  magics = player.getMagicCardZone().getZoneCards();
         for(int i  = 1 ; i<=5; i++)
-        { if(getMagicCardSpeed(magics.get(i))!=1)
+        { if(getMagicCardSpeed(magics.get(i))!=1 && !magics.get(i).isActivated())
             return true;
         }
         return false;
@@ -597,22 +596,28 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public Boolean askToActivateInRivalsTurn() {
+    public void askToActivateInRivalsTurn() {
         changeTurn();
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
         String ans = duelMenu.getString();
         if (ans.equals("no")) {
-            if(currentPlayer==chainPlayers.get(0))
-             doChainActions();
+            if(currentPlayer==chainPlayers.get(0)) {
+                doChainActions();
+                duelMenu.setCantDoThisKindsOfMove(false);
+            }
             else {
             changeTurn();
             duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
-            duelMenu.setCantDoThisKindsOfMove(false);
-            return false;}
+            if(canMakeChain(currentPlayer))
+                duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
+                String ans2 = duelMenu.getString();
+                if(ans2.equals("no"))
+                    doChainActions();
+                else return ;
+                duelMenu.setCantDoThisKindsOfMove(false); }
         }
-        return true;
     }
 
     public Boolean doPlayerHasThisCard(Player player, String name) {

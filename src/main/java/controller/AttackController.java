@@ -57,7 +57,8 @@ public class AttackController  {
 
 
     public DuelMenuResponses normalAttack(int number) //TODO RESET CARD IN NEEDED PLACES
-    {  damage = 0;
+    {
+        damage = 0;
         if (gamePlayController.getSelectedCard() == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         else if (!((MonsterCard) gamePlayController.getSelectedCard()).toStringPosition().equals("OO") || !(gamePlayController.getSelectedCard() instanceof MonsterCard)
@@ -77,6 +78,15 @@ public class AttackController  {
         else if (position.equals("DO"))
             return attackToDefencePos(attacker,target, number, false);
         else return attackToDefencePos(attacker,target, number, true);
+    }
+
+    public void checkerForEffects()
+    {   if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Jamamer")!=null)
+    {  gamePlayController.changeTurn();
+
+
+    }
+
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard attacker,MonsterCard target, int number, Boolean hidden) {
@@ -135,18 +145,19 @@ public class AttackController  {
     }
 
     public DuelMenuResponses directAttack() {
-        if (gamePlayController.getSelectedCard() == null)
+        MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
+        if (attacker == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
-        else if (!(gamePlayController.getSelectedCard() instanceof MonsterCard) || (gamePlayController.getSelectedCard().getCardPlacedZone() != gamePlayController.getCurrentPlayer().getMonsterCardZone()))
+        else if (!(attacker instanceof MonsterCard) || (attacker.getCardPlacedZone() != gamePlayController.getCurrentPlayer().getMonsterCardZone()))
             return YOU_CANT_ATTACK_WITH_THIS_CARD;
         else if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) != Phase.PhaseLevel.BATTLE)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-        else if (alreadyAttackedThisTurn((MonsterCard) gamePlayController.getSelectedCard()))
+        else if (alreadyAttackedThisTurn(attacker))
             return DuelMenuResponses.ALREADY_ATTACKED;
         else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
-        attackedCardsInTurn.add((MonsterCard) gamePlayController.getSelectedCard());
-        gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
+        attackedCardsInTurn.add(attacker);
+        gamePlayController.getOpponentPlayer().reduceLifePoint((attacker).getGameATK());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
     }
 
