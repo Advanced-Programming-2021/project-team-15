@@ -13,6 +13,7 @@ import java.util.HashMap;
 import static controller.responses.DuelMenuResponses.*;
 
 public class AttackController  {
+    private boolean  isAttacking   =false;
     private GamePlayController gamePlayController = GamePlayController.getInstance();
 
     public ArrayList<Card> getAttackStoppersInTurn() {
@@ -73,6 +74,10 @@ public class AttackController  {
         String position =gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
+        isAttacking = false;
+        checkerForEffects();
+        if(!isAttacking)
+            return ATTACK_CANCELED;
         if (position.equals("OO"))
             return attackAttackPos(attacker,target, number);
         else if (position.equals("DO"))
@@ -81,12 +86,30 @@ public class AttackController  {
     }
 
     public void checkerForEffects()
-    {   if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Jamamer")!=null)
-    {  gamePlayController.changeTurn();
-
-
+    {   if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder")!=null)
+       {  gamePlayController.changeTurn();
+          DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
+          if (getAnswer()) {
+              GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
+              isAttacking = false;
+          }
+           gamePlayController.changeTurn();
+       }
+       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force")!=null)
+      {   gamePlayController.changeTurn();
+        DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
+        if(getAnswer()) {
+            GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
+            isAttacking = false;
+        }
+            gamePlayController.changeTurn();
+      }
     }
-
+    public Boolean getAnswer()
+    {   String ans =  DuelMenu.getInstance().getString();
+        if(ans.equals("yes"))
+            return true;
+        else return false;
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard attacker,MonsterCard target, int number, Boolean hidden) {
@@ -185,5 +208,13 @@ public class AttackController  {
             return  true;
     }
     return false;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
     }
 }

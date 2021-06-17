@@ -20,13 +20,19 @@ public class TrapEffectController {
     DuelMenu duelMenu = DuelMenu.getInstance();
     EffectController effectController = gamePlayController.getEffectController();
 
-    public void magicCylinder(MagicCard trap) {
+    public void magicCylinder(Card trap) {
+        if(gamePlayController.getAttackController().isAttacking())
+            gamePlayController.activateCard(trap);
+        else return;
         gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
         duelMenu.printResponse(DuelMenuResponses.EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
     public void mirrorForce(Card trap) {
+        if(gamePlayController.getAttackController().isAttacking())
+            gamePlayController.activateCard(trap);
+        else return;
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMode() == MonsterCard.Mode.ATTACK)
@@ -37,6 +43,9 @@ public class TrapEffectController {
     }
 
     public void mindCrush(Card trap) {
+        if(!doIt)
+        {gamePlayController.activateCard(trap);
+            return;}
         Boolean did = false;
         String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
@@ -64,6 +73,7 @@ public class TrapEffectController {
     }
 
     public void trapHole(Card trap) {
+        gamePlayController.activateCard(trap);
         gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }

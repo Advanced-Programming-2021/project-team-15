@@ -20,6 +20,15 @@ public class GamePlayController extends MenuController {
     private static SpellEffectController spellEffectController = new SpellEffectController();
     private static MonsterEffectController monsterEffectController = new MonsterEffectController();
     private ArrayList<MagicCard> chainCards = new ArrayList<>();
+
+    public static TrapEffectController getTrapEffectController() {
+        return trapEffectController;
+    }
+
+    public static void setTrapEffectController(TrapEffectController trapEffectController) {
+        GamePlayController.trapEffectController = trapEffectController;
+    }
+
     public ArrayList<MagicCard> getChainCards() {
         return chainCards;
     }
@@ -153,6 +162,8 @@ public class GamePlayController extends MenuController {
             shuffle();
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             currentPlayer.getDeckZone().getZoneCards().remove(0);
+            if(checkIfGameIsFinished())
+                defineWinner();
         } else {
             currentPlayer.setCanDraw(true);
             goNextPhase();
@@ -249,6 +260,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = summon();
+            checkForEffectsAfterSummon();
             selectedCard = null;
             return duelMenuResponses;
         }
@@ -438,6 +450,7 @@ public class GamePlayController extends MenuController {
             return NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
+            checkForEffectsAfterSummon();
             selectedCard = null;
             return duelMenuResponses;
         }
@@ -455,6 +468,34 @@ public class GamePlayController extends MenuController {
         selectedCard.setHidden(false);
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
+    }
+    public void checkForEffectsAfterSummon()
+    {
+        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole")!=null &&
+                ((MonsterCard)selectedCard).getGameATK()>=1000)
+        {  gamePlayController.changeTurn();
+            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Trap Hole");
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"));
+            }
+            gamePlayController.changeTurn();
+        }
+        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute")!=null)
+        {  gamePlayController.changeTurn();
+            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Torrential Tribute");
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
+            }
+            gamePlayController.changeTurn();
+        }
+
+    }
+    public boolean getAnswer()
+    {    String ans =  duelMenu.getString();
+        if(ans.equals("yes"))
+            return true;
+        else return false;
+
     }
 
     public void activateSpellCard() { //TODO COMPLETE
@@ -539,6 +580,16 @@ public class GamePlayController extends MenuController {
         return 2;
     else return 1;
     }
+    public void  activateCard(Card card)
+    {  card.setHidden(false);
+      card.setActivated(true);
+        activatedCards.put(currentPlayer,card);
+        if(card.getCardPlacedZone()== currentPlayer.getHand())
+            currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) card,currentPlayer);
+        duelMenu.printResponse(SPELL_ACTIVATED);
+
+    }
+
 
     public void activateSelectedCard()
     {  selectedCard.setHidden(false);
@@ -592,6 +643,9 @@ public class GamePlayController extends MenuController {
             break;
             case "Advanced Ritual Art" : spellEffectController.advancedRitualArt(card);
             break;
+            case "Mind Crush" : trapEffectController.mindCrush(card);
+            break;
+
             default:
                 break;
         }

@@ -339,6 +339,10 @@ public class DuelMenu extends Menu {
                 break;
             case ENTER_PLAYER:
                 System.out.println("enter player (rival/current player)");
+            case ATTACK_CANCELED:
+                System.out.println("attack canceled!");
+                break;
+
 
 
             default:
