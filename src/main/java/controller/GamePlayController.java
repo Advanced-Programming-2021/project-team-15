@@ -33,7 +33,6 @@ public class GamePlayController extends MenuController {
     public ArrayList<MagicCard> getChainCards() {
         return chainCards;
     }
-    public Player mainCurrentPlayer;
     public void setChainCards(ArrayList<MagicCard> chainCards) {
         this.chainCards = chainCards;
     }
@@ -83,21 +82,6 @@ public class GamePlayController extends MenuController {
         GamePlayController.setCard = setCard;
     }
 
-    public ArrayList<MagicCard> getChainCards() {
-        return chainCards;
-    }
-
-    public void setChainCards(ArrayList<MagicCard> chainCards) {
-        this.chainCards = chainCards;
-    }
-
-    public ArrayList<Player> getChainPlayers() {
-        return chainPlayers;
-    }
-
-    public void setChainPlayers(ArrayList<Player> chainPlayers) {
-        this.chainPlayers = chainPlayers;
-    }
 
     public HashMap<MonsterCard, Integer> getSuijinVictims() {
         return suijinVictims;
