@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class JSONController {
 
     public void loadGameCards() throws IOException, CsvValidationException {
+        Card.getAllCards().clear();
         File file = new File("src/main/resources/Monster.csv");
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);

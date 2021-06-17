@@ -126,6 +126,8 @@ public class GamePlayController extends MenuController {
 
     public void startRound() {
         refresh();
+        currentPlayer = game.getFirstPlayer();
+        opponentPlayer = game.getSecondPlayer();
         game.setRoundCount(game.getRoundCount() + 1);
         game.getFirstPlayer().setLifePoint(8000);
         game.getSecondPlayer().setLifePoint(8000);
@@ -480,9 +482,9 @@ public class GamePlayController extends MenuController {
         addSelectedCardToChain();
         else if(canContinueTheChain())
           addSelectedCardToChain();
-    else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
-           selectedCard =null;
-                  return;}
+//    else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
+//           selectedCard =null;
+//                  return;}
     if(!canMakeChain(opponentPlayer) && !canMakeChain(currentPlayer))
     { if(chainPlayers.get(0)!=currentPlayer)
     { changeTurn();

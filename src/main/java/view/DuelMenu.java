@@ -68,8 +68,8 @@ public class DuelMenu extends Menu {
         }
         while (true) {
             String input = Utility.getNextLine();
-            if (input.equals("menu exit")) checkAndCallMenuExit();
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select")) System.out.println("it's not your turn to play this kind of moves");
+            if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.matches("select(.*)(\\d)(.*)"))
                 checkAndCallSelectNumericZone(input);
             else if (input.startsWith("select"))
@@ -303,9 +303,9 @@ public class DuelMenu extends Menu {
             case SPELL_ACTIVATED:
                 System.out.println("spell activated");
                 break;
-            case CANT_BE_ADDED_TO_CHAIN:
-                System.out.println("youu can't add this card ro chain");
-                break;
+//            case CANT_BE_ADDED_TO_CHAIN:
+//                System.out.println("you can't add this card ro chain");
+//                break;
             case EFFECT_DONE_SUCCESSFULLY:
                 System.out.println("effect done successfully");
                 break;
@@ -365,7 +365,8 @@ public class DuelMenu extends Menu {
             String secondPlayerMove = Utility.getNextLine();
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
-                System.out.println("now it will be " + gamePlayController.getGame().getFirstPlayer() + "'s turn");
+                System.out.println("now it will be " +
+                        gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + "'s turn");
                 break;
             }
         }
