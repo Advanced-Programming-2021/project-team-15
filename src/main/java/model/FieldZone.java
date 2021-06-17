@@ -2,28 +2,29 @@ package model;
 
 import java.util.ArrayList;
 
-public class FieldZone extends Zone{
+public class FieldZone extends Zone {
     ArrayList<MagicCard> zoneCards;
 
     public FieldZone() {
         super(ZoneType.FIELD);
         zoneCards = new ArrayList<>();
     }
-    public void moveCardToFieldZone(MagicCard card , Player player)
-    {  if(zoneCards.isEmpty())
-        zoneCards.add(card);
+
+    public void moveCardToFieldZone(MagicCard card, Player player) {
+        if (zoneCards.isEmpty())
+            zoneCards.add(card);
         else {
-        player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(0));
-        card.setCardPlacedZone(player.getFieldZone());
-    }
+            player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(0));
+            card.setCardPlacedZone(player.getFieldZone());
+        }
 
     }
-    public void addCardToFieldZone(MagicCard magicCard)
-    {
+
+    public void addCardToFieldZone(MagicCard magicCard) {
         zoneCards.add(magicCard);
     }
-    public void removeCardFromFieldZone(MagicCard magicCard)
-    {
+
+    public void removeCardFromFieldZone(MagicCard magicCard) {
         zoneCards.remove(magicCard);
     }
 
@@ -34,9 +35,10 @@ public class FieldZone extends Zone{
     public void setZoneCards(ArrayList<MagicCard> zoneCards) {
         this.zoneCards = zoneCards;
     }
-    public String toStringPos()
-    { if(zoneCards.get(0)==null)
-        return "E";
+
+    public String toStringPos() {
+        if (zoneCards.size()==0)
+            return "E";
         else return "O";
     }
 }

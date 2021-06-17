@@ -75,7 +75,7 @@ public class DuelMenu extends Menu {
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
-            else if ( input.equals("next phase"))   printResponse(gamePlayController.goNextPhase());
+            else if ( input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
             else if (input.equals("set")) printResponse(gamePlayController.setCommand());
             else if (input.matches("set --position (attack|defense)")) {
