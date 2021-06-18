@@ -507,6 +507,12 @@ public class GamePlayController extends MenuController {
     }
 
     public void checkForEffectsAfterSummon() {
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute") != null) {
+            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Torrential Tribute");
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
+            }
+        }
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
                 ((MonsterCard) selectedCard).getGameATK() >= 1000) {
             gamePlayController.changeTurn();
@@ -524,7 +530,6 @@ public class GamePlayController extends MenuController {
             }
             gamePlayController.changeTurn();
         }
-
     }
 
     public boolean getAnswer() {
@@ -561,9 +566,9 @@ public class GamePlayController extends MenuController {
             addSelectedCardToChain();
         else if (canContinueTheChain())
             addSelectedCardToChain();
-//    else {duelMenu.printResponse(CANT_BE_ADDED_TO_CHAIN);
-//           selectedCard =null;
-//                  return;}
+  else {duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
+          selectedCard =null;
+                 return;}
         if (!canMakeChain(opponentPlayer) && !canMakeChain(currentPlayer)) {
             if (chainPlayers.get(0) != currentPlayer) {
                 changeTurn();
@@ -594,7 +599,6 @@ public class GamePlayController extends MenuController {
             trapEffectController.setDoIt(true);
             callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
         }
-
     }
 
 
@@ -701,7 +705,12 @@ public class GamePlayController extends MenuController {
             case "Mind Crush":
                 trapEffectController.mindCrush(card);
                 break;
-
+            case "Time Seal":
+                trapEffectController.timeSeal(card);
+                break;
+            case "Magic Jammer":
+                trapEffectController.magicJammer(card);
+                break;
             default:
                 break;
         }
@@ -747,10 +756,10 @@ public class GamePlayController extends MenuController {
         Map<Integer, MonsterCard> monsterZone = player.getMonsterCardZone().getZoneCards();
         Map<Integer, MagicCard> magicZone = player.getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
-            if (magicZone.get(i).getCardName().equals(name))
+            if (magicZone.get(i)!=null && magicZone.get(i).getCardName().equals(name))
                 return magicZone.get(i);
-            else if (monsterZone.get(i).getCardName().equals(name))
-                return magicZone.get(i);
+            else if (monsterZone.get(i)!=null && monsterZone.get(i).getCardName().equals(name))
+                return monsterZone.get(i);
         }
         return null;
     }

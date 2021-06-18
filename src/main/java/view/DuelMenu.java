@@ -357,6 +357,11 @@ public class DuelMenu extends Menu {
                 System.out.println("enter player (rival/current player)");
             case ATTACK_CANCELED:
                 System.out.println("attack canceled!");
+            case  ACTIVATION_CANCELED:
+                System.out.println("activation cancelled!");
+                break;
+            case  CANT_ADD_THIS_CARD_TO_CHAIN:
+                System.out.println("can't be added to chain");
                 break;
 
 

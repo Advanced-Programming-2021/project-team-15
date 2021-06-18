@@ -68,10 +68,10 @@ public class AttackController {
         String position = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
-        isAttacking = false;
-//        checkerForEffects();
-//        if (!isAttacking)
-//            return ATTACK_CANCELED;
+        isAttacking = true;
+        checkerForEffects();
+        if(!isAttacking)
+            return ATTACK_CANCELED;
         if (position.equals("OO"))
             return attackTOAttackPos(attacker, target, number);
         else if (position.equals("DO"))
@@ -79,25 +79,31 @@ public class AttackController {
         else return attackToDefencePos(attacker, target, number, true);
     }
 
-    public void checkerForEffects() {
-        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder") != null) {
+    public void checkerForEffects()
+    {   if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder")!=null)
+       {  gamePlayController.changeTurn();
+          DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
+          if (getAnswer()) {
+              GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
+              isAttacking = false;
+          }
+           gamePlayController.changeTurn();
+       }
+       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force")!=null)
+      {   gamePlayController.changeTurn();
+        DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
+        if(getAnswer()) {
+            GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
+            isAttacking = false; }
             gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
-            if (getAnswer()) {
-                GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
-                isAttacking = false;
-            }
-            gamePlayController.changeTurn();
-        }
-        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force") != null) {
-            gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
-            if (getAnswer()) {
-                GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
-                isAttacking = false;
-            }
-            gamePlayController.changeTurn();
-        }
+      }
+       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(),"Negate Attack" )!=null)
+       {   if (getAnswer()) {
+           GamePlayController.getTrapEffectController().negateAttack(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Negate Attack"));
+           isAttacking = false; }
+       gamePlayController.changeTurn();
+       }
+
     }
 
     public Boolean getAnswer() {
@@ -176,6 +182,10 @@ public class AttackController {
         else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
         attackedCardsInTurn.add(attacker);
+        isAttacking = true;
+        checkerForEffects();
+        if(!isAttacking)
+            return ATTACK_CANCELED;
         gamePlayController.getOpponentPlayer().reduceLifePoint((attacker).getGameATK());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
     }
