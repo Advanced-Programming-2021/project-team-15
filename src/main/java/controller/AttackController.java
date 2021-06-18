@@ -74,7 +74,7 @@ public class AttackController  {
         String position =gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
-        isAttacking = false;
+        isAttacking = true;
         checkerForEffects();
         if(!isAttacking)
             return ATTACK_CANCELED;
@@ -186,6 +186,10 @@ public class AttackController  {
         else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
         attackedCardsInTurn.add(attacker);
+        isAttacking = true;
+        checkerForEffects();
+        if(!isAttacking)
+            return ATTACK_CANCELED;
         gamePlayController.getOpponentPlayer().reduceLifePoint((attacker).getGameATK());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;
     }
