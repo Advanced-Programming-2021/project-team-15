@@ -284,6 +284,9 @@ rock
 rock
 rock
 paper
+next phase
+select --hand 2
+select -d
 menu exit
 user logout
 user remove --username mehrad --password m

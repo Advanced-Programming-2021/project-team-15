@@ -52,7 +52,7 @@ public class GamePlayController extends MenuController {
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
     private Game game;
-    private int currentPhaseNumber = 1;
+    private int currentPhaseNumber = 0;
     private Card selectedCard;
     private Player currentPlayer;
     private Player opponentPlayer;
@@ -166,7 +166,6 @@ public class GamePlayController extends MenuController {
                 defineWinner();
         } else {
             currentPlayer.setCanDraw(true);
-            goNextPhase();
         }
     }
 
@@ -300,7 +299,7 @@ public class GamePlayController extends MenuController {
         board.append("  \t\t\t\t\t\t").append(currentPlayer.getDeckZone().getZoneCards().size()).append("\n");
         board.append("c \t".repeat(currentPlayer.getHand().getNumberOfCardsInHand()));
         board.append("\n").append(currentPlayer.getUser().getNickName());
-        DuelMenu.getInstance().printString(board.toString());
+        //DuelMenu.getInstance().printString(board.toString());
         return board.toString();
     }
 

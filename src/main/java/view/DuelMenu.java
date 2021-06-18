@@ -58,7 +58,10 @@ public class DuelMenu extends Menu {
             else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
             else if (input.startsWith("duel")) {
                 checkAndCallNewDuel(input);
-                if (weAreOnGame) break;
+                if (weAreOnGame) {
+                    printResponse(gamePlayController.goNextPhase());
+                    break;
+                }
             } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
             else System.out.println("invalid command");
             if (super.isExit) {
