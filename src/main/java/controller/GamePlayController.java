@@ -141,6 +141,14 @@ public class GamePlayController extends MenuController {
         game.getSecondPlayer().startNewGame();
         game.getFirstPlayer().getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
         game.getSecondPlayer().getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
+        for (Card card : currentPlayer.getDeckZone().getZoneCards()) {
+            card.setOwner(currentPlayer);
+            card.setSummoned(false);
+        }
+        for (Card card : opponentPlayer.getDeckZone().getZoneCards()) {
+            card.setOwner(opponentPlayer);
+            card.setSummoned(false);
+        }
         shuffle();
         for (int i = 0; i < 5; i++) {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
@@ -229,6 +237,15 @@ public class GamePlayController extends MenuController {
         return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
     }
 
+    public DuelMenuResponses showCard() {
+        if (selectedCard == null) return NO_CARD_SELECTED;
+        else if (selectedCard.getOwner() == opponentPlayer
+                && !selectedCard.getSummoned())
+            return CANNOT_ACCESS_RIVAL_CARD;
+        else
+            return SHOW_CARD;
+    }
+
     public DuelMenuResponses selectNotNumericZone(String zoneType, String opponentOrPlayer) {
         Player player;
         if (opponentOrPlayer.equals("player")) player = currentPlayer;
@@ -257,6 +274,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = summon();
+            selectedCard.setSummoned(true);
 //            checkForEffectsAfterSummon();
             selectedCard = null;
             DuelMenu.getInstance().printString(showGameBoard());
@@ -321,7 +339,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
         else if (((MonsterCard) selectedCard).getLevel() <= 4) {
             doSummon();
-            selectedCard = null;
+            //selectedCard = null;
             return DuelMenuResponses.CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() == 5 || ((MonsterCard) selectedCard).getLevel() == 6) {
@@ -348,7 +366,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
         doSummon();
-        selectedCard = null;
+        //selectedCard = null;
         return DuelMenuResponses.CARD_SUMMONED;
     }
 
@@ -362,7 +380,7 @@ public class GamePlayController extends MenuController {
         currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress, currentPlayer);
         currentPlayer.getMonsterCardZone().moveCardToGraveyard(secondAddress, currentPlayer);
         doSummon();
-        selectedCard = null;
+        //selectedCard = null;
         return DuelMenuResponses.CARD_SUMMONED;
     }
 

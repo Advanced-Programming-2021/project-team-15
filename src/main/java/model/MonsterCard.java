@@ -2,17 +2,21 @@ package model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class MonsterCard extends Card {
-    @SerializedName("Attack")private int attackPoint;
+    @SerializedName("Attack")
+    private int attackPoint;
     private int gameATK = attackPoint;
-    @SerializedName("Defence")private int defensePoint;
+    @SerializedName("Defence")
+    private int defensePoint;
     private int gameDEF = defensePoint;
-    @SerializedName("Level") private int level;
-    @SerializedName("Monster Type") private MonsterType monsterType;
-    @SerializedName("Monster Attribute") private MonsterAttribute monsterAttribute;
-    @SerializedName("Monster Effect Type") private MonsterEffectType monsterEffectType;
+    @SerializedName("Level")
+    private int level;
+    @SerializedName("Monster Type")
+    private MonsterType monsterType;
+    @SerializedName("Monster Attribute")
+    private MonsterAttribute monsterAttribute;
+    @SerializedName("Monster Effect Type")
+    private MonsterEffectType monsterEffectType;
     private transient Boolean isSummoned = false;
     private transient Mode mode;
 
@@ -35,10 +39,9 @@ public class MonsterCard extends Card {
     }
 
     public void setSummoned(Boolean summoned) {
-        if(summoned)
-        {
-            setMode( Mode.ATTACK);
-            setHidden(true);
+        if (summoned) {
+            setMode(Mode.ATTACK);
+            setHidden(false);
         }
         isSummoned = summoned;
     }
@@ -65,10 +68,10 @@ public class MonsterCard extends Card {
     }
 
     public void setAttackPoint(int attackPoint) {
-        if(attackPoint<0)
+        if (attackPoint < 0)
             this.attackPoint = 0;
         else
-        this.attackPoint = attackPoint;
+            this.attackPoint = attackPoint;
     }
 
     public int getDefensePoint() {
@@ -140,6 +143,18 @@ public class MonsterCard extends Card {
         this.gameDEF = gameDEF;
     }
 
+    public String toStringPosition() {
+        String first;
+        String second;
+        if (isHidden)
+            second = "H";
+        else second = "O";
+        if (mode.equals(Mode.ATTACK))
+            first = "O";
+        else first = "D";
+        return first + second;
+    }
+
     public enum MonsterEffectType {
         @SerializedName("Normal") NORMAL,
         @SerializedName("Effect") EFFECT,
@@ -147,10 +162,14 @@ public class MonsterCard extends Card {
 
         public static MonsterEffectType getMonsterEffectType(String monsterEffectType) {
             switch (monsterEffectType) {
-                case "Normal" : return NORMAL;
-                case "Effect" : return EFFECT;
-                case "Ritual" : return RITUAL;
-                default:return null;
+                case "Normal":
+                    return NORMAL;
+                case "Effect":
+                    return EFFECT;
+                case "Ritual":
+                    return RITUAL;
+                default:
+                    return null;
             }
         }
     }
@@ -173,29 +192,45 @@ public class MonsterCard extends Card {
         @SerializedName("Sea Serpent") SEA_SERPENT("Sea Serpent");
         private final String name;
 
-        public static MonsterType getMonsterTypeByName(String monsterType) {
-            switch (monsterType) {
-                case "Spellcaster" : return SPELL_CASTER;
-                case "Warrior" : return WARRIOR;
-                case "Beast-Warrior" : return BEAST_WARRIOR;
-                case "Fiend" : return FIEND;
-                case "Aqua" : return AQUA;
-                case "Beast" : return BEAST;
-                case "Pyro" : return PYRO;
-                case "Thunder" : return THUNDER;
-                case "Dragon" : return DRAGON;
-                case "Machine" : return MACHINE;
-                case "Rock" : return ROCK;
-                case "Insect" : return INSECT;
-                case "Cyberse" : return CYBER;
-                case "Fairy" : return FAIRY;
-                case "Sea Serpent" : return SEA_SERPENT;
-                default: return null;
-            }
-        }
-
         MonsterType(String name) {
             this.name = name;
+        }
+
+        public static MonsterType getMonsterTypeByName(String monsterType) {
+            switch (monsterType) {
+                case "Spellcaster":
+                    return SPELL_CASTER;
+                case "Warrior":
+                    return WARRIOR;
+                case "Beast-Warrior":
+                    return BEAST_WARRIOR;
+                case "Fiend":
+                    return FIEND;
+                case "Aqua":
+                    return AQUA;
+                case "Beast":
+                    return BEAST;
+                case "Pyro":
+                    return PYRO;
+                case "Thunder":
+                    return THUNDER;
+                case "Dragon":
+                    return DRAGON;
+                case "Machine":
+                    return MACHINE;
+                case "Rock":
+                    return ROCK;
+                case "Insect":
+                    return INSECT;
+                case "Cyberse":
+                    return CYBER;
+                case "Fairy":
+                    return FAIRY;
+                case "Sea Serpent":
+                    return SEA_SERPENT;
+                default:
+                    return null;
+            }
         }
 
         public String getName() {
@@ -234,17 +269,5 @@ public class MonsterCard extends Card {
                     return null;
             }
         }
-    }
-
-    public String toStringPosition()
-    {  String first = "";
-        String second= "";
-        if(!isHidden)
-            second = "O";
-        else second = "H";
-        if(mode.equals(Mode.ATTACK))
-            first = "O";
-        else first="D";
-        return first+second;
     }
 }

@@ -79,6 +79,7 @@ public class DuelMenu extends Menu {
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
+            else if (input.equals("card show")) checkAndCallShowCard();
             else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
             else if (input.equals("set")) printResponse(gamePlayController.setCommand());
@@ -97,6 +98,11 @@ public class DuelMenu extends Menu {
                 return;
             }
         }
+    }
+
+    public void checkAndCallShowCard() {
+        duelMenuResponses = gamePlayController.showCard();
+        printResponse(duelMenuResponses);
     }
 
     public void checkAndCallNewDuel(String input) {
@@ -313,6 +319,12 @@ public class DuelMenu extends Menu {
 //                break;
             case EFFECT_DONE_SUCCESSFULLY:
                 System.out.println("effect done successfully");
+                break;
+            case SHOW_CARD:
+                System.out.println(gamePlayController.getSelectedCard().cardShow());
+                break;
+            case CANNOT_ACCESS_RIVAL_CARD:
+                System.out.println("You can't access this card!");
                 break;
             case SHOW_NEW_PHASE:
                 System.out.println("phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());

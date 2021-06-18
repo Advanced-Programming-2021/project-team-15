@@ -13,6 +13,7 @@ public class Card {
     }
 
     public Boolean isSummoned = false;
+    protected transient Player owner;
     //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")
     protected String cardName;
@@ -22,13 +23,12 @@ public class Card {
     @SerializedName("Card Type")
     protected CardType cardType;
     protected String type = "type";
-    protected Boolean isSet = false;
-    protected Boolean isHidden = true;
-    protected Zone cardPlacedZone;
+    protected transient Boolean isSet = false;
+    protected transient Boolean isHidden = true;
+    protected transient Zone cardPlacedZone;
     @SerializedName("Price")
     protected int price;
-    private boolean isActivated;
-
+    private transient boolean isActivated;
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -54,6 +54,14 @@ public class Card {
 
     public static void setAllCards(ArrayList<Card> allCards) {
         Card.allCards = allCards;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -131,7 +139,6 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-
     public CardType getCardType() {
         return cardType;
     }
@@ -154,6 +161,24 @@ public class Card {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String cardShow() {
+        StringBuilder details = new StringBuilder();
+        if (this instanceof MonsterCard) {
+            details.append("Name : ").append(this.getCardName()).append("\n");
+            details.append("Level : ").append(((MonsterCard) this).getLevel()).append("\n");
+            details.append("Type : ").append(((MonsterCard) this).getMonsterType()).append("\n");
+            details.append("Attack : ").append(((MonsterCard) this).getAttackPoint()).append("\n");
+            details.append("Defense : ").append(((MonsterCard) this).getDefensePoint()).append("\n");
+            details.append("Description : ").append(this.getCardDescription());
+        } else if (this instanceof MagicCard) {
+            details.append("Name : ").append(this.getCardName()).append("\n");
+            details.append(((MagicCard) this).getMagicType()).append("\n");
+            details.append("Type : ").append(((MagicCard) this).getCardIcon()).append("\n");
+            details.append("Description : ").append(this.getCardDescription());
+        }
+        return details.toString();
     }
 
     public enum CardType {
