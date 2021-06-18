@@ -1,12 +1,9 @@
 package controller;
 
-import controller.EffectController;
-import controller.GamePlayController;
 import controller.responses.DuelMenuResponses;
 import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
-import utility.Utility;
 import view.DuelMenu;
 
 import java.util.Map;
@@ -15,13 +12,13 @@ import java.util.Random;
 import static controller.responses.DuelMenuResponses.*;
 
 public class TrapEffectController {
-    private boolean doIt = false;
     GamePlayController gamePlayController = GamePlayController.getInstance();
     DuelMenu duelMenu = DuelMenu.getInstance();
     EffectController effectController = gamePlayController.getEffectController();
+    private boolean doIt = false;
 
     public void magicCylinder(Card trap) {
-        if(gamePlayController.getAttackController().isAttacking())
+        if (gamePlayController.getAttackController().isAttacking())
             gamePlayController.activateCard(trap);
         else return;
         gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
@@ -30,7 +27,7 @@ public class TrapEffectController {
     }
 
     public void mirrorForce(Card trap) {
-        if(gamePlayController.getAttackController().isAttacking())
+        if (gamePlayController.getAttackController().isAttacking())
             gamePlayController.activateCard(trap);
         else return;
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
@@ -43,9 +40,10 @@ public class TrapEffectController {
     }
 
     public void mindCrush(Card trap) {
-        if(!doIt)
-        {gamePlayController.activateCard(trap);
-            return;}
+        if (!doIt) {
+            gamePlayController.activateCard(trap);
+            return;
+        }
         Boolean did = false;
         String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
@@ -111,12 +109,13 @@ public class TrapEffectController {
                     duelMenu.printResponse(INVALID_CELL_NUMBER);
                 }
             }
-    }
-    //TODO THIS
+        }
+        //TODO THIS
 //    public void callOfHunted()
 //    {   duelMenu.printResponse(ENTER_ONE_NUMBER);
 //        while (true)
     }
+
     public void setDoIt(boolean b) {
     }
 }

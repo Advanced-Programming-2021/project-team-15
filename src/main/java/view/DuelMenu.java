@@ -71,14 +71,15 @@ public class DuelMenu extends Menu {
         }
         while (true) {
             String input = Utility.getNextLine();
-            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select")) System.out.println("it's not your turn to play this kind of moves");
+            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
+                System.out.println("it's not your turn to play this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.matches("select(.*)(\\d)(.*)"))
                 checkAndCallSelectNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.startsWith("select"))
                 checkAndCallSelectNotNumericZone(input);
-            else if ( input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
+            else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
             else if (input.equals("set")) printResponse(gamePlayController.setCommand());
             else if (input.matches("set --position (attack|defense)")) {
@@ -89,7 +90,7 @@ public class DuelMenu extends Menu {
                 Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
                 if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
             } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-            //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
+                //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
@@ -188,9 +189,9 @@ public class DuelMenu extends Menu {
                 break;
             case RIVALS_TURN_AND_SHOW_DRAW_PHASE: {
                 System.out.println("phase : end phase");
-                System.out.println("it's " + gamePlayController.getCurrentPlayer() + "'s turn");
-                System.out.println("phase : draw phase");
                 gamePlayController.drawPhase();
+                System.out.println("it's " + gamePlayController.getCurrentPlayer().getUser().getNickName() + "'s turn");
+                System.out.println("phase : draw phase");
             }
             break;
             case CANT_SUMMON_THIS_CARD:
@@ -314,7 +315,7 @@ public class DuelMenu extends Menu {
                 System.out.println("effect done successfully");
                 break;
             case SHOW_NEW_PHASE:
-                System.out.println("phase :"+" "+ Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
+                System.out.println("phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
                 break;
             case CARD_EQUIPPED:
                 System.out.println("card equipped!");
@@ -336,7 +337,7 @@ public class DuelMenu extends Menu {
                 break;
             case ENTER_SOME_NUMBERS:
                 System.out.println("enter numbers of monsters to be destroyed. (e.g :1 2 3)");
-            break;
+                break;
             case LEVELS_DONT_MATCH:
                 System.out.println("selected monsters levels don't match with ritual monster");
                 break;
@@ -345,7 +346,6 @@ public class DuelMenu extends Menu {
             case ATTACK_CANCELED:
                 System.out.println("attack canceled!");
                 break;
-
 
 
             default:
@@ -379,9 +379,9 @@ public class DuelMenu extends Menu {
             }
         }
     }
-    public void doYouWannaActivateSpecialCard(String name)
-    {
-        System.out.println("do you wanna activate your "+name+" ?");
+
+    public void doYouWannaActivateSpecialCard(String name) {
+        System.out.println("do you wanna activate your " + name + " ?");
     }
 
 

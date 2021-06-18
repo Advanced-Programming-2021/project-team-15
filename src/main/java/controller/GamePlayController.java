@@ -21,32 +21,6 @@ public class GamePlayController extends MenuController {
     private static MonsterEffectController monsterEffectController = new MonsterEffectController();
     public Player mainCurrentPlayer;
     private ArrayList<MagicCard> chainCards = new ArrayList<>();
-
-    public static TrapEffectController getTrapEffectController() {
-        return trapEffectController;
-    }
-
-    public static void setTrapEffectController(TrapEffectController trapEffectController) {
-        GamePlayController.trapEffectController = trapEffectController;
-    }
-
-    public ArrayList<MagicCard> getChainCards() {
-        return chainCards;
-    }
-    public void setChainCards(ArrayList<MagicCard> chainCards) {
-        this.chainCards = chainCards;
-    }
-
-
-
-    public ArrayList<Player> getChainPlayers() {
-        return chainPlayers;
-    }
-
-    public void setChainPlayers(ArrayList<Player> chainPlayers) {
-        this.chainPlayers = chainPlayers;
-    }
-
     private ArrayList<Player> chainPlayers = new ArrayList<>();
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
@@ -68,6 +42,14 @@ public class GamePlayController extends MenuController {
         super("Duel Menu");
     }
 
+    public static TrapEffectController getTrapEffectController() {
+        return trapEffectController;
+    }
+
+    public static void setTrapEffectController(TrapEffectController trapEffectController) {
+        GamePlayController.trapEffectController = trapEffectController;
+    }
+
     public static GamePlayController getInstance() {
         if (gamePlayController == null)
             gamePlayController = new GamePlayController();
@@ -82,6 +64,21 @@ public class GamePlayController extends MenuController {
         GamePlayController.setCard = setCard;
     }
 
+    public ArrayList<MagicCard> getChainCards() {
+        return chainCards;
+    }
+
+    public void setChainCards(ArrayList<MagicCard> chainCards) {
+        this.chainCards = chainCards;
+    }
+
+    public ArrayList<Player> getChainPlayers() {
+        return chainPlayers;
+    }
+
+    public void setChainPlayers(ArrayList<Player> chainPlayers) {
+        this.chainPlayers = chainPlayers;
+    }
 
     public HashMap<MonsterCard, Integer> getSuijinVictims() {
         return suijinVictims;
@@ -162,7 +159,7 @@ public class GamePlayController extends MenuController {
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
             DuelMenu.getInstance().printString(currentPlayer.getDeckZone().getZoneCards().get(0).getCardName());
             currentPlayer.getDeckZone().getZoneCards().remove(0);
-            if(checkIfGameIsFinished())
+            if (checkIfGameIsFinished())
                 defineWinner();
         } else {
             currentPlayer.setCanDraw(true);
@@ -260,15 +257,17 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = summon();
-            checkForEffectsAfterSummon();
+//            checkForEffectsAfterSummon();
             selectedCard = null;
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
 
     public String showGameBoard() {
         StringBuilder board = new StringBuilder();
-        board.append(opponentPlayer.getUser().getNickName()).append("\n");
+        board.append(opponentPlayer.getUser().getNickName()).append(" : ").
+                append(opponentPlayer.getLifePoint()).append("\n");
         board.append("\tc ".repeat(opponentPlayer.getHand().getNumberOfCardsInHand()));
         board.append("\n").append(opponentPlayer.getDeckZone().getZoneCards().size()).append("\n\t");
         board.append(opponentPlayer.getMagicCardZone().toStringPos(4)).append("\t").
@@ -283,7 +282,7 @@ public class GamePlayController extends MenuController {
                 append(opponentPlayer.getMonsterCardZone().toStringPos(5)).append("\n");
         board.append(opponentPlayer.getGraveyardZone().getZoneCards().size()).append("\t\t\t\t\t\t").
                 append(opponentPlayer.getFieldZone().toStringPos()).append("\n");
-        board.append("\n----------------------------------------------------------\n\n");
+        board.append("\n------------------------------------------\n\n");
         board.append(currentPlayer.getFieldZone().toStringPos()).append("\t\t\t\t\t\t").
                 append(currentPlayer.getGraveyardZone().getZoneCards().size()).append("\n\t");
         board.append(currentPlayer.getMonsterCardZone().toStringPos(5)).append("\t").
@@ -298,7 +297,8 @@ public class GamePlayController extends MenuController {
                 append(currentPlayer.getMagicCardZone().toStringPos(4)).append("\n");
         board.append("  \t\t\t\t\t\t").append(currentPlayer.getDeckZone().getZoneCards().size()).append("\n");
         board.append("c \t".repeat(currentPlayer.getHand().getNumberOfCardsInHand()));
-        board.append("\n").append(currentPlayer.getUser().getNickName());
+        board.append("\n").append(currentPlayer.getUser().getNickName()).append(" : ").
+                append(opponentPlayer.getLifePoint());
         //DuelMenu.getInstance().printString(board.toString());
         return board.toString();
     }
@@ -468,7 +468,7 @@ public class GamePlayController extends MenuController {
             return NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
-            checkForEffectsAfterSummon();
+//            checkForEffectsAfterSummon();
             selectedCard = null;
             return duelMenuResponses;
         }
@@ -487,19 +487,19 @@ public class GamePlayController extends MenuController {
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
-    public void checkForEffectsAfterSummon()
-    {
-        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole")!=null &&
-                ((MonsterCard)selectedCard).getGameATK()>=1000)
-        {  gamePlayController.changeTurn();
+
+    public void checkForEffectsAfterSummon() {
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
+                ((MonsterCard) selectedCard).getGameATK() >= 1000) {
+            gamePlayController.changeTurn();
             DuelMenu.getInstance().doYouWannaActivateSpecialCard("Trap Hole");
             if (getAnswer()) {
                 GamePlayController.getTrapEffectController().trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"));
             }
             gamePlayController.changeTurn();
         }
-        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute")!=null)
-        {  gamePlayController.changeTurn();
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute") != null) {
+            gamePlayController.changeTurn();
             DuelMenu.getInstance().doYouWannaActivateSpecialCard("Torrential Tribute");
             if (getAnswer()) {
                 GamePlayController.getTrapEffectController().torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
@@ -508,9 +508,10 @@ public class GamePlayController extends MenuController {
         }
 
     }
-    public boolean getAnswer()
-    {    String ans =  duelMenu.getString();
-        if(ans.equals("yes"))
+
+    public boolean getAnswer() {
+        String ans = duelMenu.getString();
+        if (ans.equals("yes"))
             return true;
         else return false;
 
@@ -598,19 +599,20 @@ public class GamePlayController extends MenuController {
             return 2;
         else return 1;
     }
-    public void  activateCard(Card card)
-    {  card.setHidden(false);
-      card.setActivated(true);
-        activatedCards.put(currentPlayer,card);
-        if(card.getCardPlacedZone()== currentPlayer.getHand())
-            currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) card,currentPlayer);
+
+    public void activateCard(Card card) {
+        card.setHidden(false);
+        card.setActivated(true);
+        activatedCards.put(currentPlayer, card);
+        if (card.getCardPlacedZone() == currentPlayer.getHand())
+            currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) card, currentPlayer);
         duelMenu.printResponse(SPELL_ACTIVATED);
 
     }
 
 
-    public void activateSelectedCard()
-    {  selectedCard.setHidden(false);
+    public void activateSelectedCard() {
+        selectedCard.setHidden(false);
         selectedCard.setActivated(true);
         activatedCards.put(currentPlayer, selectedCard);
         if (selectedCard.getCardPlacedZone() == currentPlayer.getHand())
@@ -627,42 +629,60 @@ public class GamePlayController extends MenuController {
             case "Forset":
                 spellEffectController.forest(true);
                 break;
-            case "Closed Forest" : spellEffectController.closedForest(true);
-            break;
-            case "Umiiruka" : spellEffectController.umiiruka(true);
-            break;
-            case "Sword of Dark Destruction" : spellEffectController.swordOfDarkDestruction(card);
-            break;
-            case "Black Pendant" : spellEffectController.blackPendant(card);
-            break;
-            case "United We Stand" : spellEffectController.unitedWeStand(card);
-            break;
-            case "Magnum Shield" : spellEffectController.magnumShield(card);
-            break;
-            case "Terraforming" : spellEffectController.terraforming(card);
-            break;
-            case "Pot of Greed" :  spellEffectController.potOfGReed(card);
-            break;
-            case "Raigeki" : spellEffectController.raigeki(card);
-            break;
-            case "Harpie's Feather Duster" : spellEffectController.harpiesFeatherDuster(card);
-            break;
-            case "Dark Hole" : spellEffectController.darkHole(card);
-            break;
-            case" Mystical Space Typhoon" : spellEffectController.mysticalSpaceTyphoon(card,player);
-            break;
-            case "Ring of defense" : spellEffectController.ringOfDefense(card);
-            break;
-            case  "Twin Twisters" : spellEffectController.twinTwisters(card,player);
-            break;
-            case "Change of Heart" : spellEffectController.changeOfHeart(card);
-            break;
-            case "Monster Reborn" : spellEffectController.monsterReborn(card);
-            break;
-            case "Advanced Ritual Art" : spellEffectController.advancedRitualArt(card);
-            break;
-            case "Mind Crush" : trapEffectController.mindCrush(card);
-            break;
+            case "Closed Forest":
+                spellEffectController.closedForest(true);
+                break;
+            case "Umiiruka":
+                spellEffectController.umiiruka(true);
+                break;
+            case "Sword of Dark Destruction":
+                spellEffectController.swordOfDarkDestruction(card);
+                break;
+            case "Black Pendant":
+                spellEffectController.blackPendant(card);
+                break;
+            case "United We Stand":
+                spellEffectController.unitedWeStand(card);
+                break;
+            case "Magnum Shield":
+                spellEffectController.magnumShield(card);
+                break;
+            case "Terraforming":
+                spellEffectController.terraforming(card);
+                break;
+            case "Pot of Greed":
+                spellEffectController.potOfGReed(card);
+                break;
+            case "Raigeki":
+                spellEffectController.raigeki(card);
+                break;
+            case "Harpie's Feather Duster":
+                spellEffectController.harpiesFeatherDuster(card);
+                break;
+            case "Dark Hole":
+                spellEffectController.darkHole(card);
+                break;
+            case " Mystical Space Typhoon":
+                spellEffectController.mysticalSpaceTyphoon(card, player);
+                break;
+            case "Ring of defense":
+                spellEffectController.ringOfDefense(card);
+                break;
+            case "Twin Twisters":
+                spellEffectController.twinTwisters(card, player);
+                break;
+            case "Change of Heart":
+                spellEffectController.changeOfHeart(card);
+                break;
+            case "Monster Reborn":
+                spellEffectController.monsterReborn(card);
+                break;
+            case "Advanced Ritual Art":
+                spellEffectController.advancedRitualArt(card);
+                break;
+            case "Mind Crush":
+                trapEffectController.mindCrush(card);
+                break;
 
             default:
                 break;
