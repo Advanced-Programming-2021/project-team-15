@@ -100,10 +100,16 @@ public class AttackController  {
         DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
         if(getAnswer()) {
             GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
-            isAttacking = false;
-        }
+            isAttacking = false; }
             gamePlayController.changeTurn();
       }
+       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(),"Negate Attack" )!=null)
+       {   if (getAnswer()) {
+           GamePlayController.getTrapEffectController().negateAttack(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Negate Attack"));
+           isAttacking = false; }
+       gamePlayController.changeTurn();
+       }
+
     }
     public Boolean getAnswer()
     {   String ans =  DuelMenu.getInstance().getString();
