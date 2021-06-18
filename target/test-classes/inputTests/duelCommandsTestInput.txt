@@ -285,8 +285,17 @@ rock
 rock
 paper
 next phase
+next phase
+select --hand 1
+card show
 select --hand 2
-select -d
+card show
+select --hand 3
+card show
+select --hand 4
+card show
+select --hand 5
+card show
 menu exit
 user logout
 user remove --username mehrad --password m

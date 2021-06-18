@@ -29,6 +29,8 @@ public class JSONController {
             monsterCard.setAttackPoint(Integer.parseInt(monsterArray[5]));
             monsterCard.setDefensePoint(Integer.parseInt(monsterArray[6]));
             monsterCard.setPrice(Integer.parseInt(monsterArray[8]));
+            monsterCard.setGameATK(monsterCard.getAttackPoint());
+            monsterCard.setGameDEF(monsterCard.getDefensePoint());
             Card.addCard(monsterCard);
         }
 

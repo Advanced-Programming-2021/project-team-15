@@ -46,7 +46,6 @@ public class MonsterCard extends Card {
         isSummoned = summoned;
     }
 
-
     private void addAttackPoint(int point) {
         this.setAttackPoint(this.getAttackPoint() + point);
     }
