@@ -68,6 +68,8 @@ public class AttackController {
         String position = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
+        if(target.getCardName().equals("Command Knight") && target.isActivated() && gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard()>=2)
+            return CANT_ATTACK_TO_THIS_CARD;
         isAttacking = true;
         checkerForEffects();
         if(!isAttacking)
@@ -80,7 +82,8 @@ public class AttackController {
     }
 
     public void checkerForEffects()
-    {   if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder")!=null)
+    {
+        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder")!=null)
        {  gamePlayController.changeTurn();
           DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
           if (getAnswer()) {
@@ -115,11 +118,23 @@ public class AttackController {
 
     public DuelMenuResponses attackToDefencePos(MonsterCard attacker, MonsterCard target, int number, Boolean hidden) {
         target.setHidden(false);
+        if(hidden)
+        {  if(target.getCardName().equals("Command Knight") && !target.isActivated())
+                GamePlayController.getMonsterEffectController().commandKnight(true,target);
+           if(target.getCardName().equals("Man-Eater Bug"))
+               GamePlayController.getMonsterEffectController().manEaterBug(target);
+        }
         int difference = attacker.getGameATK() - target.getGameDEF();
         damage = difference;
         if (difference > 0) {
-            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             attackedCardsInTurn.add(attacker);
+            if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
+            if(target.getCardName().equals("Marshmallon"))
+            {   if(hidden)
+            { DuelMenu.getInstance().lifePointReduced(1000);
+                gamePlayController.getCurrentPlayer().reduceLifePoint(1000);}
+                return THIS_CARD_CANT_BE_DESTROYED;
+            }
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
             else DuelMenu.getInstance().hiddenDefensePositionMonsterDestroyed(target.getCardName());
@@ -143,11 +158,19 @@ public class AttackController {
         int difference = attacker.getGameATK() - target.getGameATK();
         damage = difference;
         if (difference > 0) {
-            gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
-            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             attackedCardsInTurn.add(attacker);
+            if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
+            gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
+            if(target.getCardName().equals("Marshmallon")) {
+                return THIS_CARD_CANT_BE_DESTROYED;
+            }
+             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             return DuelMenuResponses.DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE;
         } else if (difference == 0) {
+            if(target.getCardName().equals("Marshmallon")) {
+                gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+                return THIS_CARD_CANT_BE_DESTROYED;
+            }
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
             return DuelMenuResponses.BOTH_MONSTERS_ARE_DESTROYED;
@@ -179,7 +202,7 @@ public class AttackController {
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
         else if (alreadyAttackedThisTurn(attacker))
             return DuelMenuResponses.ALREADY_ATTACKED;
-        else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
+        else if (!gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
             return CANT_ATTACK_DIRECTLY;
         attackedCardsInTurn.add(attacker);
         isAttacking = true;

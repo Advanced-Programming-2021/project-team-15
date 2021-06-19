@@ -18,9 +18,9 @@ public class MonsterEffectController {
     AttackController attackController  = gamePlayController.getAttackController();
      DuelMenu duelMenu = DuelMenu.getInstance();
 
-    public void CommandKnight(Boolean x,MonsterCard commandKnight)  //flip and change pos to up
-    {   if(commandKnight.isActivated())  //?
-        return;
+    public void commandKnight(Boolean x,MonsterCard commandKnight)  //flip and change pos to up
+    {     if(x)
+        commandKnight.setActivated(true);
         int amount = 400;
         if(!x)
             amount = -amount;
@@ -29,8 +29,7 @@ public class MonsterEffectController {
             if (entry.getValue() != null && entry.getValue()!=gamePlayController.getSelectedCard())
                 entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
         }
-    if(gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard()>=2)
-        gamePlayController.getAttackController().getCantBeAttacked().add((MonsterCard) gamePlayController.getSelectedCard());
+
     }
 
     public void commandKnightForNewAddedCard(MonsterCard monsterCard)
@@ -54,9 +53,8 @@ public class MonsterEffectController {
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
     }
 
-    public void ManEaterBug(MonsterCard manEaterBug)  //flip or change pos from down to up
-    {  if(manEaterBug.isActivated())
-        return;
+    public void manEaterBug(MonsterCard manEaterBug)  //flip or change pos from down to up
+    {   manEaterBug.setActivated(true);
         manEaterBug.setActivated(true);
         Player player  = effectController.getOwnerOfMonster(manEaterBug);
         Player victim;
@@ -87,15 +85,6 @@ public class MonsterEffectController {
     }
 
 
-    public void Scanner(){
-
-    }
-
-    public void Marshmallon(Boolean hidden){
-        if(hidden)
-            gamePlayController.getCurrentPlayer().reduceLifePoint(1000);
-
-    }
     public void BeastKingBarbaros(Boolean isSummon)
     {   if(isSummon) {
         duelMenu.printResponse(DO_YOU_WANNA_TRIBUTE);
@@ -173,6 +162,12 @@ public void MirageDragon(Card card)
       gamePlayController.getOpponentPlayer().getLimits().add(Limit.CANT_ACTIVATE_TRAP);
 }
 
+
+public void yomiShip(MonsterCard attacker , MonsterCard yomiShip)
+{ yomiShip.setActivated(true);
+  gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+ DuelMenu.getInstance().printResponse(EFFECT_DONE_SUCCESSFULLY);
+}
 
 
 

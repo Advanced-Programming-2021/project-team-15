@@ -64,6 +64,14 @@ public class GamePlayController extends MenuController {
         GamePlayController.setCard = setCard;
     }
 
+    public static MonsterEffectController getMonsterEffectController() {
+        return monsterEffectController;
+    }
+
+    public static void setMonsterEffectController(MonsterEffectController monsterEffectController) {
+        GamePlayController.monsterEffectController = monsterEffectController;
+    }
+
     public ArrayList<MagicCard> getChainCards() {
         return chainCards;
     }
@@ -502,6 +510,7 @@ public class GamePlayController extends MenuController {
             return CANT_FLIP_SUMMON;
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
+        checkForMonsters();
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
@@ -626,8 +635,6 @@ public class GamePlayController extends MenuController {
         card.setHidden(false);
         card.setActivated(true);
         activatedCards.put(currentPlayer, card);
-        if (card.getCardPlacedZone() == currentPlayer.getHand())
-            currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) card, currentPlayer);
         duelMenu.printResponse(SPELL_ACTIVATED);
 
     }
@@ -810,6 +817,15 @@ public class GamePlayController extends MenuController {
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
+        checkForMonsters();
+    }
+
+
+    public void checkForMonsters()
+    {  if(selectedCard.getCardName().equals("Command Knight") && !selectedCard.isActivated())
+        monsterEffectController.commandKnight(true, (MonsterCard) selectedCard);
+        if(selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
+            monsterEffectController.manEaterBug((MonsterCard) selectedCard);
     }
 
     public void refresh() {

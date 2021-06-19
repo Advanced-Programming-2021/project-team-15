@@ -363,6 +363,12 @@ public class DuelMenu extends Menu {
             case  CANT_ADD_THIS_CARD_TO_CHAIN:
                 System.out.println("can't be added to chain");
                 break;
+            case CANT_ATTACK_TO_THIS_CARD:
+                System.out.println("you can't attack to this card");
+                break;
+            case THIS_CARD_CANT_BE_DESTROYED:
+                System.out.println("this card can't be destroyed");
+                break;
 
 
             default:
@@ -397,6 +403,12 @@ public class DuelMenu extends Menu {
         }
     }
 
+    public void lifePointReduced(int point)
+    {
+        System.out.println("current player received "+point+" damage!");
+
+    }
+
     public void doYouWannaActivateSpecialCard(String name) {
         System.out.println("do you wanna activate your " + name + " ?");
     }
@@ -423,5 +435,6 @@ public class DuelMenu extends Menu {
     public String getString() {
         return Utility.getNextLine();
     }
+
 
 }
