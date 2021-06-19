@@ -24,10 +24,10 @@
                 <Font size="62.0" />
             </font>
         </Label>
-      <Button fx:id="exitBtn" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="153.0" text="Exit" textFill="#794d4d">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Button>
+        <Button fx:id="exitBtn" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="153.0" text="Exit" textFill="#794d4d">
+            <font>
+                <Font size="36.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>
