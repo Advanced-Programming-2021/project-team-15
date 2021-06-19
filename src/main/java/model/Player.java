@@ -4,35 +4,10 @@ import controller.Limit;
 
 import java.util.ArrayList;
 
-public class Player  {
-    private  User user;
-    private  boolean canDraw;
-
-    public boolean isCanDraw() {
-        return canDraw;
-    }
-
-    public void setCanDraw(boolean canDraw) {
-        this.canDraw = canDraw;
-    }
-
-    public boolean isCanAttack() {
-        return canAttack;
-    }
-
-    public void setCanAttack(boolean canAttack) {
-        this.canAttack = canAttack;
-    }
-    private  boolean canAttack;
-
-    public boolean isAttacking() {
-        return isAttacking;
-    }
-
-    public void setAttacking(boolean attacking) {
-        isAttacking = attacking;
-    }
-
+public class Player {
+    private User user;
+    private boolean canDraw;
+    private boolean canAttack;
     private boolean isAttacking;
     private int lifePoint;
     private Hand hand;
@@ -42,6 +17,37 @@ public class Player  {
     private MonsterCardZone monsterCardZone;
     private MagicCardZone magicCardZone;
     private Boolean haveSelectedCard;
+    private ArrayList<Limit> limits = new ArrayList<>();
+    public Player(User user) {
+        this.user = user;
+        fieldZone = new FieldZone();
+        graveyardZone = new GraveyardZone();
+        deckZone = new DeckZone();
+        magicCardZone = new MagicCardZone();
+        monsterCardZone = new MonsterCardZone();
+        hand = new Hand();
+        haveSelectedCard = false;
+    }
+
+    public boolean isCanDraw() {
+        return canDraw;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
 
     public ArrayList<Limit> getLimits() {
         return limits;
@@ -51,34 +57,20 @@ public class Player  {
         this.limits = limits;
     }
 
-    private ArrayList<Limit> limits = new ArrayList<>();
-
     public Boolean getCanDraw() {
         return canDraw;
     }
 
-    public void setCanDraw(Boolean canDraw) {
+    public void setCanDraw(boolean canDraw) {
         this.canDraw = canDraw;
     }
 
-
-
-    public Player( User user) {
-        this.user =user;
+    public void startNewGame() {
         fieldZone = new FieldZone();
         graveyardZone = new GraveyardZone();
         deckZone = new DeckZone();
-        magicCardZone= new MagicCardZone();
-        monsterCardZone= new MonsterCardZone();
-        hand = new Hand();
-        haveSelectedCard = false;
-    }
-    public void startNewGame()
-    {    fieldZone = new FieldZone();
-        graveyardZone = new GraveyardZone();
-        deckZone = new DeckZone();
-        magicCardZone= new MagicCardZone();
-        monsterCardZone= new MonsterCardZone();
+        magicCardZone = new MagicCardZone();
+        monsterCardZone = new MonsterCardZone();
         hand = new Hand();
         haveSelectedCard = false;
     }
@@ -155,18 +147,17 @@ public class Player  {
         this.magicCardZone = magicCardZone;
     }
 
-    public Zone getZoneByZoneType(Zone.ZoneType zoneType)
-    { Zone zone = null;
-        switch (zoneType)
-        {
+    public Zone getZoneByZoneType(Zone.ZoneType zoneType) {
+        Zone zone = null;
+        switch (zoneType) {
             case HAND:
-                zone= hand;
+                zone = hand;
                 break;
             case MONSTER_CARD:
                 zone = monsterCardZone;
                 break;
             case MAGIC_CARD:
-                zone= magicCardZone;
+                zone = magicCardZone;
                 break;
             case DECK:
                 zone = deckZone;

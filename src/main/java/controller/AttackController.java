@@ -106,7 +106,6 @@ public class AttackController {
            isAttacking = false; }
        gamePlayController.changeTurn();
        }
-
     }
 
     public Boolean getAnswer() {

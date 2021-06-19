@@ -142,6 +142,7 @@ public class GamePlayController extends MenuController {
         refresh();
         currentPlayer = game.getFirstPlayer();
         opponentPlayer = game.getSecondPlayer();
+        currentPlayer.setCanDraw(true);
         game.setRoundCount(game.getRoundCount() + 1);
         game.getFirstPlayer().setLifePoint(8000);
         game.getSecondPlayer().setLifePoint(8000);
@@ -164,7 +165,7 @@ public class GamePlayController extends MenuController {
             opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
             opponentPlayer.getDeckZone().getZoneCards().remove(0);
         }
-        currentPlayer.setCanDraw(false);
+        currentPlayer.setCanDraw(true);
     }
 
     public void drawPhase() {
@@ -398,6 +399,7 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = set();
             selectedCard = null;
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -774,12 +776,14 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses normalAttack(int number) {
         DuelMenuResponses responses = attackController.normalAttack(number);
         selectedCard = null;
+        DuelMenu.getInstance().printString(showGameBoard());
         return responses;
     }
 
     public DuelMenuResponses directAttack() {
         DuelMenuResponses responses = attackController.directAttack();
         selectedCard = null;
+        DuelMenu.getInstance().printString(showGameBoard());
         return responses;
     }
 
