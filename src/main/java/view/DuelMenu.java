@@ -196,6 +196,7 @@ public class DuelMenu extends Menu {
             case RIVALS_TURN_AND_SHOW_DRAW_PHASE: {
                 System.out.println("phase : end phase");
                 gamePlayController.drawPhase();
+                gamePlayController.goNextPhase();
                 System.out.println("it's " + gamePlayController.getCurrentPlayer().getUser().getNickName() + "'s turn");
                 System.out.println("phase : draw phase");
             }
@@ -251,8 +252,14 @@ public class DuelMenu extends Menu {
             case CANT_CHANGE_THIS_CARD_POSITION:
                 System.out.println("you can't change this card position");
                 break;
+            case CANT_CHANGE_HIDDEN_CARD_POSITION:
+                System.out.println("You can't change hidden cards position");
+                break;
             case ALREADY_CHANGED_POSITION:
                 System.out.println("you already changed this card position in turn");
+                break;
+            case ALREADY_WANTED_POSITION:
+                System.out.println("selected card is already in wanted position");
                 break;
             case MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY:
                 System.out.println("monster card position changed successfully");
@@ -265,6 +272,9 @@ public class DuelMenu extends Menu {
                 break;
             case YOU_CANT_ATTACK_WITH_THIS_CARD:
                 System.out.println("you can't attack with this card");
+                break;
+            case NOT_IN_ATTACK_POSITION:
+                System.out.println("Your card is not in attack position");
                 break;
             case ALREADY_ATTACKED:
                 System.out.println("this card already attacked");
