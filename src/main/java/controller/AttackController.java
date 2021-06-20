@@ -13,6 +13,16 @@ import static controller.responses.DuelMenuResponses.*;
 
 public class AttackController {
     private static int damage;
+
+    public int getTexChangerCount() {
+        return texChangerCount;
+    }
+
+    public void setTexChangerCount(int texChangerCount) {
+        this.texChangerCount = texChangerCount;
+    }
+
+    private int texChangerCount = 0 ;
     private boolean isAttacking = false;
     private GamePlayController gamePlayController = GamePlayController.getInstance();
     private ArrayList<Card> attackStoppersInTurn = new ArrayList();
@@ -71,6 +81,9 @@ public class AttackController {
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
         if(target.getCardName().equals("Command Knight") && target.isActivated() && gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard()>=2)
             return CANT_ATTACK_TO_THIS_CARD;
+        if(target.getCardName().equals("Texchanger") && texChangerCount==0)
+        { GamePlayController.getMonsterEffectController().textChanger(target);
+            return EFFECT_DONE_SUCCESSFULLY; }
         isAttacking = true;
         checkerForEffects();
         if(!isAttacking)
@@ -117,17 +130,18 @@ public class AttackController {
     }
 
     public DuelMenuResponses attackToDefencePos(MonsterCard attacker, MonsterCard target, int number, Boolean hidden) {
+        attackedCardsInTurn.add(attacker);
         target.setHidden(false);
-        if(hidden)
-        {  if(target.getCardName().equals("Command Knight") && !target.isActivated())
-                GamePlayController.getMonsterEffectController().commandKnight(true,target);
-           if(target.getCardName().equals("Man-Eater Bug"))
-               GamePlayController.getMonsterEffectController().manEaterBug(target);
-        }
         int difference = attacker.getGameATK() - target.getGameDEF();
         damage = difference;
+        if(hidden)
+        {  if(target.getCardName().equals("Command Knight") && !target.isActivated())
+            GamePlayController.getMonsterEffectController().commandKnight(true,target);
+            if(target.getCardName().equals("Man-Eater Bug"))
+                GamePlayController.getMonsterEffectController().manEaterBug(target);
+            if(target.getCardName().equals("The Calculator") && !target.isActivated())
+                GamePlayController.getMonsterEffectController().theCalculator(target);}
         if (difference > 0) {
-            attackedCardsInTurn.add(attacker);
             if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
             if(target.getCardName().equals("Marshmallon"))
             {   if(hidden)
@@ -135,17 +149,16 @@ public class AttackController {
                 gamePlayController.getCurrentPlayer().reduceLifePoint(1000);}
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
             else DuelMenu.getInstance().hiddenDefensePositionMonsterDestroyed(target.getCardName());
         } else if (difference == 0) {
-            attackedCardsInTurn.add(attacker);
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED;
             else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyed(target.getCardName());
         } else {
             gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
-            attackedCardsInTurn.add(attacker);
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED;
             else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyedWithDamage(target.getCardName());

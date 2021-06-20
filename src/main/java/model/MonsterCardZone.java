@@ -1,5 +1,7 @@
 package model;
 
+import controller.GamePlayController;
+
 import java.util.TreeMap;
 
 public class MonsterCardZone extends NumericZone {

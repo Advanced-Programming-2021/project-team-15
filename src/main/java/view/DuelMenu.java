@@ -223,7 +223,7 @@ public class DuelMenu extends Menu {
                 System.out.println("this card needs two tributes");
                 break;
             case ENTER_ONE_NUMBER:
-                System.out.println("enter one number : ");
+                System.out.println("enter number");
                 break;
             case ENTER_FIRST_NUMBER:
                 System.out.println("enter first number : ");
@@ -379,6 +379,39 @@ public class DuelMenu extends Menu {
             case THIS_CARD_CANT_BE_DESTROYED:
                 System.out.println("this card can't be destroyed");
                 break;
+            case DO_YOU_WANNA_TRIBUTE:
+                System.out.println("do you wanna tribute to summon?");
+                break;
+            case DO_YOU_WANNA_TRIBUTE_2_MONSTERS:
+                System.out.println("do you wanna tribute 2 monsters?");
+                break;
+            case DO_YOU_WANNA_TRIBUTE_TREE_MONSTERS:
+                System.out.println("do you wanna tribute 3 monsters?");
+                break;
+            case DO_YOU_WANNA_NORMAL_SUMMON:
+                System.out.println("do you wanna normal summon?");
+                break;
+            case WANNA_CHOOSE_FROM_DECK:
+                System.out.println("wanna choose from deck?");
+                break;
+            case WANNA_CHOOSE_FROM_GRAVEYARD:
+                System.out.println("wanna choose from graveyard?");
+                break;
+            case WANNA_CHOOSE_FROM_HAND:
+                System.out.println("wanna choose from hand?");
+                break;
+            case NO_WAY_TO_SPECIAL_SUMMON:
+                System.out.println("");
+                break;
+            case  CANT_SPECIAL_SUMMON:
+                System.out.println("you can't special summon this monster");
+                break;
+            case CANT_NORMAL_SET_THIS_MONSTER:
+                System.out.println("you cant normal set this monster, it should be special summoned!");
+                break;
+
+
+
 
 
             default:

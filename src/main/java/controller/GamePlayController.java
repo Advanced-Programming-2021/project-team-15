@@ -347,7 +347,11 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
-        else if (((MonsterCard) selectedCard).getLevel() <= 4) {
+        if(selectedCard.getCardName().equals("Gate Guardian")) {
+            if(monsterEffectController.gateGuardian())
+                return CARD_SUMMONED;
+        }
+        if (((MonsterCard) selectedCard).getLevel() <= 4) {
             doSummon();
             //selectedCard = null;
             return DuelMenuResponses.CARD_SUMMONED;
@@ -364,10 +368,16 @@ public class GamePlayController extends MenuController {
                 return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
             else {
                 duelMenu.printResponse(GET_TWO_NUMBERS_TO_BE_TRIBUTE);
+                if(selectedCard.getCardName().equals("Beast King Barbaros"))
+                {  boolean ans = monsterEffectController.BeastKingBarbaros();
+                    if(!ans) return EFFECT_DONE_SUCCESSFULLY;
+                }
                 return twoMonsterTribute();
             }
         }
     }
+
+
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
@@ -425,6 +435,8 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
+        if(selectedCard.getCardName().equals("Gate Guardian"))
+            return CANT_NORMAL_SET_THIS_MONSTER;
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         setSetCard(selectedCard);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
@@ -500,7 +512,6 @@ public class GamePlayController extends MenuController {
             return NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
-//            checkForEffectsAfterSummon();
             selectedCard = null;
             return duelMenuResponses;
         }
@@ -517,7 +528,9 @@ public class GamePlayController extends MenuController {
             return CANT_FLIP_SUMMON;
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
-        checkForMonsters();
+        checkForMonsters((MonsterCard) selectedCard);
+        if(selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
+            monsterEffectController.manEaterBug((MonsterCard) selectedCard);
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
@@ -829,15 +842,15 @@ public class GamePlayController extends MenuController {
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
-        checkForMonsters();
+        checkForMonsters((MonsterCard) selectedCard);
     }
 
 
-    public void checkForMonsters()
-    {  if(selectedCard.getCardName().equals("Command Knight") && !selectedCard.isActivated())
-        monsterEffectController.commandKnight(true, (MonsterCard) selectedCard);
-        if(selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
-            monsterEffectController.manEaterBug((MonsterCard) selectedCard);
+    public void checkForMonsters(MonsterCard monsterCard)
+    {   if(monsterCard.getCardName().equals("The Calculator") && !monsterCard.isActivated())
+            monsterEffectController.theCalculator(monsterCard);
+        if(monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
+        monsterEffectController.commandKnight(true, monsterCard);
     }
 
     public void refresh() {
@@ -845,6 +858,7 @@ public class GamePlayController extends MenuController {
         effectController.removeControl();
         chainCards.clear();
         attackController.getAttackStoppersInTurn().clear();
+        attackController.setTexChangerCount(0);
         changedPositionCardsInTurn.clear();
         summonedOrSetMonstersInTurn.clear();
         setSpellCardsInTurn.clear();

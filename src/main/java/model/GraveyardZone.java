@@ -21,8 +21,8 @@ public class GraveyardZone extends Zone {
            spellEffectController.yami(false);
         else if(card.getCardName().equals("Forest") &&  card.isActivated())
             spellEffectController.forest(false);
-        else if(card.getCardName().equals("Closed Forest") &&  card.isActivated())
-            spellEffectController.closedForest(false);
+//        else if(card.getCardName().equals("Closed Forest") &&  card.isActivated())
+//            spellEffectController.closedForest(false);
           else if(card.getCardName().equals("Umiiruka") &&  card.isActivated())
               spellEffectController.forest(false);
         GamePlayController.getInstance().getActivatedCards().values().remove(card);
