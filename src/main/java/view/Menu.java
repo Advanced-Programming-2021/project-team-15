@@ -1,9 +1,9 @@
 package view;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.MenuController;
-import controller.RegexController;
-import utility.Utility;
+import controller.menuController.MenuController;
+import controller.utilizationController.RegexController;
+import controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public abstract class Menu {
     static {
-        Utility.initializeScanner();
+        UtilityController.initializeScanner();
     }
 
     private final MenuController menuController;

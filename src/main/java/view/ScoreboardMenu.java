@@ -1,10 +1,8 @@
 package view;
 
-import controller.ScoreboardController;
+import controller.menuController.ScoreboardController;
 import controller.responses.ScoreboardMenuResponses;
-import utility.Utility;
-
-import java.util.Scanner;
+import controller.utilizationController.UtilityController;
 
 public class ScoreboardMenu extends Menu {
     private static ScoreboardMenu scoreboardMenu;
@@ -24,10 +22,11 @@ public class ScoreboardMenu extends Menu {
     @Override
     public void scanInput() {
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (input.equals("scoreboard show")) checkAndCallShowScoreboard();
             else if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;

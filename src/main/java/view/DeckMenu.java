@@ -1,12 +1,11 @@
 package view;
 
-import controller.DeckController;
+import controller.menuController.DeckController;
 import controller.responses.DeckMenuResponses;
 import model.Deck;
-import utility.Utility;
+import controller.utilizationController.UtilityController;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class DeckMenu extends Menu {
     private static DeckMenu deckMenu;
@@ -31,7 +30,7 @@ public class DeckMenu extends Menu {
     @Override
     public void scanInput() {
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("deck create")) checkAndCallCreateDeck(input);
             else if (input.startsWith("deck delete")) checkAndCallDeleteDeck(input);
@@ -42,6 +41,7 @@ public class DeckMenu extends Menu {
             else if (input.equals("deck show --cards")) checkAndCallShowAllCardsOfUser();
             else if (input.startsWith("deck show")) checkAndCallShowThisDeck(input);
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;

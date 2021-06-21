@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.exceptions.CsvValidationException;
+import controller.menuController.*;
 import controller.responses.DeckMenuResponses;
 import controller.responses.LoginMenuResponses;
-import model.Card;
+import controller.utilizationController.DatabaseController;
+import model.cards.Card;
 import model.Deck;
 import model.User;
 import org.testng.annotations.Test;
@@ -25,7 +27,7 @@ public class MenuControllerTest {
     ShopController shopController = new ShopController();
     ScoreboardController scoreboardController = new ScoreboardController("Scoreboard Menu");
     DeckController deckController = new DeckController();
-    JSONController jsonController = new JSONController();
+    DatabaseController databaseController = new DatabaseController();
     DeckMenuResponses deckMenuResponses;
     LoginMenuResponses loginMenuResponses;
 
@@ -95,7 +97,7 @@ public class MenuControllerTest {
     public void createDeckTest() throws FileNotFoundException {
         User user = readUsersFromFile("src/test/resources/toAddCardToDeckTest.json").get(0);
         User.getAllUsers().add(user);
-        jsonController.refreshUsersToFileJson();
+        databaseController.refreshUsersToFileJson();
         MenuController.setUser(user);
         deckController.createDeck("Uh");
         assertNotNull(user.getDeckByName("Uh"));
@@ -110,9 +112,9 @@ public class MenuControllerTest {
     public void addCardToDeckTest() throws IOException, CsvValidationException {
         User user = readUsersFromFile("src/test/resources/toAddCardToDeckTest.json").get(0);
         User.getAllUsers().add(user);
-        jsonController.refreshUsersToFileJson();
+        databaseController.refreshUsersToFileJson();
         MenuController.setUser(user);
-        jsonController.loadGameCards();
+        databaseController.loadGameCards();
         user.setActiveDeck(user.getDeckByName(user.getActiveDeckName()));
         deckMenuResponses = deckController.addCardToDeck("Yami", "gav", Deck.DeckType.MAIN);
         assertEquals(DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK, deckMenuResponses);

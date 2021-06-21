@@ -1,11 +1,11 @@
 package view;
 
-import controller.AttackController;
-import controller.GamePlayController;
-import controller.MenuController;
+import controller.gamePlayController.AttackController;
+import controller.gamePlayController.GamePlayController;
+import controller.menuController.MenuController;
 import controller.responses.DuelMenuResponses;
 import model.Game;
-import utility.Utility;
+import controller.utilizationController.UtilityController;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -53,7 +53,7 @@ public class DuelMenu extends Menu {
     @Override
     public void scanInput() {
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
             else if (input.startsWith("duel")) {
@@ -70,7 +70,7 @@ public class DuelMenu extends Menu {
             }
         }
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
                 System.out.println("it's not your turn to play this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
@@ -437,9 +437,9 @@ public class DuelMenu extends Menu {
     public void playRPS() {
         while (true) {
             System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String firstPlayerMove = Utility.getNextLine();
+            String firstPlayerMove = UtilityController.getNextLine();
             System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String secondPlayerMove = Utility.getNextLine();
+            String secondPlayerMove = UtilityController.getNextLine();
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " +
@@ -496,11 +496,11 @@ public class DuelMenu extends Menu {
     }
 
     public int getNum() {
-        return Integer.parseInt(Utility.getNextLine());
+        return Integer.parseInt(UtilityController.getNextLine());
     }
 
     public String getString() {
-        return Utility.getNextLine();
+        return UtilityController.getNextLine();
     }
 
 

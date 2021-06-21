@@ -1,6 +1,6 @@
 package model;
 
-import controller.MenuController;
+import model.cards.Card;
 
 import java.util.ArrayList;
 
