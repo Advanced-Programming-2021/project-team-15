@@ -1,5 +1,7 @@
 package model;
 
+import model.cards.Card;
+
 import java.util.ArrayList;
 
 public class User {
@@ -75,7 +77,7 @@ public class User {
 
     public Card getCardByName(String cardName) {
         for (Card card : allCardsOfUser) {
-            if (card.cardName.equals(cardName))
+            if (card.getCardName().equals(cardName))
                 return card;
         }
         return null;

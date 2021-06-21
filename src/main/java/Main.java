@@ -1,8 +1,5 @@
 import com.opencsv.exceptions.CsvValidationException;
-import controller.JSONController;
-import model.Card;
-import model.MagicCard;
-import model.MonsterCard;
+import controller.utilizationController.DatabaseController;
 import view.LoginMenu;
 
 import java.io.IOException;
@@ -23,8 +20,8 @@ card show (page 10)
 
 public class Main {
     public static void main(String[] args) throws IOException, CsvValidationException {
-        JSONController jsonController = new JSONController();
-        jsonController.loadGameCards();
+        DatabaseController databaseController = new DatabaseController();
+        databaseController.loadGameCards();
         LoginMenu loginMenu = LoginMenu.getInstance();
 //        for (Card card : Card.getAllCards()) {
 //            if (card instanceof MonsterCard) System.out.println("monster");

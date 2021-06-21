@@ -1,11 +1,10 @@
 package view;
 
-import controller.ProfileController;
+import controller.menuController.ProfileController;
 import controller.responses.ProfileMenuResponses;
-import utility.Utility;
+import controller.utilizationController.UtilityController;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class ProfileMenu extends Menu {
     private static ProfileMenu profileMenu;
@@ -25,11 +24,12 @@ public class ProfileMenu extends Menu {
     @Override
     public void scanInput() {
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (input.startsWith("profile change --nickname")) checkAndCallChangeNickname(input);
             else if (input.startsWith("profile change")) checkAndCallChangePassword(input);
             else if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;

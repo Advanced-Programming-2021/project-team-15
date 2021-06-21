@@ -1,13 +1,12 @@
 package view;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.ShopController;
+import controller.menuController.ShopController;
 import controller.responses.ShopMenuResponses;
-import utility.Utility;
+import controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class ShopMenu extends Menu {
     private static ShopMenu shopMenu;
@@ -28,12 +27,13 @@ public class ShopMenu extends Menu {
     @Override
     public void scanInput() throws IOException, CsvValidationException {
         while (true) {
-            String input = Utility.getNextLine();
+            String input = UtilityController.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
             else if (input.equals("shop show --all")) checkAndCallShowAllCards();
             else if (regexController.showMenuRegex(input))
                 checkAndCallShowCurrentMenu();
+            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
