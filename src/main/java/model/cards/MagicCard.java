@@ -1,6 +1,7 @@
-package model;
+package model.cards;
 
 import com.google.gson.annotations.SerializedName;
+import model.cards.Card;
 
 public class MagicCard extends Card {
 
