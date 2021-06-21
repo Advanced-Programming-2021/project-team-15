@@ -14,18 +14,9 @@ import static controller.responses.DuelMenuResponses.*;
 public class AttackController {
     private static int damage;
 
-    public int getTexChangerCount() {
-        return texChangerCount;
-    }
-
-    public void setTexChangerCount(int texChangerCount) {
-        this.texChangerCount = texChangerCount;
-    }
-
-    private int texChangerCount = 0 ;
     private boolean isAttacking = false;
     private GamePlayController gamePlayController = GamePlayController.getInstance();
-    private ArrayList<Card> attackStoppersInTurn = new ArrayList();
+    private ArrayList<Card> cardsShouldBeUsedOnce = new ArrayList();
     private ArrayList<MonsterCard> cantBeAttacked = new ArrayList<>();
     private ArrayList<MonsterCard> attackedCardsInTurn = new ArrayList<>();
 
@@ -37,13 +28,7 @@ public class AttackController {
         AttackController.damage = damage;
     }
 
-    public ArrayList<Card> getAttackStoppersInTurn() {
-        return attackStoppersInTurn;
-    }
 
-    public void setAttackStoppersInTurn(ArrayList<Card> attackStoppersInTurn) {
-        this.attackStoppersInTurn = attackStoppersInTurn;
-    }
 
     public ArrayList<MonsterCard> getCantBeAttacked() {
         return cantBeAttacked;
@@ -81,8 +66,9 @@ public class AttackController {
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
         if(target.getCardName().equals("Command Knight") && target.isActivated() && gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard()>=2)
             return CANT_ATTACK_TO_THIS_CARD;
-        if(target.getCardName().equals("Texchanger") && texChangerCount==0)
-        { GamePlayController.getMonsterEffectController().textChanger(target);
+        if(target.getCardName().equals("Texchanger") && !haveBeenUsed(target))
+        {   cardsShouldBeUsedOnce.add(target);
+            GamePlayController.getMonsterEffectController().textChanger(target);
             return EFFECT_DONE_SUCCESSFULLY; }
         isAttacking = true;
         checkerForEffects();
@@ -149,6 +135,9 @@ public class AttackController {
                 gamePlayController.getCurrentPlayer().reduceLifePoint(1000);}
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
+            if(target.getCardName().equals("Exploder Dragon"))
+            {gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+             DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");}
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
@@ -172,6 +161,11 @@ public class AttackController {
         damage = difference;
         if (difference > 0) {
             attackedCardsInTurn.add(attacker);
+            if(target.getCardName().equals("Exploder Dragon"))
+            {   gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+                DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");
+                gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
+            return EFFECT_DONE_SUCCESSFULLY;}
             if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
             gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
             if(target.getCardName().equals("Marshmallon")) {
@@ -245,8 +239,8 @@ public class AttackController {
         return true;
     }
 
-    public Boolean haveBeenAttackStopper(Card card) {
-        for (Card card1 : attackStoppersInTurn) {
+    public Boolean haveBeenUsed(Card card) {
+        for (Card card1 : cardsShouldBeUsedOnce) {
             if (card1 == card)
                 return true;
         }
@@ -259,5 +253,13 @@ public class AttackController {
 
     public void setAttacking(boolean attacking) {
         isAttacking = attacking;
+    }
+
+    public ArrayList<Card> getCardsShouldBeUsedOnce() {
+        return cardsShouldBeUsedOnce;
+    }
+
+    public void setCardsShouldBeUsedOnce(ArrayList<Card> cardsShouldBeUsedOnce) {
+        this.cardsShouldBeUsedOnce = cardsShouldBeUsedOnce;
     }
 }

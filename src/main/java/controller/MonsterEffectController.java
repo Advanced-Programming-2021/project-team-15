@@ -74,6 +74,7 @@ public class MonsterEffectController {
         }
         gamePlayController.getSelectedCard().setActivated(true);
         chooseThreeMonsterAndTribute();
+        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         return true;
     }
 
@@ -84,15 +85,18 @@ public class MonsterEffectController {
         if (string.equals("yes")) {
             ((MonsterCard) gamePlayController.getSelectedCard()).setGameATK(1900);
             gamePlayController.doSummon();
+            duelMenu.printResponse(CARD_SUMMONED);
             gamePlayController.setSelectedCard(null);
             return false;
         }
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_TRIBUTE_TREE_MONSTERS);
         String ans = duelMenu.getString();
-        if (string.equals("yes")) {
+        if (ans.equals("yes")) {
             chooseThreeMonsterAndTribute();
             effectController.destroyCards(Card.CardType.MONSTER, false);
             effectController.destroyCards(Card.CardType.MAGIC, false);
+            gamePlayController.doSummon();
+            duelMenu.printResponse(CARD_SUMMONED);
             gamePlayController.setSelectedCard(null);
             return false;
         }
@@ -111,7 +115,6 @@ public class MonsterEffectController {
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(num, gamePlayController.getCurrentPlayer());
                 i++;
                 if (i == 3) {
-                    duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                     return;
                 }
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
@@ -121,7 +124,6 @@ public class MonsterEffectController {
 
     public void textChanger(MonsterCard textChanger) {
         duelMenu.printResponse(ATTACK_CANCELED);
-        attackController.setTexChangerCount(attackController.getTexChangerCount() + 1);
         gamePlayController.changeTurn();
         duelMenu.printResponse(DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD);
         String string = duelMenu.getString();
@@ -216,7 +218,7 @@ public class MonsterEffectController {
         }
     }
 
-    public void doHeraldOfCreation() {
+    public void heraldOfCreation() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int n = duelMenu.getNum();
@@ -248,7 +250,7 @@ public class MonsterEffectController {
 
     }
 
-    public Boolean HeraldOfCreation() {
+    public Boolean checkHeraldOfCreation() {
 
         for (Card card : gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards()) {
             if (card != null && (card instanceof MonsterCard) && ((MonsterCard) card).getLevel() >= 7 && gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0)
@@ -258,13 +260,13 @@ public class MonsterEffectController {
     }
 
 
-    public void ExploderDragon() {
-        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
-        gamePlayController.getCurrentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
-        gamePlayController.getOpponentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
-    }
+//    public void ExploderDragon() {
+//        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+//        gamePlayController.getCurrentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
+//        gamePlayController.getOpponentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
+//    }
 
-    public Boolean TerratigertheEmpoweredWarrior() {
+    public Boolean checkTerratigerTheEmpoweredWarrior() {
         for (Card card : gamePlayController.getCurrentPlayer().getHand().getZoneCards()) {
             if (card != null && (card instanceof MonsterCard) && ((MonsterCard) card).getLevel() <= 4 && ((MonsterCard) card).getMonsterEffectType() == MonsterCard.MonsterEffectType.NORMAL)
                 return true;
@@ -272,7 +274,7 @@ public class MonsterEffectController {
         return false;
     }
 
-    public Boolean doTerratigertheEmpoweredWarrior() {
+    public Boolean terratigertheEmpoweredWarrior() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int num = duelMenu.getNum();
@@ -288,13 +290,16 @@ public class MonsterEffectController {
         }
     }
 
-    public void TheTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
-    {
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
-        if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() == 5) {
-            duelMenu.printResponse(MONSTER_ZONE_IS_FULL);
-            return;
+    public boolean theTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
+    {   duelMenu.printResponse(DO_YOU_WANNA_SPECIAL_SUMMON);
+        String string = duelMenu.getString();
+        if(!string.equals("yes"))
+            return false;
+        if(gamePlayController.getCurrentPlayer().getHand().getZoneCards().isEmpty())
+        { duelMenu.printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
+            return false;
         }
+        duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int num = duelMenu.getNum();
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
@@ -309,7 +314,7 @@ public class MonsterEffectController {
                     theTricky.setMode(MonsterCard.Mode.ATTACK);
                 else
                     theTricky.setMode(MonsterCard.Mode.DEFENSE);
-                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                return true;
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);

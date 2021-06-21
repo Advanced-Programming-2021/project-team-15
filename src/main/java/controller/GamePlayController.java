@@ -141,16 +141,14 @@ public class GamePlayController extends MenuController {
 
     public void startRound() {
         refresh();
-        currentPlayer = game.getFirstPlayer();
-        opponentPlayer = game.getSecondPlayer();
         currentPlayer.setCanDraw(true);
         game.setRoundCount(game.getRoundCount() + 1);
         game.getFirstPlayer().setLifePoint(8000);
         game.getSecondPlayer().setLifePoint(8000);
         game.getFirstPlayer().startNewGame();
         game.getSecondPlayer().startNewGame();
-        game.getFirstPlayer().getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
-        game.getSecondPlayer().getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
+        currentPlayer.getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
+        opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
         for (Card card : currentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(currentPlayer);
             card.setSummoned(false);
@@ -205,6 +203,8 @@ public class GamePlayController extends MenuController {
         }
         game.setFirstPlayer(winner);
         game.setSecondPlayer(loser);
+        currentPlayer = game.getFirstPlayer();
+        opponentPlayer = game.getSecondPlayer();
         startRound();
         return true;
     }
@@ -357,6 +357,10 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() == 5 || ((MonsterCard) selectedCard).getLevel() == 6) {
+            if(selectedCard.getCardName().equals("The Tricky"))
+            {  boolean ans = monsterEffectController.theTricky((MonsterCard) selectedCard);
+                if(ans) return EFFECT_DONE_SUCCESSFULLY;
+            }
             if (currentPlayer.getMonsterCardZone().getNumberOfCard() == 0)
                 return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
             else {
@@ -823,9 +827,27 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
+           if(Game.getPhases().get(currentPhaseNumber).equals(Phase.PhaseLevel.MAIN1))
+            checkHeraldOfCreation();
             return DuelMenuResponses.SHOW_NEW_PHASE;
         }
     }
+    public void  checkHeraldOfCreation() {
+        Map<Integer, MonsterCard> monsterZone = currentPlayer.getMonsterCardZone().getZoneCards();
+        for (int i =1 ; i<=5 ; i++){
+            if( monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden())
+            {
+                if(monsterEffectController.checkHeraldOfCreation())
+                {   monsterZone.get(i).setActivated(true);
+                    duelMenu.printString("Herald of Creation is activated!");
+                    monsterEffectController.heraldOfCreation();
+                }
+            }
+
+        }
+
+    }
+
 
     public void changeTurn() {
         if (game.getFirstPlayer() == currentPlayer) {
@@ -851,14 +873,15 @@ public class GamePlayController extends MenuController {
             monsterEffectController.theCalculator(monsterCard);
         if(monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
         monsterEffectController.commandKnight(true, monsterCard);
+        if(monsterCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
+            monsterEffectController.terratigertheEmpoweredWarrior();
     }
 
     public void refresh() {
         suijinVictimsReset();
         effectController.removeControl();
         chainCards.clear();
-        attackController.getAttackStoppersInTurn().clear();
-        attackController.setTexChangerCount(0);
+        attackController.getCardsShouldBeUsedOnce().clear();
         changedPositionCardsInTurn.clear();
         summonedOrSetMonstersInTurn.clear();
         setSpellCardsInTurn.clear();
@@ -938,6 +961,18 @@ public class GamePlayController extends MenuController {
         return (currentPlayer.getLifePoint() <= 0 || opponentPlayer.getLifePoint() <= 0 || currentPlayer.getDeckZone().getZoneCards().size() == 0 ||
                 opponentPlayer.getDeckZone().getZoneCards().size() == 0);
     }
+    public void defineStarter(Player winner , Player loser)
+    {    String ans = duelMenu.defineStarterOfNextRound(winner.getUser().getUserName());
+        if(ans.equals("yes")) {
+            currentPlayer = loser;
+            opponentPlayer = winner;
+        } else {
+            currentPlayer = winner;
+            opponentPlayer = loser;
+        }
+        duelMenu.startNewRound(currentPlayer.getUser().getUserName());
+     startRound();
+    }
 
 
     public void defineWinner() {
@@ -950,38 +985,40 @@ public class GamePlayController extends MenuController {
             winner = opponentPlayer;
             loser = currentPlayer;
         }
-        game.getWinnerOfEachRound()[game.getRoundCount()] = winner;
+        game.getWinnerOfEachRound()[game.getRoundCount()-1] = winner;
 
         if (game.getRoundNumber() == 1) {
             game.getWinnerOfEachRound()[0] = winner;
             game.giveAwardOneRound(winner, loser);
-            duelMenu.printResponse(END_GAME);
+            duelMenu.matchFinished(winner.getUser().getUserName(),1000);
         } else {
             if (game.getRoundCount() == 1) //TODO ASK IF IT IS OK
             {
                 game.getWinnerOfEachRound()[0] = winner;
                 game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                 game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
-                duelMenu.printResponse(END_GAME_AND_RPC);
+                duelMenu.roundFinished(winner.getUser().getUserName());
+                defineStarter(winner,loser);
             } else if (game.getRoundCount() == 2) {
                 if (game.getWinnerOfEachRound()[0] == winner) {
                     game.getWinnerOfEachRound()[1] = winner;
                     game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                     game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                     game.giveAwardThreeRounds(winner, loser);
-                    duelMenu.printResponse(END_MATCH);
+                    duelMenu.matchFinished(winner.getUser().getUserName(),3000);
                 } else {
                     game.getWinnerOfEachRound()[1] = winner;
                     game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                     game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
-                    duelMenu.printResponse(END_GAME_AND_RPC);
+                    duelMenu.roundFinished(winner.getUser().getUserName());
+                    defineStarter(winner,loser);
                 }
             } else {
                 game.getWinnerOfEachRound()[2] = winner;
                 game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                 game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                 game.giveAwardThreeRounds(winner, loser);
-                duelMenu.printResponse(END_MATCH);
+                duelMenu.matchFinished(winner.getUser().getUserName(),3000);
             }
         }
     }

@@ -409,6 +409,9 @@ public class DuelMenu extends Menu {
             case CANT_NORMAL_SET_THIS_MONSTER:
                 System.out.println("you cant normal set this monster, it should be special summoned!");
                 break;
+            case DO_YOU_WANNA_SPECIAL_SUMMON:
+                System.out.println("do you wanna special summon this monster?");
+                break;
 
 
 
@@ -446,6 +449,15 @@ public class DuelMenu extends Menu {
         }
     }
 
+    public void roundFinished(String winner)
+    {
+        System.out.println(winner+" won the game!");
+    }
+    public void matchFinished(String winner, int score)
+    {
+        System.out.println(winner+" won the game with score : "+score);
+    }
+
     public void lifePointReduced(int point)
     {
         System.out.println("current player received "+point+" damage!");
@@ -454,6 +466,18 @@ public class DuelMenu extends Menu {
 
     public void doYouWannaActivateSpecialCard(String name) {
         System.out.println("do you wanna activate your " + name + " ?");
+    }
+
+
+    public String defineStarterOfNextRound(String name)
+    {
+        System.out.println("Dear "+name+" do you wanna be first player of this round?");
+        String ans = Utility.getNextLine();
+        return ans ;
+    }
+    public void startNewRound(String name)
+    {   System.out.println("GAME STARTED!");
+        System.out.println("now it will be " + name+ "'s turn");
     }
 
 
