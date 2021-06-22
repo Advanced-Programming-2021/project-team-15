@@ -1,9 +1,31 @@
 package controller;
 
 import controller.responses.LoginMenuResponses;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import model.User;
 
-public class LoginController extends MenuController {
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginController extends   MenuController implements Initializable {
+    @FXML
+    Button signUpButton;
+    @FXML
+    Button loginButton;
+    @FXML
+    Button exitButton;
+
     public LoginController() {
         super("Login Menu");
     }
@@ -40,5 +62,33 @@ public class LoginController extends MenuController {
             jsonController.refreshUsersToFileJson();
             return LoginMenuResponses.USER_REMOVE_SUCCESSFUL;
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loginButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage stage=(Stage) loginButton.getScene().getWindow();
+                stage.close();
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FxmlFiles/Login.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage primaryStage= new Stage();
+                primaryStage.setTitle("LoginPage");
+                primaryStage.setScene(new Scene(root, 1920, 1080));
+                primaryStage.show();
+            }
+
+        });
     }
 }
