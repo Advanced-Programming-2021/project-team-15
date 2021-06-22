@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController extends   MenuController implements Initializable {
+public class LoginController extends MenuController implements Initializable {
     @FXML
     Button signUpButton;
     @FXML
@@ -55,9 +55,10 @@ public class LoginController extends   MenuController implements Initializable {
 
     public LoginMenuResponses removeUser(String username, String password) {
         jsonController.refreshUsersFromFileJson();
-        if (User.getUserByUserName(username)==null) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
-        else if (!User.getUserByUserName(username).getPassWord().equals(password)) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
-        else{
+        if (User.getUserByUserName(username) == null) return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
+        else if (!User.getUserByUserName(username).getPassWord().equals(password))
+            return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
+        else {
             User.removeUserByUsername(username);
             jsonController.refreshUsersToFileJson();
             return LoginMenuResponses.USER_REMOVE_SUCCESSFUL;
@@ -69,7 +70,7 @@ public class LoginController extends   MenuController implements Initializable {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                Stage stage=(Stage) loginButton.getScene().getWindow();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
                 stage.close();
                 URL url = null;
                 try {
@@ -83,12 +84,42 @@ public class LoginController extends   MenuController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Stage primaryStage= new Stage();
+                Stage primaryStage = new Stage();
                 primaryStage.setTitle("LoginPage");
                 primaryStage.setScene(new Scene(root, 1920, 1080));
                 primaryStage.show();
             }
 
+        });
+        signUpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage stage = (Stage) signUpButton.getScene().getWindow();
+                stage.close();
+                URL url = null;
+                try {
+                    url = new File("src/main/java/FxmlFiles/Signup.fxml").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage primaryStage = new Stage();
+                primaryStage.setTitle("SignUpPage");
+                primaryStage.setScene(new Scene(root, 1920, 1080));
+                primaryStage.show();
+            }
+        });
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage stage = (Stage) exitButton.getScene().getWindow();
+                stage.close();
+            }
         });
     }
 }
