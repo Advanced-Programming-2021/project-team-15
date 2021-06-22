@@ -11,4 +11,6 @@ module YuGiOhG15 {
     opens view to javafx.fxml;
     opens model to javafx.base;
     exports view;
+    exports controller;
+    opens controller to javafx.fxml;
 }
