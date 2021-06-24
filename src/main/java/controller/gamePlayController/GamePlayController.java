@@ -598,29 +598,43 @@ public class GamePlayController extends MenuController {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
         spellEffectController.setDoIt(false);
         trapEffectController.setDoIt(false);
-        callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
-        if (!selectedCard.isActivated()) {
-            duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
-            return;
-        }
+
         if (chainCards.isEmpty())
+            mainCurrentPlayer = currentPlayer;
+
+        if (chainCards.isEmpty() || canContinueTheChain(selectedCard) ) {
             addSelectedCardToChain();
-        else if (canContinueTheChain())
-            addSelectedCardToChain();
+            callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
+            if (!selectedCard.isActivated()) {
+                duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+                return;
+            }
+        }
         else {
             duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
             selectedCard = null;
-            return;
         }
-        if (!canMakeChain(opponentPlayer) && !canMakeChain(currentPlayer)) {
-            if (chainPlayers.get(0) != currentPlayer) {
-                changeTurn();
-                duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
-            }
-            doChainActions();
-        } else if (canMakeChain(opponentPlayer))
-            askToActivateInRivalsTurn();
+        selectedCard = null;
+        if(mainCurrentPlayer==currentPlayer){
+            if(canMakeChain(opponentPlayer))
+            {changeTurn();
+                if(!askForActivatingInRivalsTurn())
+                { changeTurn();
+                    if(canMakeChain(currentPlayer) )
+                    { if(!askForActivatingInRivalsTurn())
+                        doChainActions();}
+                    else doChainActions();
+                }
+
+            } } else if (opponentPlayer == mainCurrentPlayer) {
+            changeTurn();
+            if (canMakeChain(currentPlayer)) {
+                if (!askForActivatingInRivalsTurn())
+                    doChainActions();
+            } else doChainActions();
+        }
     }
+
 
 
     public void addSelectedCardToChain() {
@@ -628,10 +642,10 @@ public class GamePlayController extends MenuController {
         chainPlayers.add(currentPlayer);
     }
 
-    public boolean canContinueTheChain() {
+    public boolean canContinueTheChain(Card card) {
         int lastSpeed = getMagicCardSpeed(chainCards.get(chainCards.size() - 1));
-        int selectedCardSpeed = getMagicCardSpeed((MagicCard) selectedCard);
-        if (selectedCardSpeed != 1 && selectedCardSpeed >= lastSpeed)
+        int cardSpeed = getMagicCardSpeed((MagicCard) card);
+        if (cardSpeed != 1 && cardSpeed >= lastSpeed)
             return true;
         else return false;
     }
@@ -642,13 +656,15 @@ public class GamePlayController extends MenuController {
             trapEffectController.setDoIt(true);
             callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
         }
+        chainCards.clear();
+        duelMenu.setCantDoThisKindsOfMove(true);
     }
 
 
     public Boolean canMakeChain(Player player) {
         Map<Integer, MagicCard> magics = player.getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
-            if (getMagicCardSpeed(magics.get(i)) != 1 && !magics.get(i).isActivated())
+            if (canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
                 return true;
         }
         return false;
@@ -757,29 +773,18 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public void askToActivateInRivalsTurn() {
-        changeTurn();
+    public boolean askForActivatingInRivalsTurn(){
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
         String ans = duelMenu.getString();
-        if (ans.equals("no")) {
-            if (currentPlayer == chainPlayers.get(0)) {
-                doChainActions();
-                duelMenu.setCantDoThisKindsOfMove(false);
-            } else {
-                changeTurn();
-                duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
-                if (canMakeChain(currentPlayer))
-                    duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
-                String ans2 = duelMenu.getString();
-                if (ans2.equals("no"))
-                    doChainActions();
-                else return;
-                duelMenu.setCantDoThisKindsOfMove(false);
-            }
+        if (ans.equals("no")){
+            return false;
         }
+        else return true;
     }
+
+
 
     public Boolean doPlayerHasThisCard(Player player, String name) {
         Map<Integer, MonsterCard> monsterZone = player.getMonsterCardZone().getZoneCards();

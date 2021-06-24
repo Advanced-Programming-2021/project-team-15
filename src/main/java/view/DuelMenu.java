@@ -91,7 +91,7 @@ public class DuelMenu extends Menu {
                 Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
                 if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
             } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-                //else if(input.equals("activate effect")) printResponse(gamePlayController.activateSpellCard());
+                else if(input.equals("activate effect")) gamePlayController.activateSpellCard();
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
@@ -412,6 +412,9 @@ public class DuelMenu extends Menu {
             case DO_YOU_WANNA_SPECIAL_SUMMON:
                 System.out.println("do you wanna special summon this monster?");
                 break;
+            case DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP:
+                System.out.println("do you wanna activate spell or trap?");
+                break;
 
 
 
@@ -472,7 +475,7 @@ public class DuelMenu extends Menu {
     public String defineStarterOfNextRound(String name)
     {
         System.out.println("Dear "+name+" do you wanna be first player of this round?");
-        String ans = Utility.getNextLine();
+        String ans = UtilityController.getNextLine();
         return ans ;
     }
     public void startNewRound(String name)
