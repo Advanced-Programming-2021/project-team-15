@@ -732,7 +732,7 @@ public class GamePlayController extends MenuController {
 
     public void checkForContinuesEffectsWhenNewCardAdded(MonsterCard monsterCard, Player currentPlayer) {
         Map<Integer, MonsterCard> ourMap = currentPlayer.getMagicCardZone().getZoneCards();
-        Map<Integer, MonsterCard> theirMap = getTheOtherPlayer(currentPlayer).getMagicCardZone().getZoneCards();
+        Map<Integer, MagicCard> theirMap = getTheOtherPlayer(currentPlayer).getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
             if(ourMap.get(i)!=null && ourMap.get(i).isActivated()) {
                 if (ourMap.get(i).getCardName().equals("Yami") || theirMap.get(i).getCardName().equals("Yami")) spellEffectController.yamiForNewAddedCard(monsterCard);
@@ -898,7 +898,7 @@ public class GamePlayController extends MenuController {
     public void  checkHeraldOfCreation() {
         Map<Integer, MonsterCard> monsterZone = currentPlayer.getMonsterCardZone().getZoneCards();
         for (int i =1 ; i<=5 ; i++){
-            if( monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden())
+            if( monsterZone.get(i)!=null && monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden())
             {
                 if(monsterEffectController.checkHeraldOfCreation())
                 {   monsterZone.get(i).setActivated(true);
