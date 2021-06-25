@@ -408,7 +408,6 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
         else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
         doSummon();
-        //selectedCard = null;
         return DuelMenuResponses.CARD_SUMMONED;
     }
 
@@ -1187,7 +1186,7 @@ public class GamePlayController extends MenuController {
            }
 
        }
-       return String;
+       return output.toString();
     }
 
 
