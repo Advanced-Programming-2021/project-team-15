@@ -72,13 +72,16 @@ public class DuelMenu extends Menu {
         while (true) {
             String input = UtilityController.getNextLine();
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
-                System.out.println("it's not your turn to play this kind of moves");
+                System.out.println("you can't do this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.matches("select(.*)(\\d)(.*)"))
-                checkAndCallSelectNumericZone(input);
+            else if (input.equals("surrender")) gamePlayController.surrender();
+            else if(input.matches("duel set-winner (\\.+)"))
+            {  Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
+                if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
+            }
+            else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
-            else if (input.startsWith("select"))
-                checkAndCallSelectNotNumericZone(input);
+            else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
             else if (input.equals("card show")) checkAndCallShowCard();
             else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
@@ -213,8 +216,10 @@ public class DuelMenu extends Menu {
             case ALREADY_SUMMONED_SET:
                 System.out.println("you already summoned/set on this turn");
                 break;
-            case CARD_SUMMONED:
+            case CARD_SUMMONED: {
                 System.out.println("summoned successfully");
+                 gamePlayController.checkForEffectsAfterSummon();
+            }
                 break;
             case GET_ONE_NUMBER_TO_BE_TRIBUTE:
                 System.out.println("this card needs one tribute");
@@ -267,8 +272,10 @@ public class DuelMenu extends Menu {
             case CANT_FLIP_SUMMON:
                 System.out.println("you can't flip summon this card");
                 break;
-            case FLIP_SUMMONED_SUCCESSFULLY:
+            case FLIP_SUMMONED_SUCCESSFULLY: {
                 System.out.println("flip summoned successfully");
+                gamePlayController.checkForTrapHole();
+            }
                 break;
             case YOU_CANT_ATTACK_WITH_THIS_CARD:
                 System.out.println("you can't attack with this card");
@@ -415,10 +422,6 @@ public class DuelMenu extends Menu {
             case DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP:
                 System.out.println("do you wanna activate spell or trap?");
                 break;
-
-
-
-
 
             default:
                 break;

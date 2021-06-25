@@ -32,12 +32,13 @@ public class GamePlayController extends MenuController {
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
+    private boolean isWinCheating;
     private Game game;
+    private boolean isSurrender;
     private int currentPhaseNumber = 0;
     private Card selectedCard;
     private Player currentPlayer;
     private Player opponentPlayer;
-    private boolean preparationNotDoneYet = false;
     private AttackController attackController;
     private ArrayList<MonsterCard> summonedOrSetMonstersInTurn = new ArrayList<>();
     private ArrayList<MagicCard> setSpellCardsInTurn = new ArrayList<>();
@@ -292,7 +293,7 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = summon();
             selectedCard.setSummoned(true);
-//            checkForEffectsAfterSummon();
+
             selectedCard = null;
             DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
@@ -359,6 +360,8 @@ public class GamePlayController extends MenuController {
                 return CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() <= 4) {
+            if(selectedCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
+                monsterEffectController.terratigertheEmpoweredWarrior();
             doSummon();
             //selectedCard = null;
             return DuelMenuResponses.CARD_SUMMONED;
@@ -545,29 +548,33 @@ public class GamePlayController extends MenuController {
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
+    public void checkForTrapHole()
+    {
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
+                ((MonsterCard) selectedCard).getGameATK() >= 1000) {
+            gamePlayController.changeTurn();
+            duelMenu.doYouWannaActivateSpecialCard("Trap Hole");
+            if (getAnswer()) {
+                trapEffectController.trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"));
+            }
+            gamePlayController.changeTurn();
+        }
+    }
 
     public void checkForEffectsAfterSummon() {
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(),
                 "Torrential Tribute") != null) {
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Torrential Tribute");
+           duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
             if (getAnswer()) {
-                GamePlayController.getTrapEffectController().torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
+                trapEffectController.torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
             }
         }
-        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
-                ((MonsterCard) selectedCard).getGameATK() >= 1000) {
-            gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Trap Hole");
-            if (getAnswer()) {
-                GamePlayController.getTrapEffectController().trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"));
-            }
-            gamePlayController.changeTurn();
-        }
+        checkForTrapHole();
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute") != null) {
             gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Torrential Tribute");
+            duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
             if (getAnswer()) {
-                GamePlayController.getTrapEffectController().torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
+                trapEffectController.torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
             }
             gamePlayController.changeTurn();
         }
@@ -581,7 +588,7 @@ public class GamePlayController extends MenuController {
 
     }
 
-    public void activateSpellCard() { //TODO COMPLETE
+    public void activateSpellCard() {
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -603,12 +610,12 @@ public class GamePlayController extends MenuController {
             mainCurrentPlayer = currentPlayer;
 
         if (chainCards.isEmpty() || canContinueTheChain(selectedCard) ) {
-            addSelectedCardToChain();
             callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
             if (!selectedCard.isActivated()) {
                 duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
                 return;
             }
+            else addSelectedCardToChain();
         }
         else {
             duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
@@ -773,6 +780,12 @@ public class GamePlayController extends MenuController {
         }
     }
 
+    public void surrender()
+    {   isSurrender = true;
+        defineWinner();
+
+    }
+
     public boolean askForActivatingInRivalsTurn(){
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
@@ -878,6 +891,12 @@ public class GamePlayController extends MenuController {
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
         checkForMonsters((MonsterCard) selectedCard);
     }
+    public void cheatAndWin(String name)
+    {  if(name.equals(currentPlayer.getUser().getNickName())) {
+        isWinCheating = true;
+        defineWinner();
+    }
+    }
 
 
     public void checkForMonsters(MonsterCard monsterCard)
@@ -885,8 +904,7 @@ public class GamePlayController extends MenuController {
             monsterEffectController.theCalculator(monsterCard);
         if(monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
         monsterEffectController.commandKnight(true, monsterCard);
-        if(monsterCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
-            monsterEffectController.terratigertheEmpoweredWarrior();
+
     }
 
     public void refresh() {
@@ -990,7 +1008,17 @@ public class GamePlayController extends MenuController {
     public void defineWinner() {
         Player winner;
         Player loser;
-        if (currentPlayer.getLifePoint() <= 0 || currentPlayer.getDeckZone().getZoneCards().size() == 0) {
+        if (isWinCheating)
+        {   winner = currentPlayer;
+            loser = opponentPlayer;
+            isWinCheating = false;
+        }
+        else if(isSurrender)
+        {   winner = opponentPlayer;
+            loser  = currentPlayer;
+            isSurrender = false;
+        }
+        else if (currentPlayer.getLifePoint() <= 0 || currentPlayer.getDeckZone().getZoneCards().size() == 0) {
             winner = currentPlayer;
             loser = opponentPlayer;
         } else {
