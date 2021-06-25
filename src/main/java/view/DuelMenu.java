@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class DuelMenu extends Menu {
     private static DuelMenu duelMenu;
     private static GamePlayController gamePlayController;
+    public boolean isAi=false;
 
     static {
         gamePlayController = GamePlayController.getInstance();
@@ -91,7 +92,7 @@ public class DuelMenu extends Menu {
                 Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
                 if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
             } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-                else if(input.equals("activate effect")) gamePlayController.activateSpellCard();
+            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
@@ -123,8 +124,21 @@ public class DuelMenu extends Menu {
     }
 
     public void checkAndCallNewAiDuel(String input) {
-
-
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.newDuelRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+            isAi = true;
+            String secondPlayer = "ai";
+            secondUsername = secondPlayer;
+            int rounds = Integer.parseInt(enteredDetails.get("rounds"));
+            duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
+            printResponse(duelMenuResponses);
+            if (duelMenuResponses == DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
+                weAreOnGame = true;
+                playRPS();
+            }
+        }
     }
 
     public void checkAndCallSelectNumericZone(String input) {
@@ -367,10 +381,10 @@ public class DuelMenu extends Menu {
                 System.out.println("enter player (rival/current player)");
             case ATTACK_CANCELED:
                 System.out.println("attack canceled!");
-            case  ACTIVATION_CANCELED:
+            case ACTIVATION_CANCELED:
                 System.out.println("activation cancelled!");
                 break;
-            case  CANT_ADD_THIS_CARD_TO_CHAIN:
+            case CANT_ADD_THIS_CARD_TO_CHAIN:
                 System.out.println("can't be added to chain");
                 break;
             case CANT_ATTACK_TO_THIS_CARD:
@@ -403,7 +417,7 @@ public class DuelMenu extends Menu {
             case NO_WAY_TO_SPECIAL_SUMMON:
                 System.out.println("");
                 break;
-            case  CANT_SPECIAL_SUMMON:
+            case CANT_SPECIAL_SUMMON:
                 System.out.println("you can't special summon this monster");
                 break;
             case CANT_NORMAL_SET_THIS_MONSTER:
@@ -415,9 +429,6 @@ public class DuelMenu extends Menu {
             case DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP:
                 System.out.println("do you wanna activate spell or trap?");
                 break;
-
-
-
 
 
             default:
@@ -439,10 +450,17 @@ public class DuelMenu extends Menu {
 
     public void playRPS() {
         while (true) {
+            String secondPlayerMove;
             System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
             String firstPlayerMove = UtilityController.getNextLine();
             System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String secondPlayerMove = UtilityController.getNextLine();
+            if (gamePlayController.getGame().getSecondPlayer().getUser().getNickName().equals("ai")) {
+                int r = (int) (Math.random() * 3);
+                secondPlayerMove = new String[]{"rock", "paper", "scissors"}[r];
+                System.out.println(secondPlayerMove);
+            } else {
+                secondPlayerMove = UtilityController.getNextLine();
+            }
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " +
@@ -452,18 +470,16 @@ public class DuelMenu extends Menu {
         }
     }
 
-    public void roundFinished(String winner)
-    {
-        System.out.println(winner+" won the game!");
-    }
-    public void matchFinished(String winner, int score)
-    {
-        System.out.println(winner+" won the game with score : "+score);
+    public void roundFinished(String winner) {
+        System.out.println(winner + " won the game!");
     }
 
-    public void lifePointReduced(int point)
-    {
-        System.out.println("current player received "+point+" damage!");
+    public void matchFinished(String winner, int score) {
+        System.out.println(winner + " won the game with score : " + score);
+    }
+
+    public void lifePointReduced(int point) {
+        System.out.println("current player received " + point + " damage!");
 
     }
 
@@ -472,15 +488,15 @@ public class DuelMenu extends Menu {
     }
 
 
-    public String defineStarterOfNextRound(String name)
-    {
-        System.out.println("Dear "+name+" do you wanna be first player of this round?");
+    public String defineStarterOfNextRound(String name) {
+        System.out.println("Dear " + name + " do you wanna be first player of this round?");
         String ans = UtilityController.getNextLine();
-        return ans ;
+        return ans;
     }
-    public void startNewRound(String name)
-    {   System.out.println("GAME STARTED!");
-        System.out.println("now it will be " + name+ "'s turn");
+
+    public void startNewRound(String name) {
+        System.out.println("GAME STARTED!");
+        System.out.println("now it will be " + name + "'s turn");
     }
 
 

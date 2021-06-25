@@ -185,7 +185,64 @@ public class GamePlayController extends MenuController {
             if (checkIfGameIsFinished())
                 defineWinner();
         } else {
-            currentPlayer.setCanDraw(true);
+            currentPlayer.
+                    setCanDraw(true);
+
+
+        }
+    }
+
+    public void aiSummonOrSetMonster() {
+        for (int i = 0; i < gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand(); i++) {
+            if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() < 5) {
+                if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i)).getGameATK() > 1500 &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.ATTACK);
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setHidden(false);
+                    gamePlayController.getCurrentPlayer().getHand().getZoneCards().remove(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    break;
+
+                } else if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i)).getGameDEF() > 1500 &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.DEFENSE);
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
+                    gamePlayController.getCurrentPlayer().getHand().getZoneCards().remove(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    break;
+                } else if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.DEFENSE);
+                    ((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
+                    gamePlayController.getCurrentPlayer().getHand().getZoneCards().remove(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    break;
+                }
+            }
+        }
+    }
+
+    public void aiSetMagicCard() {
+        for (int i = 0; i < gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand(); i++) {
+            if (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard() < 5) {
+                if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i) instanceof MagicCard) {
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+                    ((MagicCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
+                    gamePlayController.getCurrentPlayer().getHand().getZoneCards().remove(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
+
+                }
+            }
+        }
+    }
+    public void aiDirectAttack(){
+        if(gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard()==0) {
+            for (int i = 0; i < gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard(); i++) {
+                if (((MonsterCard) gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).getMode() == MonsterCard.Mode.ATTACK) {
+                    gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard)gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i)).getGameATK());
+                }
+            }
         }
     }
 
@@ -354,8 +411,8 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
-        if(selectedCard.getCardName().equals("Gate Guardian")) {
-            if(monsterEffectController.gateGuardian())
+        if (selectedCard.getCardName().equals("Gate Guardian")) {
+            if (monsterEffectController.gateGuardian())
                 return CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() <= 4) {
@@ -364,9 +421,9 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() == 5 || ((MonsterCard) selectedCard).getLevel() == 6) {
-            if(selectedCard.getCardName().equals("The Tricky"))
-            {  boolean ans = monsterEffectController.theTricky((MonsterCard) selectedCard);
-                if(ans) return EFFECT_DONE_SUCCESSFULLY;
+            if (selectedCard.getCardName().equals("The Tricky")) {
+                boolean ans = monsterEffectController.theTricky((MonsterCard) selectedCard);
+                if (ans) return EFFECT_DONE_SUCCESSFULLY;
             }
             if (currentPlayer.getMonsterCardZone().getNumberOfCard() == 0)
                 return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
@@ -379,15 +436,14 @@ public class GamePlayController extends MenuController {
                 return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
             else {
                 duelMenu.printResponse(GET_TWO_NUMBERS_TO_BE_TRIBUTE);
-                if(selectedCard.getCardName().equals("Beast King Barbaros"))
-                {  boolean ans = monsterEffectController.BeastKingBarbaros();
-                    if(!ans) return EFFECT_DONE_SUCCESSFULLY;
+                if (selectedCard.getCardName().equals("Beast King Barbaros")) {
+                    boolean ans = monsterEffectController.BeastKingBarbaros();
+                    if (!ans) return EFFECT_DONE_SUCCESSFULLY;
                 }
                 return twoMonsterTribute();
             }
         }
     }
-
 
 
     public DuelMenuResponses oneMonsterTribute() {
@@ -446,7 +502,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
-        if(selectedCard.getCardName().equals("Gate Guardian"))
+        if (selectedCard.getCardName().equals("Gate Guardian"))
             return CANT_NORMAL_SET_THIS_MONSTER;
         currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         setSetCard(selectedCard);
@@ -540,7 +596,7 @@ public class GamePlayController extends MenuController {
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
         checkForMonsters((MonsterCard) selectedCard);
-        if(selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
+        if (selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
             monsterEffectController.manEaterBug((MonsterCard) selectedCard);
         selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
@@ -602,31 +658,31 @@ public class GamePlayController extends MenuController {
         if (chainCards.isEmpty())
             mainCurrentPlayer = currentPlayer;
 
-        if (chainCards.isEmpty() || canContinueTheChain(selectedCard) ) {
+        if (chainCards.isEmpty() || canContinueTheChain(selectedCard)) {
             addSelectedCardToChain();
             callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
             if (!selectedCard.isActivated()) {
                 duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
                 return;
             }
-        }
-        else {
+        } else {
             duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
             selectedCard = null;
         }
         selectedCard = null;
-        if(mainCurrentPlayer==currentPlayer){
-            if(canMakeChain(opponentPlayer))
-            {changeTurn();
-                if(!askForActivatingInRivalsTurn())
-                { changeTurn();
-                    if(canMakeChain(currentPlayer) )
-                    { if(!askForActivatingInRivalsTurn())
-                        doChainActions();}
-                    else doChainActions();
+        if (mainCurrentPlayer == currentPlayer) {
+            if (canMakeChain(opponentPlayer)) {
+                changeTurn();
+                if (!askForActivatingInRivalsTurn()) {
+                    changeTurn();
+                    if (canMakeChain(currentPlayer)) {
+                        if (!askForActivatingInRivalsTurn())
+                            doChainActions();
+                    } else doChainActions();
                 }
 
-            } } else if (opponentPlayer == mainCurrentPlayer) {
+            }
+        } else if (opponentPlayer == mainCurrentPlayer) {
             changeTurn();
             if (canMakeChain(currentPlayer)) {
                 if (!askForActivatingInRivalsTurn())
@@ -634,7 +690,6 @@ public class GamePlayController extends MenuController {
             } else doChainActions();
         }
     }
-
 
 
     public void addSelectedCardToChain() {
@@ -773,17 +828,15 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public boolean askForActivatingInRivalsTurn(){
+    public boolean askForActivatingInRivalsTurn() {
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
         String ans = duelMenu.getString();
-        if (ans.equals("no")){
+        if (ans.equals("no")) {
             return false;
-        }
-        else return true;
+        } else return true;
     }
-
 
 
     public Boolean doPlayerHasThisCard(Player player, String name) {
@@ -832,6 +885,7 @@ public class GamePlayController extends MenuController {
         return false;
     }
 
+
     public DuelMenuResponses goNextPhase() {
         DuelMenu.getInstance().printString(showGameBoard());
         if (currentPhaseNumber == 5) {
@@ -839,18 +893,18 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
-           if(Game.getPhases().get(currentPhaseNumber).equals(Phase.PhaseLevel.MAIN1))
-            checkHeraldOfCreation();
+            if (Game.getPhases().get(currentPhaseNumber).equals(Phase.PhaseLevel.MAIN1))
+                checkHeraldOfCreation();
             return DuelMenuResponses.SHOW_NEW_PHASE;
         }
     }
-    public void  checkHeraldOfCreation() {
+
+    public void checkHeraldOfCreation() {
         Map<Integer, MonsterCard> monsterZone = currentPlayer.getMonsterCardZone().getZoneCards();
-        for (int i =1 ; i<=5 ; i++){
-            if( monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden())
-            {
-                if(monsterEffectController.checkHeraldOfCreation())
-                {   monsterZone.get(i).setActivated(true);
+        for (int i = 1; i <= 5; i++) {
+            if (monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden()) {
+                if (monsterEffectController.checkHeraldOfCreation()) {
+                    monsterZone.get(i).setActivated(true);
                     duelMenu.printString("Herald of Creation is activated!");
                     monsterEffectController.heraldOfCreation();
                 }
@@ -880,12 +934,12 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public void checkForMonsters(MonsterCard monsterCard)
-    {   if(monsterCard.getCardName().equals("The Calculator") && !monsterCard.isActivated())
+    public void checkForMonsters(MonsterCard monsterCard) {
+        if (monsterCard.getCardName().equals("The Calculator") && !monsterCard.isActivated())
             monsterEffectController.theCalculator(monsterCard);
-        if(monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
-        monsterEffectController.commandKnight(true, monsterCard);
-        if(monsterCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
+        if (monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
+            monsterEffectController.commandKnight(true, monsterCard);
+        if (monsterCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
             monsterEffectController.terratigertheEmpoweredWarrior();
     }
 
@@ -973,9 +1027,10 @@ public class GamePlayController extends MenuController {
         return (currentPlayer.getLifePoint() <= 0 || opponentPlayer.getLifePoint() <= 0 || currentPlayer.getDeckZone().getZoneCards().size() == 0 ||
                 opponentPlayer.getDeckZone().getZoneCards().size() == 0);
     }
-    public void defineStarter(Player winner , Player loser)
-    {    String ans = duelMenu.defineStarterOfNextRound(winner.getUser().getUserName());
-        if(ans.equals("yes")) {
+
+    public void defineStarter(Player winner, Player loser) {
+        String ans = duelMenu.defineStarterOfNextRound(winner.getUser().getUserName());
+        if (ans.equals("yes")) {
             currentPlayer = loser;
             opponentPlayer = winner;
         } else {
@@ -983,7 +1038,7 @@ public class GamePlayController extends MenuController {
             opponentPlayer = loser;
         }
         duelMenu.startNewRound(currentPlayer.getUser().getUserName());
-     startRound();
+        startRound();
     }
 
 
@@ -997,12 +1052,12 @@ public class GamePlayController extends MenuController {
             winner = opponentPlayer;
             loser = currentPlayer;
         }
-        game.getWinnerOfEachRound()[game.getRoundCount()-1] = winner;
+        game.getWinnerOfEachRound()[game.getRoundCount() - 1] = winner;
 
         if (game.getRoundNumber() == 1) {
             game.getWinnerOfEachRound()[0] = winner;
             game.giveAwardOneRound(winner, loser);
-            duelMenu.matchFinished(winner.getUser().getUserName(),1000);
+            duelMenu.matchFinished(winner.getUser().getUserName(), 1000);
         } else {
             if (game.getRoundCount() == 1) //TODO ASK IF IT IS OK
             {
@@ -1010,27 +1065,27 @@ public class GamePlayController extends MenuController {
                 game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                 game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                 duelMenu.roundFinished(winner.getUser().getUserName());
-                defineStarter(winner,loser);
+                defineStarter(winner, loser);
             } else if (game.getRoundCount() == 2) {
                 if (game.getWinnerOfEachRound()[0] == winner) {
                     game.getWinnerOfEachRound()[1] = winner;
                     game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                     game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                     game.giveAwardThreeRounds(winner, loser);
-                    duelMenu.matchFinished(winner.getUser().getUserName(),3000);
+                    duelMenu.matchFinished(winner.getUser().getUserName(), 3000);
                 } else {
                     game.getWinnerOfEachRound()[1] = winner;
                     game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                     game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                     duelMenu.roundFinished(winner.getUser().getUserName());
-                    defineStarter(winner,loser);
+                    defineStarter(winner, loser);
                 }
             } else {
                 game.getWinnerOfEachRound()[2] = winner;
                 game.getFirstPlayerLifePointEachRound().add(game.getFirstPlayer().getLifePoint());
                 game.getSecondPlayerLifePointEachRound().add(game.getSecondPlayer().getLifePoint());
                 game.giveAwardThreeRounds(winner, loser);
-                duelMenu.matchFinished(winner.getUser().getUserName(),3000);
+                duelMenu.matchFinished(winner.getUser().getUserName(), 3000);
             }
         }
     }

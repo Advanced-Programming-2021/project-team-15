@@ -27,9 +27,6 @@ public class AttackController {
     public static void setDamage(int damage) {
         AttackController.damage = damage;
     }
-
-
-
     public ArrayList<MonsterCard> getCantBeAttacked() {
         return cantBeAttacked;
     }
