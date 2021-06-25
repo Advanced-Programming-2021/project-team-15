@@ -74,6 +74,7 @@ public class DuelMenu extends Menu {
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
                 System.out.println("you can't do this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
+            else if(input.equals("show graveyard"))  showGraveYard();
             else if (input.equals("surrender")) gamePlayController.surrender();
             else if (input.matches("duel set-winner (\\.+)")) {
                 Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
@@ -99,6 +100,18 @@ public class DuelMenu extends Menu {
                 super.isExit = false;
                 return;
             }
+        }
+    }
+
+    public void showGraveYard()
+    {
+        System.out.println(gamePlayController.showGraveYard());
+        while (true)
+        {  String input = UtilityController.getNextLine();
+            if(input.equals("back"))
+                break;
+            else if(input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard());
+            else System.out.println("invalid command! you should go back to game!");
         }
     }
 
@@ -421,7 +434,12 @@ public class DuelMenu extends Menu {
             case DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP:
                 System.out.println("do you wanna activate spell or trap?");
                 break;
-
+            case YOU_SHOULD_SET_TRAP:
+                System.out.println("you should set the trap");
+                break;
+            case CANT_ACTIVATE_TRAP_IN_THIS_TURN:
+                System.out.println("you can't activate the trap in first turn you set");
+                break;
             default:
                 break;
         }
