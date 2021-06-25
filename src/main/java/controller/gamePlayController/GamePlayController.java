@@ -731,7 +731,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void checkForContinuesEffectsWhenNewCardAdded(MonsterCard monsterCard, Player currentPlayer) {
-        Map<Integer, MonsterCard> ourMap = currentPlayer.getMagicCardZone().getZoneCards();
+        Map<Integer, MagicCard> ourMap = currentPlayer.getMagicCardZone().getZoneCards();
         Map<Integer, MagicCard> theirMap = getTheOtherPlayer(currentPlayer).getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
             if(ourMap.get(i)!=null && ourMap.get(i).isActivated()) {
@@ -890,12 +890,12 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
         } else {
             currentPhaseNumber++;
-           if(Game.getPhases().get(currentPhaseNumber).equals(Phase.PhaseLevel.MAIN1))
-            checkHeraldOfCreation();
+           //if(Game.getPhases().get(currentPhaseNumber).equals(Phase.PhaseLevel.MAIN1))
+            //checkHeraldOfCreation();
             return DuelMenuResponses.SHOW_NEW_PHASE;
         }
     }
-    public void  checkHeraldOfCreation() {
+    public void checkHeraldOfCreation() {
         Map<Integer, MonsterCard> monsterZone = currentPlayer.getMonsterCardZone().getZoneCards();
         for (int i =1 ; i<=5 ; i++){
             if( monsterZone.get(i)!=null && monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden())

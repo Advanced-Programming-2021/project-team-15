@@ -13,7 +13,7 @@ public class MonsterCardZone extends NumericZone {
 
     public MonsterCardZone() {
         super(ZoneType.MONSTER_CARD, new TreeMap<>());
-        for (int i = 1; i < 5; i++)
+        for (int i = 1; i <= 5; i++)
             zoneCards.put(i, null);
     }
 

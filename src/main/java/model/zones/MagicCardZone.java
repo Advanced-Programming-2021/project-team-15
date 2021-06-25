@@ -10,7 +10,7 @@ public class MagicCardZone extends NumericZone{
 
     public MagicCardZone() {
         super(ZoneType.MAGIC_CARD , new TreeMap<>());
-        for (int i = 1 ; i<5; i++)
+        for (int i = 1 ; i<=5; i++)
             zoneCards.put(i, null);
     }
 
