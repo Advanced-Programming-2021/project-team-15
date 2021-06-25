@@ -1,17 +1,11 @@
 package controller.utilizationController;
 
-import controller.menuController.MainMenuController;
-import controller.menuController.ShopController;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexController {
-    MainMenuController mainMenuController = new MainMenuController();
-    ShopController shopController = new ShopController();
-
     public Boolean createUserRegex(String input, HashMap<String, String> enteredDetails) {
         Matcher matcher = getCommandMatcher(input, "user create (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+)$");
         if (matcher.find()) {
@@ -46,8 +40,7 @@ public class RegexController {
             enteredDetails.put("username", inputParameters.get("--username"));
             enteredDetails.put("nickname", inputParameters.get("--nickname"));
             enteredDetails.put("password", inputParameters.get("--password"));
-        }
-        else if (commandCase.equals(CommandCase.SHORT)) {
+        } else if (commandCase.equals(CommandCase.SHORT)) {
             enteredDetails.put("username", inputParameters.get("-u"));
             enteredDetails.put("nickname", inputParameters.get("-n"));
             enteredDetails.put("password", inputParameters.get("-p"));
@@ -97,8 +90,7 @@ public class RegexController {
         if (commandCase.equals(CommandCase.LONG)) {
             enteredDetails.put("username", inputParameters.get("--username"));
             enteredDetails.put("password", inputParameters.get("--password"));
-        }
-        else if (commandCase.equals(CommandCase.SHORT)) {
+        } else if (commandCase.equals(CommandCase.SHORT)) {
             enteredDetails.put("username", inputParameters.get("-u"));
             enteredDetails.put("password", inputParameters.get("-p"));
         }
@@ -236,7 +228,7 @@ public class RegexController {
     public Boolean importExportRegex(String input, HashMap<String, String> enteredDetails) {
         Matcher matcher = getCommandMatcher(input, "(import|export) card ([\\w'\\-, ]+)$");
         if (matcher.find()) {
-            enteredDetails.put("action",matcher.group(1));
+            enteredDetails.put("action", matcher.group(1));
             enteredDetails.put("name", matcher.group(2));
             return true;
         }

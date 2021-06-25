@@ -14,7 +14,7 @@ public class Card {
         allCards = new ArrayList<>();
     }
 
-    public Boolean isSummoned = false;
+    public transient Boolean isSummoned = false;
     protected transient Player owner;
     //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")

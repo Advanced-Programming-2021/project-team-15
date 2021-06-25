@@ -4,6 +4,7 @@ import controller.menuController.ImportExportController;
 import controller.responses.ImportExportResponses;
 import controller.utilizationController.UtilityController;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class ImportExportMenu extends Menu {
@@ -21,12 +22,10 @@ public class ImportExportMenu extends Menu {
     }
 
     @Override
-    public void scanInput() {
+    public void scanInput() throws IOException {
         while (true) {
             String input = UtilityController.getNextLine();
-            if (input.equals("serialize")) importExportController.serialize();
-            else if (input.equals("deserialize")) importExportController.deserialize();
-            else if (input.startsWith("import") ||
+            if (input.startsWith("import") ||
                     input.startsWith("export")) checkAndCallImportExportCard(input);
             else if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
@@ -39,7 +38,7 @@ public class ImportExportMenu extends Menu {
         }
     }
 
-    public void checkAndCallImportExportCard(String input) {
+    public void checkAndCallImportExportCard(String input) throws IOException {
         HashMap<String, String> enteredDetails = new HashMap<>();
         if (!regexController.importExportRegex(input, enteredDetails))
             System.out.println("invalid command");
@@ -58,10 +57,13 @@ public class ImportExportMenu extends Menu {
                 output = "card with this name doesn't exist";
                 break;
             case CARD_EXPORT_SUCCESSFUL:
-                output = "card " + importExportController.getChosenCard().getCardName() + " exported successfully";
+                output = "card exported successfully";
                 break;
             case CARD_IMPORT_SUCCESSFUL:
-                output = "card " + importExportController.getChosenCard().getCardName() + " imported successfully";
+                output = "card imported successfully";
+                break;
+            case CARD_ALREADY_EXISTS:
+                output = "card with this name already exists";
                 break;
         }
         System.out.println(output);

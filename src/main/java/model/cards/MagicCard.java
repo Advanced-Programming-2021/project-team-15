@@ -70,7 +70,7 @@ public class MagicCard extends Card {
         @SerializedName("Limited") LIMITED,
         @SerializedName("Unlimited") UNLIMITED;
 
-        public static Status getMagicType(String status) {
+        public static Status getStatus(String status) {
             switch (status) {
                 case "Limited" : return LIMITED;
                 case "unLimited" : return UNLIMITED;

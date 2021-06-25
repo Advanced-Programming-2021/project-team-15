@@ -3,22 +3,19 @@ package controller.menuController;
 import controller.responses.ImportExportResponses;
 import controller.utilizationController.DatabaseController;
 import model.cards.Card;
+import model.cards.MagicCard;
+import model.cards.MonsterCard;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ImportExportController extends MenuController {
-    public static ArrayList<Card> userCards;
     private static ImportExportController importExportController;
     DatabaseController databaseController = DatabaseController.getInstance();
-    private Card chosenCard;
 
     public ImportExportController(String menuName) {
         super(menuName);
-        deserialize();
-        if (userCards == null || userCards.size()==0)
-            serialize();
-        else Card.setAllCards(userCards);
     }
 
     public static ImportExportController getInstance() {
@@ -27,41 +24,25 @@ public class ImportExportController extends MenuController {
         return importExportController;
     }
 
-    public void serialize() {
-        try {
-            databaseController.serializeCards();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deserialize() {
-        userCards = databaseController.deserializeCards();
-    }
-
-    public ImportExportResponses importCard(String cardName) {
-        deserialize();
-        chosenCard = null;
-        for (Card card : userCards)
-            if (card.getCardName().equals(cardName)) chosenCard = card;
-        if (chosenCard == null) return ImportExportResponses.CARD_NOT_FOUND;
-        Card.getAllCards().add(chosenCard);
-        serialize();
+    public ImportExportResponses importCard(String cardName) throws IOException {
+        File cardFile = new File("src/main/resources/Cards/"+cardName+".json");
+        if (!cardFile.exists()) return ImportExportResponses.CARD_NOT_FOUND;
+        if (Card.getCardByName(cardName)!=null) return ImportExportResponses.CARD_ALREADY_EXISTS;
+        Card card = databaseController.deserializeCard(cardName);
+        if (card.getCardType()== Card.CardType.MONSTER)
+            databaseController.writeMonsterCardToCSV((MonsterCard) card);
+        else if (card.getCardType()== Card.CardType.MAGIC)
+            databaseController.writeMagicCardToCSV((MagicCard) card);
+        else System.out.println("rid");
+        Card.getAllCards().add(card);
         return ImportExportResponses.CARD_IMPORT_SUCCESSFUL;
     }
 
-    public ImportExportResponses exportCard(String cardName) {
-        deserialize();
-        chosenCard = null;
-        for (Card card : Card.getAllCards())
-            if (card.getCardName().equals(cardName)) chosenCard = card;
-        if (chosenCard == null) return ImportExportResponses.CARD_NOT_FOUND;
-        Card.getAllCards().remove(chosenCard);
-        serialize();
+    public ImportExportResponses exportCard(String cardName) throws IOException {
+        Card card = Card.getCardByName(cardName);
+        if (card==null) return ImportExportResponses.CARD_NOT_FOUND;
+        databaseController.serializeCard(card);
         return ImportExportResponses.CARD_EXPORT_SUCCESSFUL;
     }
 
-    public Card getChosenCard() {
-        return chosenCard;
-    }
 }

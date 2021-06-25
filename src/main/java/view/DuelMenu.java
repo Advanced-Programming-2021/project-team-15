@@ -4,8 +4,8 @@ import controller.gamePlayController.AttackController;
 import controller.gamePlayController.GamePlayController;
 import controller.menuController.MenuController;
 import controller.responses.DuelMenuResponses;
-import model.Game;
 import controller.utilizationController.UtilityController;
+import model.Game;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -75,11 +75,10 @@ public class DuelMenu extends Menu {
                 System.out.println("you can't do this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.equals("surrender")) gamePlayController.surrender();
-            else if(input.matches("duel set-winner (\\.+)"))
-            {  Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
+            else if (input.matches("duel set-winner (\\.+)")) {
+                Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
                 if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
-            }
-            else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
+            } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
             else if (input.equals("card show")) checkAndCallShowCard();
@@ -94,7 +93,7 @@ public class DuelMenu extends Menu {
                 Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
                 if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
             } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-                else if(input.equals("activate effect")) gamePlayController.activateSpellCard();
+            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
             else System.out.println("invalid command");
             if (super.isExit) {
                 super.isExit = false;
@@ -218,9 +217,9 @@ public class DuelMenu extends Menu {
                 break;
             case CARD_SUMMONED: {
                 System.out.println("summoned successfully");
-                 gamePlayController.checkForEffectsAfterSummon();
+                gamePlayController.checkForEffectsAfterSummon();
             }
-                break;
+            break;
             case GET_ONE_NUMBER_TO_BE_TRIBUTE:
                 System.out.println("this card needs one tribute");
                 break;
@@ -276,7 +275,7 @@ public class DuelMenu extends Menu {
                 System.out.println("flip summoned successfully");
                 gamePlayController.checkForTrapHole();
             }
-                break;
+            break;
             case YOU_CANT_ATTACK_WITH_THIS_CARD:
                 System.out.println("you can't attack with this card");
                 break;
@@ -374,10 +373,10 @@ public class DuelMenu extends Menu {
                 System.out.println("enter player (rival/current player)");
             case ATTACK_CANCELED:
                 System.out.println("attack canceled!");
-            case  ACTIVATION_CANCELED:
+            case ACTIVATION_CANCELED:
                 System.out.println("activation cancelled!");
                 break;
-            case  CANT_ADD_THIS_CARD_TO_CHAIN:
+            case CANT_ADD_THIS_CARD_TO_CHAIN:
                 System.out.println("can't be added to chain");
                 break;
             case CANT_ATTACK_TO_THIS_CARD:
@@ -410,7 +409,7 @@ public class DuelMenu extends Menu {
             case NO_WAY_TO_SPECIAL_SUMMON:
                 System.out.println("");
                 break;
-            case  CANT_SPECIAL_SUMMON:
+            case CANT_SPECIAL_SUMMON:
                 System.out.println("you can't special summon this monster");
                 break;
             case CANT_NORMAL_SET_THIS_MONSTER:
@@ -455,18 +454,16 @@ public class DuelMenu extends Menu {
         }
     }
 
-    public void roundFinished(String winner)
-    {
-        System.out.println(winner+" won the game!");
-    }
-    public void matchFinished(String winner, int score)
-    {
-        System.out.println(winner+" won the game with score : "+score);
+    public void roundFinished(String winner) {
+        System.out.println(winner + " won the game!");
     }
 
-    public void lifePointReduced(int point)
-    {
-        System.out.println("current player received "+point+" damage!");
+    public void matchFinished(String winner, int score) {
+        System.out.println(winner + " won the game with score : " + score);
+    }
+
+    public void lifePointReduced(int point) {
+        System.out.println("current player received " + point + " damage!");
 
     }
 
@@ -475,15 +472,14 @@ public class DuelMenu extends Menu {
     }
 
 
-    public String defineStarterOfNextRound(String name)
-    {
-        System.out.println("Dear "+name+" do you wanna be first player of this round?");
-        String ans = UtilityController.getNextLine();
-        return ans ;
+    public String defineStarterOfNextRound(String name) {
+        System.out.println("Dear " + name + " do you wanna be first player of this round?");
+        return UtilityController.getNextLine();
     }
-    public void startNewRound(String name)
-    {   System.out.println("GAME STARTED!");
-        System.out.println("now it will be " + name+ "'s turn");
+
+    public void startNewRound(String name) {
+        System.out.println("GAME STARTED!");
+        System.out.println("now it will be " + name + "'s turn");
     }
 
 
@@ -508,6 +504,5 @@ public class DuelMenu extends Menu {
     public String getString() {
         return UtilityController.getNextLine();
     }
-
 
 }

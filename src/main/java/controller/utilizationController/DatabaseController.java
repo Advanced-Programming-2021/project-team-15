@@ -1,11 +1,15 @@
 package controller.utilizationController;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import model.*;
+import model.Deck;
+import model.User;
 import model.cards.Card;
 import model.cards.MagicCard;
 import model.cards.MonsterCard;
@@ -16,8 +20,9 @@ import java.util.ArrayList;
 
 public class DatabaseController {
     private static DatabaseController databaseController;
+
     public static DatabaseController getInstance() {
-        if(databaseController ==null)
+        if (databaseController == null)
             databaseController = new DatabaseController();
         return databaseController;
     }
@@ -34,13 +39,45 @@ public class DatabaseController {
         readMagicCardsFromCSV(reader);
         fileReader.close();
         reader.close();
-        //serializeCards();
+    }
+
+    public void writeMonsterCardToCSV(MonsterCard card) throws IOException {
+        String path = "src/main/resources/Monster.csv";
+        CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
+                CSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
+        String[] monsterDetails = new String[9];
+        monsterDetails[0] = card.getCardName();
+        monsterDetails[1] = String.valueOf(card.getLevel());
+        monsterDetails[2] = String.valueOf(card.getMonsterAttribute());
+        monsterDetails[3] = String.valueOf(card.getMonsterType());
+        monsterDetails[4] = String.valueOf(card.getMonsterEffectType());
+        monsterDetails[5] = String.valueOf(card.getAttackPoint());
+        monsterDetails[6] = String.valueOf(card.getDefensePoint());
+        monsterDetails[7] = card.getCardDescription();
+        monsterDetails[8] = String.valueOf(card.getPrice());
+        writer.writeNext(monsterDetails);
+        writer.close();
+    }
+
+    public void writeMagicCardToCSV(MagicCard card) throws IOException {
+        String path = "src/main/resources/Magic.csv";
+        CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
+                CSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
+        String[] magicDetails = new String[6];
+        magicDetails[0] = card.getCardName();
+        magicDetails[1] = String.valueOf(card.getMagicType());
+        magicDetails[2] = String.valueOf(card.getCardIcon());
+        magicDetails[3] = card.getCardDescription();
+        magicDetails[4] = String.valueOf(card.getStatus());
+        magicDetails[5] = String.valueOf(card.getPrice());
+        writer.writeNext(magicDetails);
+        writer.close();
     }
 
     private void readMonsterCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
         String[] monsterArray = reader.readNext();
         while ((monsterArray = reader.readNext()) != null) {
-            MonsterCard monsterCard = new MonsterCard(monsterArray[7],monsterArray[0],"0", Card.CardType.MONSTER );
+            MonsterCard monsterCard = new MonsterCard(monsterArray[7], monsterArray[0], "0", Card.CardType.MONSTER);
             monsterCard.setLevel(Integer.parseInt(monsterArray[1]));
             monsterCard.setMonsterAttribute(MonsterCard.MonsterAttribute.getAttribute(monsterArray[2]));
             monsterCard.setMonsterType(MonsterCard.MonsterType.getMonsterTypeByName(monsterArray[3]));
@@ -58,79 +95,67 @@ public class DatabaseController {
     private void readMagicCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
         String[] magicArray = reader.readNext();
         while ((magicArray = reader.readNext()) != null) {
-            MagicCard magicCard = new MagicCard(magicArray[3], magicArray[0], "0", Card.CardType.MAGIC );
+            MagicCard magicCard = new MagicCard(magicArray[3], magicArray[0], "0", Card.CardType.MAGIC);
             magicCard.setMagicType(MagicCard.MagicType.getMagicType(magicArray[1]));
             magicCard.setCardIcon(MagicCard.CardIcon.getCardIcon(magicArray[2]));
-            magicCard.setStatus(MagicCard.Status.getMagicType(magicArray[4]));
+            magicCard.setStatus(MagicCard.Status.getStatus(magicArray[4]));
             magicCard.setPrice(Integer.parseInt(magicArray[5]));
             Card.addCard(magicCard);
         }
     }
 
-    public void serializeCards() throws IOException {
+    public void serializeCard(Card card) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        File cardsFile = new File("src/main/resources/Cards.json");
-        try(Writer writer = new FileWriter(cardsFile)) {
-            gson.toJson(Card.getAllCards(),writer);
-        }
-        catch (IOException e) {
+        File cardFile = new File("src/main/resources/Cards/" + card.getCardName() + ".json");
+        try (Writer writer = new FileWriter(cardFile)) {
+            gson.toJson(card, writer);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public ArrayList<Card> deserializeCards() {
-        ArrayList<Card> cards;
+    public Card deserializeCard(String cardName) {
+        Card card;
         GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader("src/main/resources/Cards.json")) {
+        try (Reader reader = new FileReader("src/main/resources/Cards/" + cardName + ".json")) {
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
-            Type cardsListType = new TypeToken<ArrayList<Card>>(){}.getType();
-            cards = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader,cardsListType);
-            return cards;
-        }
-        catch (IOException e) {
+            Type cardsListType = new TypeToken<Card>() {
+            }.getType();
+            card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardsListType);
+            return card;
+        } catch (IOException e) {
             //e.printStackTrace();
         }
         return null;
     }
 
-//    public void monsterCardParseJson() {
-//        Gson gson = new Gson();
-//        try (Reader reader = new FileReader("src/main/resources/Monster.json")) {
-//            MonsterCard[] monsterCardArray = gson.fromJson(reader, MonsterCard[].class);
-//            for(MonsterCard monsterCard : monsterCardArray) {
-//                monsterCard.setCardType(Card.CardType.MONSTER);
-//                Card.addCard(monsterCard);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    public void magicCardParseJson() {
+//    public ArrayList<Card> deserializeCards() {
+//        ArrayList<Card> cards;
 //        GsonBuilder gsonBuilder = new GsonBuilder();
-//        Gson gson = gsonBuilder.create();
-//        try (Reader reader = new FileReader("src/main/resources/Magic.json")) {
-//            MagicCard[] magicCardArray = gson.fromJson(reader, MagicCard[].class);
-//            for (MagicCard magicCard : magicCardArray) {
-//                magicCard.setCardType(Card.CardType.MAGIC);
-//                Card.addCard(magicCard);
-//            }
+//        try (Reader reader = new FileReader("src/main/resources/Cards.json")) {
+//            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+//                    .of(Card.class, "type").
+//                            registerSubtype(MonsterCard.class, "MONSTER").
+//                            registerSubtype(MagicCard.class, "MAGIC");
+//            Type cardsListType = new TypeToken<ArrayList<Card>>(){}.getType();
+//            cards = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader,cardsListType);
+//            return cards;
 //        }
 //        catch (IOException e) {
-//            e.printStackTrace();
+//            //e.printStackTrace();
 //        }
+//        return null;
 //    }
 
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try(Writer writer = new FileWriter("src/main/resources/Users.json")) {
+        try (Writer writer = new FileWriter("src/main/resources/Users.json")) {
             setAllCardsType();
-            gson.toJson(User.getAllUsers(),writer);
-        }
-        catch (IOException e) {
+            gson.toJson(User.getAllUsers(), writer);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -145,7 +170,7 @@ public class DatabaseController {
             for (Deck deck : user.getAllDecksOfUser())
                 for (Card card : deck.getSideDeck())
                     setType(card);
-            if (user.getActiveDeck()!=null) {
+            if (user.getActiveDeck() != null) {
                 for (Card card : user.getActiveDeck().getMainDeck())
                     setType(card);
                 for (Card card : user.getActiveDeck().getSideDeck())
@@ -169,57 +194,12 @@ public class DatabaseController {
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
-            Type usersListType = new TypeToken<ArrayList<User>>(){}.getType();
+            Type usersListType = new TypeToken<ArrayList<User>>() {
+            }.getType();
             User.setAllUsers(gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, usersListType));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Welcome to this Game!\nFrom: Group15 AP- 2021 Spring");
             //e.printStackTrace();
         }
     }
-//    public void refreshCardsFromFileJson() {
-//        Card.getAllCards().removeAll(Card.getAllCards());
-////        monsterCardParseJson();
-////        magicCardParseJson();
-//        GsonBuilder gsonBuilder = new GsonBuilder();
-//        String[] filenames = {"src/main/resources/Monster.json","src/main/resources/Magic.json"};
-//        ArrayList<Card> tempCardsList = new ArrayList<>();
-//        int fileCounter = 0;
-//        for (String filename : filenames) {
-//            try (Reader reader = new FileReader(filename)) {
-//                Type cardsListType = new TypeToken<ArrayList<Card>>() {}.getType();
-//                tempCardsList.addAll(gsonBuilder.create().fromJson(reader, cardsListType));
-//                for (Card card : tempCardsList) {
-//                    if (fileCounter==0)
-//                        card.setCardType(Card.CardType.MONSTER);
-//                    else if (fileCounter==1) card.setCardType(Card.CardType.MAGIC);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            fileCounter++;
-//        }
-//        Card.setAllCards(tempCardsList);
-//    }
-    //    static class MagicCardDeserializer implements JsonDeserializer<MagicCard> {
-//        @Override
-//        public MagicCard deserialize(JsonElement json, Type typeof, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-//            JsonObject jsonObject = json.getAsJsonObject();
-//
-//            JsonElement jsonType = jsonObject.get("Type");
-//            String type = jsonType.getAsString();
-//
-//            MagicCard magicCard = null;
-//
-//            if("Trap".equals(type)) {
-//                magicCard = new TrapCard();
-//                magicCard.setMagicType(MagicCard.MagicType.TRAP);
-//            } else if("Spell".equals(type)) {
-//                magicCard = new SpellCard();
-//                magicCard.setMagicType(MagicCard.MagicType.SPELL);
-//            }
-//            return magicCard;
-//        }
-//    }
-
 }
