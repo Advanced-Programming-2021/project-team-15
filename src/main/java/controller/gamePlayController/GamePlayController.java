@@ -11,10 +11,7 @@ import model.zones.NumericZone;
 import model.zones.Zone;
 import view.DuelMenu;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static controller.responses.DuelMenuResponses.*;
 import static model.cards.MagicCard.CardIcon.COUNTER;
@@ -389,11 +386,11 @@ public class GamePlayController extends MenuController {
             if (currentPlayer.getMonsterCardZone().getNumberOfCard() < 2)
                 return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
             else {
-                duelMenu.printResponse(GET_TWO_NUMBERS_TO_BE_TRIBUTE);
                 if(selectedCard.getCardName().equals("Beast King Barbaros"))
                 {  boolean ans = monsterEffectController.BeastKingBarbaros();
                     if(!ans) return EFFECT_DONE_SUCCESSFULLY;
                 }
+                duelMenu.printResponse(GET_TWO_NUMBERS_TO_BE_TRIBUTE);
                 return twoMonsterTribute();
             }
         }
@@ -403,25 +400,41 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses oneMonsterTribute() {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
-        int num = duelMenu.getNum();
-        if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null)
-            return DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER;
-        else currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
-        doSummon();
-        return DuelMenuResponses.CARD_SUMMONED;
+        while (true)
+        { int num = duelMenu.getNum();
+            if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(num) == null) {
+                duelMenu.printResponse(DuelMenuResponses.ONE_TRIBUTE_NO_MONSTER);
+                duelMenu.printResponse(ENTER_ONE_NUMBER);
+            }
+            else {
+                currentPlayer.getMonsterCardZone().moveCardToGraveyard(num, currentPlayer);
+                doSummon();
+                return DuelMenuResponses.CARD_SUMMONED;}
+        }
     }
 
     public DuelMenuResponses twoMonsterTribute() {
-        duelMenu.printResponse(ENTER_FIRST_NUMBER);
-        int firstAddress = duelMenu.getNum();
-        duelMenu.printResponse(ENTER_SECOND_NUMBER);
-        int secondAddress = duelMenu.getNum();
-        if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null || currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
-            return DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER;
-        currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress, currentPlayer);
-        currentPlayer.getMonsterCardZone().moveCardToGraveyard(secondAddress, currentPlayer);
+        while (true)
+        {  duelMenu.printResponse(ENTER_FIRST_NUMBER);
+            int firstAddress = duelMenu.getNum();
+            if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(firstAddress) == null)
+                duelMenu.printResponse(DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER);
+            else {
+                currentPlayer.getMonsterCardZone().moveCardToGraveyard(firstAddress, currentPlayer);
+                break;
+            }
+        }
+        while (true)
+        { duelMenu.printResponse(ENTER_SECOND_NUMBER);
+            int secondAddress = duelMenu.getNum();
+            if (currentPlayer.getMonsterCardZone().getCardByPlaceNumber(secondAddress) == null)
+                duelMenu.printResponse(DuelMenuResponses.TWO_TRIBUTE_NO_MONSTER);
+            else {
+                currentPlayer.getMonsterCardZone().moveCardToGraveyard(secondAddress, currentPlayer);
+                break;
+            }
+        }
         doSummon();
-        //selectedCard = null;
         return DuelMenuResponses.CARD_SUMMONED;
     }
 
