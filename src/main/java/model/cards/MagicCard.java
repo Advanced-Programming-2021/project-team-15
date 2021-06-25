@@ -1,9 +1,16 @@
 package model.cards;
 
 import com.google.gson.annotations.SerializedName;
-import model.cards.Card;
 
 public class MagicCard extends Card {
+
+
+
+    public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
+        super(cardDescription, cardName, cardNumber, cardType);
+        super.type = "MAGIC";
+        this.cardType = CardType.MAGIC;
+    }
 
     @SerializedName("Type")
     private MagicType magicType;
@@ -11,12 +18,6 @@ public class MagicCard extends Card {
     private Status status;
     @SerializedName("Icon (Property)")
     private CardIcon cardIcon;
-
-    public MagicCard(String cardDescription, String cardName, String cardNumber, CardType cardType) {
-        super(cardDescription, cardName, cardNumber, cardType);
-        super.type = "MAGIC";
-        this.cardType = CardType.MAGIC;
-    }
 
     public MagicType getMagicType() {
         return magicType;
@@ -46,35 +47,57 @@ public class MagicCard extends Card {
         StringBuilder info = new StringBuilder();
         info.append("Name: ").append(cardName).append("\n");
         info.append(magicType).append("\n");
-        //SerializedName a = cardIcon.getAnnotation(SerializedName.class);
-        //a.value()
         info.append("Type: ").append(cardIcon.getName()).append("\n");
         info.append("Description: ").append(cardDescription);
         return info.toString();
     }
 
     public enum MagicType {
-        @SerializedName("Spell") SPELL,
-        @SerializedName("Trap") TRAP;
+        @SerializedName("Spell") SPELL("Spell"),
+        @SerializedName("Trap") TRAP("Trap");
+
+        private final String name;
+        MagicType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public static MagicType getMagicType(String magicType) {
             switch (magicType) {
-                case "Spell" : return SPELL;
-                case "Trap" : return TRAP;
-                default:return null;
+                case "Spell":
+                    return SPELL;
+                case "Trap":
+                    return TRAP;
+                default:
+                    return null;
             }
         }
     }
 
     public enum Status {
-        @SerializedName("Limited") LIMITED,
-        @SerializedName("Unlimited") UNLIMITED;
+        @SerializedName("Limited") LIMITED("Limited"),
+        @SerializedName("Unlimited") UNLIMITED("Unlimited");
+        private final String name;
+
+        Status(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public static Status getStatus(String status) {
             switch (status) {
-                case "Limited" : return LIMITED;
-                case "unLimited" : return UNLIMITED;
-                default:return null;
+                case "Limited":
+                    return LIMITED;
+                case "Unlimited":
+                    return UNLIMITED;
+                default:
+                    return null;
             }
         }
     }
@@ -88,6 +111,10 @@ public class MagicCard extends Card {
         @SerializedName("Counter") COUNTER("Counter"),
         @SerializedName("Normal") NORMAL("Normal");
         private final String name;
+
+        CardIcon(String name) {
+            this.name = name;
+        }
 
         public static CardIcon getCardIcon(String cardIcon) {
             switch (cardIcon) {
@@ -108,10 +135,6 @@ public class MagicCard extends Card {
                 default:
                     return null;
             }
-        }
-
-        CardIcon(String name) {
-            this.name = name;
         }
 
         public String getName() {

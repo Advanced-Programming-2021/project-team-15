@@ -48,9 +48,9 @@ public class DatabaseController {
         String[] monsterDetails = new String[9];
         monsterDetails[0] = card.getCardName();
         monsterDetails[1] = String.valueOf(card.getLevel());
-        monsterDetails[2] = String.valueOf(card.getMonsterAttribute());
-        monsterDetails[3] = String.valueOf(card.getMonsterType());
-        monsterDetails[4] = String.valueOf(card.getMonsterEffectType());
+        monsterDetails[2] = String.valueOf(card.getMonsterAttribute().getName());
+        monsterDetails[3] = String.valueOf(card.getMonsterType().getName());
+        monsterDetails[4] = String.valueOf(card.getMonsterEffectType().getName());
         monsterDetails[5] = String.valueOf(card.getAttackPoint());
         monsterDetails[6] = String.valueOf(card.getDefensePoint());
         monsterDetails[7] = card.getCardDescription();
@@ -62,13 +62,13 @@ public class DatabaseController {
     public void writeMagicCardToCSV(MagicCard card) throws IOException {
         String path = "src/main/resources/Magic.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
-                CSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
+                CSVWriter.DEFAULT_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
         String[] magicDetails = new String[6];
         magicDetails[0] = card.getCardName();
-        magicDetails[1] = String.valueOf(card.getMagicType());
-        magicDetails[2] = String.valueOf(card.getCardIcon());
+        magicDetails[1] = String.valueOf(card.getMagicType().getName());
+        magicDetails[2] = String.valueOf(card.getCardIcon().getName());
         magicDetails[3] = card.getCardDescription();
-        magicDetails[4] = String.valueOf(card.getStatus());
+        magicDetails[4] = String.valueOf(card.getStatus().getName());
         magicDetails[5] = String.valueOf(card.getPrice());
         writer.writeNext(magicDetails);
         writer.close();
@@ -122,9 +122,8 @@ public class DatabaseController {
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
-            Type cardsListType = new TypeToken<Card>() {
-            }.getType();
-            card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardsListType);
+            Type cardType = new TypeToken<Card>() {}.getType();
+            card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardType);
             return card;
         } catch (IOException e) {
             //e.printStackTrace();

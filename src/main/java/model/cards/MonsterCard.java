@@ -156,9 +156,18 @@ public class MonsterCard extends Card {
     }
 
     public enum MonsterEffectType {
-        @SerializedName("Normal") NORMAL,
-        @SerializedName("Effect") EFFECT,
-        @SerializedName("Ritual") RITUAL;
+        @SerializedName("Normal") NORMAL("Normal"),
+        @SerializedName("Effect") EFFECT("Effect"),
+        @SerializedName("Ritual") RITUAL("Ritual");
+
+        private final String name;
+        MonsterEffectType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public static MonsterEffectType getMonsterEffectType(String monsterEffectType) {
             switch (monsterEffectType) {
@@ -244,12 +253,21 @@ public class MonsterCard extends Card {
     }
 
     public enum MonsterAttribute {
-        @SerializedName("DARK") DARK,
-        @SerializedName("WATER") WATER,
-        @SerializedName("FIRE") FIRE,
-        @SerializedName("EARTH") EARTH,
-        @SerializedName("WIND") WIND,
-        @SerializedName("LIGHT") LIGHT;
+        @SerializedName("DARK") DARK("DARK"),
+        @SerializedName("WATER") WATER("WATER"),
+        @SerializedName("FIRE") FIRE("FIRE"),
+        @SerializedName("EARTH") EARTH("EARTH"),
+        @SerializedName("WIND") WIND("WIND"),
+        @SerializedName("LIGHT") LIGHT("LIGHT");
+
+        private final String name;
+        MonsterAttribute(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
 
         public static MonsterAttribute getAttribute(String attribute) {
             switch (attribute) {
