@@ -81,6 +81,14 @@ public class GamePlayController extends MenuController {
         GamePlayController.monsterEffectController = monsterEffectController;
     }
 
+    public static SpellEffectController getSpellEffectController() {
+        return spellEffectController;
+    }
+
+    public static void setSpellEffectController(SpellEffectController spellEffectController) {
+        GamePlayController.spellEffectController = spellEffectController;
+    }
+
     public ArrayList<MagicCard> getChainCards() {
         return chainCards;
     }
@@ -706,20 +714,34 @@ public class GamePlayController extends MenuController {
         duelMenu.printResponse(SPELL_ACTIVATED);
     }
 
+    public void checkForContinuesEffectsWhenNewCardAdded(MonsterCard monsterCard, Player currentPlayer) {
+        Map<Integer, MonsterCard> ourMap = currentPlayer.getMagicCardZone().getZoneCards();
+        Map<Integer, MonsterCard> theirMap = getTheOtherPlayer(currentPlayer).getMagicCardZone().getZoneCards();
+        for (int i = 1; i <= 5; i++) {
+            if(ourMap.get(i)!=null && ourMap.get(i).isActivated()) {
+                if (ourMap.get(i).getCardName().equals("Yami") || theirMap.get(i).getCardName().equals("Yami")) spellEffectController.yamiForNewAddedCard(monsterCard);
+                if (ourMap.get(i).getCardName().equals("Forset") || theirMap.get(i).getCardName().equals("Forset")) spellEffectController.forestForNewAddedCard(monsterCard);
+                if (ourMap.get(i).getCardName().equals("Closed Forest")) spellEffectController.closedForestForNewAddedCard(monsterCard);
+                if (ourMap.get(i).getCardName().equals("Umiiruka") || theirMap.get(i).getCardName().equals("Umiiruka")) spellEffectController.umiirukaForNewAddedCard(monsterCard);
+            }
+
+        }
+    }
+
     public void callSpellOrTrap(MagicCard card, Player player) {  //TODO
         String cardName = card.getCardName();
         switch (cardName) {
             case "Yami":
-                spellEffectController.yami(true);
+                spellEffectController.yami(true ,card);
                 break;
             case "Forset":
-                spellEffectController.forest(true);
+                spellEffectController.forest(true, card);
                 break;
             case "Closed Forest":
-                spellEffectController.closedForest(true);
+                spellEffectController.closedForest(true, card);
                 break;
             case "Umiiruka":
-                spellEffectController.umiiruka(true);
+                spellEffectController.umiiruka(true, card);
                 break;
             case "Sword of Dark Destruction":
                 spellEffectController.swordOfDarkDestruction(card);

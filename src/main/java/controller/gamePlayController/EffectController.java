@@ -15,32 +15,29 @@ public class EffectController {
     HashMap<MagicCard, Card> equippedCardsBySpells = new HashMap<>();
 
 
-    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount) {
-        Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
-
+    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount,  Player player) {
+        Map<Integer, MonsterCard> map = player.getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                 entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
         }
         if (both) {
-            map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
+            map = gamePlayController.getTheOtherPlayer(player).getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                     entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
-            }
-
-        }
+            } }
     }
 
-    public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount) {
-        Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
+    public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount, Player player) {
+        Map<Integer, MonsterCard> map = player.getMonsterCardZone().getZoneCards();
 
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                 entry.getValue().setGameDEF(entry.getValue().getGameDEF() + amount);
         }
         if (both) {
-            map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
+            map = gamePlayController.getTheOtherPlayer(player).getMonsterCardZone().getZoneCards();
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                     entry.getValue().setGameDEF(entry.getValue().getGameDEF() + amount);
@@ -73,9 +70,9 @@ public class EffectController {
             Map<Integer, MonsterCard> monster2 = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
             Map<Integer, MagicCard> magic2 = gamePlayController.getCurrentPlayer().getMagicCardZone().getZoneCards();
             for (int j = 1; j < 6; j++) {
-                if (monster.get(j) != null && type == Card.CardType.MONSTER)
+                if (monster2.get(j) != null && type == Card.CardType.MONSTER)
                     gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
-                if (magic.get(j) != null && type == Card.CardType.MAGIC)
+                if (magic2.get(j) != null && type == Card.CardType.MAGIC)
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
 
             }
@@ -91,9 +88,6 @@ public class EffectController {
         return i;
     }
 
-    public int numberOfWholeMagicCards() {
-        return (gamePlayController.getCurrentPlayer().getMagicCardZone().getNumberOfCard() + gamePlayController.getOpponentPlayer().getMagicCardZone().getNumberOfCard());
-    }
 
     public void getControl(MonsterCard monsterCard)
     {
@@ -108,19 +102,6 @@ public class EffectController {
         monstersWeTookControl.remove(monsterCard);
     }
     }
-
-    public Player getOwnerOfMagicCard(Card card)
-    { if( gamePlayController.getCurrentPlayer().getMagicCardZone().isExist(card))
-        return gamePlayController.getCurrentPlayer();
-        else return gamePlayController.getOpponentPlayer();
-    }
-    public Player getOwnerOfMonster(Card card)
-    {  if(gamePlayController.getCurrentPlayer().getMonsterCardZone().isExist(card))
-        return gamePlayController.getCurrentPlayer();
-        else return gamePlayController.getOpponentPlayer();
-
-    }
-
 
     public GamePlayController getGamePlayController() {
         return gamePlayController;

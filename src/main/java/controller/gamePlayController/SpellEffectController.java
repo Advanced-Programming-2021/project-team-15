@@ -32,19 +32,19 @@ public class SpellEffectController {
     EffectController effectController = gamePlayController.getEffectController();
     //TODO : FIRST 4 EFFECTS SHOULD HE CHECKED DUHHHHHHH
 
-    public void yami(Boolean x) {
+    public void yami(Boolean x, MagicCard  card) {
         if(!doIt){
         if(x)  gamePlayController.activateSelectedCard();
          return;}
         int amount = 200;
         if (!x)
             amount = -amount;
-        effectController.addATK(MonsterCard.MonsterType.FIEND, true, amount);
-        effectController.addATK(MonsterCard.MonsterType.SPELL_CASTER, true, amount);
-        effectController.addATK(MonsterCard.MonsterType.FAIRY, true, -amount);
-        effectController.addDEF(MonsterCard.MonsterType.FIEND, true, amount);
-        effectController.addDEF(MonsterCard.MonsterType.SPELL_CASTER, true, amount);
-        effectController.addDEF(MonsterCard.MonsterType.FAIRY, true, -amount);
+        effectController.addATK(MonsterCard.MonsterType.FIEND, true, amount, card.getOwner());
+        effectController.addATK(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
+        effectController.addATK(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.FIEND, true, amount ,card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
     }
 
     public void spellAbsorption() {
@@ -70,19 +70,19 @@ public class SpellEffectController {
     }
 
 
-    public void forest(Boolean x) {
+    public void forest(Boolean x ,MagicCard card) {
         if(!doIt){
         if(x)  gamePlayController.activateSelectedCard();
          return;}
         int amount = 200;
         if (!x)
             amount = -amount;
-        effectController.addATK(MonsterCard.MonsterType.BEAST, true, amount);
-        effectController.addDEF(MonsterCard.MonsterType.BEAST, true, amount);
-        effectController.addATK(MonsterCard.MonsterType.INSECT, true, amount);
-        effectController.addDEF(MonsterCard.MonsterType.INSECT, true, amount);
-        effectController.addATK(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount);
-        effectController.addDEF(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount);
+        effectController.addATK(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
+        effectController.addATK(MonsterCard.MonsterType.INSECT, true, amount ,card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.INSECT, true, amount, card.getOwner());
+        effectController.addATK(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount ,card.getOwner());
+        effectController.addDEF(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount , card.getOwner());
     }
 
     public void forestForNewAddedCard(MonsterCard monsterCard) {
@@ -94,14 +94,14 @@ public class SpellEffectController {
         }
     }
 
-    public void closedForest(Boolean x) {
+    public void closedForest(Boolean x, Card card) {
         if(!doIt){
         if(x) gamePlayController.activateSelectedCard();
          return;}
         int i = effectController.numberOfDeadMonsters();
         if (!x)
             i = -i;
-        effectController.addATK(MonsterCard.MonsterType.BEAST, false, i * 100);
+        effectController.addATK(MonsterCard.MonsterType.BEAST, false, i * 100, card.getOwner());
     }
 
 
@@ -112,21 +112,21 @@ public class SpellEffectController {
         }
     }
 
-    public void closedForestForNewCardAddedToGraveyard(MonsterCard monsterCard) {
-        effectController.addATK(MonsterCard.MonsterType.BEAST, false, 100);
+    public void closedForestForNewCardAddedToGraveyard(MonsterCard monsterCard, MagicCard closedForest) {
+        effectController.addATK(MonsterCard.MonsterType.BEAST, false, 100, closedForest.getOwner() );
     }
 
 
-    public void umiiruka(Boolean x) {
+    public void umiiruka(Boolean x, Card card) {
         if(!doIt){
         if(x)  gamePlayController.activateSelectedCard();
          return;}
         if (!x) {
-            effectController.addATK(MonsterCard.MonsterType.AQUA, true, -500);
-            effectController.addATK(MonsterCard.MonsterType.AQUA, true, 400);
+            effectController.addATK(MonsterCard.MonsterType.AQUA, true, -500, card.getOwner());
+            effectController.addATK(MonsterCard.MonsterType.AQUA, true, 400, card.getOwner());
         }
-        effectController.addATK(MonsterCard.MonsterType.AQUA, true, 500);
-        effectController.addATK(MonsterCard.MonsterType.AQUA, true, -400);
+        effectController.addATK(MonsterCard.MonsterType.AQUA, true, 500 ,card.getOwner());
+        effectController.addATK(MonsterCard.MonsterType.AQUA, true, -400, card.getOwner());
     }
 
     public void umiirukaForNewAddedCard(MonsterCard monsterCard) {

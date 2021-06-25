@@ -331,9 +331,9 @@ public class DuelMenu extends Menu {
             case SPELL_ACTIVATED:
                 System.out.println("spell activated");
                 break;
-//            case CANT_BE_ADDED_TO_CHAIN:
-//                System.out.println("you can't add this card ro chain");
-//                break;
+           case CANT_BE_ADDED_TO_CHAIN:
+               System.out.println("you can't add this card ro chain");
+                break;
             case EFFECT_DONE_SUCCESSFULLY:
                 System.out.println("effect done successfully");
                 break;

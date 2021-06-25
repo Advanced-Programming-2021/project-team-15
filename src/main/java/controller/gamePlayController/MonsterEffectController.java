@@ -14,7 +14,6 @@ import static controller.responses.DuelMenuResponses.*;
 public class MonsterEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
     EffectController effectController = gamePlayController.getEffectController();
-    AttackController attackController = gamePlayController.getAttackController();
     DuelMenu duelMenu = DuelMenu.getInstance();
 
     public void commandKnight(Boolean x, MonsterCard commandKnight)  //flip and change pos to up
@@ -51,7 +50,7 @@ public class MonsterEffectController {
     {
         manEaterBug.setActivated(true);
         manEaterBug.setActivated(true);
-        Player player = effectController.getOwnerOfMonster(manEaterBug);
+        Player player = manEaterBug.getOwner();
         Player victim;
         if (player == gamePlayController.getCurrentPlayer())
             victim = gamePlayController.getOpponentPlayer();
@@ -167,7 +166,7 @@ public class MonsterEffectController {
         int sum = 0;
         for (int i = 1; i <= 5; i++) {
             if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(i) != null)
-            {  int level = (effectController.getOwnerOfMonster(calculator)).getMonsterCardZone().getCardByPlaceNumber(i).getLevel();
+            {  int level = (calculator.getOwner()).getMonsterCardZone().getCardByPlaceNumber(i).getLevel();
                 sum += level;}
         }
         calculator.setGameATK(sum * 300);
