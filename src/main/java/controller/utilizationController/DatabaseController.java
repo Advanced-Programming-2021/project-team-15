@@ -15,13 +15,29 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class DatabaseController {
+    private static DatabaseController databaseController;
+    public static DatabaseController getInstance() {
+        if(databaseController ==null)
+            databaseController = new DatabaseController();
+        return databaseController;
+    }
 
     public void loadGameCards() throws IOException, CsvValidationException {
         Card.getAllCards().clear();
         File file = new File("src/main/resources/Monster.csv");
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
+        readMonsterCardsFromCSV(reader);
+        file = new File("src/main/resources/Magic.csv");
+        fileReader = new FileReader(file);
+        reader = new CSVReader(fileReader);
+        readMagicCardsFromCSV(reader);
+        fileReader.close();
+        reader.close();
+        //serializeCards();
+    }
 
+    private void readMonsterCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
         String[] monsterArray = reader.readNext();
         while ((monsterArray = reader.readNext()) != null) {
             MonsterCard monsterCard = new MonsterCard(monsterArray[7],monsterArray[0],"0", Card.CardType.MONSTER );
@@ -37,11 +53,9 @@ public class DatabaseController {
             monsterCard.setMode(MonsterCard.Mode.DEFENSE);
             Card.addCard(monsterCard);
         }
+    }
 
-        file = new File("src/main/resources/Magic.csv");
-        fileReader = new FileReader(file);
-        reader = new CSVReader(fileReader);
-
+    private void readMagicCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
         String[] magicArray = reader.readNext();
         while ((magicArray = reader.readNext()) != null) {
             MagicCard magicCard = new MagicCard(magicArray[3], magicArray[0], "0", Card.CardType.MAGIC );
@@ -51,9 +65,35 @@ public class DatabaseController {
             magicCard.setPrice(Integer.parseInt(magicArray[5]));
             Card.addCard(magicCard);
         }
+    }
 
-        fileReader.close();
-        reader.close();
+    public void serializeCards() throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        File cardsFile = new File("src/main/resources/Cards.json");
+        try(Writer writer = new FileWriter(cardsFile)) {
+            gson.toJson(Card.getAllCards(),writer);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Card> deserializeCards() {
+        ArrayList<Card> cards;
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        try (Reader reader = new FileReader("src/main/resources/Cards.json")) {
+            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                    .of(Card.class, "type").
+                            registerSubtype(MonsterCard.class, "MONSTER").
+                            registerSubtype(MagicCard.class, "MAGIC");
+            Type cardsListType = new TypeToken<ArrayList<Card>>(){}.getType();
+            cards = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader,cardsListType);
+            return cards;
+        }
+        catch (IOException e) {
+            //e.printStackTrace();
+        }
+        return null;
     }
 
 //    public void monsterCardParseJson() {
