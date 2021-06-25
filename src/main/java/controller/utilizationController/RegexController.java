@@ -233,6 +233,16 @@ public class RegexController {
         return false;
     }
 
+    public Boolean importExportRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "(import|export) card ([\\w'\\-, ]+)$");
+        if (matcher.find()) {
+            enteredDetails.put("action",matcher.group(1));
+            enteredDetails.put("name", matcher.group(2));
+            return true;
+        }
+        return false;
+    }
+
 
     public Boolean isAddOrRemoveCardValid(Matcher matcher, String sideOrMain, HashMap<String, String> enteredDetails) {
         boolean commandValidation = true;
