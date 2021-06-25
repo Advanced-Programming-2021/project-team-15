@@ -184,10 +184,15 @@ public class GamePlayController extends MenuController {
             currentPlayer.getDeckZone().getZoneCards().remove(0);
             if (checkIfGameIsFinished())
                 defineWinner();
+            if(duelMenu.isAi && currentPlayer.getUser().getNickName().equals("ai")){
+                aiSummonOrSetMonster();
+                aiSetMagicCard();
+                aiDirectAttack();
+                aiAttackToAttackPos();
+            }
         } else {
             currentPlayer.
                     setCanDraw(true);
-
 
         }
     }
@@ -294,6 +299,7 @@ public class GamePlayController extends MenuController {
                 }
             }
         }
+        changeTurn();
 
     }
 
