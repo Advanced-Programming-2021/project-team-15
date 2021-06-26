@@ -4,18 +4,18 @@ user create --nickname parpari --username parnian --password p
 user login --username mehrad --password m
 increase --money 1000000
 menu enter Shop
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -23,20 +23,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -44,20 +44,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -65,20 +65,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -86,23 +86,23 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
 menu exit
 menu enter Deck
 deck create pedaret
-deck add-card --card Call of The Haunted --deck pedaret
-deck add-card --card Vanity's Emptiness --deck pedaret
-deck add-card --card Wall of Revealing Light --deck pedaret
-deck add-card --card Sword of dark destruction --deck pedaret
-deck add-card --card Black Pendant --deck pedaret
-deck add-card --card United We Stand --deck pedaret
-deck add-card --card Magnum Shield --deck pedaret
-deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Yomi Ship --deck pedaret
+deck add-card --card Texchanger --deck pedaret
+deck add-card --card The Calculator --deck pedaret
+deck add-card --card Herald of Creation --deck pedaret
+deck add-card --card Exploder Dragon --deck pedaret
+deck add-card --card Terratiger, the Empowered Warrior --deck pedaret
+deck add-card --card The Tricky --deck pedaret
+deck add-card --card Beast King Barbaros --deck pedaret
 deck add-card --card Hero of the east --deck pedaret
 deck add-card --card Battle warrior --deck pedaret
 deck add-card --card Crawling dragon --deck pedaret
-deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Command Knight --deck pedaret
 deck add-card --card Blue-Eyes white dragon --deck pedaret
 deck add-card --card Crab Turtle --deck pedaret
 deck add-card --card Skull Guardian --deck pedaret
@@ -111,18 +111,18 @@ deck add-card --card Haniwa --deck pedaret
 deck add-card --card Man-Eater Bug --deck pedaret
 deck add-card --card Gate Guardian --deck pedaret
 deck add-card --card Bitron --deck pedaret
-deck add-card --card Call of The Haunted --deck pedaret
-deck add-card --card Vanity's Emptiness --deck pedaret
-deck add-card --card Wall of Revealing Light --deck pedaret
-deck add-card --card Sword of dark destruction --deck pedaret
-deck add-card --card Black Pendant --deck pedaret
-deck add-card --card United We Stand --deck pedaret
-deck add-card --card Magnum Shield --deck pedaret
-deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Yomi Ship --deck pedaret
+deck add-card --card Texchanger --deck pedaret
+deck add-card --card The Calculator --deck pedaret
+deck add-card --card Herald of Creation --deck pedaret
+deck add-card --card Exploder Dragon --deck pedaret
+deck add-card --card Terratiger, the Empowered Warrior --deck pedaret
+deck add-card --card The Tricky --deck pedaret
+deck add-card --card Beast King Barbaros --deck pedaret
 deck add-card --card Hero of the east --deck pedaret
 deck add-card --card Battle warrior --deck pedaret
 deck add-card --card Crawling dragon --deck pedaret
-deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Command Knight --deck pedaret
 deck add-card --card Blue-Eyes white dragon --deck pedaret
 deck add-card --card Crab Turtle --deck pedaret
 deck add-card --card Skull Guardian --deck pedaret
@@ -142,18 +142,18 @@ user logout
 user login --username parnian --password p
 increase --money 1000000
 menu enter Shop
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -161,20 +161,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -182,20 +182,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -203,20 +203,20 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
-shop buy Call of The Haunted
-shop buy Vanity's Emptiness
-shop buy Wall of Revealing Light
-shop buy Sword of dark destruction
-shop buy Black Pendant
-shop buy United We Stand
-shop buy Magnum Shield
-shop buy Advanced Ritual Art
+shop buy Yomi Ship
+shop buy Texchanger
+shop buy The Calculator
+shop buy Herald of Creation
+shop buy Exploder Dragon
+shop buy Terratiger, the Empowered Warrior
+shop buy The Tricky
+shop buy Beast King Barbaros
 shop buy Hero of the east
 shop buy Battle warrior
 shop buy Crawling dragon
-shop buy Flame manipulator
+shop buy Command Knight
 shop buy Blue-Eyes white dragon
 shop buy Crab Turtle
 shop buy Skull Guardian
@@ -224,23 +224,23 @@ shop buy Slot Machine
 shop buy Haniwa
 shop buy Man-Eater Bug
 shop buy Gate Guardian
-shop buy Scanner
+shop buy Marshmallon
 shop buy Bitron
 menu exit
 menu enter Deck
 deck create pedaret
-deck add-card --card Call of The Haunted --deck pedaret
-deck add-card --card Vanity's Emptiness --deck pedaret
-deck add-card --card Wall of Revealing Light --deck pedaret
-deck add-card --card Sword of dark destruction --deck pedaret
-deck add-card --card Black Pendant --deck pedaret
-deck add-card --card United We Stand --deck pedaret
-deck add-card --card Magnum Shield --deck pedaret
-deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Yomi Ship --deck pedaret
+deck add-card --card Texchanger --deck pedaret
+deck add-card --card The Calculator --deck pedaret
+deck add-card --card Herald of Creation --deck pedaret
+deck add-card --card Exploder Dragon --deck pedaret
+deck add-card --card Terratiger, the Empowered Warrior --deck pedaret
+deck add-card --card The Tricky --deck pedaret
+deck add-card --card Beast King Barbaros --deck pedaret
 deck add-card --card Hero of the east --deck pedaret
 deck add-card --card Battle warrior --deck pedaret
 deck add-card --card Crawling dragon --deck pedaret
-deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Command Knight --deck pedaret
 deck add-card --card Blue-Eyes white dragon --deck pedaret
 deck add-card --card Crab Turtle --deck pedaret
 deck add-card --card Skull Guardian --deck pedaret
@@ -249,18 +249,18 @@ deck add-card --card Haniwa --deck pedaret
 deck add-card --card Man-Eater Bug --deck pedaret
 deck add-card --card Gate Guardian --deck pedaret
 deck add-card --card Bitron --deck pedaret
-deck add-card --card Call of The Haunted --deck pedaret
-deck add-card --card Vanity's Emptiness --deck pedaret
-deck add-card --card Wall of Revealing Light --deck pedaret
-deck add-card --card Sword of dark destruction --deck pedaret
-deck add-card --card Black Pendant --deck pedaret
-deck add-card --card United We Stand --deck pedaret
-deck add-card --card Magnum Shield --deck pedaret
-deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Yomi Ship --deck pedaret
+deck add-card --card Texchanger --deck pedaret
+deck add-card --card The Calculator --deck pedaret
+deck add-card --card Herald of Creation --deck pedaret
+deck add-card --card Exploder Dragon --deck pedaret
+deck add-card --card Terratiger, the Empowered Warrior --deck pedaret
+deck add-card --card The Tricky --deck pedaret
+deck add-card --card Beast King Barbaros --deck pedaret
 deck add-card --card Hero of the east --deck pedaret
 deck add-card --card Battle warrior --deck pedaret
 deck add-card --card Crawling dragon --deck pedaret
-deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Command Knight --deck pedaret
 deck add-card --card Blue-Eyes white dragon --deck pedaret
 deck add-card --card Crab Turtle --deck pedaret
 deck add-card --card Skull Guardian --deck pedaret

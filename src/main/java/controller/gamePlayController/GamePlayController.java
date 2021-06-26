@@ -550,6 +550,7 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
             selectedCard = null;
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
