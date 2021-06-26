@@ -6,6 +6,7 @@ import controller.menuController.MenuController;
 import controller.responses.DuelMenuResponses;
 import controller.utilizationController.UtilityController;
 import model.Game;
+import model.cards.Card;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -74,7 +75,7 @@ public class DuelMenu extends Menu {
             if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
                 System.out.println("you can't do this kind of moves");
             if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if(input.equals("show graveyard"))  showGraveYard();
+            else if (input.equals("show graveyard")) showGraveYard();
             else if (input.equals("surrender")) gamePlayController.surrender();
             else if (input.matches("duel set-winner (\\.+)")) {
                 Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
@@ -82,7 +83,8 @@ public class DuelMenu extends Menu {
             } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
             else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
-            else if (input.equals("card show")) checkAndCallShowCard();
+            else if (input.equals("card show")) checkAndCallShowSelectedCard();
+            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
             else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
             else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
             else if (input.equals("set")) printResponse(gamePlayController.setCommand());
@@ -103,19 +105,30 @@ public class DuelMenu extends Menu {
         }
     }
 
-    public void showGraveYard()
-    {
+    public void showGraveYard() {
         System.out.println(gamePlayController.showGraveYard());
-        while (true)
-        {  String input = UtilityController.getNextLine();
-            if(input.equals("back"))
+        while (true) {
+            String input = UtilityController.getNextLine();
+            if (input.equals("back"))
                 break;
-            else if(input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard());
+            else if (input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard());
             else System.out.println("invalid command! you should go back to game!");
         }
     }
 
-    public void checkAndCallShowCard() {
+//    public void showCardByName(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.cardShowRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String cardName = enteredDetails.get("name");
+//            if (cardName.equals("--selected")) checkAndCallShowSelectedCard();
+//            else if (Card.getCardByName(cardName)==null) printString("No card exists with this name");
+//            else printString(Card.getCardByName(cardName).cardShow());
+//        }
+//    }
+
+    public void checkAndCallShowSelectedCard() {
         duelMenuResponses = gamePlayController.showCard();
         printResponse(duelMenuResponses);
     }
@@ -343,8 +356,8 @@ public class DuelMenu extends Menu {
             case SPELL_ACTIVATED:
                 System.out.println("spell activated");
                 break;
-           case CANT_BE_ADDED_TO_CHAIN:
-               System.out.println("you can't add this card ro chain");
+            case CANT_BE_ADDED_TO_CHAIN:
+                System.out.println("you can't add this card ro chain");
                 break;
             case EFFECT_DONE_SUCCESSFULLY:
                 System.out.println("effect done successfully");

@@ -235,6 +235,14 @@ public class RegexController {
         return false;
     }
 
+    public Boolean cardShowRegex(String input, HashMap<String, String> enteredDetails) {
+        Matcher matcher = getCommandMatcher(input, "card show ([\\w'\\-, ]+)$");
+        if (matcher.find()) {
+            enteredDetails.put("name", matcher.group(1));
+            return true;
+        }
+        return false;
+    }
 
     public Boolean isAddOrRemoveCardValid(Matcher matcher, String sideOrMain, HashMap<String, String> enteredDetails) {
         boolean commandValidation = true;
@@ -266,7 +274,6 @@ public class RegexController {
             commandCase = CommandCase.INVALID;
             commandValidation = false;
         }
-
 
         if (commandCase.equals(CommandCase.LONG)) {
             enteredDetails.put("card", inputParameters.get("--card"));

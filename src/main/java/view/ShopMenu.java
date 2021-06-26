@@ -31,6 +31,7 @@ public class ShopMenu extends Menu {
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
             else if (input.equals("shop show --all")) checkAndCallShowAllCards();
+            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
             else if (regexController.showMenuRegex(input))
                 checkAndCallShowCurrentMenu();
             else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
