@@ -72,8 +72,10 @@ public class DuelMenu extends Menu {
         }
         while (true) {
             String input = UtilityController.getNextLine();
-            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select"))
+            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
                 System.out.println("you can't do this kind of moves");
+                continue;
+            }
             if (input.equals("menu exit")) checkAndCallMenuExit();
             else if (input.equals("show graveyard")) showGraveYard();
             else if (input.equals("surrender")) gamePlayController.surrender();

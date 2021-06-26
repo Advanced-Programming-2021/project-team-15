@@ -171,8 +171,8 @@ public class Card {
             details.append("Name : ").append(this.getCardName()).append("\n");
             details.append("Level : ").append(((MonsterCard) this).getLevel()).append("\n");
             details.append("Type : ").append(((MonsterCard) this).getMonsterType()).append("\n");
-            details.append("Attack : ").append(((MonsterCard) this).getAttackPoint()).append("\n");
-            details.append("Defense : ").append(((MonsterCard) this).getDefensePoint()).append("\n");
+            details.append("Attack : ").append(((MonsterCard) this).getGameATK()).append("\n");
+            details.append("Defense : ").append(((MonsterCard) this).getGameDEF()).append("\n");
             details.append("Description : ").append(this.getCardDescription());
         } else if (this instanceof MagicCard) {
             details.append("Name : ").append(this.getCardName()).append("\n");

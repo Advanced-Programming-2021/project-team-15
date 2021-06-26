@@ -640,7 +640,6 @@ public class GamePlayController extends MenuController {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
                     duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
-                    return;
                 } else addSelectedCardToChain();
             } else {
                 duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
@@ -688,10 +687,11 @@ public class GamePlayController extends MenuController {
         for (int i = chainCards.size() - 1; i >= 0; i--) {
             spellEffectController.setDoIt(true);
             trapEffectController.setDoIt(true);
+            duelMenu.printString("**"+chainCards.get(i).getCardName()+"**");
             callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
         }
         chainCards.clear();
-        duelMenu.setCantDoThisKindsOfMove(true);
+        duelMenu.setCantDoThisKindsOfMove(false);
     }
 
 

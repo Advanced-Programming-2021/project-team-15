@@ -259,7 +259,8 @@ public class SpellEffectController {
 
     public void magnumShield(MagicCard magnumShield) {
         if(!doIt){
-            if(checkMagnumShield()) gamePlayController.activateSelectedCard();
+            if(checkMagnumShield())
+                gamePlayController.activateSelectedCard();
          return;}
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
