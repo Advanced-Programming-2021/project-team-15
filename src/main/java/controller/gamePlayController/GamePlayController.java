@@ -465,7 +465,7 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses setMonster() {
-        if (opponentPlayer.getMonsterCardZone().getNumberOfCard() == 5)
+        if (currentPlayer.getMonsterCardZone().getNumberOfCard() == 5)
             return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;

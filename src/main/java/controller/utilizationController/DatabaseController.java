@@ -131,24 +131,6 @@ public class DatabaseController {
         return null;
     }
 
-//    public ArrayList<Card> deserializeCards() {
-//        ArrayList<Card> cards;
-//        GsonBuilder gsonBuilder = new GsonBuilder();
-//        try (Reader reader = new FileReader("src/main/resources/Cards.json")) {
-//            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-//                    .of(Card.class, "type").
-//                            registerSubtype(MonsterCard.class, "MONSTER").
-//                            registerSubtype(MagicCard.class, "MAGIC");
-//            Type cardsListType = new TypeToken<ArrayList<Card>>(){}.getType();
-//            cards = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader,cardsListType);
-//            return cards;
-//        }
-//        catch (IOException e) {
-//            //e.printStackTrace();
-//        }
-//        return null;
-//    }
-
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (Writer writer = new FileWriter("src/main/resources/Users.json")) {
