@@ -20,13 +20,16 @@ public class Game {
     private Player secondPlayer;
     private int roundNumber;
     private int roundCount;
-    private Player[] winnerOfEachRound = new Player[3];
+    private Player[] winnerOfEachRound ;
     private ArrayList<Integer> firstPlayerLifePointEachRound;
     private ArrayList<Integer> secondPlayerLifePointEachRound;
     private Player wholeGameWinner;
     private Player roundWinner;
 
     public Game(Player firstPlayer, Player secondPlayer, int roundNumber) {
+        winnerOfEachRound = new Player[3];
+        firstPlayerLifePointEachRound = new ArrayList<>();
+        secondPlayerLifePointEachRound = new ArrayList<>();
         this.roundNumber = roundNumber;
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;

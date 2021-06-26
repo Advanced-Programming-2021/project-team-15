@@ -158,6 +158,7 @@ public class GamePlayController extends MenuController {
         game.setRoundCount(game.getRoundCount() + 1);
         game.getFirstPlayer().setLifePoint(8000);
         game.getSecondPlayer().setLifePoint(8000);
+        currentPhaseNumber = 0;
         game.getFirstPlayer().startNewGame();
         game.getSecondPlayer().startNewGame();
         currentPlayer.getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
@@ -186,7 +187,7 @@ public class GamePlayController extends MenuController {
         if (currentPlayer.getCanDraw()) {
             shuffle();
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-            //DuelMenu.getInstance().printString(currentPlayer.getDeckZone().getZoneCards().get(0).getCardName());
+            duelMenu.printString(currentPlayer.getDeckZone().getZoneCards().get(0).getCardName());
             currentPlayer.getDeckZone().getZoneCards().remove(0);
             if (checkIfGameIsFinished())
                 defineWinner();
@@ -1030,7 +1031,7 @@ public class GamePlayController extends MenuController {
                 opponentPlayer.getDeckZone().getZoneCards().size() == 0);
     }
     public void defineStarter(Player winner , Player loser)
-    {    String ans = duelMenu.defineStarterOfNextRound(winner.getUser().getUserName());
+    {    String ans = duelMenu.defineStarterOfNextRound(loser.getUser().getUserName());
         if(ans.equals("yes")) {
             currentPlayer = loser;
             opponentPlayer = winner;
@@ -1040,6 +1041,7 @@ public class GamePlayController extends MenuController {
         }
         duelMenu.startNewRound(currentPlayer.getUser().getUserName());
      startRound();
+     goNextPhase();
     }
 
 
