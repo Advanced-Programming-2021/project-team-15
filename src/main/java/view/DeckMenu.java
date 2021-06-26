@@ -2,8 +2,8 @@ package view;
 
 import controller.menuController.DeckController;
 import controller.responses.DeckMenuResponses;
-import model.Deck;
 import controller.utilizationController.UtilityController;
+import model.Deck;
 
 import java.util.HashMap;
 
@@ -40,6 +40,7 @@ public class DeckMenu extends Menu {
             else if (input.equals("deck show --all")) checkAndCallShowAllDecks();
             else if (input.equals("deck show --cards")) checkAndCallShowAllCardsOfUser();
             else if (input.startsWith("deck show")) checkAndCallShowThisDeck(input);
+            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
             else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
             else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
             else System.out.println("invalid command");

@@ -1,8 +1,8 @@
 package controller.menuController;
 
 import controller.responses.DeckMenuResponses;
-import model.cards.Card;
 import model.Deck;
+import model.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -123,7 +123,6 @@ public class DeckController extends MenuController {
             for (Card card : monsterCards) {
                 deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
             }
-            //if (monsterCards.size()!=0)deckDetails.deleteCharAt(deckDetails.lastIndexOf("\n"));
             deckDetails.append("* ").append("Magics :\n");
             for (Card card : magicCards) {
                 deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
