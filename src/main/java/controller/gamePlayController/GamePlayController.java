@@ -171,10 +171,12 @@ public class GamePlayController extends MenuController {
         opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
         for (Card card : currentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(currentPlayer);
+            card.setHidden(true);
             card.setSummoned(false);
         }
         for (Card card : opponentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(opponentPlayer);
+            card.setHidden(true);
             card.setSummoned(false);
         }
         shuffle();
@@ -303,7 +305,7 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = summon();
-            selectedCard.setSummoned(true);
+            ((MonsterCard)selectedCard).setSummoned(true,false);
 
             selectedCard = null;
             DuelMenu.getInstance().printString(showGameBoard());

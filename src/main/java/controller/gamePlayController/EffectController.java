@@ -69,12 +69,11 @@ public class EffectController {
         if (both) {
             Map<Integer, MonsterCard> monster2 = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
             Map<Integer, MagicCard> magic2 = gamePlayController.getCurrentPlayer().getMagicCardZone().getZoneCards();
-            for (int j = 1; j < 6; j++) {
+            for (int j = 1; j <= 5; j++) {
                 if (monster2.get(j) != null && type == Card.CardType.MONSTER)
                     gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
                 if (magic2.get(j) != null && type == Card.CardType.MAGIC)
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyard(j, gamePlayController.getCurrentPlayer());
-
             }
         }
     }
