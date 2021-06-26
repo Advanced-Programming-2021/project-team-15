@@ -1,10 +1,10 @@
 package controller.gamePlayController;
 
 import controller.responses.DuelMenuResponses;
-import model.cards.Card;
 import model.Game;
-import model.cards.MonsterCard;
 import model.Phase;
+import model.cards.Card;
+import model.cards.MonsterCard;
 import view.DuelMenu;
 
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ public class AttackController {
     public static void setDamage(int damage) {
         AttackController.damage = damage;
     }
-
 
 
     public ArrayList<MonsterCard> getCantBeAttacked() {
@@ -64,15 +63,16 @@ public class AttackController {
         String position = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();
         MonsterCard target = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number);
         MonsterCard attacker = (MonsterCard) gamePlayController.getSelectedCard();
-        if(target.getCardName().equals("Command Knight") && target.isActivated() && gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard()>=2)
+        if (target.getCardName().equals("Command Knight") && target.isActivated() && gamePlayController.getOpponentPlayer().getMonsterCardZone().getNumberOfCard() >= 2)
             return CANT_ATTACK_TO_THIS_CARD;
-        if(target.getCardName().equals("Texchanger") && !haveBeenUsed(target))
-        {   cardsShouldBeUsedOnce.add(target);
+        if (target.getCardName().equals("Texchanger") && !haveBeenUsed(target)) {
+            cardsShouldBeUsedOnce.add(target);
             GamePlayController.getMonsterEffectController().textChanger(target);
-            return EFFECT_DONE_SUCCESSFULLY; }
+            return EFFECT_DONE_SUCCESSFULLY;
+        }
         isAttacking = true;
         checkerForEffects();
-        if(!isAttacking)
+        if (!isAttacking)
             return ATTACK_CANCELED;
         if (position.equals("OO"))
             return attackTOAttackPos(attacker, target, number);
@@ -81,31 +81,32 @@ public class AttackController {
         else return attackToDefencePos(attacker, target, number, true);
     }
 
-    public void checkerForEffects()
-    {
-        if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder")!=null)
-       {  gamePlayController.changeTurn();
-          DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
-          if (getAnswer()) {
-              GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
-              isAttacking = false;
-          }
-           gamePlayController.changeTurn();
-       }
-       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force")!=null)
-      {   gamePlayController.changeTurn();
-        DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
-        if(getAnswer()) {
-            GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
-            isAttacking = false; }
+    public void checkerForEffects() {
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder") != null) {
             gamePlayController.changeTurn();
-      }
-       if(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(),"Negate Attack" )!=null)
-       {   if (getAnswer()) {
-           GamePlayController.getTrapEffectController().negateAttack(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Negate Attack"));
-           isAttacking = false; }
-       gamePlayController.changeTurn();
-       }
+            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
+                isAttacking = false;
+            }
+            gamePlayController.changeTurn();
+        }
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force") != null) {
+            gamePlayController.changeTurn();
+            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
+                isAttacking = false;
+            }
+            gamePlayController.changeTurn();
+        }
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Negate Attack") != null) {
+            if (getAnswer()) {
+                GamePlayController.getTrapEffectController().negateAttack(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Negate Attack"));
+                isAttacking = false;
+            }
+            gamePlayController.changeTurn();
+        }
     }
 
     public Boolean getAnswer() {
@@ -120,24 +121,28 @@ public class AttackController {
         target.setHidden(false);
         int difference = attacker.getGameATK() - target.getGameDEF();
         damage = difference;
-        if(hidden)
-        {  if(target.getCardName().equals("Command Knight") && !target.isActivated())
-            GamePlayController.getMonsterEffectController().commandKnight(true,target);
-            if(target.getCardName().equals("Man-Eater Bug"))
+        if (hidden) {
+            if (target.getCardName().equals("Command Knight") && !target.isActivated())
+                GamePlayController.getMonsterEffectController().commandKnight(true, target);
+            if (target.getCardName().equals("Man-Eater Bug"))
                 GamePlayController.getMonsterEffectController().manEaterBug(target);
-            if(target.getCardName().equals("The Calculator") && !target.isActivated())
-                GamePlayController.getMonsterEffectController().theCalculator(target);}
+            if (target.getCardName().equals("The Calculator") && !target.isActivated())
+                GamePlayController.getMonsterEffectController().theCalculator(target);
+        }
         if (difference > 0) {
-            if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
-            if(target.getCardName().equals("Marshmallon"))
-            {   if(hidden)
-            { DuelMenu.getInstance().lifePointReduced(1000);
-                gamePlayController.getCurrentPlayer().reduceLifePoint(1000);}
+            if (target.getCardName().equals("Yomi Ship"))
+                GamePlayController.getMonsterEffectController().yomiShip(attacker, target);
+            if (target.getCardName().equals("Marshmallon")) {
+                if (hidden) {
+                    DuelMenu.getInstance().lifePointReduced(1000);
+                    gamePlayController.getCurrentPlayer().reduceLifePoint(1000);
+                }
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
-            if(target.getCardName().equals("Exploder Dragon"))
-            {gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
-             DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");}
+            if (target.getCardName().equals("Exploder Dragon")) {
+                gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+                DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");
+            }
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
@@ -161,20 +166,22 @@ public class AttackController {
         damage = difference;
         if (difference > 0) {
             attackedCardsInTurn.add(attacker);
-            if(target.getCardName().equals("Exploder Dragon"))
-            {   gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
+            if (target.getCardName().equals("Exploder Dragon")) {
+                gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
                 DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");
                 gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
-            return EFFECT_DONE_SUCCESSFULLY;}
-            if(target.getCardName().equals("Yomi Ship")) GamePlayController.getMonsterEffectController().yomiShip(attacker,target);
+                return EFFECT_DONE_SUCCESSFULLY;
+            }
+            if (target.getCardName().equals("Yomi Ship"))
+                GamePlayController.getMonsterEffectController().yomiShip(attacker, target);
             gamePlayController.getOpponentPlayer().reduceLifePoint(difference);
-            if(target.getCardName().equals("Marshmallon")) {
+            if (target.getCardName().equals("Marshmallon")) {
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
-             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             return DuelMenuResponses.DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE;
         } else if (difference == 0) {
-            if(target.getCardName().equals("Marshmallon")) {
+            if (target.getCardName().equals("Marshmallon")) {
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
@@ -207,7 +214,7 @@ public class AttackController {
             return YOU_CANT_ATTACK_WITH_THIS_CARD;
         if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) != Phase.PhaseLevel.BATTLE)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-        else if (attacker.getMode()!= MonsterCard.Mode.ATTACK) return NOT_IN_ATTACK_POSITION;
+        else if (attacker.getMode() != MonsterCard.Mode.ATTACK) return NOT_IN_ATTACK_POSITION;
         else if (alreadyAttackedThisTurn(attacker))
             return DuelMenuResponses.ALREADY_ATTACKED;
         else if (!gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().isEmpty())
@@ -215,7 +222,7 @@ public class AttackController {
         attackedCardsInTurn.add(attacker);
         isAttacking = true;
         checkerForEffects();
-        if(!isAttacking)
+        if (!isAttacking)
             return ATTACK_CANCELED;
         gamePlayController.getOpponentPlayer().reduceLifePoint((attacker).getGameATK());
         return YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK;

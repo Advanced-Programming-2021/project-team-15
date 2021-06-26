@@ -61,6 +61,7 @@ public class MonsterEffectController {
             if (victim.getMonsterCardZone().getZoneCards().get(num) != null) {
                 victim.getMonsterCardZone().moveCardToGraveyard(num, victim);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                return;
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
@@ -87,7 +88,7 @@ public class MonsterEffectController {
             ((MonsterCard) gamePlayController.getSelectedCard()).setGameATK(1900);
             gamePlayController.doSummon();
             duelMenu.printResponse(CARD_SUMMONED);
-            gamePlayController.setSelectedCard(null);
+            //gamePlayController.setSelectedCard(null);
             return false;
         }
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_TRIBUTE_TREE_MONSTERS);
@@ -98,7 +99,7 @@ public class MonsterEffectController {
             effectController.destroyCards(Card.CardType.MAGIC, false);
             gamePlayController.doSummon();
             duelMenu.printResponse(CARD_SUMMONED);
-            gamePlayController.setSelectedCard(null);
+            //gamePlayController.setSelectedCard(null);
             return false;
         }
         return true;
