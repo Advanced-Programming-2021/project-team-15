@@ -59,6 +59,7 @@ public class SpellEffectController {
     }
 
     public void yamiForNewAddedCard(MonsterCard monsterCard) {
+        duelMenu.printString("yami effect for new added card!");
         if (monsterCard.getMonsterType() == MonsterCard.MonsterType.FIEND ||
                 monsterCard.getMonsterType() == MonsterCard.MonsterType.SPELL_CASTER) {
             monsterCard.setAttackPoint(monsterCard.getAttackPoint() + 200);
@@ -86,6 +87,7 @@ public class SpellEffectController {
     }
 
     public void forestForNewAddedCard(MonsterCard monsterCard) {
+        duelMenu.printString("forest effect for new added card!");
         if (monsterCard.getMonsterType() == MonsterCard.MonsterType.BEAST ||
                 monsterCard.getMonsterType() == MonsterCard.MonsterType.INSECT ||
                 monsterCard.getMonsterType() == MonsterCard.MonsterType.BEAST_WARRIOR) {
@@ -106,6 +108,7 @@ public class SpellEffectController {
 
 
     public void closedForestForNewAddedCard(MonsterCard monsterCard) {
+        duelMenu.printString("closed forest effect for new added card!");
         int i = effectController.numberOfDeadMonsters();
         if (monsterCard.getMonsterType() == MonsterCard.MonsterType.BEAST) {
             monsterCard.setGameATK(monsterCard.getGameATK() + i * 100);
@@ -130,6 +133,7 @@ public class SpellEffectController {
     }
 
     public void umiirukaForNewAddedCard(MonsterCard monsterCard) {
+        duelMenu.printString("umiiruka effect for new added card!");
         if (monsterCard.getMonsterType() == MonsterCard.MonsterType.AQUA) {
             monsterCard.setGameATK(monsterCard.getGameATK() + 500);
             monsterCard.setGameDEF(monsterCard.getGameDEF() + -400);
@@ -582,10 +586,10 @@ public class SpellEffectController {
 
     public ArrayList<MonsterCard> getWholeMonsters(Player player) {
         ArrayList<MonsterCard> monsters = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            if (player.getMonsterCardZone().getZoneCards().get(i) != null && player.getMonsterCardZone().getZoneCards().get(i) instanceof MonsterCard)
-                monsters.add((MonsterCard) player.getMonsterCardZone().getZoneCards().get(i));
-        }
+//        for (int i = 1; i <= 5; i++) {
+//            if (player.getMonsterCardZone().getZoneCards().get(i) != null && player.getMonsterCardZone().getZoneCards().get(i) instanceof MonsterCard)
+//                monsters.add((MonsterCard) player.getMonsterCardZone().getZoneCards().get(i));
+//        }
         for (Card card : player.getDeckZone().getZoneCards()) {
             if (card instanceof MonsterCard)
                 monsters.add((MonsterCard) card);
@@ -615,14 +619,17 @@ public class SpellEffectController {
         int out[] = numbers;
         int sum = 0;
         for (int i = 0; i < out.length; i++) {
-            if(out[i]>=5) {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                return false;
-            }
-
-            sum = sum + ((MonsterCard) player.getDeckZone().getZoneCards().get(out[i])).getLevel();
+            sum = sum + (getWholeMonsters(player)).get(out[i]).getLevel();
         }
         return sum == level;
+    }
+    public void showWholeMonsters(ArrayList<MonsterCard> monsterCards)
+    { StringBuilder out = new StringBuilder();
+        int i = 0 ;
+        for(MonsterCard monsterCard : monsterCards)
+    {  out.append(i).append(" : ").append(monsterCard.getCardName()).append(" level : ").append(monsterCard.getLevel()).append("\n");
+    }
+        duelMenu.printString(out.toString());
     }
 
 
@@ -631,6 +638,11 @@ public class SpellEffectController {
             if(checkAdvancedRitualArt()) gamePlayController.activateSelectedCard();
             else return;}
         int[] out;
+        if (getRitualMonsterOfHand(gamePlayController.getCurrentPlayer())==null)
+        {     duelMenu.printString("you dont have ritual monster ...");
+        return;}
+        duelMenu.printString("you can ritual summon "+getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).getCardName()+"with level :"+getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).getLevel());
+        showWholeMonsters(getWholeMonsters(gamePlayController.getCurrentPlayer()));
         while (true) {
             duelMenu.printResponse(ENTER_SOME_NUMBERS);
             String string = duelMenu.getString();
@@ -645,8 +657,8 @@ public class SpellEffectController {
                 }
                 if (checkSummon(out, gamePlayController.getCurrentPlayer(), getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).getLevel())) {
                     for (int i = 0; i < out.length; i++) {
-                        gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(i));
-                        gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(out[i]);
+                        gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(out[i]));
+                        gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(out[i]));
                     }
                     duelMenu.printResponse(ENTER_POS);
                     String ans =duelMenu.getString();

@@ -522,7 +522,9 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setSpell() {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
-        currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
+        if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
+            currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+        else currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         selectedCard.setHidden(true);
         setSpellCardsInTurn.add((MagicCard) selectedCard);
         setTrapAndSpellCardsInTurn.add((MagicCard) selectedCard);
@@ -731,18 +733,16 @@ public class GamePlayController extends MenuController {
     }
 
     public void checkForContinuesEffectsWhenNewCardAdded(MonsterCard monsterCard, Player currentPlayer) {
-        Map<Integer, MagicCard> ourMap = currentPlayer.getMagicCardZone().getZoneCards();
-        Map<Integer, MagicCard> theirMap = getTheOtherPlayer(currentPlayer).getMagicCardZone().getZoneCards();
-        for (int i = 1; i <= 5; i++) {
-            if(ourMap.get(i)!=null && ourMap.get(i).isActivated()) {
-                if (ourMap.get(i).getCardName().equals("Yami") || theirMap.get(i).getCardName().equals("Yami")) spellEffectController.yamiForNewAddedCard(monsterCard);
-                if (ourMap.get(i).getCardName().equals("Forset") || theirMap.get(i).getCardName().equals("Forset")) spellEffectController.forestForNewAddedCard(monsterCard);
-                if (ourMap.get(i).getCardName().equals("Closed Forest")) spellEffectController.closedForestForNewAddedCard(monsterCard);
-                if (ourMap.get(i).getCardName().equals("Umiiruka") || theirMap.get(i).getCardName().equals("Umiiruka")) spellEffectController.umiirukaForNewAddedCard(monsterCard);
-            }
+        ArrayList<MagicCard> ourFieldZone = currentPlayer.getFieldZone().getZoneCards();
+        ArrayList<MagicCard>  theirFieldZone = getTheOtherPlayer(currentPlayer).getFieldZone().getZoneCards();
+                if (( !ourFieldZone.isEmpty() && ourFieldZone.get(0).getCardName().equals("Yami"))|| (!theirFieldZone.isEmpty() && theirFieldZone.get(0).getCardName().equals("Yami"))) spellEffectController.yamiForNewAddedCard(monsterCard);
+                if (( !ourFieldZone.isEmpty() && ourFieldZone.get(0).getCardName().equals("Forest"))|| (!theirFieldZone.isEmpty() && theirFieldZone.get(0).getCardName().equals("Forest"))) spellEffectController.forestForNewAddedCard(monsterCard);
+                if (( !ourFieldZone.isEmpty() && ourFieldZone.get(0).getCardName().equals("Closed Forest"))) spellEffectController.closedForestForNewAddedCard(monsterCard);
+                if(( !ourFieldZone.isEmpty() && ourFieldZone.get(0).getCardName().equals("Umiiruka"))|| (!theirFieldZone.isEmpty() && theirFieldZone.get(0).getCardName().equals("Umiiruka"))) spellEffectController.umiirukaForNewAddedCard(monsterCard);
+
 
         }
-    }
+
 
     public void callSpellOrTrap(MagicCard card, Player player) {  //TODO
         String cardName = card.getCardName();
