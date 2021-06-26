@@ -187,7 +187,6 @@ public class GamePlayController extends MenuController {
         if (currentPlayer.getCanDraw()) {
             shuffle();
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-            duelMenu.printString(currentPlayer.getDeckZone().getZoneCards().get(0).getCardName());
             currentPlayer.getDeckZone().getZoneCards().remove(0);
             if (checkIfGameIsFinished())
                 defineWinner();
@@ -657,8 +656,7 @@ public class GamePlayController extends MenuController {
                                 doChainActions();
                         } else doChainActions();
                     }
-
-                }
+                } else doChainActions();
             } else if (opponentPlayer == mainCurrentPlayer) {
                 changeTurn();
                 if (canMakeChain(currentPlayer)) {
@@ -677,6 +675,7 @@ public class GamePlayController extends MenuController {
     }
 
     public boolean canContinueTheChain(Card card) {
+        if (chainCards.isEmpty()) return true;
         int lastSpeed = getMagicCardSpeed(chainCards.get(chainCards.size() - 1));
         int cardSpeed = getMagicCardSpeed((MagicCard) card);
         if (cardSpeed != 1 && cardSpeed >= lastSpeed)
@@ -698,7 +697,7 @@ public class GamePlayController extends MenuController {
     public Boolean canMakeChain(Player player) {
         Map<Integer, MagicCard> magics = player.getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
-            if (canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
+            if ( magics.get(i)!= null && canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
                 return true;
         }
         return false;

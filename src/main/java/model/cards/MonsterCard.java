@@ -68,9 +68,6 @@ public class MonsterCard extends Card {
     }
 
     public void setAttackPoint(int attackPoint) {
-        if (attackPoint < 0)
-            this.attackPoint = 0;
-        else
             this.attackPoint = attackPoint;
     }
 
@@ -132,6 +129,9 @@ public class MonsterCard extends Card {
     }
 
     public void setGameATK(int gameATK) {
+        if ( gameATK < 0)
+            this.gameATK = 0;
+        else
         this.gameATK = gameATK;
     }
 
@@ -140,7 +140,10 @@ public class MonsterCard extends Card {
     }
 
     public void setGameDEF(int gameDEF) {
-        this.gameDEF = gameDEF;
+        if ( gameDEF < 0)
+            this.gameDEF = 0;
+        else
+            this.gameDEF = gameDEF;
     }
 
     public String toStringPosition() {
