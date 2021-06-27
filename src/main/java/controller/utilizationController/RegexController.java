@@ -319,16 +319,20 @@ public class RegexController {
         return commandValidation;
     }
 
-    public Boolean newGameAiRegex(String input) {
+    public Boolean newGameAiRegex(String input,HashMap<String, String> enteredDetails) {
         if (input.contains(" --new") && input.contains(" --ai")) {
             input = input.replaceAll(" --new", "");
             input = input.replaceAll(" --ai", "");
             Matcher matcher = getCommandMatcher(input, "\\bduel --rounds (\\d+)$");
-//            if(matcher.find())
-//            {
-//                // startNewAiGame()  ?
-//            }
-//            else
+          if(matcher.find())
+            {
+
+               // int round=Integer.parseInt(matcher.group(1));
+                enteredDetails.put("rounds", matcher.group(1));
+             return true;
+                // startNewAiGame()  ?
+            }
+         else
             return false;
         } else return false;
     }

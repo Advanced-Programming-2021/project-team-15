@@ -56,7 +56,13 @@ public class DuelMenu extends Menu {
         while (true) {
             String input = UtilityController.getNextLine();
             if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
+            else if (input.startsWith("duel") && input.contains(" --ai")) {
+                checkAndCallNewAiDuel(input);
+                if (weAreOnGame) {
+                    printResponse(gamePlayController.goNextPhase());
+                    break;
+                }
+            }
             else if (input.startsWith("duel")) {
                 checkAndCallNewDuel(input);
                 if (weAreOnGame) {
@@ -125,7 +131,7 @@ public class DuelMenu extends Menu {
 
     public void checkAndCallNewAiDuel(String input) {
         HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.newDuelRegex(input, enteredDetails))
+        if (!regexController.newGameAiRegex(input, enteredDetails))
             System.out.println("invalid command");
         else {
             isAi = true;

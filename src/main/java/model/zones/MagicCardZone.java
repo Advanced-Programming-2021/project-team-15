@@ -20,6 +20,7 @@ public class MagicCardZone extends NumericZone{
                 zoneCards.get(key).setCardPlacedZone(this);
                 zoneCards.put(key,card);
                 return;
+
             }
         }
     }
@@ -37,7 +38,12 @@ public class MagicCardZone extends NumericZone{
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, magicCard);
                 magicCard.setCardPlacedZone(this);
-                return;
+                if(currentPlayer.getUser().getNickName().equals("ai")){
+                    magicCard.setHidden(true);
+                    return;
+                }else {
+                    return;
+                }
             }
         }
 

@@ -1,7 +1,7 @@
-user create --username mehrad --nickname milan --password m
+user create --username ai --nickname ai --password m
 user create --password k --username kiarash --nickname kia
 user create --nickname parpari --username parnian --password p
-user login --username mehrad --password m
+user login --username ai --password m
 increase --money 1000000
 menu enter Shop
 shop buy Call of The Haunted
@@ -300,5 +300,5 @@ menu exit
 user logout
 user remove --username mehrad --password m
 user remove --username kiarash --password k
-user remove --username parnian --password p
+user remove --username ai --password p
 menu exit

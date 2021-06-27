@@ -39,8 +39,8 @@ public class MonsterCardZone extends NumericZone {
                         monsterCard.setMode(MonsterCard.Mode.ATTACK);
                         monsterCard.setHidden(false);
                     }else{
-                        monsterCard.setMode(MonsterCard.Mode.DEFENSE);
-                        monsterCard.setHidden(true);
+                        monsterCard.setMode(MonsterCard.Mode.ATTACK);
+                        monsterCard.setHidden(false);
                     }
 
                 }
