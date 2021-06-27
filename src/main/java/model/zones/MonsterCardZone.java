@@ -34,6 +34,16 @@ public class MonsterCardZone extends NumericZone {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, monsterCard);
                 monsterCard.setCardPlacedZone(this);
+                if(currentPlayer.getUser().getNickName().equals("ai")){
+                    if(monsterCard.getGameATK()>1500 && monsterCard.getLevel()<=4){
+                        monsterCard.setMode(MonsterCard.Mode.ATTACK);
+                        monsterCard.setHidden(false);
+                    }else{
+                        monsterCard.setMode(MonsterCard.Mode.DEFENSE);
+                        monsterCard.setHidden(true);
+                    }
+
+                }
                 return;
             }
         }
