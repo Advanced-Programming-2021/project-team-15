@@ -29,7 +29,7 @@ public class SpellEffectController {
 
     DuelMenu duelMenu = DuelMenu.getInstance();
     GamePlayController gamePlayController = GamePlayController.getInstance();
-    EffectController effectController = gamePlayController.getEffectController();
+    EffectController effectController = GamePlayController.getEffectController();
     //TODO : FIRST 4 EFFECTS SHOULD HE CHECKED DUHHHHHHH
 
     public void yami(Boolean x, MagicCard  card) {

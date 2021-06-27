@@ -29,12 +29,12 @@ public class GamePlayController extends MenuController {
     private static TrapEffectController trapEffectController = new TrapEffectController();
     private static SpellEffectController spellEffectController = new SpellEffectController();
     private static MonsterEffectController monsterEffectController = new MonsterEffectController();
+    private static EffectController effectController = new EffectController();
     public Player mainCurrentPlayer;
     private ArrayList<MagicCard> chainCards = new ArrayList<>();
     private ArrayList<Player> chainPlayers = new ArrayList<>();
     private DuelMenu duelMenu = DuelMenu.getInstance();
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
-    private EffectController effectController;
     private boolean isWinCheating;
     private MonsterCard trapHoleVictim;
     private Game game;
@@ -117,12 +117,8 @@ public class GamePlayController extends MenuController {
         this.suijinVictims = suijinVictims;
     }
 
-    public EffectController getEffectController() {
+    public static EffectController getEffectController() {
         return effectController;
-    }
-
-    public void setEffectController(EffectController effectController) {
-        this.effectController = effectController;
     }
 
     public int getCurrentPhaseNumber() {
@@ -153,7 +149,6 @@ public class GamePlayController extends MenuController {
             Player second = new Player(secondUser);
             game = new Game(first, second, roundNum);
             attackController = new AttackController();
-            effectController = new EffectController();
             spellEffectController = new SpellEffectController();
             return DuelMenuResponses.GAME_STARTED_SUCCESSFULLY;
         }

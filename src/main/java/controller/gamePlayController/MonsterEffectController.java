@@ -13,7 +13,6 @@ import static controller.responses.DuelMenuResponses.*;
 
 public class MonsterEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
-    EffectController effectController = gamePlayController.getEffectController();
     DuelMenu duelMenu = DuelMenu.getInstance();
 
     public void commandKnight(Boolean x, MonsterCard commandKnight)  //flip and change pos to up
@@ -28,7 +27,6 @@ public class MonsterEffectController {
             if (entry.getValue() != null && entry.getValue() != gamePlayController.getSelectedCard())
                 entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
         }
-
     }
 
     public void commandKnightForNewAddedCard(MonsterCard monsterCard) {
@@ -76,6 +74,7 @@ public class MonsterEffectController {
         }
         gamePlayController.getSelectedCard().setActivated(true);
         chooseThreeMonsterAndTribute();
+        gamePlayController.doSummon();
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         return true;
     }
@@ -99,8 +98,8 @@ public class MonsterEffectController {
                 return false;
             }
             chooseThreeMonsterAndTribute();
-            effectController.destroyCards(Card.CardType.MONSTER, false);
-            effectController.destroyCards(Card.CardType.MAGIC, false);
+            GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, false);
+            GamePlayController.getEffectController().destroyCards(Card.CardType.MAGIC, false);
             gamePlayController.doSummon();
             duelMenu.printResponse(CARD_SUMMONED);
             //gamePlayController.setSelectedCard(null);
@@ -264,7 +263,7 @@ public class MonsterEffectController {
 
     public Boolean checkHeraldOfCreation() {
         for (Card card : gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards()) {
-            if (card != null && (card instanceof MonsterCard) && ((MonsterCard) card).getLevel() >= 7 &&
+            if ((card instanceof MonsterCard) && ((MonsterCard) card).getLevel() >= 7 &&
                     gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0)
                 return true;
         }

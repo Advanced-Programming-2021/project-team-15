@@ -15,7 +15,7 @@ import static controller.responses.DuelMenuResponses.*;
 public class TrapEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
     DuelMenu duelMenu = DuelMenu.getInstance();
-    EffectController effectController = gamePlayController.getEffectController();
+    EffectController effectController = GamePlayController.getEffectController();
     private boolean doIt = false;
 
     public void magicCylinder(Card trap) {
