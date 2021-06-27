@@ -42,16 +42,17 @@ public class TrapEffectController {
             return;
         }
         Boolean did = false;
+        duelMenu.printResponse(GIVE_A_NAME);
         String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
-            if (card.getCardName().equals(string)) {
+            if ( card!=null && card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 did = true;
             }
         }
         for (Card card : gamePlayController.getOpponentPlayer().getHand().getZoneCards()) {
-            if (card.getCardName().equals(string)) {
+            if ( card!=null && card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 did = true;
@@ -67,9 +68,9 @@ public class TrapEffectController {
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void trapHole(Card trap) {
+    public void trapHole(Card trap, MonsterCard victim) {
         gamePlayController.activateCard(trap);
-        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
+        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(victim, gamePlayController.getOpponentPlayer());
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }

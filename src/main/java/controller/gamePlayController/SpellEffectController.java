@@ -412,6 +412,8 @@ public class SpellEffectController {
             } else if (num == 6 && player.getFieldZone().getZoneCards().get(0) != null) {
                 player.getGraveyardZone().addCardToGraveyardZone(player.getFieldZone().getZoneCards().get(0));
                 player.getFieldZone().getZoneCards().remove(0);
+                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(mysticalSpaceTyphoon, ownerOfCard);
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);

@@ -18,9 +18,10 @@ public class FieldZone extends Zone {
             zoneCards.add(card);
         else {
             player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(0));
-            card.setCardPlacedZone(player.getFieldZone());
+            zoneCards.remove(0);
+            zoneCards.add(card);
         }
-
+        card.setCardPlacedZone(this);
     }
 
     public void addCardToFieldZone(MagicCard magicCard) {
