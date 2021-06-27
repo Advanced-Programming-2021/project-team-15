@@ -302,7 +302,7 @@ public class SpellEffectController {
         for (Card card : gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards()) {
             if (card instanceof MagicCard && ((MagicCard) card).getMagicType() == MagicCard.MagicType.SPELL
                     && ((MagicCard) card).getCardIcon() == MagicCard.CardIcon.FIELD) {
-                duelMenu.printString("do you wanna add this"+ card.getCardName()+" to your had?");
+                duelMenu.printString("do you wanna add this "+ card.getCardName()+" to your had?");
                 String ans = duelMenu.getString();
                 if(ans.equals("yes"))
                 {
@@ -384,7 +384,9 @@ public class SpellEffectController {
     public Boolean checkMysticalSpaceTyphoon(Player ownerOfCard) {
         int num = gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().getNumberOfCard();
         num += ownerOfCard.getMagicCardZone().getNumberOfCard();
-        if (num == 1)
+        num+= ownerOfCard.getFieldZone().getZoneCards().size();
+        num+= gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().size();
+        if (num ==0)
             return false;
         else return true;
     }
@@ -410,9 +412,10 @@ public class SpellEffectController {
             if (num <= 5 && map.get(num) != null) {
                 player.getMagicCardZone().moveCardToGraveyard(num, player);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                if(mysticalSpaceTyphoon.getCardPlacedZone()!=ownerOfCard.getGraveyardZone())
                 ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(mysticalSpaceTyphoon, ownerOfCard);
                 return;
-            } else if (num == 6 && player.getFieldZone().getZoneCards().get(0) != null) {
+            } else if (num == 6 && !player.getFieldZone().getZoneCards().isEmpty()) {
                 player.getGraveyardZone().addCardToGraveyardZone(player.getFieldZone().getZoneCards().get(0));
                 player.getFieldZone().getZoneCards().remove(0);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -434,15 +437,16 @@ public class SpellEffectController {
             gamePlayController.activateSelectedCard();
         return;
     }
+    if(gamePlayController.getChainCards().get(gamePlayController.getChainCards().size()-1).getCardName().equals("Magic Jammer")){
     gamePlayController.getChainCards().remove(gamePlayController.getChainCards().size()-1);
     gamePlayController.getChainPlayers().remove(gamePlayController.getChainCards().size()-1);
+      duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);}
     }
 
     public Boolean checkTwinTwisters(Player ownerOfCard) {
-        if ( ownerOfCard.getMagicCardZone().getNumberOfCard()
-                + gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().getNumberOfCard() <= 1 &&
-               ownerOfCard.getFieldZone().getZoneCards().get(0) != null &&
-                gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().get(0) != null)
+        if (( (ownerOfCard.getMagicCardZone().getNumberOfCard() + gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().getNumberOfCard()+ownerOfCard.getFieldZone().getZoneCards().size()+
+        gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().size()) <= 1) ||
+                        ownerOfCard.getHand().getNumberOfCardsInHand()==0)
             return false;
         else return true;
     }
@@ -454,7 +458,12 @@ public class SpellEffectController {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);  // of your hand !
         while (true) {
-            int num = duelMenu.getNum();
+            String ans=duelMenu.getString();
+            if(ans.equals("cancel")) {
+                duelMenu.printResponse(CANCELED);
+                return;
+            }
+            int num = Integer.parseInt(ans);
             if (ownerOfCard.getHand().getNumberOfCardsInHand() >= num) {
                 ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(twinTwisters, ownerOfCard);
                 break;
@@ -465,29 +474,34 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String ans=duelMenu.getString();
+            if(ans.equals("cancel")) {
+                duelMenu.printResponse(CANCELED);
+                return;
+            }
+            int num = Integer.parseInt(ans);
             if (num <= 5 && gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().getZoneCards().get(num) != null) {
                 gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().moveCardToGraveyard(num, gamePlayController.getTheOtherPlayer(ownerOfCard));
                 i++;
-            } else if (num == 6 && gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().get(0) != null) {
+            } else if (num == 6 && !gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().isEmpty()) {
                 gamePlayController.getTheOtherPlayer(ownerOfCard).getGraveyardZone().addCardToGraveyardZone(gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().get(0));
                 gamePlayController.getTheOtherPlayer(ownerOfCard).getFieldZone().getZoneCards().remove(0);
                 i++;
                 if (i == 1) {
                     duelMenu.printResponse(WANNA_ADD_ANOTHER_CARD);
-                    String ans =duelMenu.getString();
-                    if (ans.equals("yes")) {
+                    String answer =duelMenu.getString();
+                    if (answer.equals("yes")) {
                         duelMenu.printResponse(ENTER_ONE_NUMBER);
                         continue;
                     } else {
                         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                      ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(twinTwisters, ownerOfCard);
-                        break;
+                        return;
                     }
                 } else if (i == 2) {
                     duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                   ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(twinTwisters, ownerOfCard);
-                    break;
+                    return;
                 }
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);
@@ -676,7 +690,7 @@ public class SpellEffectController {
         while (true) {
             duelMenu.printResponse(ENTER_SOME_NUMBERS);
             String string = duelMenu.getString();
-            if(string.equals("cancel")) {duelMenu.printString("canceled!");
+            if(string.equals("cancel")) {duelMenu.printResponse(CANCELED);
                 return;}
             if (!string.matches("(\\d+\\s)+\\d+"))
              duelMenu.printResponse(SHOULD_RIVAL_SUMMON_RIGHT_NOW);

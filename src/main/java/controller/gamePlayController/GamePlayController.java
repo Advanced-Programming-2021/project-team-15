@@ -648,6 +648,7 @@ public class GamePlayController extends MenuController {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
                     duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+                    if(chainCards.isEmpty())  mainCurrentPlayer = currentPlayer;
                 } else {
                     if (chainCards.isEmpty())
                         mainCurrentPlayer = currentPlayer;
@@ -744,7 +745,7 @@ public class GamePlayController extends MenuController {
         card.setHidden(false);
         card.setActivated(true);
         activatedCards.put(currentPlayer, card);
-        duelMenu.printResponse(SPELL_ACTIVATED);
+        duelMenu.printResponse(TRAP_ACTIVATED);
 
     }
 
@@ -820,7 +821,7 @@ public class GamePlayController extends MenuController {
             case "Dark Hole":
                 spellEffectController.darkHole(card);
                 break;
-            case " Mystical Space Typhoon":
+            case "Mystical space typhoon":
                 spellEffectController.mysticalSpaceTyphoon(card, player);
                 break;
             case "Ring of defense":
@@ -941,6 +942,9 @@ public class GamePlayController extends MenuController {
 
         }
 
+    }
+    public void increaseLp(int amount)
+    {  currentPlayer.setLifePoint(currentPlayer.getLifePoint()+amount);
     }
 
 

@@ -40,7 +40,7 @@ public class TrapEffectController {
             gamePlayController.activateCard(trap);
             return;
         }
-        Boolean did = false;
+        boolean did = false;
         duelMenu.printResponse(GIVE_A_NAME);
         String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {

@@ -84,6 +84,7 @@ public class DuelMenu extends Menu {
                 if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
             } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
             else if (input.equals("select -d")) checkAndCallDeselect(input);
+            else if(input.matches("increase LP (\\d+)")) increaseLp(input);
             else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
             else if (input.equals("card show")) checkAndCallShowSelectedCard();
             else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
@@ -181,6 +182,10 @@ public class DuelMenu extends Menu {
             printResponse(duelMenuResponses);
         }
 
+    }
+    public void increaseLp(String input)
+    {  Matcher matcher = Pattern.compile("increase LP (\\d+)").matcher(input);
+        if(matcher.find())  gamePlayController.increaseLp(Integer.parseInt(matcher.group(1)));
     }
 
     public void checkAndCallDeselect(String input) {
@@ -468,6 +473,9 @@ public class DuelMenu extends Menu {
                 break;
             case CANCELED:
                 System.out.println("canceled");
+                break;
+            case TRAP_ACTIVATED:
+                System.out.println("trap activated");
                 break;
 
             default:
