@@ -108,12 +108,12 @@ public class DuelMenu extends Menu {
     }
 
     public void showGraveYard() {
-        System.out.println(gamePlayController.showGraveYard());
+        System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
         while (true) {
             String input = UtilityController.getNextLine();
             if (input.equals("back"))
                 break;
-            else if (input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard());
+            else if (input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
             else System.out.println("invalid command! you should go back to game!");
         }
     }
@@ -466,6 +466,10 @@ public class DuelMenu extends Menu {
             case GIVE_A_NAME:
                 System.out.println("give a name :");
                 break;
+            case CANCELED:
+                System.out.println("canceled");
+                break;
+
             default:
                 break;
         }

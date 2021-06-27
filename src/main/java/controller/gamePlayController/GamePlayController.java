@@ -632,7 +632,7 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(YOU_ALREADY_ACTIVATED_THIS_CARD);
         else if (((MagicCard) selectedCard).getMagicType() == MagicCard.MagicType.TRAP && selectedCard.getCardPlacedZone() == currentPlayer.getHand())
             duelMenu.printResponse(YOU_SHOULD_SET_TRAP);
-        else if (isTrapSetInThisTurn((MagicCard) selectedCard)) duelMenu.printResponse(CANT_ACTIVATE_TRAP_IN_THIS_TURN);
+        else if ( isTrapSetInThisTurn((MagicCard) selectedCard) ) duelMenu.printResponse(CANT_ACTIVATE_TRAP_IN_THIS_TURN);
         else if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD
                 && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
@@ -1220,7 +1220,7 @@ public class GamePlayController extends MenuController {
 
     }
 
-    public String showGraveYard() {
+    public String showGraveYard(Player player) {
         StringBuilder output = new StringBuilder();
         if (currentPlayer.getGraveyardZone().getZoneCards().isEmpty())
             output.append("graveyard empty");
