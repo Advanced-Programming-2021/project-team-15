@@ -29,11 +29,11 @@ public class DatabaseController {
 
     public void loadGameCards() throws IOException, CsvValidationException {
         Card.getAllCards().clear();
-        File file = new File("C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Monster.csv");
+        File file = new File("src/main/resources/Monster.csv");
         FileReader fileReader = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
         readMonsterCardsFromCSV(reader);
-        file = new File("C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Magic.csv");
+        file = new File("src/main/resources/Magic.csv");
         fileReader = new FileReader(file);
         reader = new CSVReader(fileReader);
         readMagicCardsFromCSV(reader);
@@ -42,7 +42,7 @@ public class DatabaseController {
     }
 
     public void writeMonsterCardToCSV(MonsterCard card) throws IOException {
-        String path = "C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Monster.csv";
+        String path = "src/main/resources/Monster.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
                 CSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
         String[] monsterDetails = new String[9];
@@ -60,7 +60,7 @@ public class DatabaseController {
     }
 
     public void writeMagicCardToCSV(MagicCard card) throws IOException {
-        String path = "C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Magic.csv";
+        String path = "src/main/resources/Magic.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
                 CSVWriter.DEFAULT_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
         String[] magicDetails = new String[6];
@@ -131,27 +131,9 @@ public class DatabaseController {
         return null;
     }
 
-//    public ArrayList<Card> deserializeCards() {
-//        ArrayList<Card> cards;
-//        GsonBuilder gsonBuilder = new GsonBuilder();
-//        try (Reader reader = new FileReader("src/main/resources/Cards.json")) {
-//            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-//                    .of(Card.class, "type").
-//                            registerSubtype(MonsterCard.class, "MONSTER").
-//                            registerSubtype(MagicCard.class, "MAGIC");
-//            Type cardsListType = new TypeToken<ArrayList<Card>>(){}.getType();
-//            cards = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader,cardsListType);
-//            return cards;
-//        }
-//        catch (IOException e) {
-//            //e.printStackTrace();
-//        }
-//        return null;
-//    }
-
     public void refreshUsersToFileJson() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (Writer writer = new FileWriter("C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Users.json")) {
+        try (Writer writer = new FileWriter("src/main/resources/Users.json")) {
             setAllCardsType();
             gson.toJson(User.getAllUsers(), writer);
         } catch (IOException e) {
@@ -188,7 +170,7 @@ public class DatabaseController {
 
     public void refreshUsersFromFileJson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader("C:\\Users\\parnian\\IdeaProjects\\yugioh\\project-team-15\\src\\main\\resources\\Users.json")) {
+        try (Reader reader = new FileReader("src/main/resources/Users.json")) {
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
