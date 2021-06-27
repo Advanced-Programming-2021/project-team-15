@@ -48,7 +48,7 @@ public class GraveyardZone extends Zone {
     }
     public void resetCard(Card card)
     {   if(card instanceof MonsterCard)
-        ((MonsterCard) card).setSummoned(false);
+        ((MonsterCard) card).setSummoned(false,false);
         card.setSet(false);
         card.setActivated(false);
     }

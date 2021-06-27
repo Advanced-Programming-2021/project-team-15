@@ -399,8 +399,10 @@ public class DuelMenu extends Menu {
                 break;
             case ENTER_PLAYER:
                 System.out.println("enter player (rival/current player)");
+                break;
             case ATTACK_CANCELED:
                 System.out.println("attack canceled!");
+                break;
             case ACTIVATION_CANCELED:
                 System.out.println("activation cancelled!");
                 break;
@@ -455,6 +457,8 @@ public class DuelMenu extends Menu {
             case CANT_ACTIVATE_TRAP_IN_THIS_TURN:
                 System.out.println("you can't activate the trap in first turn you set");
                 break;
+            case DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD:
+                System.out.println("do you want to summon a normal Cyberse card? (yes/no)");
             case CARD_DESTROYED_BY_TRAP_HOLE:
                 System.out.println("card destroyed by trap hole!");
                 break;

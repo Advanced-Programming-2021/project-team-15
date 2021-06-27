@@ -39,9 +39,9 @@ public class MonsterCard extends Card {
         return isSummoned;
     }
 
-    public void setSummoned(Boolean summoned) {
+    public void setSummoned(Boolean summoned,boolean attacking) {
         if (summoned) {
-            setMode(Mode.ATTACK);
+            if (attacking) setMode(Mode.ATTACK);
             setHidden(false);
         }
         isSummoned = summoned;
@@ -103,7 +103,6 @@ public class MonsterCard extends Card {
     public void setMonsterEffectType(MonsterEffectType monsterEffectType) {
         this.monsterEffectType = monsterEffectType;
     }
-
 
     public Mode getMode() {
         return mode;
