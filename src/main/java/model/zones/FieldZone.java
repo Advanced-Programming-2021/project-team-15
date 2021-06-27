@@ -24,9 +24,6 @@ public class FieldZone extends Zone {
         card.setCardPlacedZone(this);
     }
 
-    public void addCardToFieldZone(MagicCard magicCard) {
-        zoneCards.add(magicCard);
-    }
 
     public void removeCardFromFieldZone(MagicCard magicCard) {
         zoneCards.remove(magicCard);

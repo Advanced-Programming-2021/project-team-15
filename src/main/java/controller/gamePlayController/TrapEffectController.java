@@ -112,10 +112,16 @@ public class TrapEffectController {
                     gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
                     MagicCard magicCard = gamePlayController.getChainCards().get(gamePlayController.getChainCards().indexOf(trap)-1);
                     Player    player  = gamePlayController.getChainPlayers().get(gamePlayController.getChainCards().indexOf(trap)-1);
+                    if(magicCard.getCardPlacedZone()==player.getFieldZone())
+                    {  player.getFieldZone().removeCardFromFieldZone(magicCard);
+                        player.getGraveyardZone().addCardToGraveyardZone(magicCard);
+                    }
+                    else {
+                        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(magicCard,player);
+                    }
                     gamePlayController.getChainCards().remove(magicCard);
                     gamePlayController.getChainPlayers().remove(player);
-                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(magicCard,player);
-                    DuelMenu.getInstance().printResponse(ACTIVATION_CANCELED);
+                    duelMenu.printString(magicCard.getCardName()+" action got canceled");
                     duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap , gamePlayController.getCurrentPlayer());
                     return;

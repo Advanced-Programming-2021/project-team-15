@@ -343,8 +343,8 @@ public class DuelMenu extends Menu {
             case ACTIVATE_EFFECT_ONLY_ON_SPELL:
                 System.out.println("activate effect is only for spell cards");
                 break;
-            case CANT_ACTIVATE_EFFECT_ON_THIS_TURN:
-                System.out.println("you can't activate an effect on this turn");
+            case CANT_ACTIVATE_EFFECT_ON_THIS_PHASE:
+                System.out.println("you can't activate an effect on this phase");
                 break;
             case YOU_ALREADY_ACTIVATED_THIS_CARD:
                 System.out.println("you have already activated this card");
