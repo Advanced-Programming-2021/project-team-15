@@ -625,7 +625,8 @@ public class GamePlayController extends MenuController {
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
             duelMenu.printResponse(ACTIVATE_EFFECT_ONLY_ON_SPELL);
-        else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
+        else if (!(((MagicCard) selectedCard).getMagicType()== MagicCard.MagicType.SPELL && ((MagicCard) selectedCard).getCardIcon()==QUICK_PLAY) &&
+                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
             duelMenu.printResponse(CANT_ACTIVATE_EFFECT_ON_THIS_PHASE);
         else if (selectedCard.isActivated())
