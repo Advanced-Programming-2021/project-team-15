@@ -207,8 +207,6 @@ public class GamePlayController extends MenuController {
                         }
                     }
                     currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.ATTACK);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(false);
                     return;
                 }
             }
@@ -229,9 +227,7 @@ public class GamePlayController extends MenuController {
                                 currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(j));
                                 currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(j));
                                 currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                                ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.ATTACK);
-                                ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(false);
-                                return;
+                               return;
                             }
                         }
                     }else{
@@ -240,9 +236,7 @@ public class GamePlayController extends MenuController {
                                 currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(j));
                                 currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(j));
                                 currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                                ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.DEFENSE);
-                                ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
-                                return;
+                                 return;
                             }
                         }
                     }
@@ -259,30 +253,18 @@ public class GamePlayController extends MenuController {
                 if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
                         ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameATK() > 1500 &&
                         ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
-                    //  gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i));
-                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.ATTACK);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(false);
-                    // currentPlayer.getHand().getZoneCards().remove(currentPlayer.getHand().getZoneCards().get(i));
-                    break;
+                   currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                   break;
 
                 } else if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
                         ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameDEF() > 1500 &&
                         ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
-                    //   currentPlayer.getMonsterCardZone().moveToFirstEmptyPlace(currentPlayer.getHand().getZoneCards().get(i));
-                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.DEFENSE);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
-                    // currentPlayer.getHand().getZoneCards().remove(currentPlayer.getHand().getZoneCards().get(i));
+                   currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
                     break;
                 } else if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
                         ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
-                    // currentPlayer.getMonsterCardZone().moveToFirstEmptyPlace(currentPlayer.getHand().getZoneCards().get(i));
                     currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.DEFENSE);
-                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(true);
-                    //    currentPlayer.getHand().getZoneCards().remove(currentPlayer.getHand().getZoneCards().get(i));
-                    break;
+                     break;
                 }
             }
         }
@@ -293,9 +275,7 @@ public class GamePlayController extends MenuController {
             if (currentPlayer.getMagicCardZone().getNumberOfCard() < 5) {
                 if (currentPlayer.getHand().getZoneCards().get(i) instanceof MagicCard) {
                     currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
-                    //     currentPlayer.getMonsterCardZone().moveToFirstEmptyPlace(currentPlayer.getHand().getZoneCards().get(i));
                     ((MagicCard) currentPlayer.getMagicCardZone().getZoneCards().get(i)).setHidden(true);
-                    //   currentPlayer.getHand().getZoneCards().remove(currentPlayer.getHand().getZoneCards().get(i));
 
                 }
             }
