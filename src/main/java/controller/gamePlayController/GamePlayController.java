@@ -250,7 +250,7 @@ public class GamePlayController extends MenuController {
             default:
                 return DuelMenuResponses.INVALID_SELECTION;
         }
-        if (cardNumber == 0 || cardNumber > 5)
+        if (cardNumber == 0 || (cardNumber > 5 && !zoneTypeEnum.equals(Zone.ZoneType.HAND) ))
             return DuelMenuResponses.INVALID_SELECTION;
         if (zoneTypeEnum.equals(Zone.ZoneType.HAND) && cardNumber > currentPlayer.getHand().getNumberOfCardsInHand())
             return DuelMenuResponses.INVALID_SELECTION;
