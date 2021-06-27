@@ -30,6 +30,7 @@ public class GamePlayController extends MenuController {
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private EffectController effectController;
     private boolean isWinCheating;
+    private MonsterCard trapHoleVictim;
     private Game game;
     private boolean isSurrender;
     private int currentPhaseNumber = 0;
@@ -179,6 +180,7 @@ public class GamePlayController extends MenuController {
             opponentPlayer.getDeckZone().getZoneCards().remove(0);
         }
         currentPlayer.setCanDraw(true);
+        opponentPlayer.setCanDraw(true);
     }
 
     public void drawPhase() {
@@ -297,8 +299,8 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
             DuelMenuResponses duelMenuResponses = summon();
+            checkForEffectsAfterSummon();
             selectedCard.setSummoned(true);
-
             selectedCard = null;
             DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
@@ -368,7 +370,9 @@ public class GamePlayController extends MenuController {
             if(selectedCard.getCardName().equals("Terratiger, the Empowered Warrior") && monsterEffectController.checkTerratigerTheEmpoweredWarrior())
                 monsterEffectController.terratigertheEmpoweredWarrior();
             doSummon();
-            //selectedCard = null;
+            if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
+                    ((MonsterCard) selectedCard).getGameATK() >= 1000)
+                trapHoleVictim = (MonsterCard) selectedCard;
             return DuelMenuResponses.CARD_SUMMONED;
         }
         if (((MonsterCard) selectedCard).getLevel() == 5 || ((MonsterCard) selectedCard).getLevel() == 6) {
@@ -522,8 +526,10 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setSpell() {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
-        if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
+        if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+            currentPlayer.getHand().removeCardFromHand(selectedCard);
+        }
         else currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         selectedCard.setHidden(true);
         setSpellCardsInTurn.add((MagicCard) selectedCard);
@@ -568,23 +574,27 @@ public class GamePlayController extends MenuController {
         checkForMonsters((MonsterCard) selectedCard);
         if(selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
             monsterEffectController.manEaterBug((MonsterCard) selectedCard);
-        selectedCard = null;
+        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
+                ((MonsterCard) selectedCard).getGameATK() >= 1000)
+            trapHoleVictim = (MonsterCard) selectedCard;
+            selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
     public void checkForTrapHole()
     {
-        if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Trap Hole") != null &&
-                ((MonsterCard) selectedCard).getGameATK() >= 1000) {
+            if(trapHoleVictim!=null){
             gamePlayController.changeTurn();
             duelMenu.doYouWannaActivateSpecialCard("Trap Hole");
             if (getAnswer()) {
-                trapEffectController.trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"));
+                trapEffectController.trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"), trapHoleVictim);
             }
             gamePlayController.changeTurn();
-        }
+            trapHoleVictim=null;}
+
     }
 
     public void checkForEffectsAfterSummon() {
+        checkForTrapHole();
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(),
                 "Torrential Tribute") != null) {
            duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
@@ -592,7 +602,6 @@ public class GamePlayController extends MenuController {
                 trapEffectController.torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
             }
         }
-        checkForTrapHole();
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute") != null) {
             gamePlayController.changeTurn();
             duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
@@ -628,25 +637,26 @@ public class GamePlayController extends MenuController {
                 && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else
-        {if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD)
-            currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+        {
+
         spellEffectController.setDoIt(false);
         trapEffectController.setDoIt(false);
 
-            if (chainCards.isEmpty())
-                mainCurrentPlayer = currentPlayer;
 
             if (chainCards.isEmpty() || canContinueTheChain(selectedCard)) {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
                     duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
-                } else addSelectedCardToChain();
+                } else {
+                    if (chainCards.isEmpty())
+                        mainCurrentPlayer = currentPlayer;
+                        addSelectedCardToChain();}
             } else {
                 duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
                 selectedCard = null;
             }
             selectedCard = null;
-            if (mainCurrentPlayer == currentPlayer) {
+            if (mainCurrentPlayer == currentPlayer && !chainCards.isEmpty()) {
                 if (canMakeChain(opponentPlayer)) {
                     changeTurn();
                     if (!askForActivatingInRivalsTurn()) {
@@ -687,6 +697,8 @@ public class GamePlayController extends MenuController {
         for (int i = chainCards.size() - 1; i >= 0; i--) {
             spellEffectController.setDoIt(true);
             trapEffectController.setDoIt(true);
+            if(chainCards.get(i).getCardPlacedZone()==chainPlayers.get(i).getGraveyardZone())
+                continue;
             duelMenu.printString("**"+chainCards.get(i).getCardName()+"**");
             callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
         }
@@ -698,8 +710,19 @@ public class GamePlayController extends MenuController {
     public Boolean canMakeChain(Player player) {
         Map<Integer, MagicCard> magics = player.getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
-            if ( magics.get(i)!= null && canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
+
+            if (magics.get(i) != null && canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
+            {  if(magics.get(i).getCardName().equals("Twin Twisters") &&  spellEffectController.checkTwinTwisters(player))
                 return true;
+                 if(magics.get(i).getCardName().equals("Mystical space typhoon") && spellEffectController.checkMysticalSpaceTyphoon(player))
+                    return true;
+               if(!magics.get(i).getCardName().equals("Twin Twisters") && !magics.get(i).getCardName().equals("Mystical space typhoon") && !magics.get(i).getCardName().equals("Magic Cylinder")
+                && !magics.get(i).getCardName().equals("Mirror Force") && !magics.get(i).getCardName().equals("Trap Hole") && !magics.get(i).getCardName().equals("Torrential Tribute") &&
+                       !magics.get(i).getCardName().equals("Negate Attack") && !magics.get(i).getCardName().equals("Solemn Warning"))
+                   return true;
+
+            }
+
         }
         return false;
     }
@@ -728,7 +751,11 @@ public class GamePlayController extends MenuController {
         selectedCard.setHidden(false);
         selectedCard.setActivated(true);
         activatedCards.put(currentPlayer, selectedCard);
-        if (selectedCard.getCardPlacedZone() == currentPlayer.getHand())
+        if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD && selectedCard.getCardPlacedZone() == currentPlayer.getHand() ) {
+            currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+            currentPlayer.getHand().removeCardFromHand(selectedCard);
+        }
+        if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD )
             currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         duelMenu.printResponse(SPELL_ACTIVATED);
     }

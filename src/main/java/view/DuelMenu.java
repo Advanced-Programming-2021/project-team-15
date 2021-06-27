@@ -455,6 +455,12 @@ public class DuelMenu extends Menu {
             case CANT_ACTIVATE_TRAP_IN_THIS_TURN:
                 System.out.println("you can't activate the trap in first turn you set");
                 break;
+            case CARD_DESTROYED_BY_TRAP_HOLE:
+                System.out.println("card destroyed by trap hole!");
+                break;
+            case GIVE_A_NAME:
+                System.out.println("give a name :");
+                break;
             default:
                 break;
         }
