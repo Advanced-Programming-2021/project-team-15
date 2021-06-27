@@ -459,6 +459,7 @@ public class DuelMenu extends Menu {
                 break;
             case DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD:
                 System.out.println("do you want to summon a normal Cyberse card? (yes/no)");
+                break;
             case CARD_DESTROYED_BY_TRAP_HOLE:
                 System.out.println("card destroyed by trap hole!");
                 break;
