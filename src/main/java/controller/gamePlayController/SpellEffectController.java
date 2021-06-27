@@ -388,7 +388,7 @@ public class SpellEffectController {
 
     public void mysticalSpaceTyphoon(MagicCard mysticalSpaceTyphoon, Player ownerOfCard) {
         if(!doIt){
-        if(checkMysticalSpaceTyphoon(ownerOfCard) || !gamePlayController.isSpellSSetInThisTurn(mysticalSpaceTyphoon)) gamePlayController.activateSelectedCard();
+        if(checkMysticalSpaceTyphoon(ownerOfCard) && !gamePlayController.isSpellSSetInThisTurn(mysticalSpaceTyphoon)) gamePlayController.activateSelectedCard();
          return;}
         Map<Integer, MagicCard> map;
         Player player;
@@ -420,12 +420,14 @@ public class SpellEffectController {
             }
         }
     }
+    public boolean checkRingOfDefense(){
+        return (!gamePlayController.getChainCards().isEmpty() && gamePlayController.getChainCards().get(gamePlayController.getChainCards().size()-1).getCardName().equals("Magic Jammer"));
+    }
     public void ringOfDefense(MagicCard ringOfDefense)
     {   if(!doIt) {
-        if(!gamePlayController.getChainCards().isEmpty() && gamePlayController.getChainCards().get(gamePlayController.getChainCards().size()-1).getCardName().equals("Magic Jammer")
-         || !gamePlayController.isSpellSSetInThisTurn(ringOfDefense) )
+        if( checkRingOfDefense() && !gamePlayController.isSpellSSetInThisTurn(ringOfDefense) )
             gamePlayController.activateSelectedCard();
-        else return;
+        return;
     }
     gamePlayController.getChainCards().remove(gamePlayController.getChainCards().size()-1);
     gamePlayController.getChainPlayers().remove(gamePlayController.getChainCards().size()-1);
@@ -442,7 +444,7 @@ public class SpellEffectController {
 
     public void twinTwisters(MagicCard twinTwisters ,Player ownerOfCard) {
         if(!doIt){
-            if(checkTwinTwisters(ownerOfCard) || !gamePlayController.isSpellSSetInThisTurn(twinTwisters)) gamePlayController.activateSelectedCard();
+            if(checkTwinTwisters(ownerOfCard) && !gamePlayController.isSpellSSetInThisTurn(twinTwisters)) gamePlayController.activateSelectedCard();
              return;}
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);  // of your hand !

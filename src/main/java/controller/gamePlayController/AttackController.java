@@ -101,6 +101,7 @@ public class AttackController {
             gamePlayController.changeTurn();
         }
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Negate Attack") != null) {
+            gamePlayController.changeTurn();
             if (getAnswer()) {
                 GamePlayController.getTrapEffectController().negateAttack(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Negate Attack"));
                 isAttacking = false;

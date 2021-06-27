@@ -716,14 +716,17 @@ public class GamePlayController extends MenuController {
         for (int i = 1; i <= 5; i++) {
 
             if (magics.get(i) != null && canContinueTheChain(magics.get(i)) && !magics.get(i).isActivated())
-            {  if(magics.get(i).getCardName().equals("Twin Twisters") &&  spellEffectController.checkTwinTwisters(player))
+            {  if(magics.get(i).getCardName().equals("Twin Twisters") &&  spellEffectController.checkTwinTwisters(player) && !gamePlayController.isSpellSSetInThisTurn(magics.get(i)))
                 return true;
-                 if(magics.get(i).getCardName().equals("Mystical space typhoon") && spellEffectController.checkMysticalSpaceTyphoon(player))
+                 if(magics.get(i).getCardName().equals("Mystical space typhoon") && spellEffectController.checkMysticalSpaceTyphoon(player) &&  !gamePlayController.isSpellSSetInThisTurn(magics.get(i)) )
                     return true;
+                 if(magics.get(i).getCardName().equals("Ring of defense") && spellEffectController.checkRingOfDefense() && !gamePlayController.isSpellSSetInThisTurn(magics.get(i)))
+                     return true;
                if(!magics.get(i).getCardName().equals("Twin Twisters") && !magics.get(i).getCardName().equals("Mystical space typhoon") && !magics.get(i).getCardName().equals("Magic Cylinder")
                 && !magics.get(i).getCardName().equals("Mirror Force") && !magics.get(i).getCardName().equals("Trap Hole") && !magics.get(i).getCardName().equals("Torrential Tribute") &&
-                       !magics.get(i).getCardName().equals("Negate Attack") && !magics.get(i).getCardName().equals("Solemn Warning"))
+                       !magics.get(i).getCardName().equals("Negate Attack") && !magics.get(i).getCardName().equals("Solemn Warning") &&!magics.get(i).getCardName().equals("Ring of defense"))
                    return true;
+
 
             }
 
