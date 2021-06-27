@@ -344,6 +344,7 @@ public class SpellEffectController {
             gamePlayController.getCurrentPlayer().getHand().addCardToHand(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(0));
             gamePlayController.getCurrentPlayer().getDeckZone().removeCardFromDeckZone(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().get(0));
         }
+        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(potOfGreed, gamePlayController.getCurrentPlayer());
 
     }
@@ -360,6 +361,7 @@ public class SpellEffectController {
             return;
         }
         GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, false);
+        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(raigeki, gamePlayController.getCurrentPlayer());
     }
 
@@ -712,9 +714,9 @@ public class SpellEffectController {
                     out[i] = Integer.parseInt(nums[i]);
                 }
                 if (checkSummon(out, gamePlayController.getCurrentPlayer(), getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).getLevel())) {
-                    for (int j : out) {
-                        gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(j));
-                        gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(j));
+                    for (int j =0 ; j<out.length;j++) {
+                        gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(out[j]));
+                        gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards().remove(getWholeMonsters(gamePlayController.getCurrentPlayer()).get(out[j]));
                     }
                     duelMenu.printResponse(ENTER_POS);
                     String ans = duelMenu.getString();
