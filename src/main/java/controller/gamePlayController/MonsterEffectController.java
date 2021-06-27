@@ -184,13 +184,11 @@ public class MonsterEffectController {
             gamePlayController.getOpponentPlayer().getLimits().add(Limit.CANT_ACTIVATE_TRAP);
     }
 
-
     public void yomiShip(MonsterCard attacker, MonsterCard yomiShip) {
         yomiShip.setActivated(true);
         gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
     }
-
 
     public Boolean isNormalCyberseExists(ArrayList<Card> zoneCards) {
         for (Card card : zoneCards) {
@@ -201,7 +199,6 @@ public class MonsterEffectController {
         }
         return false;
     }
-
 
     public void checkFindAskTextChanger(ArrayList<Card> zoneCards) {
         int i = 0;
@@ -258,7 +255,6 @@ public class MonsterEffectController {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
             }
         }
-
     }
 
     public Boolean checkHeraldOfCreation() {
@@ -269,13 +265,6 @@ public class MonsterEffectController {
         }
         return false;
     }
-
-
-//    public void ExploderDragon() {
-//        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(gamePlayController.getSelectedCard(), gamePlayController.getCurrentPlayer());
-//        gamePlayController.getCurrentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
-//        gamePlayController.getOpponentPlayer().getLimits().add(Limit.DONT_DECREASE_LP);
-//    }
 
     public Boolean checkTerratigerTheEmpoweredWarrior() {
         for (Card card : gamePlayController.getCurrentPlayer().getHand().getZoneCards()) {
