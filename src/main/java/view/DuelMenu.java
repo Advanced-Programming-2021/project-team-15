@@ -6,6 +6,7 @@ import controller.menuController.MenuController;
 import controller.responses.DuelMenuResponses;
 import controller.utilizationController.UtilityController;
 import model.Game;
+import model.cards.Card;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -113,8 +114,7 @@ public class DuelMenu extends Menu {
             String input = UtilityController.getNextLine();
             if (input.equals("back"))
                 break;
-            else if (input.equals("show graveyard"))
-                System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
+            else if (input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
             else System.out.println("invalid command! you should go back to game!");
         }
     }

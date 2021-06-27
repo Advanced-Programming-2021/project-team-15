@@ -29,6 +29,19 @@ public class User {
         allCardsOfUser = new ArrayList<>();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof User)) return false;
+        User user = (User) object;
+        if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
+        || user.money!=money || user.score!=score || !user.activeDeckName.equals(activeDeckName)) return false;
+        return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
+    }
+
     public static User getUserByUserName(String userName) {
         for (User user : allUsers) {
             if (user.userName.equals(userName))
@@ -62,20 +75,6 @@ public class User {
         User.allUsers = allUsers;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null)
-            return false;
-        if (object == this)
-            return true;
-        if (!(object instanceof User)) return false;
-        User user = (User) object;
-        if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
-                || user.money != money || user.score != score || !user.activeDeckName.equals(activeDeckName))
-            return false;
-        return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
-    }
-
     public Card getCardByName(String cardName) {
         for (Card card : allCardsOfUser) {
             if (card.getCardName().equals(cardName))
@@ -85,7 +84,7 @@ public class User {
     }
 
     public void removeUserCardByName(String cardName) {
-        if (getCardIndexByName(cardName) == -1)
+        if (getCardIndexByName(cardName)==-1)
             return;
         allCardsOfUser.remove(getCardIndexByName(cardName));
     }

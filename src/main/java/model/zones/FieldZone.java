@@ -38,7 +38,7 @@ public class FieldZone extends Zone {
     }
 
     public String toStringPos() {
-        if (zoneCards.size() == 0)
+        if (zoneCards.size()==0)
             return "E";
         else return "O";
     }

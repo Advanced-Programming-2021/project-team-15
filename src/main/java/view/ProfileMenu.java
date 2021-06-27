@@ -11,7 +11,6 @@ public class ProfileMenu extends Menu {
     ProfileController profileController = new ProfileController();
     String newNickname;
     ProfileMenuResponses responses;
-
     private ProfileMenu() {
         super("Profile Menu");
     }
@@ -58,13 +57,13 @@ public class ProfileMenu extends Menu {
         else {
             String currentPassword = enteredDetails.get("current");
             String newPassword = enteredDetails.get("new");
-            responses = profileController.changePassword(currentPassword, newPassword);
+            responses = profileController.changePassword(currentPassword , newPassword);
             printResponse(responses);
         }
 
     }
-
-    private void printResponse(ProfileMenuResponses profileMenuResponses) {
+    private void printResponse(ProfileMenuResponses profileMenuResponses)
+    {
         String output = "";
         switch (profileMenuResponses) {
             case PASSWORD_CHANGE_SUCCESSFUL:
@@ -80,7 +79,7 @@ public class ProfileMenu extends Menu {
                 output = "nickname changed successfully!";
                 break;
             case USER_NICKNAME_ALREADY_EXISTS:
-                output = "user with nickname " + newNickname + " already exists";
+                output = "user with nickname "+newNickname+" already exists";
                 break;
             default:
                 break;

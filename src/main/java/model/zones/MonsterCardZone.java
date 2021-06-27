@@ -3,8 +3,10 @@ package model.zones;
 import controller.gamePlayController.GamePlayController;
 import model.Player;
 import model.cards.Card;
+import model.cards.MagicCard;
 import model.cards.MonsterCard;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 public class MonsterCardZone extends NumericZone {

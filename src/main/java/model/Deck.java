@@ -34,10 +34,9 @@ public class Deck {
             return true;
         if (!(object instanceof Deck)) return false;
         Deck deck = (Deck) object;
-        if (!deck.name.equals(name) || !deck.isValid == isValid || !deck.isActive == isActive) return false;
+        if (!deck.name.equals(name) || !deck.isValid==isValid || !deck.isActive==isActive) return false;
         return deck.mainDeck.equals(mainDeck) && deck.sideDeck.equals(sideDeck);
     }
-
     public void addCardToDeck(Card card, DeckType deckType) {
         if (deckType == DeckType.MAIN)
             mainDeck.add(card);

@@ -9,7 +9,6 @@ public class ScoreboardMenu extends Menu {
     StringBuilder usersListStringBuilder;
     ScoreboardController scoreboardController = new ScoreboardController("Scoreboard Menu");
     ScoreboardMenuResponses responses;
-
     private ScoreboardMenu() {
         super("Scoreboard Menu");
     }

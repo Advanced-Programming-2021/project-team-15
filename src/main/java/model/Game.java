@@ -20,7 +20,7 @@ public class Game {
     private Player secondPlayer;
     private int roundNumber;
     private int roundCount;
-    private Player[] winnerOfEachRound;
+    private Player[] winnerOfEachRound ;
     private ArrayList<Integer> firstPlayerLifePointEachRound;
     private ArrayList<Integer> secondPlayerLifePointEachRound;
     private Player wholeGameWinner;
