@@ -19,6 +19,7 @@ public class Player {
     private MagicCardZone magicCardZone;
     private Boolean haveSelectedCard;
     private ArrayList<Limit> limits = new ArrayList<>();
+
     public Player(User user) {
         this.user = user;
         fieldZone = new FieldZone();

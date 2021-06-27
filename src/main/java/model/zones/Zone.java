@@ -5,10 +5,12 @@ import java.util.HashMap;
 
 public class Zone {
     private static HashMap<String, ArrayList<Zone>> allZones;
-    private ZoneType zoneType ;
+
     static {
         allZones = new HashMap<>();
     }
+
+    private ZoneType zoneType;
 
     public Zone(ZoneType zoneType) {
         this.zoneType = zoneType;
@@ -30,7 +32,7 @@ public class Zone {
         this.zoneType = zoneType;
     }
 
-   public enum ZoneType{
+    public enum ZoneType {
         HAND,
         MONSTER_CARD,
         MAGIC_CARD,

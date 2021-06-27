@@ -1,10 +1,10 @@
 package controller.gamePlayController;
 
 import controller.responses.DuelMenuResponses;
+import model.Player;
 import model.cards.Card;
 import model.cards.MagicCard;
 import model.cards.MonsterCard;
-import model.Player;
 import view.DuelMenu;
 
 import java.util.Map;
@@ -44,14 +44,14 @@ public class TrapEffectController {
         duelMenu.printResponse(GIVE_A_NAME);
         String string = duelMenu.getString();
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
-            if ( card!=null && card.getCardName().equals(string)) {
+            if (card != null && card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 did = true;
             }
         }
         for (Card card : gamePlayController.getOpponentPlayer().getHand().getZoneCards()) {
-            if ( card!=null && card.getCardName().equals(string)) {
+            if (card != null && card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getOpponentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 did = true;
@@ -100,35 +100,35 @@ public class TrapEffectController {
     }
 
     public void magicJammer(Card trap) {
-        if(!doIt)
-        {  if(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0 && !gamePlayController.getChainCards().isEmpty())
-            gamePlayController.activateCard(trap);
-            return; }
+        if (!doIt) {
+            if (gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0 && !gamePlayController.getChainCards().isEmpty())
+                gamePlayController.activateCard(trap);
+            return;
+        }
         while (true) {
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
-                int num = duelMenu.getNum();
-                if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num) != null) {
-                    gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
-                    gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
-                    MagicCard magicCard = gamePlayController.getChainCards().get(gamePlayController.getChainCards().indexOf(trap)-1);
-                    Player    player  = gamePlayController.getChainPlayers().get(gamePlayController.getChainCards().indexOf(trap)-1);
-                    if(magicCard.getCardPlacedZone()==player.getFieldZone())
-                    {  player.getFieldZone().removeCardFromFieldZone(magicCard);
-                        player.getGraveyardZone().addCardToGraveyardZone(magicCard);
-                    }
-                    else {
-                        gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(magicCard,player);
-                    }
-                    gamePlayController.getChainCards().remove(magicCard);
-                    gamePlayController.getChainPlayers().remove(player);
-                    duelMenu.printString(magicCard.getCardName()+" action got canceled");
-                    duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
-                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap , gamePlayController.getCurrentPlayer());
-                    return;
+            duelMenu.printResponse(ENTER_ONE_NUMBER);
+            int num = duelMenu.getNum();
+            if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num) != null) {
+                gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
+                gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
+                MagicCard magicCard = gamePlayController.getChainCards().get(gamePlayController.getChainCards().indexOf(trap) - 1);
+                Player player = gamePlayController.getChainPlayers().get(gamePlayController.getChainCards().indexOf(trap) - 1);
+                if (magicCard.getCardPlacedZone() == player.getFieldZone()) {
+                    player.getFieldZone().removeCardFromFieldZone(magicCard);
+                    player.getGraveyardZone().addCardToGraveyardZone(magicCard);
                 } else {
-                    duelMenu.printResponse(INVALID_CELL_NUMBER);
+                    gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(magicCard, player);
                 }
+                gamePlayController.getChainCards().remove(magicCard);
+                gamePlayController.getChainPlayers().remove(player);
+                duelMenu.printString(magicCard.getCardName() + " action got canceled");
+                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
+                return;
+            } else {
+                duelMenu.printResponse(INVALID_CELL_NUMBER);
             }
+        }
 
     }
 

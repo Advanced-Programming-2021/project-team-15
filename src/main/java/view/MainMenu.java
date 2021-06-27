@@ -12,6 +12,7 @@ public class MainMenu extends Menu {
     private static MainMenu mainMenu;
     MainMenuController mainMenuController = new MainMenuController();
     MainMenuResponses responses;
+
     private MainMenu() {
         super("Main Menu");
     }
@@ -85,7 +86,7 @@ public class MainMenu extends Menu {
                 output = "menu name you entered doesn't exist!";
                 break;
             case MENU_ENTER_SUCCESSFUL:
-                output = "entered menu"+nextMenu.menuName+"...";
+                output = "entered menu" + nextMenu.menuName + "...";
                 break;
             case MENU_NAVIGATION_NOT_POSSIBLE:
                 output = "menu navigation is not possible";

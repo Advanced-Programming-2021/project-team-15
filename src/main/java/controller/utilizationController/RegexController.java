@@ -328,19 +328,17 @@ public class RegexController {
         return commandValidation;
     }
 
-    public Boolean newGameAiRegex(String input) {
-        if (input.contains(" --new") && input.contains(" --ai")) {
-            input = input.replaceAll(" --new", "");
-            input = input.replaceAll(" --ai", "");
-            Matcher matcher = getCommandMatcher(input, "\\bduel --rounds (\\d+)$");
-//            if(matcher.find())
-//            {
-//                // startNewAiGame()  ?
-//            }
-//            else
-            return false;
-        } else return false;
-    }
+//    public Boolean newGameAiRegex(String input) {
+//        if (input.contains(" --new") && input.contains(" --ai")) {
+//            input = input.replaceAll(" --new", "");
+//            input = input.replaceAll(" --ai", "");
+//            Matcher matcher = getCommandMatcher(input, "\\bduel --rounds (\\d+)$");
+////            if (matcher.find()) {
+////                // startNewAiGame()  ?
+////            } else
+////                return false;
+//        } else return false;
+//    }
 
     public Boolean selectFromNumericZone(String input, HashMap<String, String> enteredDetails) {
         String opponentOrPlayer = "player";
