@@ -790,7 +790,7 @@ public class GamePlayController extends MenuController {
             case "Yami":
                 spellEffectController.yami(true, card);
                 break;
-            case "Forset":
+            case "Forest":
                 spellEffectController.forest(true, card);
                 break;
             case "Closed Forest":
