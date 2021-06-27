@@ -366,6 +366,7 @@ public class DuelMenu extends Menu {
                 break;
             case SHOW_CARD:
                 System.out.println(gamePlayController.getSelectedCard().cardShow());
+                gamePlayController.setSelectedCard(null);
                 break;
             case CANNOT_ACCESS_RIVAL_CARD:
                 System.out.println("You can't access this card!");
@@ -552,5 +553,4 @@ public class DuelMenu extends Menu {
     public String getString() {
         return UtilityController.getNextLine();
     }
-
 }

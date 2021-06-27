@@ -168,11 +168,13 @@ public class GamePlayController extends MenuController {
         for (Card card : currentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(currentPlayer);
             card.setHidden(true);
+            if (card instanceof MonsterCard) ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
             card.setSummoned(false);
         }
         for (Card card : opponentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(opponentPlayer);
             card.setHidden(true);
+            ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
             card.setSummoned(false);
         }
         shuffle();
@@ -262,14 +264,17 @@ public class GamePlayController extends MenuController {
             selectedCard = ((NumericZone) zone).getCardByPlaceNumber(cardNumber);
             return DuelMenuResponses.CARD_SELECTED;
         }
+//        selectedCard = null;
         return DuelMenuResponses.SELECTION_NO_CARD_FOUND;
     }
 
     public DuelMenuResponses showCard() {
         if (selectedCard == null) return NO_CARD_SELECTED;
         else if (selectedCard.getOwner() == opponentPlayer
-                && !selectedCard.getSummoned())
+                && !selectedCard.getSummoned()) {
+            selectedCard = null;
             return CANNOT_ACCESS_RIVAL_CARD;
+        }
         else
             return SHOW_CARD;
     }
@@ -975,7 +980,6 @@ public class GamePlayController extends MenuController {
             monsterEffectController.theCalculator(monsterCard);
         if (monsterCard.getCardName().equals("Command Knight") && !monsterCard.isActivated())
             monsterEffectController.commandKnight(true, monsterCard);
-
     }
 
     public void refresh() {

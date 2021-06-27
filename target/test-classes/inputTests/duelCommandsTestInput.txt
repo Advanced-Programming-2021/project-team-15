@@ -5,7 +5,7 @@ user login --username mehrad --password m
 increase --money 1000000
 menu enter Shop
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -26,7 +26,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -47,7 +47,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -68,7 +68,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -92,7 +92,7 @@ menu exit
 menu enter Deck
 deck create pedaret
 deck add-card --card Yomi Ship --deck pedaret
-deck add-card --card Texchanger --deck pedaret
+deck add-card --card Marshmallon --deck pedaret
 deck add-card --card The Calculator --deck pedaret
 deck add-card --card Herald of Creation --deck pedaret
 deck add-card --card Exploder Dragon --deck pedaret
@@ -112,7 +112,7 @@ deck add-card --card Man-Eater Bug --deck pedaret
 deck add-card --card Gate Guardian --deck pedaret
 deck add-card --card Bitron --deck pedaret
 deck add-card --card Yomi Ship --deck pedaret
-deck add-card --card Texchanger --deck pedaret
+deck add-card --card Marshmallon --deck pedaret
 deck add-card --card The Calculator --deck pedaret
 deck add-card --card Herald of Creation --deck pedaret
 deck add-card --card Exploder Dragon --deck pedaret
@@ -143,7 +143,7 @@ user login --username parnian --password p
 increase --money 1000000
 menu enter Shop
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -164,7 +164,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -185,7 +185,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -206,7 +206,7 @@ shop buy Gate Guardian
 shop buy Marshmallon
 shop buy Bitron
 shop buy Yomi Ship
-shop buy Texchanger
+shop buy Marshmallon
 shop buy The Calculator
 shop buy Herald of Creation
 shop buy Exploder Dragon
@@ -230,7 +230,7 @@ menu exit
 menu enter Deck
 deck create pedaret
 deck add-card --card Yomi Ship --deck pedaret
-deck add-card --card Texchanger --deck pedaret
+deck add-card --card Marshmallon --deck pedaret
 deck add-card --card The Calculator --deck pedaret
 deck add-card --card Herald of Creation --deck pedaret
 deck add-card --card Exploder Dragon --deck pedaret
@@ -250,7 +250,7 @@ deck add-card --card Man-Eater Bug --deck pedaret
 deck add-card --card Gate Guardian --deck pedaret
 deck add-card --card Bitron --deck pedaret
 deck add-card --card Yomi Ship --deck pedaret
-deck add-card --card Texchanger --deck pedaret
+deck add-card --card Marshmallon --deck pedaret
 deck add-card --card The Calculator --deck pedaret
 deck add-card --card Herald of Creation --deck pedaret
 deck add-card --card Exploder Dragon --deck pedaret
