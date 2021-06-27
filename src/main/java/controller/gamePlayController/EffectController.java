@@ -1,9 +1,9 @@
 package controller.gamePlayController;
 
+import model.Player;
 import model.cards.Card;
 import model.cards.MagicCard;
 import model.cards.MonsterCard;
-import model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class EffectController {
     HashMap<MagicCard, Card> equippedCardsBySpells = new HashMap<>();
 
 
-    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount,  Player player) {
+    public void addATK(MonsterCard.MonsterType type, Boolean both, int amount, Player player) {
         Map<Integer, MonsterCard> map = player.getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
             if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
@@ -26,7 +26,8 @@ public class EffectController {
             for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
                 if (entry.getValue() != null && entry.getValue().getMonsterType() == type)
                     entry.getValue().setGameATK(entry.getValue().getGameATK() + amount);
-            } }
+            }
+        }
     }
 
     public void addDEF(MonsterCard.MonsterType type, Boolean both, int amount, Player player) {
@@ -88,18 +89,18 @@ public class EffectController {
     }
 
 
-    public void getControl(MonsterCard monsterCard)
-    {
+    public void getControl(MonsterCard monsterCard) {
         gamePlayController.getOpponentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
-      gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+        gamePlayController.getCurrentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
         monstersWeTookControl.add(monsterCard);
     }
-    public void removeControl()
-    {   for( MonsterCard monsterCard : monstersWeTookControl)
-    {  gamePlayController.getCurrentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
-        gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
-        monstersWeTookControl.remove(monsterCard);
-    }
+
+    public void removeControl() {
+        for (MonsterCard monsterCard : monstersWeTookControl) {
+            gamePlayController.getCurrentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
+            gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
+            monstersWeTookControl.remove(monsterCard);
+        }
     }
 
     public GamePlayController getGamePlayController() {
@@ -125,8 +126,6 @@ public class EffectController {
     public void setEquippedCardsBySpells(HashMap<MagicCard, Card> equippedCardsBySpells) {
         this.equippedCardsBySpells = equippedCardsBySpells;
     }
-
-
 
 
 }
