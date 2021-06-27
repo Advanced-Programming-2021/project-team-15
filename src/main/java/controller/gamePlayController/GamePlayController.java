@@ -185,7 +185,7 @@ public class GamePlayController extends MenuController {
             if (checkIfGameIsFinished())
                 defineWinner();
             if (duelMenu.isAi && currentPlayer.getUser().getNickName().equals("ai")) {
-                aiSummonOrSetNormalMonster();
+                aiSummonOrSetLevel6Monster();
                 aiSetMagicCard();
                 aiDirectAttack();
                 aiAttackToAttackPos();
@@ -197,11 +197,27 @@ public class GamePlayController extends MenuController {
         }
     }
     public void aiSummonOrSetLevel6Monster(){
-
+        for(int i=0 ; i<currentPlayer.getHand().getNumberOfCardsInHand() ; i++){
+            if(currentPlayer.getMonsterCardZone().getNumberOfCard()<5 && currentPlayer.getMonsterCardZone().getNumberOfCard()>=2){
+                if(currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() == 6 ){
+                    for(int j=0 ; j<2 ; j++){
+                        for(int k=1 ; k<=5 ; k++){
+                            currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(k));
+                            currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(k));
+                        }
+                    }
+                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setMode(MonsterCard.Mode.ATTACK);
+                    ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).setHidden(false);
+                    return;
+                }
+            }
+        }
+        aiSummonOrSetLevel5Monster();
     }
 
     public void aiSummonOrSetLevel5Monster() {
-        int summonCounts = 0;
+
         for (int i = 0; i < currentPlayer.getHand().getNumberOfCardsInHand(); i++) {
             if (currentPlayer.getMonsterCardZone().getNumberOfCard() < 5 && gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() >= 1) {
                 if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
