@@ -15,7 +15,6 @@ import static controller.responses.DuelMenuResponses.*;
 public class TrapEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
     DuelMenu duelMenu = DuelMenu.getInstance();
-    EffectController effectController = GamePlayController.getEffectController();
     private boolean doIt = false;
 
     public void magicCylinder(Card trap) {
@@ -77,7 +76,7 @@ public class TrapEffectController {
 
     public void torrentialTribute(Card trap) {
         gamePlayController.activateCard(trap);
-        effectController.destroyCards(Card.CardType.MONSTER, true);
+        GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, true);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }

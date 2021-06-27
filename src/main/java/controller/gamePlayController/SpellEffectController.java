@@ -12,7 +12,6 @@ import java.util.Map;
 import static controller.responses.DuelMenuResponses.*;
 
 public class SpellEffectController {
-    private Card cardEffectedBySpell;
 
     public boolean isDoIt() {
         return doIt;
@@ -29,7 +28,6 @@ public class SpellEffectController {
 
     DuelMenu duelMenu = DuelMenu.getInstance();
     GamePlayController gamePlayController = GamePlayController.getInstance();
-    EffectController effectController = GamePlayController.getEffectController();
     //TODO : FIRST 4 EFFECTS SHOULD HE CHECKED DUHHHHHHH
 
     public void yami(Boolean x, MagicCard  card) {
@@ -39,12 +37,12 @@ public class SpellEffectController {
         int amount = 200;
         if (!x)
             amount = -amount;
-        effectController.addATK(MonsterCard.MonsterType.FIEND, true, amount, card.getOwner());
-        effectController.addATK(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
-        effectController.addATK(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.FIEND, true, amount ,card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.FIEND, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.FIEND, true, amount ,card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.SPELL_CASTER, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.FAIRY, true, -amount ,card.getOwner());
     }
 
     public void spellAbsorption() {
@@ -78,12 +76,12 @@ public class SpellEffectController {
         int amount = 200;
         if (!x)
             amount = -amount;
-        effectController.addATK(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
-        effectController.addATK(MonsterCard.MonsterType.INSECT, true, amount ,card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.INSECT, true, amount, card.getOwner());
-        effectController.addATK(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount ,card.getOwner());
-        effectController.addDEF(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount , card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.BEAST, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.INSECT, true, amount ,card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.INSECT, true, amount, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount ,card.getOwner());
+        GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.BEAST_WARRIOR, true, amount , card.getOwner());
     }
 
     public void forestForNewAddedCard(MonsterCard monsterCard) {
@@ -100,23 +98,23 @@ public class SpellEffectController {
         if(!doIt){
         if(x) gamePlayController.activateSelectedCard();
          return;}
-        int i = effectController.numberOfDeadMonsters();
+        int i =  GamePlayController.getEffectController().numberOfDeadMonsters();
         if (!x)
             i = -i;
-        effectController.addATK(MonsterCard.MonsterType.BEAST, false, i * 100, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.BEAST, false, i * 100, card.getOwner());
     }
 
 
     public void closedForestForNewAddedCard(MonsterCard monsterCard) {
         duelMenu.printString("closed forest effect for new added card!");
-        int i = effectController.numberOfDeadMonsters();
+        int i =  GamePlayController.getEffectController().numberOfDeadMonsters();
         if (monsterCard.getMonsterType() == MonsterCard.MonsterType.BEAST) {
             monsterCard.setGameATK(monsterCard.getGameATK() + i * 100);
         }
     }
 
     public void closedForestForNewCardAddedToGraveyard(MonsterCard monsterCard, MagicCard closedForest) {
-        effectController.addATK(MonsterCard.MonsterType.BEAST, false, 100, closedForest.getOwner() );
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.BEAST, false, 100, closedForest.getOwner() );
     }
 
 
@@ -125,11 +123,11 @@ public class SpellEffectController {
         if(x)  gamePlayController.activateSelectedCard();
          return;}
         if (!x) {
-            effectController.addATK(MonsterCard.MonsterType.AQUA, true, -500, card.getOwner());
-            effectController.addATK(MonsterCard.MonsterType.AQUA, true, 400, card.getOwner());
+            GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.AQUA, true, -500, card.getOwner());
+            GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.AQUA, true, 400, card.getOwner());
         }
-        effectController.addATK(MonsterCard.MonsterType.AQUA, true, 500 ,card.getOwner());
-        effectController.addATK(MonsterCard.MonsterType.AQUA, true, -400, card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.AQUA, true, 500 ,card.getOwner());
+        GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.AQUA, true, -400, card.getOwner());
     }
 
     public void umiirukaForNewAddedCard(MonsterCard monsterCard) {
@@ -169,7 +167,7 @@ public class SpellEffectController {
                     (map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FAIRY)) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 400);
                 map.get(num).setGameDEF(map.get(num).getGameDEF() - 200);
-                effectController.getEquippedCardsBySpells().put(swordOfDarkDestruction, map.get(num));
+                GamePlayController.getEffectController().getEquippedCardsBySpells().put(swordOfDarkDestruction, map.get(num));
                 duelMenu.printResponse(CARD_EQUIPPED);
                 return;
             } else {
@@ -183,7 +181,7 @@ public class SpellEffectController {
 
     //TODO : handle death !
     public Boolean checkBlackPendant() {
-        if (effectController.getNumberOfFaceUpMonstersOfCurrentPlayer() == 0)
+        if ( GamePlayController.getEffectController().getNumberOfFaceUpMonstersOfCurrentPlayer() == 0)
             return false;
         else return true;
     }
@@ -204,7 +202,7 @@ public class SpellEffectController {
             int num = Integer.parseInt(input);
             if (map.get(num) != null && !map.get(num).getHidden()) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 500);
-                effectController.getEquippedCardsBySpells().put(blackPendant, map.get(num));
+                GamePlayController.getEffectController().getEquippedCardsBySpells().put(blackPendant, map.get(num));
                 duelMenu.printResponse(CARD_EQUIPPED);
                 return;
             } else {
@@ -215,7 +213,7 @@ public class SpellEffectController {
     }
 
     public Boolean checkUnitedWeStand() {
-        if (effectController.getNumberOfFaceUpMonstersOfCurrentPlayer() == 0)
+        if ( GamePlayController.getEffectController().getNumberOfFaceUpMonstersOfCurrentPlayer() == 0)
             return false;
         else return true;
     }
@@ -227,13 +225,13 @@ public class SpellEffectController {
          return;}
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
-        int amount = effectController.getNumberOfFaceUpMonstersOfCurrentPlayer();
+        int amount =  GamePlayController.getEffectController().getNumberOfFaceUpMonstersOfCurrentPlayer();
         while (true) {
             int num = duelMenu.getNum();
             if (map.get(num) != null) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + amount * 800);
                 map.get(num).setGameDEF(map.get(num).getGameDEF() + amount * 800);
-                effectController.getEquippedCardsBySpells().put(unitedWeStand, map.get(num));
+                GamePlayController.getEffectController().getEquippedCardsBySpells().put(unitedWeStand, map.get(num));
                 duelMenu.printResponse(CARD_EQUIPPED);
                 return;
             } else {
@@ -269,12 +267,12 @@ public class SpellEffectController {
             if (map.get(num) != null && map.get(num).getMonsterType() == MonsterCard.MonsterType.WARRIOR && !map.get(num).getHidden()) {
                 if (map.get(num).getMode() == MonsterCard.Mode.ATTACK) {
                     map.get(num).setGameATK(map.get(num).getGameATK() + map.get(num).getDefensePoint());
-                    effectController.getEquippedCardsBySpells().put(magnumShield, map.get(num));
+                    GamePlayController.getEffectController().getEquippedCardsBySpells().put(magnumShield, map.get(num));
                     duelMenu.printResponse(CARD_EQUIPPED);
                     return;
                 } else if (map.get(num).getMode() == MonsterCard.Mode.DEFENSE) {
                     map.get(num).setGameDEF(map.get(num).getGameDEF() + map.get(num).getGameATK());
-                    effectController.getEquippedCardsBySpells().put(magnumShield, map.get(num));
+                    GamePlayController.getEffectController().getEquippedCardsBySpells().put(magnumShield, map.get(num));
                     duelMenu.printResponse(CARD_EQUIPPED);
                     return;
                 }
@@ -342,7 +340,7 @@ public class SpellEffectController {
         if(!doIt) {
         if(checkRaigeki()) gamePlayController.activateSelectedCard();
          return;}
-        effectController.destroyCards(Card.CardType.MONSTER, false);
+        GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, false);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(raigeki, gamePlayController.getCurrentPlayer());
     }
 
@@ -356,7 +354,7 @@ public class SpellEffectController {
         if(!doIt){
         if(checkHarpiesFeatherDuster()) gamePlayController.activateSelectedCard();
          return;}
-        effectController.destroyCards(Card.CardType.MAGIC, false);
+        GamePlayController.getEffectController().destroyCards(Card.CardType.MAGIC, false);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(harpiesFeatherDuster, gamePlayController.getCurrentPlayer());
     }
@@ -372,7 +370,7 @@ public class SpellEffectController {
         if(!doIt){
         if(checkDarkHole()) gamePlayController.activateSelectedCard();
          return;}
-        effectController.destroyCards(Card.CardType.MONSTER, true);
+        GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, true);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(darkHole, gamePlayController.getCurrentPlayer());
     }
@@ -507,7 +505,7 @@ public class SpellEffectController {
         while (true) {
             int num = duelMenu.getNum();
             if (map.get(num) != null) {
-                effectController.getControl(map.get(num));
+                GamePlayController.getEffectController().getControl(map.get(num));
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(magicCard, gamePlayController.getCurrentPlayer());
                 return;
