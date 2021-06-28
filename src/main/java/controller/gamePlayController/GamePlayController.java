@@ -653,6 +653,7 @@ public class GamePlayController extends MenuController {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
                     duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
+                    if(chainCards.isEmpty()) return;
                     if(chainCards.isEmpty())  mainCurrentPlayer = currentPlayer;
                 } else {
                     if (chainCards.isEmpty())
