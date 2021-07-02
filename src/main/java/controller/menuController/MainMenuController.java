@@ -16,7 +16,7 @@ public class MainMenuController extends MenuController {
         allMenus.put("ImportExport", ImportExportMenu.getInstance());
     }
     public MainMenuController() {
-        super("view.Main Menu");
+        super("Main Menu");
     }
 
     public static HashMap<String, Menu> getAllMenus() {
