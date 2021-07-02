@@ -1,11 +1,20 @@
+package view;
+
 import com.opencsv.exceptions.CsvValidationException;
 import controller.JSONController;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Card;
 import model.MagicCard;
 import model.MonsterCard;
 import view.LoginMenu;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /*To Handle :
 menu entry from other menus
@@ -21,8 +30,9 @@ card show (page 10)
 
 
 
-public class Main {
+public class Main extends Application {
     public static void main(String[] args) throws IOException, CsvValidationException {
+        launch(args);
         JSONController jsonController = new JSONController();
         jsonController.loadGameCards();
         LoginMenu loginMenu = LoginMenu.getInstance();
@@ -53,5 +63,15 @@ public class Main {
 //            }
 //            System.out.println("-----------------------------------------------");
 //        }
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        URL url = new File("src/main/java/FxmlFiles/Welcome.fxml").toURI().toURL();
+        Parent root = FXMLLoader.load(url);
+        Stage primaryStage= new Stage();
+        primaryStage.setTitle("WelcomePage");
+        primaryStage.setScene(new Scene(root, 1920, 1080));
+        primaryStage.show();
     }
 }
