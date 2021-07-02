@@ -13,7 +13,7 @@ public class MainMenu extends Menu {
     MainMenuController mainMenuController = new MainMenuController();
     MainMenuResponses responses;
     private MainMenu() {
-        super("view.Main Menu");
+        super("Main Menu");
     }
 
     public static MainMenu getInstance() {

@@ -4,7 +4,7 @@ user created successfully!
 invalid command
 Login Menu
 user logged in successfully!
-view.view.Main Menu
+view.Main Menu
 invalid command
 entered menuShop Menu...
 Shop Menu

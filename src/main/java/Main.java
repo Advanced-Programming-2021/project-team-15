@@ -1,5 +1,3 @@
-package view;
-
 import com.opencsv.exceptions.CsvValidationException;
 import controller.utilizationController.DatabaseController;
 import javafx.application.Application;
