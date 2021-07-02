@@ -38,5 +38,15 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.4" level="project" />
     <orderEntry type="library" name="Maven: org.danilopianini:gson-extras:0.2.2-dev1n+f8657bfc" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:16" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:16" level="project" />
   </component>
 </module>
