@@ -54,7 +54,7 @@
                 <Font size="25.0"/>
             </font>
         </Button>
-        <Label layoutX="768.0" layoutY="186.0" text="Main Menu Box" textFill="#0c1a4e">
+        <Label layoutX="768.0" layoutY="186.0" text="view.Main Menu Box" textFill="#0c1a4e">
             <font>
                 <Font size="50.0"/>
             </font>
