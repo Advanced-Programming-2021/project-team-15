@@ -8,9 +8,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="1080.0" prefWidth="1920.0" styleClass="login" stylesheets="@../CSSFiles/Login.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="1080.0" prefWidth="1920.0" styleClass="signup" stylesheets="@../CSSFiles/Signup.css"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignUpMenu">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="665.0" layoutX="659.0" layoutY="185.0"
                    stroke="BLACK" strokeType="INSIDE" width="646.0"/>
@@ -20,7 +20,13 @@
                 <Font size="16.0"/>
             </font>
         </TextField>
-        <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="455.0" prefHeight="52.0" prefWidth="234.0"
+        <TextField fx:id="NicknameTextField" layoutX="876.0" layoutY="449.0" prefHeight="52.0" prefWidth="234.0"
+                   promptText="Nickname" styleClass="NicknameTextField" stylesheets="@../CSSFiles/Text.css">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </TextField>
+        <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="534.0" prefHeight="52.0" prefWidth="234.0"
                        promptText="Password" styleClass="PasswordField" stylesheets="@../CSSFiles/Text.css">
             <font>
                 <Font size="17.0"/>
@@ -45,7 +51,7 @@
                 <Font size="18.0"/>
             </font>
         </Button>
-        <Label fx:id="errorLabel" layoutX="786.0" layoutY="589.0" prefHeight="28.0" prefWidth="391.0"
+        <Label fx:id="errorLabel" layoutX="786.0" layoutY="615.0" prefHeight="28.0" prefWidth="391.0"
                textFill="#d71818">
             <font>
                 <Font size="22.0"/>

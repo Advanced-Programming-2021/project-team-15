@@ -13,9 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginMenu  {
-    private static LoginMenu loginMenu;
+public class SignUpMenu {
+    private static SignUpMenu signUpMenu;
     LoginController loginController = new LoginController();
+    LoginMenuResponses responses;
     @FXML
     private Label passwordError;
     @FXML
@@ -25,11 +26,11 @@ public class LoginMenu  {
     @FXML
     private TextField passwordTextField;
     @FXML
-    private   TextField usernameTextField;
-    public static LoginMenu getInstance() {
-        if (loginMenu == null)
-            loginMenu = new LoginMenu();
-        return loginMenu;
+    private   TextField UsernameTextField;
+    public static SignUpMenu getInstance() {
+        if (signUpMenu == null)
+            signUpMenu= new SignUpMenu();
+        return signUpMenu;
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         Scene welcomeMenu= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
@@ -37,16 +38,8 @@ public class LoginMenu  {
         window.setScene(welcomeMenu);
         window.show();
     }
-    public void submitButtonClicked() throws IOException {    passwordError.setText("");
-        usernameError.setText("");
-        showResponse( loginController.loginUser(usernameTextField.getText(),passwordTextField.getText()));
-        passwordTextField.setText("");
-        passwordTextField.setText("");
-    }
 
-
-
-    private void showResponse(LoginMenuResponses loginMenuResponses) {
+    private void printResponse(LoginMenuResponses loginMenuResponses) {
         String output = "";
         switch (loginMenuResponses) {
             case USER_CREATE_SUCCESSFUL:

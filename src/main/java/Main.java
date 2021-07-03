@@ -4,8 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import view.LoginMenu;
 
 import java.io.IOException;
 
@@ -22,15 +22,27 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException, CsvValidationException {
         DatabaseController databaseController = new DatabaseController();
         databaseController.loadGameCards();
-        LoginMenu loginMenu = LoginMenu.getInstance();
 
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage= stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/FxmFiles/Welcome.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+
+    public void loginButtonClicked(MouseEvent mouseEvent)throws IOException{
+        Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
+        stage.setScene(signUpScene);
+        stage.show();
+    }
+    public void SignUpButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
+        stage.setScene(signUpScene);
+        stage.show();
+    }
+
 }
