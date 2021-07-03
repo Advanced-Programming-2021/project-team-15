@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="login" stylesheets="@../CSSFiles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:sample.controller="sample.view.LoginMenu">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="665.0" layoutX="659.0" layoutY="185.0" stroke="BLACK" strokeType="INSIDE" width="646.0" />
+        <Button fx:id="BackButton" layoutX="824.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="40.0" prefWidth="135.0" styleClass="BackButton" stylesheets="@../CSSFiles/Button.css" text="Back" textFill="#6b4545">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="SubmitButton" layoutX="1049.0" layoutY="686.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="135.0" styleClass="SubmitButton" stylesheets="@../CSSFiles/Button.css" text="Submit" textFill="#6e3b3b" onMouseClicked="#submitButtonClicked">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+      <VBox alignment="CENTER" layoutX="764.0" layoutY="184.0" prefHeight="613.0" prefWidth="435.0">
+         <children>
+              <Label text="SignUp" textFill="#7d95f2">
+                  <font>
+                      <Font size="41.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="UsernameTextField" prefHeight="52.0" prefWidth="508.0" promptText="Username" styleClass="UsernameTextField" stylesheets="@../CSSFiles/Text.css">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </TextField>
+            <Label fx:id="usernameError" prefHeight="40.0" prefWidth="441.0" text="Label">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+              <PasswordField fx:id="passwordTextField" prefHeight="52.0" prefWidth="234.0" promptText="Password" styleClass="PasswordField" stylesheets="@../CSSFiles/Text.css">
+                  <font>
+                      <Font size="17.0" />
+                  </font>
+              </PasswordField>
+            <Label fx:id="passwordError" prefHeight="40.0" prefWidth="438.0" text="">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </Label>
+              <Label fx:id="result" prefHeight="28.0" prefWidth="319.0" text="" textFill="green">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </Label>
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

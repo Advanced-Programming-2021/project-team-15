@@ -1,6 +1,7 @@
 package sample.controller.menuController;
 
 import sample.controller.responses.MainMenuResponses;
+import sample.view.*;
 
 import java.util.HashMap;
 
@@ -10,7 +11,7 @@ public class MainMenuController extends MenuController {
         allMenus.put("Duel", DuelMenu.getInstance());
         allMenus.put("Deck", DeckMenu.getInstance());
         allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
-        allMenus.put("Profile",ProfileMenu.getInstance());
+        allMenus.put("Profile", ProfileMenu.getInstance());
         allMenus.put("Shop",ShopMenu.getInstance());
         allMenus.put("ImportExport", ImportExportMenu.getInstance());
     }

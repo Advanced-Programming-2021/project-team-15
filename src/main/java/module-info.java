@@ -10,6 +10,4 @@ module YuGiOhG15 {
     requires gson.extras;
     opens sample to javafx.fxml;
     exports sample;
-    opens to
-    exports;
 }
