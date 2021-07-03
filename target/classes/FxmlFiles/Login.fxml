@@ -8,7 +8,7 @@
 <AnchorPane fx:id="Login" prefHeight="1000" prefWidth="1500" styleClass="login" stylesheets="@../CSSFiles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.LoginMenu">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="580.0" layoutX="360.0" layoutY="184.0" stroke="BLACK" strokeType="INSIDE" width="768.0" />
-        <Button layoutX="851.0" layoutY="695.0" mnemonicParsing="false"  prefHeight="52.0" prefWidth="135.0" text="submit" onMouseClicked="#submitButtonClicked"/>
+        <Button layoutX="851.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#submitButtonClicked" prefHeight="52.0" prefWidth="135.0" text="submit" />
 
       <VBox alignment="CENTER" layoutX="441.0" layoutY="276.0" prefHeight="409.0" prefWidth="620.0">
          <children>
@@ -37,7 +37,7 @@
                     <Font size="20" />
                 </font>
             </Label>
-              <Label fx:id="result" prefHeight="28.0" prefWidth="319.0" text="" textFill="red">
+              <Label fx:id="result" prefHeight="30.0" prefWidth="435.0" text="" textFill="red">
                   <font>
                       <Font size="20" />
                   </font>

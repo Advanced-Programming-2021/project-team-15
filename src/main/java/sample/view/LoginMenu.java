@@ -38,8 +38,9 @@ public class LoginMenu  {
 
     }
     public void submitButtonClicked(MouseEvent mouseEvent){
-        if(usernameTextField.getText().equals("")) {
-            usernameError.setText("username field is empty");
+        if(usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
+            if(usernameTextField.getText().equals(""))
+                usernameError.setText("username field is empty");
             if (passwordTextField.getText().equals(""))
                 passwordError.setText("password field is empty");
             return;

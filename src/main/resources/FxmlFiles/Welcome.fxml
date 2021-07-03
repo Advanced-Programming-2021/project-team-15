@@ -26,7 +26,7 @@
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#SignUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
+            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
                <font>
                   <Font size="25.0" />
                </font>
