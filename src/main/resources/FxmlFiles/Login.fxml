@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="login" stylesheets="@../CSSFiles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:sample.controller="sample.view.LoginMenu">
+<AnchorPane fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="login" stylesheets="@../CSSFiles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.LoginMenu">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="665.0" layoutX="659.0" layoutY="185.0" stroke="BLACK" strokeType="INSIDE" width="646.0" />
         <Button fx:id="BackButton" layoutX="824.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="40.0" prefWidth="135.0" styleClass="BackButton" stylesheets="@../CSSFiles/Button.css" text="Back" textFill="#6b4545">
