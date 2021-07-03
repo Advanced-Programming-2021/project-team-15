@@ -1,6 +1,6 @@
-package model.zones;
+package sample.model.zones;
 
-import model.cards.Card;
+import sample.model.cards.Card;
 
 import java.util.ArrayList;
 

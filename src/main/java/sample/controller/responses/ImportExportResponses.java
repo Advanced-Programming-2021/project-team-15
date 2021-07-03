@@ -1,4 +1,4 @@
-package controller.responses;
+package sample.controller.responses;
 
 public enum ImportExportResponses {
     CARD_NOT_FOUND,

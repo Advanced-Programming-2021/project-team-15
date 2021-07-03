@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="1080.0" prefWidth="1920.0" styleClass="signup" stylesheets="@../CSSFiles/Signup.css"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignUpMenu">
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:sample.controller="sample.view.SignUpMenu">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="665.0" layoutX="659.0" layoutY="185.0"
                    stroke="BLACK" strokeType="INSIDE" width="646.0"/>

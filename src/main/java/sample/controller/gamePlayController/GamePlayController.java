@@ -1,27 +1,27 @@
-package controller.gamePlayController;
+package sample.controller.gamePlayController;
 
-import controller.menuController.MenuController;
-import controller.responses.DuelMenuResponses;
-import model.Game;
-import model.Phase;
-import model.Player;
-import model.User;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
-import model.zones.Hand;
-import model.zones.NumericZone;
-import model.zones.Zone;
-import view.DuelMenu;
+import sample.controller.menuController.MenuController;
+import sample.controller.responses.DuelMenuResponses;
+import sample.model.Game;
+import sample.model.Phase;
+import sample.model.Player;
+import sample.model.User;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
+import sample.model.zones.Hand;
+import sample.model.zones.NumericZone;
+import sample.model.zones.Zone;
+import sample.view.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static controller.responses.DuelMenuResponses.*;
-import static model.cards.MagicCard.CardIcon.COUNTER;
-import static model.cards.MagicCard.CardIcon.QUICK_PLAY;
+import static sample.controller.responses.DuelMenuResponses.*;
+import static sample.model.cards.MagicCard.CardIcon.COUNTER;
+import static sample.model.cards.MagicCard.CardIcon.QUICK_PLAY;
 
 public class GamePlayController extends MenuController {
     private static GamePlayController gamePlayController = null;

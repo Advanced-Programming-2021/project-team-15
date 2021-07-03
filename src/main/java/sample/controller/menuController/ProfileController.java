@@ -1,7 +1,7 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.ProfileMenuResponses;
-import model.User;
+import sample.controller.responses.ProfileMenuResponses;
+import sample.model.User;
 
 public class ProfileController extends MenuController {
     public ProfileController() {

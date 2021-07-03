@@ -1,7 +1,7 @@
-package model.zones;
+package sample.model.zones;
 
-import controller.gamePlayController.GamePlayController;
-import model.cards.Card;
+import sample.controller.gamePlayController.GamePlayController;
+import sample.model.cards.Card;
 
 import java.util.ArrayList;
 

@@ -1,12 +1,11 @@
-package view;
+package sample.view;
 
-import controller.gamePlayController.AttackController;
-import controller.gamePlayController.GamePlayController;
-import controller.menuController.MenuController;
-import controller.responses.DuelMenuResponses;
-import controller.utilizationController.UtilityController;
-import model.Game;
-import model.cards.Card;
+import sample.controller.gamePlayController.AttackController;
+import sample.controller.gamePlayController.GamePlayController;
+import sample.controller.menuController.MenuController;
+import sample.controller.responses.DuelMenuResponses;
+import sample.controller.utilizationController.UtilityController;
+import sample.model.Game;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;

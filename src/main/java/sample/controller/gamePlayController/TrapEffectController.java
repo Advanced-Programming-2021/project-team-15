@@ -1,16 +1,16 @@
-package controller.gamePlayController;
+package sample.controller.gamePlayController;
 
-import controller.responses.DuelMenuResponses;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
-import model.Player;
-import view.DuelMenu;
+import sample.controller.responses.DuelMenuResponses;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
+import sample.model.Player;
+import sample.view.DuelMenu;
 
 import java.util.Map;
 import java.util.Random;
 
-import static controller.responses.DuelMenuResponses.*;
+import static sample.controller.responses.DuelMenuResponses.*;
 
 public class TrapEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();

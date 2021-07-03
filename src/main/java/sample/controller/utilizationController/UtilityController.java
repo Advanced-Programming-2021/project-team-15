@@ -1,6 +1,6 @@
-package controller.utilizationController;
+package sample.controller.utilizationController;
 
-import model.cards.Card;
+import sample.model.cards.Card;
 
 import java.util.HashMap;
 import java.util.Scanner;

@@ -1,8 +1,8 @@
-package model.cards;
+package sample.model.cards;
 
 import com.google.gson.annotations.SerializedName;
-import model.Player;
-import model.zones.Zone;
+import sample.model.Player;
+import sample.model.zones.Zone;
 
 import java.util.ArrayList;
 

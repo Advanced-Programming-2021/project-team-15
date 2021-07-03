@@ -1,9 +1,9 @@
-package view;
+package sample.view;
 
-import controller.menuController.DeckController;
-import controller.responses.DeckMenuResponses;
-import controller.utilizationController.UtilityController;
-import model.Deck;
+import sample.controller.menuController.DeckController;
+import sample.controller.responses.DeckMenuResponses;
+import sample.controller.utilizationController.UtilityController;
+import sample.model.Deck;
 
 import java.util.HashMap;
 

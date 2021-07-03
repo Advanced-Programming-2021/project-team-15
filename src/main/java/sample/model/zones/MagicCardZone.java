@@ -1,8 +1,8 @@
-package model.zones;
+package sample.model.zones;
 
-import model.Player;
-import model.cards.Card;
-import model.cards.MagicCard;
+import sample.model.Player;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
 
 import java.util.TreeMap;
 

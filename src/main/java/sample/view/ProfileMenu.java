@@ -1,8 +1,8 @@
-package view;
+package sample.view;
 
-import controller.menuController.ProfileController;
-import controller.responses.ProfileMenuResponses;
-import controller.utilizationController.UtilityController;
+import sample.controller.menuController.ProfileController;
+import sample.controller.responses.ProfileMenuResponses;
+import sample.controller.utilizationController.UtilityController;
 
 import java.util.HashMap;
 

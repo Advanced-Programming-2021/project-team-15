@@ -1,15 +1,15 @@
-package controller.gamePlayController;
+package sample.controller.gamePlayController;
 
-import controller.Limit;
-import model.Player;
-import model.cards.Card;
-import model.cards.MonsterCard;
-import view.DuelMenu;
+import sample.controller.Limit;
+import sample.model.Player;
+import sample.model.cards.Card;
+import sample.model.cards.MonsterCard;
+import sample.view.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static controller.responses.DuelMenuResponses.*;
+import static sample.controller.responses.DuelMenuResponses.*;
 
 public class MonsterEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();

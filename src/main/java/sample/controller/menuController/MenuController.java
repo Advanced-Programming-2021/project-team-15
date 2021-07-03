@@ -1,9 +1,9 @@
-package controller.menuController;
+package sample.controller.menuController;
 
 import com.rits.cloning.Cloner;
-import controller.utilizationController.DatabaseController;
-import model.cards.Card;
-import model.User;
+import sample.controller.utilizationController.DatabaseController;
+import sample.model.cards.Card;
+import sample.model.User;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package controller.utilizationController;
+package sample.controller.utilizationController;
 
 import java.util.ArrayList;
 import java.util.HashMap;

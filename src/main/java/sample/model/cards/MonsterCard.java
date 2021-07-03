@@ -1,7 +1,6 @@
-package model.cards;
+package sample.model.cards;
 
 import com.google.gson.annotations.SerializedName;
-import model.cards.Card;
 
 public class MonsterCard extends Card {
     @SerializedName("Attack")

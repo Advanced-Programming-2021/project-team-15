@@ -1,7 +1,7 @@
-package model;
+package sample.model;
 
-import controller.Limit;
-import model.zones.*;
+import sample.controller.Limit;
+import sample.model.zones.*;
 
 import java.util.ArrayList;
 

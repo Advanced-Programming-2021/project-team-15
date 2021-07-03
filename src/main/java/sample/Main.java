@@ -1,7 +1,7 @@
 package sample;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.utilizationController.DatabaseController;
+import sample.controller.utilizationController.DatabaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +16,7 @@ giving other menus instructions
 card show (page 10)
 */
 //TODO check:
-//attack controller line 102 - attackToDefencePos return
+//attack sample.controller line 102 - attackToDefencePos return
 
 public class Main extends Application {
     public static Stage stage;

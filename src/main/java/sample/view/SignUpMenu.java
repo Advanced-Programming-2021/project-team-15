@@ -1,7 +1,7 @@
-package view;
+package sample.view;
 
-import controller.menuController.LoginController;
-import controller.responses.LoginMenuResponses;
+import sample.controller.menuController.LoginController;
+import sample.controller.responses.LoginMenuResponses;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

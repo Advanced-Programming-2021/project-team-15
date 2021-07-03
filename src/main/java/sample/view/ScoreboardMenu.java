@@ -1,8 +1,8 @@
-package view;
+package sample.view;
 
-import controller.menuController.ScoreboardController;
-import controller.responses.ScoreboardMenuResponses;
-import controller.utilizationController.UtilityController;
+import sample.controller.menuController.ScoreboardController;
+import sample.controller.responses.ScoreboardMenuResponses;
+import sample.controller.utilizationController.UtilityController;
 
 public class ScoreboardMenu extends Menu {
     private static ScoreboardMenu scoreboardMenu;

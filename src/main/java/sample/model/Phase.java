@@ -1,4 +1,4 @@
-package model;
+package sample.model;
 
 public class Phase {
     private PhaseLevel phaseLevel;

@@ -1,9 +1,9 @@
-package view;
+package sample.view;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.menuController.MenuController;
-import controller.utilizationController.RegexController;
-import controller.utilizationController.UtilityController;
+import sample.controller.menuController.MenuController;
+import sample.controller.utilizationController.RegexController;
+import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

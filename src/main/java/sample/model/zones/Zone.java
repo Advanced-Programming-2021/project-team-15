@@ -1,4 +1,4 @@
-package model.zones;
+package sample.model.zones;
 
 import java.util.ArrayList;
 import java.util.HashMap;

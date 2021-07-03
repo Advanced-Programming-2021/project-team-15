@@ -1,7 +1,7 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.ScoreboardMenuResponses;
-import model.User;
+import sample.controller.responses.ScoreboardMenuResponses;
+import sample.model.User;
 
 import java.util.*;
 

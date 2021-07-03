@@ -1,14 +1,13 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.ImportExportResponses;
-import controller.utilizationController.DatabaseController;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
+import sample.controller.responses.ImportExportResponses;
+import sample.controller.utilizationController.DatabaseController;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ImportExportController extends MenuController {
     private static ImportExportController importExportController;

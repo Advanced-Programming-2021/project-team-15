@@ -1,4 +1,4 @@
-package controller.utilizationController;
+package sample.controller.utilizationController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,11 +8,11 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import model.Deck;
-import model.User;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
+import sample.model.Deck;
+import sample.model.User;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 
 import java.io.*;
 import java.lang.reflect.Type;

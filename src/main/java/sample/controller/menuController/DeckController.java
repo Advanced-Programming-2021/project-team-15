@@ -1,8 +1,8 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.DeckMenuResponses;
-import model.Deck;
-import model.cards.Card;
+import sample.controller.responses.DeckMenuResponses;
+import sample.model.Deck;
+import sample.model.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;

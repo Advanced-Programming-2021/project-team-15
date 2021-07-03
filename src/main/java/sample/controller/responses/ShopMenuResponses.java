@@ -1,4 +1,4 @@
-package controller.responses;
+package sample.controller.responses;
 
 public enum ShopMenuResponses {
     CARD_NAME_NOT_EXIST,

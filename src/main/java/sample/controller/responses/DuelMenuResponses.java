@@ -1,4 +1,4 @@
-package controller.responses;
+package sample.controller.responses;
 
 public enum DuelMenuResponses {
     NO_PLAYER_WITH_THIS_USERNAME_EXISTS,

@@ -1,15 +1,15 @@
-package controller.gamePlayController;
+package sample.controller.gamePlayController;
 
-import model.Player;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
-import view.DuelMenu;
+import sample.model.Player;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
+import sample.view.DuelMenu;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static controller.responses.DuelMenuResponses.*;
+import static sample.controller.responses.DuelMenuResponses.*;
 
 public class SpellEffectController {
 
@@ -17,7 +17,7 @@ public class SpellEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
     private boolean doIt = false;
 
-    //TODO: put a while in view ....
+    //TODO: put a while in sample.view ....
 
     static boolean isSubsetSum(ArrayList<MonsterCard> set,
                                int n, int sum) {

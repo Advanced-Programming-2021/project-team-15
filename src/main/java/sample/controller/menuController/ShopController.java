@@ -1,9 +1,9 @@
-package controller.menuController;
+package sample.controller.menuController;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.responses.ShopMenuResponses;
-import model.cards.Card;
-import model.User;
+import sample.controller.responses.ShopMenuResponses;
+import sample.model.cards.Card;
+import sample.model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;

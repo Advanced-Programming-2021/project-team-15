@@ -1,9 +1,9 @@
-package view;
+package sample.view;
 
 import com.opencsv.exceptions.CsvValidationException;
-import controller.menuController.ShopController;
-import controller.responses.ShopMenuResponses;
-import controller.utilizationController.UtilityController;
+import sample.controller.menuController.ShopController;
+import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 import java.util.HashMap;

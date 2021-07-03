@@ -1,7 +1,7 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.LoginMenuResponses;
-import model.User;
+import sample.controller.responses.LoginMenuResponses;
+import sample.model.User;
 
 public class LoginController extends MenuController {
     public LoginController() {

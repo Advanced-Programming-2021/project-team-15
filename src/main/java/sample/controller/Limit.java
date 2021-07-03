@@ -1,4 +1,4 @@
-package controller;
+package sample.controller;
 
 public enum Limit {
     CANT_ACTIVATE_TRAP,

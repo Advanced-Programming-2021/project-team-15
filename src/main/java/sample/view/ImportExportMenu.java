@@ -1,8 +1,8 @@
-package view;
+package sample.view;
 
-import controller.menuController.ImportExportController;
-import controller.responses.ImportExportResponses;
-import controller.utilizationController.UtilityController;
+import sample.controller.menuController.ImportExportController;
+import sample.controller.responses.ImportExportResponses;
+import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 import java.util.HashMap;

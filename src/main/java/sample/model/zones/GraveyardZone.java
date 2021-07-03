@@ -1,11 +1,11 @@
-package model.zones;
+package sample.model.zones;
 
-import controller.gamePlayController.GamePlayController;
-import controller.gamePlayController.SpellEffectController;
-import model.Player;
-import model.cards.Card;
-import model.cards.MagicCard;
-import model.cards.MonsterCard;
+import sample.controller.gamePlayController.GamePlayController;
+import sample.controller.gamePlayController.SpellEffectController;
+import sample.model.Player;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 
 import java.util.ArrayList;
 

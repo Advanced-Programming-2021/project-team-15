@@ -1,16 +1,16 @@
-package controller;
+package sample.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.opencsv.exceptions.CsvValidationException;
-import controller.menuController.*;
-import controller.responses.DeckMenuResponses;
-import controller.responses.LoginMenuResponses;
-import controller.utilizationController.DatabaseController;
-import model.cards.Card;
-import model.Deck;
-import model.User;
+import sample.controller.menuController.*;
+import sample.controller.responses.DeckMenuResponses;
+import sample.controller.responses.LoginMenuResponses;
+import sample.controller.utilizationController.DatabaseController;
+import sample.model.cards.Card;
+import sample.model.Deck;
+import sample.model.User;
 import org.testng.annotations.Test;
 
 import java.io.*;

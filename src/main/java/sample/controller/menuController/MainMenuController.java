@@ -1,7 +1,6 @@
-package controller.menuController;
+package sample.controller.menuController;
 
-import controller.responses.MainMenuResponses;
-import view.*;
+import sample.controller.responses.MainMenuResponses;
 
 import java.util.HashMap;
 

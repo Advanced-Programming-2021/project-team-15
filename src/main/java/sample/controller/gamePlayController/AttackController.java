@@ -1,15 +1,15 @@
-package controller.gamePlayController;
+package sample.controller.gamePlayController;
 
-import controller.responses.DuelMenuResponses;
-import model.Game;
-import model.Phase;
-import model.cards.Card;
-import model.cards.MonsterCard;
-import view.DuelMenu;
+import sample.controller.responses.DuelMenuResponses;
+import sample.model.Game;
+import sample.model.Phase;
+import sample.model.cards.Card;
+import sample.model.cards.MonsterCard;
+import sample.view.DuelMenu;
 
 import java.util.ArrayList;
 
-import static controller.responses.DuelMenuResponses.*;
+import static sample.controller.responses.DuelMenuResponses.*;
 
 public class AttackController {
     private static int damage;
