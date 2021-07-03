@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "allDecksOfUser": [],
+    "allCardsOfUser": [],
+    "userName": "aaa",
+    "passWord": "aaaa",
+    "nickName": "aaaa",
+    "score": 0,
+    "money": 0
+  }
+]

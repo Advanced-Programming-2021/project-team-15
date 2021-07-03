@@ -26,11 +26,11 @@ public class SignUpMenu {
     @FXML
     private Label nicknameError;
     @FXML
-    private TextField nicknameTextField;
+    private TextField nicknameField;
     @FXML
-    private TextField passwordTextField;
+    private TextField passwordField;
     @FXML
-    private   TextField usernameTextField;
+    private   TextField usernameField;
     public static SignUpMenu getInstance() {
         if (signUpMenu == null)
             signUpMenu= new SignUpMenu();
@@ -41,23 +41,24 @@ public class SignUpMenu {
         Main.stage.setScene(welcomeMenu);
     }
 
-    public void submitButtonClicked(MouseEvent mouseEvent){
-        if(usernameTextField.getText().equals("") || passwordTextField.getText().equals("") || nicknameTextField.getText().equals("")) {
-            if(usernameTextField.getText().equals(""))
+     public void signupButtonClicked(MouseEvent mouseEvent){
+        if(usernameField.getText().equals("") || passwordField.getText().equals("") || nicknameField.getText().equals("")) {
+            if(usernameField.getText().equals(""))
                 usernameError.setText("username field is empty");
-            if (passwordTextField.getText().equals(""))
+            if (passwordField.getText().equals(""))
                 passwordError.setText("password field is empty");
-            if (nicknameTextField.getText().equals(""))
+            if (nicknameField.getText().equals(""))
                 nicknameError.setText("nickname field is empty");
             return;
         }
+        success.setText("");
         nicknameError.setText("");
         passwordError.setText("");
         usernameError.setText("");
-        showResponse(loginController.registerUser(usernameTextField.getText(),nicknameTextField.getText(),passwordTextField.getText()));
-        passwordTextField.setText("");
-        usernameTextField.setText("");
-        nicknameTextField.setText("");
+        showResponse(loginController.registerUser(usernameField.getText(),nicknameField.getText(),passwordField.getText()));
+        passwordField.setText("");
+        usernameField.setText("");
+        nicknameField.setText("");
         }
 
     private void showResponse(LoginMenuResponses loginMenuResponses) {
