@@ -41,12 +41,11 @@ public class Main extends Application {
     public void loginButtonClicked(MouseEvent mouseEvent)throws IOException{
         Scene loginScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
         stage.setScene(loginScene);
-        stage.show();
+
     }
     public void SignUpButtonClicked(MouseEvent mouseEvent) throws IOException{
         Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
         stage.setScene(signUpScene);
-        stage.show();
     }
 
 }

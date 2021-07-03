@@ -1,5 +1,6 @@
 package sample.view;
 
+import sample.Main;
 import sample.controller.menuController.LoginController;
 import sample.controller.responses.LoginMenuResponses;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class LoginMenu  {
     @FXML
     private TextField passwordTextField;
     @FXML
-    private   TextField usernameTextField;
+    private   TextField  usernameTextField;
     public static LoginMenu getInstance() {
         if (loginMenu == null)
             loginMenu = new LoginMenu();
@@ -33,15 +34,22 @@ public class LoginMenu  {
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         Scene welcomeMenu= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
-        Stage window= (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        window.setScene(welcomeMenu);
-        window.show();
+        Main.stage.setScene(welcomeMenu);
+
     }
-    public void submitButtonClicked() throws IOException {    passwordError.setText("");
+    public void submitButtonClicked(MouseEvent mouseEvent){
+        if(usernameTextField.getText().equals("")) {
+            usernameError.setText("username field is empty");
+            if (passwordTextField.getText().equals(""))
+                passwordError.setText("password field is empty");
+            return;
+        }
+
+        passwordError.setText("");
         usernameError.setText("");
-        showResponse( loginController.loginUser(usernameTextField.getText(),passwordTextField.getText()));
+        showResponse(loginController.loginUser(usernameTextField.getText(),passwordTextField.getText()));
         passwordTextField.setText("");
-        passwordTextField.setText("");
+        usernameTextField.setText("");
     }
 
 
@@ -49,26 +57,8 @@ public class LoginMenu  {
     private void showResponse(LoginMenuResponses loginMenuResponses) {
         String output = "";
         switch (loginMenuResponses) {
-            case USER_CREATE_SUCCESSFUL:
-                output = "user created successfully!";
-                break;
-            case USER_NICKNAME_ALREADY_EXISTS:
-                output = "user with this nickname already exists";
-                break;
-            case USER_USERNAME_ALREADY_EXISTS:
-                output = "user with this username  already exists";
-                break;
-            case USER_LOGIN_SUCCESSFUL:
-                output = "user logged in successfully!";
-                break;
             case USER_USERNAME_PASSWORD_NOT_MATCHED:
-                output = "Username and password didn't match";
-                break;
-            case USER_LOGOUT_SUCCESSFUL:
-                output = "user logged out successfully!";
-                break;
-            case USER_REMOVE_SUCCESSFUL:
-                output = "user removed successfully!";
+                result.setText("Username and password didn't match");
                 break;
             default:
                 break;
