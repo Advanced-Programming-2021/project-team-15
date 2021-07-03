@@ -1,3 +1,5 @@
+package sample;
+
 import com.opencsv.exceptions.CsvValidationException;
 import controller.utilizationController.DatabaseController;
 import javafx.application.Application;
@@ -22,6 +24,7 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException, CsvValidationException {
         DatabaseController databaseController = new DatabaseController();
         databaseController.loadGameCards();
+        launch(args);
 
     }
 
