@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="Welcome" prefHeight="550" prefWidth="550" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
-    <children>
-        <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#0d293bba" height="511.0" layoutX="671.0" layoutY="232.0" stroke="BLACK" strokeType="INSIDE" width="637.0" />
-        <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="315.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d" onMouseClicked="#loginButtonClicked">
-            <font>
-                <Font size="36.0" />
-            </font>
-        </Button>
-        <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="242.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c" onMouseClicked="#SignUpButtonClicked">
-            <font>
-                <Font size="36.0" />
-            </font>
-        </Button>
-        <Label layoutX="788.0" layoutY="253.0" prefHeight="90.0" prefWidth="488.0" text="    Welcome!" textFill="#2194ff">
-            <font>
-                <Font size="62.0" />
-            </font>
-        </Label>
-        <Button fx:id="exitButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="153.0" text="Exit" textFill="#794d4d">
-            <font>
-                <Font size="36.0" />
-            </font>
-        </Button>
-    </children>
+<AnchorPane fx:id="Welcome" prefHeight="700" prefWidth="800" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
+
+      <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="377.0" layoutX="203.0" layoutY="179.0" stroke="BLACK" strokeType="INSIDE" width="399.0" />
+      <VBox alignment="CENTER" layoutX="156.0" layoutY="233.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="788.0" layoutY="253.0" prefHeight="90.0" prefWidth="488.0" text="Welcome!" textFill="#2194ff">
+               <font>
+                  <Font size="36" />
+               </font>
+            </Label>
+            <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="288.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#SignUpButtonClicked" prefHeight="50.0" prefWidth="224.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="140.0" text="Exit" textFill="#794d4d">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      </children>
+
+
 </AnchorPane>

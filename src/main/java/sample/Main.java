@@ -22,14 +22,14 @@ public class Main extends Application {
     public static Stage stage;
 
     public static void main(String[] args) throws IOException, CsvValidationException {
-        DatabaseController databaseController = new DatabaseController();
-        databaseController.loadGameCards();
         launch(args);
 
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        DatabaseController databaseController = new DatabaseController();
+        databaseController.loadGameCards();
         this.stage= stage;
         Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
         stage.setScene(new Scene(root));
@@ -38,8 +38,8 @@ public class Main extends Application {
 
 
     public void loginButtonClicked(MouseEvent mouseEvent)throws IOException{
-        Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
-        stage.setScene(signUpScene);
+        Scene loginScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
+        stage.setScene(loginScene);
         stage.show();
     }
     public void SignUpButtonClicked(MouseEvent mouseEvent) throws IOException{
