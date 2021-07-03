@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<TableView fx:id="table" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.ScoreboardController">
+    <columns>
+        <TableColumn fx:id="Rank" prefWidth="114.4000244140625" text="Rank"/>
+        <TableColumn fx:id="Player" prefWidth="227.20001220703125" text="Player"/>
+        <TableColumn fx:id="Score" prefWidth="253.60003662109375" text="Score"/>
+    </columns>
+</TableView>

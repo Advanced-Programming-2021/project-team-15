@@ -35,13 +35,15 @@ public class Main extends Application {
         launch(args);
         JSONController jsonController = new JSONController();
         jsonController.loadGameCards();
-        LoginMenu loginMenu = LoginMenu.getInstance();
+     //   LoginMenu loginMenu = LoginMenu.getInstance();
+        ScoreboardMenu scoreboardMenu=ScoreboardMenu.getInstance();
 //        for (Card card : Card.getAllCards()) {
 //            if (card instanceof MonsterCard) System.out.println("monster");
 //            else if (card instanceof MagicCard) System.out.println("magic");
 //            else System.out.println("card");
 //        }
-        loginMenu.scanInput();
+        scoreboardMenu.scanInput();
+       // loginMenu.scanInput();
 
 //        for (Card card : Card.getAllCards()) {
 //
@@ -67,7 +69,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        URL url = new File("src/main/java/FxmlFiles/Welcome.fxml").toURI().toURL();
+        URL url = new File("src/main/java/FxmlFiles/ScoreBoard.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Stage primaryStage= new Stage();
         primaryStage.setTitle("WelcomePage");
