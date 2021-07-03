@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="Welcome" prefHeight="700" prefWidth="800" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:sample.controller="sample.Main">
-
-      <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="377.0" layoutX="203.0" layoutY="179.0" stroke="BLACK" strokeType="INSIDE" width="399.0" />
-      <VBox alignment="CENTER" layoutX="156.0" layoutY="233.0" BorderPane.alignment="CENTER">
+<BorderPane fx:id="Welcome" prefHeight="1000" prefWidth="1500" style="-fx-background-color: black" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
+   <left>
+      <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Images/yugi2.png" />
+         </image>
+      </ImageView>
+   </left>
+   <center>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="788.0" layoutY="253.0" prefHeight="90.0" prefWidth="488.0" text="Welcome!" textFill="#2194ff">
-               <font>
-                  <Font size="36" />
-               </font>
-            </Label>
-            <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="288.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d">
+            <ImageView fitHeight="262.0" fitWidth="534.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/yugiohTitle.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
-            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#SignUpButtonClicked" prefHeight="50.0" prefWidth="224.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
+            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#SignUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
                <font>
                   <Font size="25.0" />
                </font>
@@ -33,7 +38,8 @@
             </Button>
          </children>
       </VBox>
-      </children>
+   </center>
 
 
-</AnchorPane>
+
+</BorderPane>

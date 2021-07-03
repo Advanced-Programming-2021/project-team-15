@@ -33,6 +33,7 @@ public class Main extends Application {
         this.stage= stage;
         Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
         stage.setScene(new Scene(root));
+        stage.setMaximized(true);
         stage.show();
     }
 
