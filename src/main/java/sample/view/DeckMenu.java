@@ -1,15 +1,15 @@
 package sample.view;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -22,38 +22,34 @@ import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
 
 public class DeckMenu{
+    private Deck selectedDeck;
     private static DeckMenu deckMenu;
-    DeckMenuResponses responses;
-    String deckName;
-    String cardName;
-    String deckType;
-    String toPrint;
-    Deck.DeckType deckTypeEnum;
+    @FXML
+    private Label activatedDeck;
+    @FXML
+    private Button activateDeck;
+    @FXML
+    private Button createDeck;
+    @FXML
+    private Label mainNumber;
+    @FXML
+    private Label sideNumber;
+    @FXML
+    private Label validation;
     private DeckController deckController = new DeckController();
     public static DeckMenu getInstance() {
         if (deckMenu == null)
             deckMenu = new DeckMenu();
         return deckMenu;
     }
+    private ListView<Deck> listView;
     @FXML
     private VBox leftSide;
     public void start() throws Exception {
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
-//        decksList.addAll(MenuController.getUser().getAllDecksOfUser());
-        decksList.addAll(new Deck("ali","d1"),
-                new Deck("sara","d2"),
-                new Deck("mary","d3"),
-                new Deck("ali","d4"),
-                new Deck("sara","d5"),
-                new Deck("ali","d6"),
-                new Deck("sara","d7"),
-                new Deck("ali","d8"),
-                new Deck("sara","d9"),
-                new Deck("ali","d10"),
-                new Deck("sara","d11")
-        );
-        // Create the ListView
-        ListView<Deck> listView = new ListView<>();
+        decksList.addAll(MenuController.getUser().getAllDecksOfUser());
+
+       listView  = new ListView<>();
 
         listView.setCellFactory((Callback<ListView<Deck>, ListCell<Deck>>) param -> {
             return new ListCell<Deck>() {
@@ -65,33 +61,29 @@ public class DeckMenu{
                         setText(null);
                         setGraphic(null);
                     } else {
-                        // Here we can build the layout we want for each ListCell. Let's use a HBox as our root.
                         HBox root = new HBox();
                         root.setAlignment(Pos.CENTER_LEFT);
                         root.setPadding(new Insets(5, 10, 5, 10));
-
-                        // Within the root, we'll show the username on the left and our two buttons to the right
                         root.getChildren().add(new Label(deck.getName()));
-
-                        // I'll add another Region here to expand, pushing the buttons to the right
                         Region region = new Region();
                         HBox.setHgrow(region, Priority.ALWAYS);
                         root.getChildren().add(region);
-
-                        // Now for our buttons
                         Button rmv = new Button("Remove");
                         rmv.setOnAction(event -> {
+                            if(selectedDeck==deck)
+                            { if(selectedDeck.isActive())
+                                activatedDeck.setText("");
+                                selectedDeck = null;
+                                cleanEveryThing();
+                            }
                             listView.getItems().remove(deck);
-                            System.out.println("removed "+deck.getName());
+                            MenuController.getUser().removeDeck(deck);
                         });
                         Button edit = new Button("Edit");
                        edit.setOnAction(event -> {
-                            // Code to remove friend
                             System.out.println("edit!");
                         });
                         root.getChildren().addAll(rmv, edit);
-
-                        // Finally, set our cell to display the root HBox
                         setText(null);
                         setGraphic(root);
                     }
@@ -100,10 +92,48 @@ public class DeckMenu{
             };
 
         });
-
         listView.setItems(decksList);
        leftSide.getChildren().add(listView);
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<Deck>() {
+                    public void changed(ObservableValue<? extends Deck> ov,
+                                       Deck old_val, Deck new_val) {
+                        updateDeckDetails(new_val);
+                        selectedDeck = new_val;
+                    }
+                });
     }
+    private void cleanEveryThing(){
+        mainNumber.setText("");
+        sideNumber.setText("");
+        validation.setText("");
+
+    }
+
+
+    public void activateButtonPressed(MouseEvent mouseEvent){
+        if(selectedDeck==null)
+           new Alert(Alert.AlertType.ERROR,"you haven't selected any deck").show();
+        else {
+            selectedDeck.setActive(true);
+            activatedDeck.setText(selectedDeck.getName());
+        }
+
+    }
+
+
+    public void updateDeckDetails(Deck newVal)
+    {   if(!listView.getItems().contains(newVal))
+        return;
+        mainNumber.setText("Main Deck : "+newVal.getMainDeck().size()+"");
+        sideNumber.setText("Side Deck : "+newVal.getSideDeck().size()+"");
+        if(newVal.isValid())  validation.setText("Valid");
+        else validation.setText("InValid");
+    }
+
+
+
+
 
 
 //    @Override
