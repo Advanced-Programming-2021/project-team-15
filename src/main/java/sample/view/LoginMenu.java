@@ -45,7 +45,6 @@ public class LoginMenu  {
                 passwordError.setText("password field is empty");
             return;
         }
-
         passwordError.setText("");
         usernameError.setText("");
         showResponse(loginController.loginUser(usernameTextField.getText(),passwordTextField.getText()));

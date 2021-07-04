@@ -30,7 +30,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage= stage;
+        Main.stage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
         stage.setScene(new Scene(root));
         stage.setMaximized(true);
@@ -46,6 +46,9 @@ public class Main extends Application {
     public void signUpButtonClicked(MouseEvent mouseEvent) throws IOException{
         Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
         stage.setScene(signUpScene);
+    }
+    public void exitButtonClicked(MouseEvent mouseEvent) throws IOException{
+        System.exit(0);
     }
 
 }

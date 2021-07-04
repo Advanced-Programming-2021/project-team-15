@@ -11,9 +11,15 @@
   {
     "allDecksOfUser": [],
     "allCardsOfUser": [],
+<<<<<<< Updated upstream
     "userName": "par",
     "passWord": "par",
     "nickName": "par",
+=======
+    "userName": "mamad",
+    "passWord": "aa",
+    "nickName": "aa",
+>>>>>>> Stashed changes
     "score": 0,
     "money": 0
   }

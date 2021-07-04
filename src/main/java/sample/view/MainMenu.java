@@ -1,6 +1,10 @@
 package sample.view;
 
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import sample.Main;
 import sample.controller.menuController.MainMenuController;
 import sample.controller.responses.MainMenuResponses;
 import sample.controller.utilizationController.UtilityController;
@@ -73,6 +77,36 @@ public class MainMenu extends Menu {
             }
             printResponse(responses);
         }
+    }
+
+    public void profileButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene profileScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+        Main.stage.setScene(profileScene);
+    }
+
+    public void scoreboardButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
+        Main.stage.setScene(scoreboardScene);
+    }
+
+    public void deckButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene deckScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Deck.fxml")));
+        Main.stage.setScene(deckScene);
+    }
+
+    public void duelButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene duelScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Duel.fxml")));
+        Main.stage.setScene(duelScene);
+    }
+
+    public void shopButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene shopScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Shop.fxml")));
+        Main.stage.setScene(shopScene);
+    }
+
+    public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene importExportScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ImportExport.fxml")));
+        Main.stage.setScene(importExportScene);
     }
 
     private void printResponse(MainMenuResponses mainMenuResponses) {
