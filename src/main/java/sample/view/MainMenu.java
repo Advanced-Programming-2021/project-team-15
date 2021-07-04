@@ -103,6 +103,12 @@ public class MainMenu {
         Main.stage.setScene(importExportScene);
     }
 
+    public void logoutButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
+        mainMenuController.logout();
+        Main.stage.setScene(loginScene);
+    }
+
 //    private void printResponse(MainMenuResponses mainMenuResponses) {
 //        String output = "";
 //        switch (mainMenuResponses) {
