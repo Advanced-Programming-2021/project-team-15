@@ -800,7 +800,7 @@ public class GamePlayController extends MenuController {
             case "Umiiruka":
                 spellEffectController.umiiruka(true, card);
                 break;
-            case "Sword of Dark Destruction":
+            case "Sword of dark destruction":
                 spellEffectController.swordOfDarkDestruction(card);
                 break;
             case "Black Pendant":
