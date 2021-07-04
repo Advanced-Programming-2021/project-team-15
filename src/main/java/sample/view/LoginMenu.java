@@ -1,20 +1,18 @@
 package sample.view;
 
-import sample.Main;
-import sample.controller.menuController.LoginController;
-import sample.controller.responses.LoginMenuResponses;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import sample.Main;
+import sample.controller.menuController.LoginController;
+import sample.controller.responses.LoginMenuResponses;
 
 import java.io.IOException;
 
-public class LoginMenu  {
+public class LoginMenu {
     private static LoginMenu loginMenu;
     LoginController loginController = new LoginController();
     @FXML
@@ -26,20 +24,23 @@ public class LoginMenu  {
     @FXML
     private TextField passwordTextField;
     @FXML
-    private   TextField  usernameTextField;
+    private TextField usernameTextField;
+
     public static LoginMenu getInstance() {
         if (loginMenu == null)
             loginMenu = new LoginMenu();
         return loginMenu;
     }
+
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
-        Scene welcomeMenu= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
+        Scene welcomeMenu = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
         Main.stage.setScene(welcomeMenu);
 
     }
-    public void submitButtonClicked(MouseEvent mouseEvent){
-        if(usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
-            if(usernameTextField.getText().equals(""))
+
+    public void submitButtonClicked(MouseEvent mouseEvent) throws IOException {
+        if (usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
+            if (usernameTextField.getText().equals(""))
                 usernameError.setText("username field is empty");
             if (passwordTextField.getText().equals(""))
                 passwordError.setText("password field is empty");
@@ -47,11 +48,15 @@ public class LoginMenu  {
         }
         passwordError.setText("");
         usernameError.setText("");
-        showResponse(loginController.loginUser(usernameTextField.getText(),passwordTextField.getText()));
+        LoginMenuResponses responses = loginController.loginUser(usernameTextField.getText(), passwordTextField.getText());
+        showResponse(responses);
         passwordTextField.setText("");
         usernameTextField.setText("");
+        if (responses == LoginMenuResponses.USER_LOGIN_SUCCESSFUL) {
+            Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+            Main.stage.setScene(mainMenuScene);
+        }
     }
-
 
 
     private void showResponse(LoginMenuResponses loginMenuResponses) {

@@ -3,23 +3,8 @@
     "allDecksOfUser": [],
     "allCardsOfUser": [],
     "userName": "aaa",
-    "passWord": "aaaa",
-    "nickName": "aaaa",
-    "score": 0,
-    "money": 0
-  },
-  {
-    "allDecksOfUser": [],
-    "allCardsOfUser": [],
-<<<<<<< Updated upstream
-    "userName": "par",
-    "passWord": "par",
-    "nickName": "par",
-=======
-    "userName": "mamad",
     "passWord": "aa",
     "nickName": "aa",
->>>>>>> Stashed changes
     "score": 0,
     "money": 0
   }
