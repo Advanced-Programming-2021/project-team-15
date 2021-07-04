@@ -19,13 +19,9 @@ import javafx.util.Callback;
 import sample.controller.menuController.DeckController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
-import sample.controller.utilizationController.UtilityController;
 import sample.model.Deck;
-import sample.model.User;
 
-import java.util.HashMap;
-
-public class DeckMenu extends Application {
+public class DeckMenu{
     private static DeckMenu deckMenu;
     DeckMenuResponses responses;
     String deckName;
@@ -41,22 +37,20 @@ public class DeckMenu extends Application {
     }
     @FXML
     private VBox leftSide;
-
-    @Override
-    public void start(Stage stage) throws Exception {
+    public void start() throws Exception {
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
 //        decksList.addAll(MenuController.getUser().getAllDecksOfUser());
         decksList.addAll(new Deck("ali","d1"),
                 new Deck("sara","d2"),
                 new Deck("mary","d3"),
-                new Deck("ali","d1"),
-                new Deck("sara","d2"),
-                new Deck("ali","d1"),
-                new Deck("sara","d2"),
-                new Deck("ali","d1"),
-                new Deck("sara","d2"),
-                new Deck("ali","d1"),
-                new Deck("sara","d2")
+                new Deck("ali","d4"),
+                new Deck("sara","d5"),
+                new Deck("ali","d6"),
+                new Deck("sara","d7"),
+                new Deck("ali","d8"),
+                new Deck("sara","d9"),
+                new Deck("ali","d10"),
+                new Deck("sara","d11")
         );
         // Create the ListView
         ListView<Deck> listView = new ListView<>();
@@ -69,6 +63,7 @@ public class DeckMenu extends Application {
 
                     if (deck == null || empty) {
                         setText(null);
+                        setGraphic(null);
                     } else {
                         // Here we can build the layout we want for each ListCell. Let's use a HBox as our root.
                         HBox root = new HBox();
@@ -84,17 +79,17 @@ public class DeckMenu extends Application {
                         root.getChildren().add(region);
 
                         // Now for our buttons
-                        Button btnAddFriend = new Button("Remove");
-                        btnAddFriend.setOnAction(event -> {
-                            MenuController.getUser().removeDeck(deck);
+                        Button rmv = new Button("Remove");
+                        rmv.setOnAction(event -> {
+                            listView.getItems().remove(deck);
                             System.out.println("removed "+deck.getName());
                         });
-                        Button btnRemove = new Button("Edit");
-                        btnRemove.setOnAction(event -> {
+                        Button edit = new Button("Edit");
+                       edit.setOnAction(event -> {
                             // Code to remove friend
                             System.out.println("edit!");
                         });
-                        root.getChildren().addAll(btnAddFriend, btnRemove);
+                        root.getChildren().addAll(rmv, edit);
 
                         // Finally, set our cell to display the root HBox
                         setText(null);

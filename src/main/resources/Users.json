@@ -7,5 +7,14 @@
     "nickName": "aa",
     "score": 0,
     "money": 0
+  },
+  {
+    "allDecksOfUser": [],
+    "allCardsOfUser": [],
+    "userName": "par",
+    "passWord": "par",
+    "nickName": "par",
+    "score": 0,
+    "money": 0
   }
 ]

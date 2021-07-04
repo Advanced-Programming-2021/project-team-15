@@ -10,7 +10,6 @@ public class MainMenuController extends MenuController {
 
     static {
         allMenus.put("Duel", DuelMenu.getInstance());
-        allMenus.put("Deck", DeckMenu.getInstance());
         allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
         allMenus.put("Profile", ProfileMenu.getInstance());
         allMenus.put("Shop", ShopMenu.getInstance());

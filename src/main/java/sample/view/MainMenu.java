@@ -1,6 +1,7 @@
 package sample.view;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import sample.Main;
@@ -83,9 +84,13 @@ public class MainMenu {
         Main.stage.setScene(scoreboardScene);
     }
 
-    public void deckButtonClicked(MouseEvent mouseEvent) throws IOException {
-        Scene deckScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Deck.fxml")));
-        Main.stage.setScene(deckScene);
+    public void deckButtonClicked(MouseEvent mouseEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckMenu.fxml"));
+        Parent root = loader.load();
+        Scene scene= new Scene(root);
+        Main.stage.setScene(scene);
+        DeckMenu deckMenu =  loader.getController();
+        deckMenu.start();
     }
 
     public void duelButtonClicked(MouseEvent mouseEvent) throws IOException {
