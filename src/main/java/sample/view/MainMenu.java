@@ -1,20 +1,18 @@
 package sample.view;
 
-import com.opencsv.exceptions.CsvValidationException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import sample.Main;
 import sample.controller.menuController.MainMenuController;
 import sample.controller.responses.MainMenuResponses;
-import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-public class MainMenu extends Menu {
+public class MainMenu {
     private static MainMenu mainMenu;
     MainMenuController mainMenuController = new MainMenuController();
     MainMenuResponses responses;
-    private MainMenu() {
-        super("sample.Main Menu");
-    }
 
     public static MainMenu getInstance() {
         if (mainMenu == null)
@@ -22,82 +20,118 @@ public class MainMenu extends Menu {
         return mainMenu;
     }
 
-    @Override
-    public void scanInput() throws IOException, CsvValidationException {
-        while (true) {
-            String input = UtilityController.getNextLine();
-            if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.equals("user logout")) checkAndCallLogout(input);
-            else if (input.startsWith("menu enter")) checkAndCallMenuEnter(input);
-            else if (input.startsWith("increase ")) checkAndCallIncreaseMoneyCheat(input);
-            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
-            else System.out.println("invalid command");
-            if (isEnter) {
-                isEnter = false;
-                nextMenu.scanInput();
-            }
-            if (super.isExit) {
-                super.isExit = false;
-                return;
-            }
-        }
+//    @Override
+//    public void scanInput() throws IOException, CsvValidationException {
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.equals("user logout")) checkAndCallLogout(input);
+//            else if (input.startsWith("menu enter")) checkAndCallMenuEnter(input);
+//            else if (input.startsWith("increase ")) checkAndCallIncreaseMoneyCheat(input);
+//            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+//            else System.out.println("invalid command");
+//            if (isEnter) {
+//                isEnter = false;
+//                nextMenu.scanInput();
+//            }
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+//        }
+//    }
+
+//    private void checkAndCallLogout(String input) {
+//        responses = mainMenuController.logout();
+//        printResponse(responses);
+//        if (responses == MainMenuResponses.USER_LOGOUT_SUCCESSFUL) {
+//            super.isExit = true;
+//        }
+//    }
+//
+//    private void checkAndCallIncreaseMoneyCheat(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.increaseMoneyRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            responses = mainMenuController.increaseMoneyCheat(Integer.parseInt(enteredDetails.get("amount")));
+//            printResponse(responses);
+//        }
+//    }
+//
+//    private void checkAndCallMenuEnter(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.enterMenuRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            responses = mainMenuController.menuEnter(enteredDetails.get("menuName"));
+//            if (responses == MainMenuResponses.MENU_ENTER_SUCCESSFUL) {
+//                nextMenu = MainMenuController.getAllMenus().get(enteredDetails.get("menuName"));
+//                isEnter = true;
+//            }
+//            printResponse(responses);
+//        }
+//    }
+
+    public void profileButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+        Main.stage.setScene(profileScene);
     }
 
-    private void checkAndCallLogout(String input) {
-        responses = mainMenuController.logout();
-        printResponse(responses);
-        if (responses == MainMenuResponses.USER_LOGOUT_SUCCESSFUL) {
-            super.isExit = true;
-        }
+    public void scoreboardButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
+        Main.stage.setScene(scoreboardScene);
     }
 
-    private void checkAndCallIncreaseMoneyCheat(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.increaseMoneyRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            responses = mainMenuController.increaseMoneyCheat(Integer.parseInt(enteredDetails.get("amount")));
-            printResponse(responses);
-        }
+    public void deckButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene deckScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Deck.fxml")));
+        Main.stage.setScene(deckScene);
     }
 
-    private void checkAndCallMenuEnter(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.enterMenuRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            responses = mainMenuController.menuEnter(enteredDetails.get("menuName"));
-            if (responses == MainMenuResponses.MENU_ENTER_SUCCESSFUL) {
-                nextMenu = MainMenuController.getAllMenus().get(enteredDetails.get("menuName"));
-                isEnter = true;
-            }
-            printResponse(responses);
-        }
+    public void duelButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene duelScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Duel.fxml")));
+        Main.stage.setScene(duelScene);
     }
 
-    private void printResponse(MainMenuResponses mainMenuResponses) {
-        String output = "";
-        switch (mainMenuResponses) {
-            case USER_LOGOUT_SUCCESSFUL:
-                output = "user logged out successfully!";
-                break;
-            case MENU_NAME_NOT_EXIST:
-                output = "menu name you entered doesn't exist!";
-                break;
-            case MENU_ENTER_SUCCESSFUL:
-                output = "entered menu"+nextMenu.menuName+"...";
-                break;
-            case MENU_NAVIGATION_NOT_POSSIBLE:
-                output = "menu navigation is not possible";
-                break;
-            case INCREASED_MONEY_SUCCESSFULLY:
-                output = "CHEAT ACTIVATED!";
-                break;
-            default:
-                break;
-        }
-        System.out.println(output);
+    public void shopButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene shopScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Shop.fxml")));
+        Main.stage.setScene(shopScene);
     }
+
+    public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene importExportScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ImportExport.fxml")));
+        Main.stage.setScene(importExportScene);
+    }
+
+    public void logoutButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
+        mainMenuController.logout();
+        Main.stage.setScene(loginScene);
+    }
+
+//    private void printResponse(MainMenuResponses mainMenuResponses) {
+//        String output = "";
+//        switch (mainMenuResponses) {
+//            case USER_LOGOUT_SUCCESSFUL:
+//                output = "user logged out successfully!";
+//                break;
+//            case MENU_NAME_NOT_EXIST:
+//                output = "menu name you entered doesn't exist!";
+//                break;
+//            case MENU_ENTER_SUCCESSFUL:
+//                output = "entered menu" + nextMenu.menuName + "...";
+//                break;
+//            case MENU_NAVIGATION_NOT_POSSIBLE:
+//                output = "menu navigation is not possible";
+//                break;
+//            case INCREASED_MONEY_SUCCESSFULLY:
+//                output = "CHEAT ACTIVATED!";
+//                break;
+//            default:
+//                break;
+//        }
+//        System.out.println(output);
+//    }
 }
 
 
