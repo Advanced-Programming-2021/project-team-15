@@ -6,15 +6,24 @@
 
 <AnchorPane prefHeight="1000" prefWidth="1500" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ShopMenu">
    <children>
-      <ScrollPane fx:id="cardsContainer" layoutX="311.0" layoutY="142.0" prefHeight="199.0" prefWidth="212.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-      <Label fx:id="dalam" alignment="CENTER" layoutX="343.0" layoutY="34.0" prefHeight="39.0" prefWidth="118.0" text="dalam" textFill="RED">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
+      <BorderPane prefHeight="1000.0" prefWidth="1500.0" styleClass="shopMenu" stylesheets="@../CSSFiles/Menus.css">
+         <right>
+            <ScrollPane fx:id="cardsContainer" opacity="0.5" prefHeight="852.0" prefWidth="766.0" BorderPane.alignment="CENTER_RIGHT">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+         </right>
+         <top>
+            <Label fx:id="dalam" alignment="CENTER" prefHeight="43.0" prefWidth="767.0" text="List of Cards" textFill="RED" BorderPane.alignment="CENTER_RIGHT">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </top>
+         <bottom>
+            <Label prefHeight="225.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
    </children>
 </AnchorPane>

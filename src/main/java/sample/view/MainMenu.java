@@ -87,9 +87,9 @@ public class MainMenu {
     public void deckButtonClicked(MouseEvent mouseEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckMenu.fxml"));
         Parent root = loader.load();
-        Scene scene= new Scene(root);
+        Scene scene = new Scene(root);
         Main.stage.setScene(scene);
-        DeckMenu deckMenu =  loader.getController();
+        DeckMenu deckMenu = loader.getController();
         deckMenu.start();
     }
 
@@ -100,10 +100,10 @@ public class MainMenu {
 
     public void shopButtonClicked(MouseEvent mouseEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Shop.fxml"));
-        Scene scene= new Scene(loader.load());
+        Scene scene = new Scene(loader.load());
+        ShopMenu shopMenu = loader.getController();
+        shopMenu.initializeContainer();
         Main.stage.setScene(scene);
-        ShopMenu shopMenu=  loader.getController();
-       shopMenu.initializeContainer();
     }
 
     public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException {

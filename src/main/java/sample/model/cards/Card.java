@@ -33,6 +33,7 @@ public class Card {
     protected int price;
     private transient boolean isActivated;
     private transient Image cardImage;
+
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -48,23 +49,6 @@ public class Card {
         return null;
     }
 
-    public Image getCardImage(){
-     if (cardImage !=null) return cardImage;
-     else {
-          StringBuilder address = new StringBuilder();
-         String[] nameParts = cardName.split(" ");
-         for (String part : nameParts) {
-             StringBuilder temp = new StringBuilder(part);
-             temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
-             part = temp.toString();
-             address.append(part);
-         }
-        address.append(".jpg");
-         cardImage = new Image(getClass().getResourceAsStream(address.toString()));
-         return cardImage;
-     }
-    }
-
     public static void addCard(Card card) {
         allCards.add(card);
     }
@@ -75,6 +59,24 @@ public class Card {
 
     public static void setAllCards(ArrayList<Card> allCards) {
         Card.allCards = allCards;
+    }
+
+    public Image getCardImage() {
+        if (cardImage != null) return cardImage;
+        else {
+            StringBuilder address = new StringBuilder();
+            String[] nameParts = cardName.split(" ");
+            for (String part : nameParts) {
+                part = part.toLowerCase();
+                StringBuilder temp = new StringBuilder(part);
+                temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
+                part = temp.toString();
+                address.append(part);
+            }
+            address.append(".jpg");
+            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+            return cardImage;
+        }
     }
 
     public Player getOwner() {
