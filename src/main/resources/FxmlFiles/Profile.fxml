@@ -5,20 +5,50 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<BorderPane fx:id="Profile" prefHeight="1000" prefWidth="1500" style="-fx-background-color: black" styleClass="profile"
+            stylesheets="@../CSSFiles/Profile.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ProfileMenu">
+    <left>
+        <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true"
+                   BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@../Images/yugi2.png"/>
+            </image>
+        </ImageView>
+    </left>
+    <center>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="262.0" fitWidth="534.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../Images/yugiohTitle.png"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="changeNicknameButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false"
+                        onMouseClicked="#changeNicknameButtonClicked" prefHeight="54.0" prefWidth="438.0"
+                        styleClass="ChangeNicknameButton" stylesheets="@../CSSFiles/Button.css" text="Change Nickname"
+                        textFill="#764d4d">
+                    <font>
+                        <Font size="25.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="changePasswordButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false"
+                        onMouseClicked="#changePasswordButtonClicked" prefHeight="54.0" prefWidth="303.0"
+                        styleClass="ChangePasswordButton" stylesheets="@../CSSFiles/Button.css" text="Change Password"
+                        textFill="#844c4c">
+                    <font>
+                        <Font size="25.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="backButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0"
+                        prefWidth="140.0" text="Back" textFill="#794d4d" onMouseClicked="#backButtonClicked">
+                    <font>
+                        <Font size="25.0"/>
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+    </center>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <ImageView fitHeight="250.0" fitWidth="385.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../Images/mamal.jpg" />
-         </image>
-      </ImageView>
-   </center>
-   <top>
-      <Label text="MAMAL sheytoonbala Menu" textFill="#ff00ee" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-   </top>
+
 </BorderPane>
