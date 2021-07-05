@@ -1,22 +1,28 @@
 package sample.view;
 
-import com.opencsv.exceptions.CsvValidationException;
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
-import sample.controller.utilizationController.UtilityController;
+import sample.model.cards.Card;
 
-import java.io.IOException;
-import java.util.HashMap;
-
-public class ShopMenu extends Menu {
+public class ShopMenu {
     private static ShopMenu shopMenu;
     ShopMenuResponses responses;
     String allCards;
     private ShopController shopController = new ShopController();
+    private int maximumCardsInRow = 5;
 
-    private ShopMenu() {
-        super("Shop Menu");
-    }
+//    private ShopMenu() {
+//        super("Shop Menu");
+//    }
+    @FXML
+    public ScrollPane cardsContainer;
 
     public static ShopMenu getInstance() {
         if (shopMenu == null)
@@ -24,43 +30,63 @@ public class ShopMenu extends Menu {
         return shopMenu;
     }
 
-    @Override
-    public void scanInput() throws IOException, CsvValidationException {
-        while (true) {
-            String input = UtilityController.getNextLine();
-            if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
-            else if (input.equals("shop show --all")) checkAndCallShowAllCards();
-            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
-            else if (regexController.showMenuRegex(input))
-                checkAndCallShowCurrentMenu();
-            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
-            else System.out.println("invalid command");
-            if (super.isExit) {
-                super.isExit = false;
-                return;
+//    @Override
+//    public void start(Stage stage) throws Exception {
+//        initializeContainer();
+//    }
+
+    public void initializeContainer() {
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        GridPane cardsGridPane = new GridPane();
+        for (int i = 0; i < rowsCount; i++) {
+            for (int j = 0; j < maximumCardsInRow; j++) {
+                //Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
+                Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
+                ImageView showingCardImage = new ImageView(cardImage);
+                showingCardImage.setFitWidth(10);
+                showingCardImage.setFitWidth(10);
+                cardsGridPane.add(showingCardImage,i,j);
             }
         }
+        cardsContainer.setContent(cardsGridPane);
     }
+//    @Override
+//    public void scanInput() throws IOException, CsvValidationException {
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.startsWith("shop buy")) checkAndCallBuyItem(input);
+//            else if (input.equals("shop show --all")) checkAndCallShowAllCards();
+//            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
+//            else if (regexController.showMenuRegex(input))
+//                checkAndCallShowCurrentMenu();
+//            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+//        }
+//    }
 
-    private void checkAndCallBuyItem(String input) throws IOException, CsvValidationException {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.buyItemRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String cardName = enteredDetails.get("name");
-            responses = shopController.buyItem(cardName);
-            printResponse(responses);
-        }
-    }
-
-    private void checkAndCallShowAllCards() throws IOException, CsvValidationException {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        responses = shopController.showAllCards(enteredDetails);
-        if (responses == ShopMenuResponses.SHOP_SHOW_ALL)
-            allCards = enteredDetails.get("allCards");
-        printResponse(responses);
-    }
+//    private void checkAndCallBuyItem(String input) throws IOException, CsvValidationException {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.buyItemRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String cardName = enteredDetails.get("name");
+//            responses = shopController.buyItem(cardName);
+//            printResponse(responses);
+//        }
+//    }
+//
+//    private void checkAndCallShowAllCards() throws IOException, CsvValidationException {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        responses = shopController.showAllCards(enteredDetails);
+//        if (responses == ShopMenuResponses.SHOP_SHOW_ALL)
+//            allCards = enteredDetails.get("allCards");
+//        printResponse(responses);
+//    }
 
     private void printResponse(ShopMenuResponses shopMenuResponses) {
         String output = "";
@@ -82,4 +108,6 @@ public class ShopMenu extends Menu {
         }
         System.out.println(output);
     }
+
+
 }

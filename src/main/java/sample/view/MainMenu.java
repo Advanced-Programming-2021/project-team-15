@@ -98,8 +98,9 @@ public class MainMenu {
         Main.stage.setScene(duelScene);
     }
 
-    public void shopButtonClicked(MouseEvent mouseEvent) throws IOException {
+    public void shopButtonClicked(MouseEvent mouseEvent) throws Exception {
         Scene shopScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Shop.fxml")));
+        ShopMenu.getInstance().initializeContainer();
         Main.stage.setScene(shopScene);
     }
 
