@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.view.ShopMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="1000" prefWidth="1500" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ShopMenu">
+   <children>
+      <ScrollPane fx:id="cardsContainer" layoutX="311.0" layoutY="142.0" prefHeight="199.0" prefWidth="212.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+      <Label fx:id="dalam" alignment="CENTER" layoutX="343.0" layoutY="34.0" prefHeight="39.0" prefWidth="118.0" text="dalam" textFill="RED">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>
