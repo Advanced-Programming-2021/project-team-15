@@ -58,7 +58,7 @@ public class ShopMenu {
         for (int i = 0; i < rowsCount; i++) {
             for (int j = 0; j < maximumCardsInRow; j++) {
                 Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
-//                Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
+//              Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
                 ImageView showingCardImage = new ImageView(cardImage);
                 showingCardImage.setFitWidth(200);
                 showingCardImage.setFitHeight(200);
