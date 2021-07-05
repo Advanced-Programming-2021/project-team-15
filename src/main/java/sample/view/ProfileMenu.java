@@ -1,90 +1,117 @@
 package sample.view;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import sample.Main;
 import sample.controller.menuController.ProfileController;
+import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ProfileMenuResponses;
-import sample.controller.utilizationController.UtilityController;
 
-import java.util.HashMap;
+import java.io.IOException;
 
-public class ProfileMenu extends Menu {
+public class  ProfileMenu {
+    @FXML
+    private Label newNicknameError;
+    @FXML
+    private Label newPasswordError;
+
+    @FXML
+    private Label oldPasswordError;
+    @FXML
+    private Label result;
+
+    @FXML
+    private TextField newNicknameTextField;
+    @FXML
+    private TextField newPasswordTextField;
+    @FXML
+    private TextField oldPasswordTextField;
     private static ProfileMenu profileMenu;
-    ProfileController profileController = new ProfileController();
-    String newNickname;
-    ProfileMenuResponses responses;
-    private ProfileMenu() {
-        super("Profile Menu");
-    }
-
+    ProfileController profileController=new ProfileController();
     public static ProfileMenu getInstance() {
         if (profileMenu == null)
             profileMenu = new ProfileMenu();
         return profileMenu;
     }
+    public void changePasswordButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangePassword.fxml")));
+        Main.stage.setScene(profileScene);
 
-    @Override
-    public void scanInput() {
-        while (true) {
-            String input = UtilityController.getNextLine();
-            if (input.startsWith("profile change --nickname")) checkAndCallChangeNickname(input);
-            else if (input.startsWith("profile change")) checkAndCallChangePassword(input);
-            else if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
-            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
-            else System.out.println("invalid command");
-            if (super.isExit) {
-                super.isExit = false;
-                return;
-            }
+    }
+    public void changeNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangeNickname.fxml")));
+        Main.stage.setScene(profileScene);
+    }
+    public void backButtonClicked(MouseEvent mouseEvent) throws IOException{
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
+    }
+
+    public void submitNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
+        if ( newNicknameTextField.getText().equals("")) {
+                newNicknameError.setText("new-nickname field is empty");
+            return;
+        }
+        newNicknameError.setText("");
+        ProfileMenuResponses responses = profileController.changeNickname(newNicknameTextField.getText());
+        showResponse(responses);
+        newNicknameTextField.setText("");
+        if (responses == ProfileMenuResponses. NICKNAME_CHANGE_SUCCESSFUL) {
+            Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+            Main.stage.setScene(profileScene);
         }
 
     }
 
-    public void checkAndCallChangeNickname(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.changeNicknameRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            newNickname = enteredDetails.get("nickname");
-            responses = profileController.changeNickname(newNickname);
-            printResponse(responses);
-        }
-    }
-
-    public void checkAndCallChangePassword(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.changePasswordRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String currentPassword = enteredDetails.get("current");
-            String newPassword = enteredDetails.get("new");
-            responses = profileController.changePassword(currentPassword , newPassword);
-            printResponse(responses);
-        }
-
-    }
-    private void printResponse(ProfileMenuResponses profileMenuResponses)
-    {
+    private void showResponse(ProfileMenuResponses responses) {
         String output = "";
-        switch (profileMenuResponses) {
-            case PASSWORD_CHANGE_SUCCESSFUL:
-                output = "password changed successfully!";
+        switch (responses) {
+            case USER_NICKNAME_ALREADY_EXISTS:
+                result.setText("User nickname already exists");
+                break;
+            case  CURRENT_PASSWORD_INVALID:
+                result.setText("Current password is invalid");
                 break;
             case IDENTICAL_PASSWORDS:
-                output = "please enter a new password";
-                break;
-            case CURRENT_PASSWORD_INVALID:
-                output = "current password is invalid";
-                break;
-            case NICKNAME_CHANGE_SUCCESSFUL:
-                output = "nickname changed successfully!";
-                break;
-            case USER_NICKNAME_ALREADY_EXISTS:
-                output = "user with nickname "+newNickname+" already exists";
-                break;
+                result.setText("Passwords are identical");
             default:
                 break;
         }
         System.out.println(output);
     }
-}
 
+
+    public void backFromNicknameButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+        Main.stage.setScene(profileScene);
+    }
+
+    public void backFromPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+        Main.stage.setScene(profileScene);
+    }
+
+    public void submitPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
+        if ( newPasswordTextField.getText().equals("") || oldPasswordTextField.getText().equals("")) {
+            if (newPasswordTextField.getText().equals(""))
+                newPasswordError.setText("new-password field is empty");
+            if(oldPasswordTextField.getText().equals(""))
+                oldPasswordError.setText("old-password field is empty");
+            return;
+        }
+        newPasswordError.setText("");
+        oldPasswordError.setText("");
+        ProfileMenuResponses responses = profileController.changePassword(oldPasswordTextField.getText(),newPasswordTextField.getText());
+        showResponse(responses);
+        newPasswordTextField.setText("");
+        oldPasswordTextField.setText("");
+        if (responses == ProfileMenuResponses. PASSWORD_CHANGE_SUCCESSFUL) {
+            Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
+            Main.stage.setScene(profileScene);
+        }
+    }
+}
