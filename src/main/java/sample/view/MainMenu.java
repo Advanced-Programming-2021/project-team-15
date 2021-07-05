@@ -99,9 +99,11 @@ public class MainMenu {
     }
 
     public void shopButtonClicked(MouseEvent mouseEvent) throws Exception {
-        Scene shopScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Shop.fxml")));
-        ShopMenu.getInstance().initializeContainer();
-        Main.stage.setScene(shopScene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Shop.fxml"));
+        Scene scene= new Scene(loader.load());
+        Main.stage.setScene(scene);
+        ShopMenu shopMenu=  loader.getController();
+       shopMenu.initializeContainer();
     }
 
     public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException {
