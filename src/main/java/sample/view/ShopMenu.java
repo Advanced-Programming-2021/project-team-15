@@ -41,7 +41,7 @@ public class ShopMenu {
 //    }
 
     public void initializeContainer() {
-        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow +1 ;
         GridPane cardsGridPane = new GridPane();
         cardsGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -55,8 +55,9 @@ public class ShopMenu {
                 cardsContainer.setOpacity(0.5);
             }
         });
-        for (int i = 0; i < rowsCount-1; i++) {
+        for (int i = 0; i < rowsCount; i++) {
             for (int j = 0; j < maximumCardsInRow; j++) {
+                if (i*maximumCardsInRow+j>=Card.getAllCards().size()) break;
                 Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
 //              Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
                 ImageView showingCardImage = new ImageView(cardImage);
