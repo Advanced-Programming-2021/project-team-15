@@ -11437,5 +11437,14 @@
     "nickName": "parpari",
     "score": 0,
     "money": 2545600
+  },
+  {
+    "allDecksOfUser": [],
+    "allCardsOfUser": [],
+    "userName": "aaa",
+    "passWord": "aa",
+    "nickName": "aa",
+    "score": 0,
+    "money": 0
   }
 ]

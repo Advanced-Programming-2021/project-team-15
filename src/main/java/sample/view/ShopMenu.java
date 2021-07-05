@@ -2,6 +2,7 @@ package sample.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,8 @@ public class ShopMenu {
 //    }
     @FXML
     public ScrollPane cardsContainer;
+    @FXML
+    private Label dalam;
 
     public static ShopMenu getInstance() {
         if (shopMenu == null)
@@ -36,6 +39,7 @@ public class ShopMenu {
 //    }
 
     public void initializeContainer() {
+        dalam.setText("Salam");
         int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
         GridPane cardsGridPane = new GridPane();
         for (int i = 0; i < rowsCount; i++) {

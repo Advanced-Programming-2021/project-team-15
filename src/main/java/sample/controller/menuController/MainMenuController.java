@@ -8,13 +8,13 @@ import java.util.HashMap;
 public class MainMenuController extends MenuController {
     private static final HashMap<String, Menu> allMenus = new HashMap<>();
 
-    static {
-        allMenus.put("Duel", DuelMenu.getInstance());
-        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
-        allMenus.put("Profile", ProfileMenu.getInstance());
-        allMenus.put("Shop", ShopMenu.getInstance());
-        allMenus.put("ImportExport", ImportExportMenu.getInstance());
-    }
+//    static {
+//        allMenus.put("Duel", DuelMenu.getInstance());
+//        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
+//        allMenus.put("Profile", ProfileMenu.getInstance());
+//        allMenus.put("Shop", ShopMenu.getInstance());
+//        allMenus.put("ImportExport", ImportExportMenu.getInstance());
+//    }
 
     public MainMenuController() {
         super("sample.Main Menu");
