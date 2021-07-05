@@ -6684,22 +6684,6 @@
             "Price": 20000
           },
           {
-            "Attack": 200,
-            "gameATK": 200,
-            "Defence": 2000,
-            "gameDEF": 2000,
-            "Level": 2,
-            "Monster Type": "Cyberse",
-            "Monster Attribute": "EARTH",
-            "Monster Effect Type": "Normal",
-            "Name": "Bitron",
-            "Description": "A new species found in electronic space. There\u0027s not much information on it.",
-            "cardNumber": "0",
-            "Card Type": "MONSTER",
-            "type": "MONSTER",
-            "Price": 1000
-          },
-          {
             "Attack": 2000,
             "gameATK": 2000,
             "Defence": 2300,
@@ -6762,22 +6746,6 @@
             "Card Type": "MONSTER",
             "type": "MONSTER",
             "Price": 20000
-          },
-          {
-            "Attack": 200,
-            "gameATK": 200,
-            "Defence": 2000,
-            "gameDEF": 2000,
-            "Level": 2,
-            "Monster Type": "Cyberse",
-            "Monster Attribute": "EARTH",
-            "Monster Effect Type": "Normal",
-            "Name": "Bitron",
-            "Description": "A new species found in electronic space. There\u0027s not much information on it.",
-            "cardNumber": "0",
-            "Card Type": "MONSTER",
-            "type": "MONSTER",
-            "Price": 1000
           }
         ],
         "mainDeck": [
@@ -6937,17 +6905,6 @@
           },
           {
             "Type": "Spell",
-            "Status": "Unlimited",
-            "Icon (Property)": "Normal",
-            "Name": "Swords of Revealing Light",
-            "Description": "After this card\u0027s activation, it remains on the field, but destroy it during the End Phase of your opponent\u0027s 3rd turn. When this card is activated: If your opponent controls a face-down monster, flip all monsters they control face-up. While this card is face-up on the field, your opponent\u0027s monsters cannot declare an attack.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 2500
-          },
-          {
-            "Type": "Spell",
             "Status": "Limited",
             "Icon (Property)": "Normal",
             "Name": "Harpie\u0027s Feather Duster",
@@ -6985,17 +6942,6 @@
             "Icon (Property)": "Quick-play",
             "Name": "Mystical space typhoon",
             "Description": "Target 1 Spell/Trap on the field; destroy that target.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 3500
-          },
-          {
-            "Type": "Spell",
-            "Status": "Unlimited",
-            "Icon (Property)": "Quick-play",
-            "Name": "Ring of defense",
-            "Description": "When a Trap effect that inflicts damage is activated: Make that effect damage 0.",
             "cardNumber": "0",
             "Card Type": "MAGIC",
             "type": "MAGIC",
@@ -11430,6 +11376,60 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 1000
+      },
+      {
+        "Attack": 200,
+        "gameATK": 200,
+        "Defence": 2000,
+        "gameDEF": 2000,
+        "Level": 2,
+        "Monster Type": "Cyberse",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Normal",
+        "Name": "Bitron",
+        "Description": "A new species found in electronic space. There\u0027s not much information on it.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1000
+      },
+      {
+        "Attack": 200,
+        "gameATK": 200,
+        "Defence": 2000,
+        "gameDEF": 2000,
+        "Level": 2,
+        "Monster Type": "Cyberse",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Normal",
+        "Name": "Bitron",
+        "Description": "A new species found in electronic space. There\u0027s not much information on it.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1000
+      },
+      {
+        "Type": "Spell",
+        "Status": "Unlimited",
+        "Icon (Property)": "Normal",
+        "Name": "Swords of Revealing Light",
+        "Description": "After this card\u0027s activation, it remains on the field, but destroy it during the End Phase of your opponent\u0027s 3rd turn. When this card is activated: If your opponent controls a face-down monster, flip all monsters they control face-up. While this card is face-up on the field, your opponent\u0027s monsters cannot declare an attack.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 2500
+      },
+      {
+        "Type": "Spell",
+        "Status": "Unlimited",
+        "Icon (Property)": "Quick-play",
+        "Name": "Ring of defense",
+        "Description": "When a Trap effect that inflicts damage is activated: Make that effect damage 0.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 3500
       }
     ],
     "userName": "parnian",

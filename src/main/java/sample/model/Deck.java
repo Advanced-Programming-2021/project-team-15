@@ -44,11 +44,11 @@ public class Deck {
             sideDeck.add(card);
     }
 
-    public void removeCardFromDeckByName(String cardName, DeckType deckType) {
+    public void removeCardFromDeck(Card card, DeckType deckType) {
         if (deckType == DeckType.MAIN)
-            mainDeck.remove(getCardByName(cardName, deckType));
+            mainDeck.remove(card);
         else if (deckType == DeckType.SIDE)
-            sideDeck.remove(getCardByName(cardName, deckType));
+            sideDeck.remove(card);
     }
 
     public String getName() {
