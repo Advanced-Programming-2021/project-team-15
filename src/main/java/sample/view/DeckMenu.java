@@ -27,10 +27,6 @@ public class DeckMenu{
     @FXML
     private Label activatedDeck;
     @FXML
-    private Button activateDeck;
-    @FXML
-    private Button createDeck;
-    @FXML
     private Label mainNumber;
     @FXML
     private Label sideNumber;
