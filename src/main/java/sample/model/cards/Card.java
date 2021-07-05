@@ -98,6 +98,24 @@ public class Card {
         Card.allCards = allCards;
     }
 
+    public Image getCardImage() {
+        if (cardImage != null) return cardImage;
+        else {
+            StringBuilder address = new StringBuilder();
+            String[] nameParts = cardName.split(" ");
+            for (String part : nameParts) {
+                part = part.toLowerCase();
+                StringBuilder temp = new StringBuilder(part);
+                temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
+                part = temp.toString();
+                address.append(part);
+            }
+            address.append(".jpg");
+            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+            return cardImage;
+        }
+    }
+
     public Player getOwner() {
         return owner;
     }

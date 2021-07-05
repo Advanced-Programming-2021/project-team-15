@@ -5,7 +5,11 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
+<<<<<<< HEAD
 <AnchorPane prefHeight="1000.0" prefWidth="1499.0" styleClass="deckMenu" stylesheets="@../CSSFiles/DeckMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckMenu">
+=======
+<AnchorPane prefHeight="1000.0" prefWidth="1499.0" styleClass="deckMenu" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckMenu">
+>>>>>>> ghraphics-phase2
    <children>
       <BorderPane layoutX="80.0" layoutY="75.0" prefHeight="737.0" prefWidth="1424.0">
          <left>

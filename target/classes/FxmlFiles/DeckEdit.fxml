@@ -3,11 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<<<<<<< HEAD
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
    <children>
       <Pane layoutX="84.0" layoutY="52.0" prefHeight="749.0" prefWidth="1332.0">
+=======
+
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
+   <children>
+      <Pane layoutX="97.0" layoutY="191.0" prefHeight="707.0" prefWidth="1319.0">
+>>>>>>> ghraphics-phase2
          <children>
             <HBox prefHeight="707.0" prefWidth="1319.0">
                <children>
@@ -39,11 +47,19 @@
                         <HBox prefHeight="346.0" prefWidth="390.0">
                            <children>
                               <Pane prefHeight="266.0" prefWidth="213.0" />
+<<<<<<< HEAD
                               <ImageView fx:id="chosenCard" fitHeight="307" fitWidth="217.5" pickOnBounds="true" preserveRatio="true" />
                               <Pane prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </HBox>
                         <Label alignment="CENTER" prefHeight="122.0" prefWidth="393.0" text="kk">
+=======
+                              <ImageView fx:id="" fitHeight="307" fitWidth="217.5" pickOnBounds="true" preserveRatio="true" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                        <Label alignment="CENTER" text="kk" prefHeight="122.0" prefWidth="393.0" >
+>>>>>>> ghraphics-phase2
                             <font>
                                 <Font size="25.0" />
                             </font>

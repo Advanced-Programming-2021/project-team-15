@@ -1,11 +1,13 @@
 package sample.view;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.controller.menuController.ShopController;
@@ -39,17 +41,28 @@ public class ShopMenu {
 //    }
 
     public void initializeContainer() {
-        dalam.setText("Salam");
         int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
         GridPane cardsGridPane = new GridPane();
+        cardsGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardsContainer.setOpacity(1);
+            }
+        });
+        cardsGridPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardsContainer.setOpacity(0.5);
+            }
+        });
         for (int i = 0; i < rowsCount; i++) {
             for (int j = 0; j < maximumCardsInRow; j++) {
-                //Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
-                Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
+                Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
+//                Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
                 ImageView showingCardImage = new ImageView(cardImage);
-                showingCardImage.setFitWidth(10);
-                showingCardImage.setFitWidth(10);
-                cardsGridPane.add(showingCardImage,i,j);
+                showingCardImage.setFitWidth(200);
+                showingCardImage.setFitHeight(200);
+                cardsGridPane.add(showingCardImage,j,i);
             }
         }
         cardsContainer.setContent(cardsGridPane);
