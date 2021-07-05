@@ -33,6 +33,16 @@ public class Card {
     protected int price;
     private transient boolean isActivated;
     private transient Image cardImage;
+
+    public DeckViewLocation getDeckViewLocation() {
+        return deckViewLocation;
+    }
+
+    public void setDeckViewLocation(DeckViewLocation deckViewLocation) {
+        this.deckViewLocation = deckViewLocation;
+    }
+
+    private transient DeckViewLocation deckViewLocation;
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -47,6 +57,15 @@ public class Card {
         }
         return null;
     }
+
+    public void setCardImage(Image cardImage) {
+        this.cardImage = cardImage;
+    }
+
+    public enum DeckViewLocation {
+        SIDE_DECK,
+        MAIN_DECK,
+        TRUNK;}
 
     public Image getCardImage(){
      if (cardImage !=null) return cardImage;

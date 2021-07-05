@@ -6,8 +6,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -16,10 +19,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.Main;
 import sample.controller.menuController.DeckController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
+
+import java.io.IOException;
 
 public class DeckMenu{
     private Deck selectedDeck;
@@ -77,8 +83,12 @@ public class DeckMenu{
                         });
                         Button edit = new Button("Edit");
                        edit.setOnAction(event -> {
-                            System.out.println("edit!");
-                        });
+                           try {
+                               goToEditDeckMenu();
+                           } catch (IOException e) {
+                               e.printStackTrace();
+                           }
+                       });
                         root.getChildren().addAll(rmv, edit);
                         setText(null);
                         setGraphic(root);
@@ -105,6 +115,13 @@ public class DeckMenu{
         validation.setText("");
 
     }
+    public void goToEditDeckMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckEdit.fxml"));
+        Scene scene= new Scene(loader.load());
+        Main.stage.setScene(scene);
+        DeckEdit deckEdit =  loader.getController();
+        deckEdit.start();
+    }
 
 
     public void activateButtonPressed(MouseEvent mouseEvent){
@@ -127,9 +144,29 @@ public class DeckMenu{
         else validation.setText("InValid");
     }
 
+    public Deck getSelectedDeck() {
+        return selectedDeck;
+    }
 
+    public void setSelectedDeck(Deck selectedDeck) {
+        this.selectedDeck = selectedDeck;
+    }
 
+    public static DeckMenu getDeckMenu() {
+        return deckMenu;
+    }
 
+    public static void setDeckMenu(DeckMenu deckMenu) {
+        DeckMenu.deckMenu = deckMenu;
+    }
+
+    public Label getActivatedDeck() {
+        return activatedDeck;
+    }
+
+    public void setActivatedDeck(Label activatedDeck) {
+        this.activatedDeck = activatedDeck;
+    }
 
 
 //    @Override
