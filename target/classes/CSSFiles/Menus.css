@@ -6,3 +6,16 @@
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
 }
+.gridPane {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.labelList {
+    -fx-background-color: #90ebff;
+    -fx-opacity: 0.5;
+}
+.labelList:hover {
+    -fx-opacity: 1;
+}

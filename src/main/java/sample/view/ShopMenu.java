@@ -3,23 +3,29 @@ package sample.view;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
 import sample.model.cards.Card;
+
+import java.util.Objects;
 
 public class ShopMenu {
     private static ShopMenu shopMenu;
     ShopMenuResponses responses;
     String allCards;
     private ShopController shopController = new ShopController();
-    private int maximumCardsInRow = 5;
+    private final int maximumCardsInRow = 5;
 
 //    private ShopMenu() {
 //        super("Shop Menu");
@@ -27,7 +33,17 @@ public class ShopMenu {
     @FXML
     public ScrollPane cardsContainer;
     @FXML
-    private Label dalam;
+    public Label cardName;
+    @FXML
+    public Label moneyLabel;
+    @FXML
+    public Label cardCount;
+    @FXML
+    private ImageView cardImage;
+    @FXML
+    public VBox buyCardVBox;
+    @FXML
+    public Button buyCardButton;
 
     public static ShopMenu getInstance() {
         if (shopMenu == null)
@@ -41,8 +57,53 @@ public class ShopMenu {
 //    }
 
     public void initializeContainer() {
-        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow +1 ;
         GridPane cardsGridPane = new GridPane();
+        setCardsGridPaneProps(cardsGridPane);
+        for (int i = 0; i < rowsCount; i++) {
+            for (int j = 0; j < maximumCardsInRow; j++) {
+                if (i*maximumCardsInRow+j>=Card.getAllCards().size()) break;
+                Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
+                ImageView showingCardImage = new ImageView(cardImage);
+                setShowingCardImageProps(showingCardImage);
+                cardsGridPane.add(showingCardImage,j,i);
+            }
+        }
+        cardsContainer.setBackground(Background.EMPTY);
+        cardsContainer.setContent(cardsGridPane);
+    }
+
+    private void setShowingCardImageProps(ImageView showingCardImage) {
+        showingCardImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showingCardImage.setFitHeight(170);
+                showingCardImage.setFitWidth(170);
+            }
+        });
+        showingCardImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                showingCardImage.setFitWidth(160);
+                showingCardImage.setFitHeight(160);
+            }
+        });
+        showingCardImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                selectCard(Objects.requireNonNull(Card.getCardByImage(showingCardImage.getImage())));
+            }
+        });
+        showingCardImage.setFitWidth(160);
+        showingCardImage.setFitHeight(160);
+    }
+
+    private void selectCard(Card selectedCard) {
+        cardName.setText(selectedCard.getCardName());
+        cardImage.setImage(selectedCard.getCardImage());
+    }
+
+    private void setCardsGridPaneProps(GridPane cardsGridPane) {
         cardsGridPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -55,17 +116,10 @@ public class ShopMenu {
                 cardsContainer.setOpacity(0.5);
             }
         });
-        for (int i = 0; i < rowsCount; i++) {
-            for (int j = 0; j < maximumCardsInRow; j++) {
-                Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
-//              Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/mamal.jpg")));
-                ImageView showingCardImage = new ImageView(cardImage);
-                showingCardImage.setFitWidth(200);
-                showingCardImage.setFitHeight(200);
-                cardsGridPane.add(showingCardImage,j,i);
-            }
-        }
-        cardsContainer.setContent(cardsGridPane);
+        cardsGridPane.setCursor(Cursor.HAND);
+        cardsGridPane.setBackground(Background.EMPTY);
+        cardsGridPane.setHgap(5);
+        cardsGridPane.setVgap(5);
     }
 //    @Override
 //    public void scanInput() throws IOException, CsvValidationException {
