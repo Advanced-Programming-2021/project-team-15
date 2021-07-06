@@ -33,16 +33,8 @@ public class Card {
     protected int price;
     private transient boolean isActivated;
     private transient Image cardImage;
-
-    public DeckViewLocation getDeckViewLocation() {
-        return deckViewLocation;
-    }
-
-    public void setDeckViewLocation(DeckViewLocation deckViewLocation) {
-        this.deckViewLocation = deckViewLocation;
-    }
-
     private transient DeckViewLocation deckViewLocation;
+
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
         this.cardDescription = cardDescription;
         this.cardName = cardName;
@@ -58,14 +50,25 @@ public class Card {
         return null;
     }
 
-    public void setCardImage(Image cardImage) {
-        this.cardImage = cardImage;
+    public static void addCard(Card card) {
+        allCards.add(card);
     }
 
-    public enum DeckViewLocation {
-        SIDE_DECK,
-        MAIN_DECK,
-        TRUNK;}
+    public static ArrayList<Card> getAllCards() {
+        return allCards;
+    }
+
+    public static void setAllCards(ArrayList<Card> allCards) {
+        Card.allCards = allCards;
+    }
+
+    public DeckViewLocation getDeckViewLocation() {
+        return deckViewLocation;
+    }
+
+    public void setDeckViewLocation(DeckViewLocation deckViewLocation) {
+        this.deckViewLocation = deckViewLocation;
+    }
 
     public Image getCardImage() {
         if (cardImage != null) return cardImage;
@@ -80,25 +83,21 @@ public class Card {
                 address.append(part);
             }
             address.append(".jpg");
-//            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
-            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/Bitron.jpg")));
+            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
             return cardImage;
         }
     }
 
-
-    public static void addCard(Card card) {
-        allCards.add(card);
+    public void setCardImage(Image cardImage) {
+        this.cardImage = cardImage;
     }
 
-    public static ArrayList<Card> getAllCards() {
-        return allCards;
+    public static Card getCardByImage(Image image) {
+        for (Card card : Card.getAllCards())
+            if (card.getCardImage() == image)
+                return card;
+        return null;
     }
-
-    public static void setAllCards(ArrayList<Card> allCards) {
-        Card.allCards = allCards;
-    }
-
 
     public Player getOwner() {
         return owner;
@@ -223,6 +222,12 @@ public class Card {
             details.append("Description : ").append(this.getCardDescription());
         }
         return details.toString();
+    }
+
+    public enum DeckViewLocation {
+        SIDE_DECK,
+        MAIN_DECK,
+        TRUNK;
     }
 
     public enum CardType {
