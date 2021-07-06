@@ -23,7 +23,7 @@ public class Deck {
         this.ownerUsername = ownerUsername;
         sideDeck = new ArrayList<>();
         mainDeck = new ArrayList<>();
-//        User.getUserByUserName(this.ownerUsername).addDeck(this);
+        User.getUserByUserName(this.ownerUsername).addDeck(this);
     }
 
     @Override

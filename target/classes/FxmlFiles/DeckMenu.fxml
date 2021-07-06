@@ -9,7 +9,19 @@
    <children>
       <BorderPane layoutX="80.0" layoutY="75.0" prefHeight="737.0" prefWidth="1424.0">
          <left>
-            <VBox fx:id="leftSide" prefHeight="855.0" prefWidth="682.0" BorderPane.alignment="CENTER" />
+            <VBox fx:id="leftSide" prefHeight="711.0" prefWidth="682.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane fx:id="mainCards" prefHeight="153.5" prefWidth="600">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
+                  <ScrollPane fx:id="sideCards" prefHeight="153.5" prefWidth="200.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
+               </children></VBox>
          </left>
          <center>
             <VBox prefHeight="910.0" prefWidth="607.0" styleClass="deckFrame" stylesheets="@../CSSFiles/frame.css" BorderPane.alignment="CENTER">

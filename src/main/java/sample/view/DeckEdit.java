@@ -2,8 +2,11 @@ package sample.view;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -13,12 +16,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import sample.Main;
 import sample.controller.menuController.DeckController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
 import sample.model.cards.Card;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -67,7 +72,6 @@ public class DeckEdit {
         sideCards = new Card[15];
         chosenCard.setFitHeight(307);
         chosenCard.setFitWidth(210.5);
-        if (!userCards.isEmpty())
         readyUpTrunk();
         readyUpMainDeck();
         readyUpSideDeck();
@@ -80,7 +84,8 @@ public class DeckEdit {
         pane.setAlignment(Pos.CENTER);
         pane.setVgap(10);
         pane.setHgap(10);
-
+        if(userCards.isEmpty())
+            return;
         for (int i= 0 ; i< trunkRow;i++){
             for (int j =0 ; j<6 ; j++) {
                 Rectangle rectangle = new Rectangle();
@@ -148,6 +153,8 @@ public class DeckEdit {
             pane.add(rectangle,i , 0);
         }
         }
+
+
 
 
 
@@ -245,6 +252,16 @@ public class DeckEdit {
                 new Alert(Alert.AlertType.INFORMATION, "card added to side deck successfully").show();
             }
         }
+    }
+
+
+    public void backButtonClicked() throws Exception {     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckMenu.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        DeckMenu deckMenu = loader.getController();
+        deckMenu.start();
+
     }
 
 

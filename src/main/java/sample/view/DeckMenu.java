@@ -30,10 +30,13 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class DeckMenu{
+    private boolean first = true;
     private Deck selectedDeck;
-    private static DeckMenu deckMenu;
     @FXML
-    private ScrollPane deckView;
+    private ScrollPane mainCards;
+    @FXML
+    private ScrollPane sideCards;
+    private static DeckMenu deckMenu;
     @FXML
     private Label activatedDeck;
     @FXML
@@ -48,14 +51,17 @@ public class DeckMenu{
             deckMenu = new DeckMenu();
         return deckMenu;
     }
-    private ListView<Deck> listView;
+
+    private ListView<Deck> listView = null;
     @FXML
     private VBox leftSide;
     public void start() throws Exception {
+        setSideCards();
+        setMainCards();
         activatedDeck.setText(MenuController.getUser().getActiveDeck().getName());
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
-        decksList.addAll( deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
-       listView  = new ListView<>();
+        decksList.addAll(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
+        listView  = new ListView<>();
         listView.setCellFactory((Callback<ListView<Deck>, ListCell<Deck>>) param -> {
             return new ListCell<Deck>() {
                 @Override
@@ -70,14 +76,13 @@ public class DeckMenu{
                         root.setAlignment(Pos.CENTER_LEFT);
                         root.setPadding(new Insets(5, 10, 5, 10));
                         Label label  = new Label(deck.getName());
-                        label. setFont(new Font("Arial", 25));
+                        label. setFont(new Font("Arial", 20));
                         root.getChildren().add(label);
                         Region region = new Region();
                         HBox.setHgrow(region, Priority.ALWAYS);
                         root.getChildren().add(region);
                         Button rmv = new Button("Remove");
-                        rmv.setFont(new Font("Arial", 25));
-                        rmv.setStyle("-fx-text-fill: red");
+                        rmv.setFont(new Font("Arial", 20));
                         rmv.setOnAction(event -> {
                             if(selectedDeck==deck)
                             { if(selectedDeck.isActive())
@@ -86,7 +91,7 @@ public class DeckMenu{
                                 cleanEveryThing();
                             }
                             listView.getItems().remove(deck);
-                            MenuController.getUser().removeDeck(deck);
+                            deckController.removeDeck(deck.getName());
                         });
                         Button edit = new Button("Edit");
                         edit.setFont(new Font("Arial", 25));
@@ -107,15 +112,59 @@ public class DeckMenu{
 
         });
         listView.setItems(decksList);
-       leftSide.getChildren().add(listView);
+            leftSide.getChildren().add(listView);
+
+
         listView.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<Deck>() {
                     public void changed(ObservableValue<? extends Deck> ov,
                                        Deck old_val, Deck new_val) {
                         updateDeckDetails(new_val);
                         selectedDeck = new_val;
+                        setSideCards();
+                        setMainCards();
+
                     }
                 });
+    }
+
+    public void setSideCards() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 20));
+        sideCards.setContent(pane);
+        pane.setAlignment(Pos.CENTER);
+        pane.setVgap(10);
+        pane.setHgap(10);
+        if (selectedDeck==null || selectedDeck.getSideDeck().isEmpty())
+            return;
+        for (int i = 0; i < selectedDeck.getSideDeck().size(); i++) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setHeight(153.5);
+            rectangle.setWidth(105.25);
+            rectangle.setArcHeight(5);
+            rectangle.setArcWidth(5);
+            rectangle.setFill(new ImagePattern(selectedDeck.getSideDeck().get(i).getCardImage()));
+            pane.add(rectangle,i,0);
+        }
+    }
+    public void setMainCards() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 20));
+        mainCards.setContent(pane);
+        pane.setAlignment(Pos.CENTER);
+        pane.setVgap(10);
+        pane.setHgap(10);
+        if (selectedDeck==null || selectedDeck.getMainDeck().isEmpty())
+            return;
+        for (int i = 0; i < selectedDeck.getMainDeck().size(); i++) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setHeight(153.5);
+            rectangle.setWidth(105.25);
+            rectangle.setArcHeight(5);
+            rectangle.setArcWidth(5);
+            rectangle.setFill(new ImagePattern(selectedDeck.getMainDeck().get(i).getCardImage()));
+            pane.add(rectangle,i,0);
+        }
     }
 
 
@@ -126,6 +175,8 @@ public class DeckMenu{
         mainNumber.setText("");
         sideNumber.setText("");
         validation.setText("");
+        setSideCards();
+        setMainCards();
 
     }
     public void goToEditDeckMenu(Deck deck) throws IOException {
@@ -150,8 +201,7 @@ public class DeckMenu{
         }
 
     }
-    public void createDeck(MouseEvent mouseEvent){
-        TextInputDialog td = new TextInputDialog();
+    public void createDeck(MouseEvent mouseEvent) throws Exception {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("create deck");
         dialog.setHeaderText("create a deck");
@@ -159,10 +209,14 @@ public class DeckMenu{
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
+            System.out.println(result.get());
             if(deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS))
                 new Alert(Alert.AlertType.ERROR,"this deck name already exists").show();
             else if(deckMenuResponses.equals(DeckMenuResponses.DECK_CREATE_SUCCESSFUL))
-                new Alert(Alert.AlertType.INFORMATION,"new deck created successfully!").show();
+            { new Alert(Alert.AlertType.INFORMATION,"new deck created successfully!").show();
+                listView.getItems().add(MenuController.getUser().getDeckByName(result.get()));
+                listView.refresh();
+               }
 
         }
 

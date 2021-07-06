@@ -6620,22 +6620,6 @@
         "ownerUsername": "parnian",
         "sideDeck": [
           {
-            "Attack": 2000,
-            "gameATK": 2000,
-            "Defence": 2300,
-            "gameDEF": 2300,
-            "Level": 7,
-            "Monster Type": "Machine",
-            "Monster Attribute": "DARK",
-            "Monster Effect Type": "Normal",
-            "Name": "Slot Machine",
-            "Description": "The machine\u0027s ability is said to vary according to its slot results.",
-            "cardNumber": "0",
-            "Card Type": "MONSTER",
-            "type": "MONSTER",
-            "Price": 7500
-          },
-          {
             "Attack": 500,
             "gameATK": 500,
             "Defence": 500,
@@ -6931,17 +6915,6 @@
             "Icon (Property)": "Quick-play",
             "Name": "Twin Twisters",
             "Description": "Discard 1 card, then target up to 2 Spells/Traps on the field; destroy them.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 3500
-          },
-          {
-            "Type": "Spell",
-            "Status": "Unlimited",
-            "Icon (Property)": "Quick-play",
-            "Name": "Mystical space typhoon",
-            "Description": "Target 1 Spell/Trap on the field; destroy that target.",
             "cardNumber": "0",
             "Card Type": "MAGIC",
             "type": "MAGIC",
@@ -7430,17 +7403,6 @@
             "Icon (Property)": "Quick-play",
             "Name": "Mystical space typhoon",
             "Description": "Target 1 Spell/Trap on the field; destroy that target.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 3500
-          },
-          {
-            "Type": "Spell",
-            "Status": "Unlimited",
-            "Icon (Property)": "Quick-play",
-            "Name": "Ring of defense",
-            "Description": "When a Trap effect that inflicts damage is activated: Make that effect damage 0.",
             "cardNumber": "0",
             "Card Type": "MAGIC",
             "type": "MAGIC",
@@ -11419,6 +11381,44 @@
         "Card Type": "MAGIC",
         "type": "MAGIC",
         "Price": 2500
+      },
+      {
+        "Type": "Spell",
+        "Status": "Unlimited",
+        "Icon (Property)": "Quick-play",
+        "Name": "Ring of defense",
+        "Description": "When a Trap effect that inflicts damage is activated: Make that effect damage 0.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 3500
+      },
+      {
+        "Attack": 2000,
+        "gameATK": 2000,
+        "Defence": 2300,
+        "gameDEF": 2300,
+        "Level": 7,
+        "Monster Type": "Machine",
+        "Monster Attribute": "DARK",
+        "Monster Effect Type": "Normal",
+        "Name": "Slot Machine",
+        "Description": "The machine\u0027s ability is said to vary according to its slot results.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 7500
+      },
+      {
+        "Type": "Spell",
+        "Status": "Unlimited",
+        "Icon (Property)": "Quick-play",
+        "Name": "Mystical space typhoon",
+        "Description": "Target 1 Spell/Trap on the field; destroy that target.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 3500
       },
       {
         "Type": "Spell",
