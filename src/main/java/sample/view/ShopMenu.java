@@ -37,9 +37,12 @@ public class ShopMenu {
     @FXML
     public Label cardCount;
     @FXML
+    public Label priceLabel;
+    @FXML
     public VBox buyCardVBox;
     @FXML
     public Button buyCardButton;
+
     ShopMenuResponses responses;
     String allCards;
     private ShopController shopController = new ShopController();
@@ -108,6 +111,7 @@ public class ShopMenu {
         cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
         int money = MenuController.getUser().getMoney();
         moneyLabel.setText(String.valueOf(money));
+        priceLabel.setText(String.valueOf(selectedCard.getPrice()));
         if (money>=selectedCard.getPrice()) activateBuyButton(buyCardButton);
         else inactivateBuyButton(buyCardButton);
     }
@@ -120,6 +124,9 @@ public class ShopMenu {
             public void handle(MouseEvent mouseEvent) {
                 try {
                     printResponse(shopController.buyItem(toBuyCard.getCardName()));
+                    int money = MenuController.getUser().getMoney();
+                    moneyLabel.setText(String.valueOf(money));
+                    priceLabel.setText(String.valueOf(toBuyCard.getPrice()));
                 } catch (IOException | CsvValidationException e) {
                     e.printStackTrace();
                 }
@@ -201,19 +208,40 @@ public class ShopMenu {
                 output = allCards;
                 break;
             case BUY_SUCCESSFUL:
-                output = "bought item successfully!";
+                output = "Bought item successfully!";
+                makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_NAME_NOT_EXIST:
-                output = "there is no card with this name";
+                output = "There is no card with this name";
+                makeAlert("Confused!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case USER_MONEY_NOT_ENOUGH:
-                output = "not enough money";
+                output = "Not enough money";
+                makeAlert("Sad!!","You are so bad!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             default:
                 break;
         }
-        new Alert(Alert.AlertType.INFORMATION, output).show();
     }
 
+    private void makeAlert(String title,String header, String context, Image graphic) {
+        ImageView imageView = new ImageView(graphic);
+        imageView.setFitHeight(80);
+        imageView.setFitWidth(80);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().getStylesheets().add(
+                getClass().getResource("/CSSFiles/Dialogs.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(context);
+        alert.setGraphic(imageView);
+        alert.setWidth(550);
+        alert.setHeight(250);
+        alert.show();
+    }
 
 }

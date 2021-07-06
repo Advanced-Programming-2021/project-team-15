@@ -22,20 +22,20 @@
          <left>
             <Pane prefHeight="743.0" prefWidth="645.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="145.0" layoutY="15.0" opacity="0.5" prefHeight="700.0" prefWidth="360.0" spacing="5.0" styleClass="labelList">
+                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="5.0" styleClass="labelList">
                      <children>
-                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="150.0" text="Name : " textAlignment="CENTER" textFill="RED">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Name : " textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id ="cardName" alignment="CENTER" prefHeight="45.0" prefWidth="2510.0" textAlignment="CENTER" textFill="RED">
+                        <Label fx:id="cardName" alignment="CENTER" prefHeight="30.0" prefWidth="2510.0" textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="cardImage" fitHeight="380.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label alignment="CENTER" prefHeight="40.0" prefWidth="400.0" text="Number of this card in your hand :" textFill="RED">
+                        <ImageView fx:id="cardImage" fitHeight="360.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="400.0" text="Number of this card in your hand :" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -45,7 +45,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="RED">
+                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -53,12 +53,22 @@
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
                         <Separator prefHeight="14.0" prefWidth="360.0" />
-                        <Label alignment="CENTER" prefHeight="45.0" prefWidth="300.0" text="Your Money : " textAlignment="CENTER" textFill="RED">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" text="Your Money : " textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="moneyLabel" alignment="CENTER" prefHeight="45.0" prefWidth="400.0" textFill="#d70000">
+                        <Label fx:id="moneyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="400.0" textFill="#581845">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="priceLabel" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Price : " textFill="#581845">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -70,12 +80,13 @@
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="1500.0" spacing="50.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="550.0" styleClass="labelList" text="Buy Card" textFill="RED">
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" styleClass="labelList" text="Back" textFill="#581845" />
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="305.0" styleClass="labelList" text="Buy Card" textFill="#581845">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" opacity="0.5" prefHeight="45.0" prefWidth="850.0" styleClass="labelList" stylesheets="@../CSSFiles/Menus.css" text="List of Cards" textAlignment="CENTER" textFill="RED">
+                  <Label alignment="CENTER" opacity="0.5" prefHeight="45.0" prefWidth="850.0" styleClass="labelList" stylesheets="@../CSSFiles/Menus.css" text="List of Cards" textAlignment="CENTER" textFill="#581845">
                      <font>
                         <Font size="30.0" />
                      </font>

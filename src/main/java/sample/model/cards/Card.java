@@ -94,7 +94,7 @@ public class Card {
 
     public static Card getCardByImage(Image image) {
         for (Card card : Card.getAllCards())
-            if (card.getCardImage() == image)
+            if (card.getCardImage().getUrl().equals(image.getUrl()))
                 return card;
         return null;
     }
