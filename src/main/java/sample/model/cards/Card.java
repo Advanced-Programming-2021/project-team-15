@@ -6,12 +6,20 @@ import sample.model.Player;
 import sample.model.zones.Zone;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Card {
 
     private static ArrayList<Card> allCards;
 
+    public static HashMap<String, Image> getAllCardsImages() {
+        return allCardsImages;
+    }
+
+    private static HashMap<String,Image> allCardsImages;
+
     static {
+        allCardsImages = new HashMap<>();
         allCards = new ArrayList<>();
     }
 
@@ -32,7 +40,6 @@ public class Card {
     @SerializedName("Price")
     protected int price;
     private transient boolean isActivated;
-    private transient Image cardImage;
     private transient DeckViewLocation deckViewLocation;
 
     public Card(String cardDescription, String cardName, String cardNumber, CardType cardType) {
@@ -71,25 +78,7 @@ public class Card {
     }
 
     public Image getCardImage() {
-        if (cardImage != null) return cardImage;
-        else {
-            StringBuilder address = new StringBuilder();
-            String[] nameParts = cardName.split(" ");
-            for (String part : nameParts) {
-                part = part.toLowerCase();
-                StringBuilder temp = new StringBuilder(part);
-                temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
-                part = temp.toString();
-                address.append(part);
-            }
-            address.append(".jpg");
-            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
-            return cardImage;
-        }
-    }
-
-    public void setCardImage(Image cardImage) {
-        this.cardImage = cardImage;
+        return allCardsImages.get(cardName);
     }
 
     public static Card getCardByImage(Image image) {
