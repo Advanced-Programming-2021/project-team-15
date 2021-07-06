@@ -11632,12 +11632,44 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 600
+      },
+      {
+        "Attack": 450,
+        "gameATK": 450,
+        "Defence": 600,
+        "gameDEF": 600,
+        "Level": 2,
+        "Monster Type": "Insect",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Effect",
+        "Name": "Man-Eater Bug",
+        "Description": "FLIP: Target 1 monster on the field; destroy that target.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 600
+      },
+      {
+        "Attack": 1000,
+        "gameATK": 1000,
+        "Defence": 500,
+        "gameDEF": 500,
+        "Level": 3,
+        "Monster Type": "Thunder",
+        "Monster Attribute": "LIGHT",
+        "Monster Effect Type": "Normal",
+        "Name": "Wattkid",
+        "Description": "A creature that electrocutes opponents with bolts of lightning.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1300
       }
     ],
     "userName": "aaa",
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 3200
+    "money": 2000
   }
 ]

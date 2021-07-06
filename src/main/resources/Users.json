@@ -11664,12 +11664,28 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 1300
+      },
+      {
+        "Attack": 900,
+        "gameATK": 900,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 3,
+        "Monster Type": "Spellcaster",
+        "Monster Attribute": "FIRE",
+        "Monster Effect Type": "Normal",
+        "Name": "Flame manipulator",
+        "Description": "This Spellcaster attacks enemies with fire-related spells such as \"Sea of Flames\" and \"Wall of Fire\".",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1500
       }
     ],
     "userName": "aaa",
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 2000
+    "money": 500
   }
 ]

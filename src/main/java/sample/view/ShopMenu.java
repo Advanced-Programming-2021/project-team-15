@@ -3,7 +3,9 @@ package sample.view;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import sample.Main;
 import sample.controller.menuController.MenuController;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
@@ -162,6 +165,11 @@ public class ShopMenu {
         cardsGridPane.setBackground(Background.EMPTY);
         cardsGridPane.setHgap(5);
         cardsGridPane.setVgap(5);
+    }
+
+    public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
     }
 //    @Override
 //    public void scanInput() throws IOException, CsvValidationException {

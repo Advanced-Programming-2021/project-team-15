@@ -45,12 +45,12 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="#581845">
+                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" opacity="0.5" prefHeight="30.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                            <cursor>
-                              <Cursor fx:constant="HAND" />
+                              <Cursor fx:constant="DEFAULT" />
                            </cursor></Button>
                         <Separator prefHeight="14.0" prefWidth="360.0" />
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" text="Your Money : " textAlignment="CENTER" textFill="#581845">
@@ -80,7 +80,14 @@
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="1500.0" spacing="50.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" styleClass="labelList" text="Back" textFill="#581845" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefWidth="225.0" styleClass="labelList" text="Back" textFill="#581845">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="305.0" styleClass="labelList" text="Buy Card" textFill="#581845">
                      <font>
                         <Font size="30.0" />
