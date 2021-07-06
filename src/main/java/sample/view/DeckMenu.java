@@ -13,10 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.Main;
@@ -26,9 +27,15 @@ import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class DeckMenu{
+    private boolean first = true;
     private Deck selectedDeck;
+    @FXML
+    private ScrollPane mainCards;
+    @FXML
+    private ScrollPane sideCards;
     private static DeckMenu deckMenu;
     @FXML
     private Label activatedDeck;
@@ -44,15 +51,17 @@ public class DeckMenu{
             deckMenu = new DeckMenu();
         return deckMenu;
     }
-    private ListView<Deck> listView;
+
+    private ListView<Deck> listView = null;
     @FXML
     private VBox leftSide;
     public void start() throws Exception {
+        setSideCards();
+        setMainCards();
+        activatedDeck.setText(MenuController.getUser().getActiveDeck().getName());
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
-        decksList.addAll(MenuController.getUser().getAllDecksOfUser());
-
-       listView  = new ListView<>();
-
+        decksList.addAll(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
+        listView  = new ListView<>();
         listView.setCellFactory((Callback<ListView<Deck>, ListCell<Deck>>) param -> {
             return new ListCell<Deck>() {
                 @Override
@@ -66,11 +75,14 @@ public class DeckMenu{
                         HBox root = new HBox();
                         root.setAlignment(Pos.CENTER_LEFT);
                         root.setPadding(new Insets(5, 10, 5, 10));
-                        root.getChildren().add(new Label(deck.getName()));
+                        Label label  = new Label(deck.getName());
+                        label. setFont(new Font("Arial", 20));
+                        root.getChildren().add(label);
                         Region region = new Region();
                         HBox.setHgrow(region, Priority.ALWAYS);
                         root.getChildren().add(region);
                         Button rmv = new Button("Remove");
+                        rmv.setFont(new Font("Arial", 20));
                         rmv.setOnAction(event -> {
                             if(selectedDeck==deck)
                             { if(selectedDeck.isActive())
@@ -79,12 +91,13 @@ public class DeckMenu{
                                 cleanEveryThing();
                             }
                             listView.getItems().remove(deck);
-                            MenuController.getUser().removeDeck(deck);
+                            deckController.removeDeck(deck.getName());
                         });
                         Button edit = new Button("Edit");
+                        edit.setFont(new Font("Arial", 25));
                        edit.setOnAction(event -> {
                            try {
-                               goToEditDeckMenu();
+                               goToEditDeckMenu(deck);
                            } catch (IOException e) {
                                e.printStackTrace();
                            }
@@ -99,27 +112,79 @@ public class DeckMenu{
 
         });
         listView.setItems(decksList);
-       leftSide.getChildren().add(listView);
+            leftSide.getChildren().add(listView);
+
+
         listView.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<Deck>() {
                     public void changed(ObservableValue<? extends Deck> ov,
                                        Deck old_val, Deck new_val) {
                         updateDeckDetails(new_val);
                         selectedDeck = new_val;
+                        setSideCards();
+                        setMainCards();
+
                     }
                 });
     }
+
+    public void setSideCards() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 20));
+        sideCards.setContent(pane);
+        pane.setAlignment(Pos.CENTER);
+        pane.setVgap(10);
+        pane.setHgap(10);
+        if (selectedDeck==null || selectedDeck.getSideDeck().isEmpty())
+            return;
+        for (int i = 0; i < selectedDeck.getSideDeck().size(); i++) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setHeight(153.5);
+            rectangle.setWidth(105.25);
+            rectangle.setArcHeight(5);
+            rectangle.setArcWidth(5);
+            rectangle.setFill(new ImagePattern(selectedDeck.getSideDeck().get(i).getCardImage()));
+            pane.add(rectangle,i,0);
+        }
+    }
+    public void setMainCards() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 20));
+        mainCards.setContent(pane);
+        pane.setAlignment(Pos.CENTER);
+        pane.setVgap(10);
+        pane.setHgap(10);
+        if (selectedDeck==null || selectedDeck.getMainDeck().isEmpty())
+            return;
+        for (int i = 0; i < selectedDeck.getMainDeck().size(); i++) {
+            Rectangle rectangle = new Rectangle();
+            rectangle.setHeight(153.5);
+            rectangle.setWidth(105.25);
+            rectangle.setArcHeight(5);
+            rectangle.setArcWidth(5);
+            rectangle.setFill(new ImagePattern(selectedDeck.getMainDeck().get(i).getCardImage()));
+            pane.add(rectangle,i,0);
+        }
+    }
+
+
+
+
+
     private void cleanEveryThing(){
         mainNumber.setText("");
         sideNumber.setText("");
         validation.setText("");
+        setSideCards();
+        setMainCards();
 
     }
-    public void goToEditDeckMenu() throws IOException {
+    public void goToEditDeckMenu(Deck deck) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckEdit.fxml"));
         Scene scene= new Scene(loader.load());
         Main.stage.setScene(scene);
         DeckEdit deckEdit =  loader.getController();
+        deckEdit.setDeck(deck);
         deckEdit.start();
     }
 
@@ -127,11 +192,38 @@ public class DeckMenu{
     public void activateButtonPressed(MouseEvent mouseEvent){
         if(selectedDeck==null)
            new Alert(Alert.AlertType.ERROR,"you haven't selected any deck").show();
+        else if(selectedDeck==MenuController.getUser().getActiveDeck())
+            new Alert(Alert.AlertType.ERROR,"this deck is already activated!").show();
         else {
             selectedDeck.setActive(true);
+            MenuController.getUser().setActiveDeck(selectedDeck);
             activatedDeck.setText(selectedDeck.getName());
         }
 
+    }
+    public void createDeck(MouseEvent mouseEvent) throws Exception {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("create deck");
+        dialog.setHeaderText("create a deck");
+        dialog.setContentText("please enter name for the new deck :");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
+            System.out.println(result.get());
+            if(deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS))
+                new Alert(Alert.AlertType.ERROR,"this deck name already exists").show();
+            else if(deckMenuResponses.equals(DeckMenuResponses.DECK_CREATE_SUCCESSFUL))
+            { new Alert(Alert.AlertType.INFORMATION,"new deck created successfully!").show();
+                listView.getItems().add(MenuController.getUser().getDeckByName(result.get()));
+                listView.refresh();
+               }
+
+        }
+
+    }
+    public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
     }
 
 
@@ -142,30 +234,6 @@ public class DeckMenu{
         sideNumber.setText("Side Deck : "+newVal.getSideDeck().size()+"");
         if(newVal.isValid())  validation.setText("Valid");
         else validation.setText("InValid");
-    }
-
-    public Deck getSelectedDeck() {
-        return selectedDeck;
-    }
-
-    public void setSelectedDeck(Deck selectedDeck) {
-        this.selectedDeck = selectedDeck;
-    }
-
-    public static DeckMenu getDeckMenu() {
-        return deckMenu;
-    }
-
-    public static void setDeckMenu(DeckMenu deckMenu) {
-        DeckMenu.deckMenu = deckMenu;
-    }
-
-    public Label getActivatedDeck() {
-        return activatedDeck;
-    }
-
-    public void setActivatedDeck(Label activatedDeck) {
-        this.activatedDeck = activatedDeck;
     }
 
 

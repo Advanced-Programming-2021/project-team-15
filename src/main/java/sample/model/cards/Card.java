@@ -80,7 +80,8 @@ public class Card {
                 address.append(part);
             }
             address.append(".jpg");
-            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+//            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+            cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/Bitron.jpg")));
             return cardImage;
         }
     }

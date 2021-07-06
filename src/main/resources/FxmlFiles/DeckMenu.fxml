@@ -9,47 +9,64 @@
    <children>
       <BorderPane layoutX="80.0" layoutY="75.0" prefHeight="737.0" prefWidth="1424.0">
          <left>
-            <VBox fx:id="leftSide" prefHeight="855.0" prefWidth="682.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="leftSide" prefHeight="711.0" prefWidth="682.0" BorderPane.alignment="CENTER">
                <children>
+                  <ScrollPane fx:id="mainCards" prefHeight="153.5" prefWidth="600">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
+                  <ScrollPane fx:id="sideCards" prefHeight="153.5" prefWidth="200.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
                </children></VBox>
          </left>
          <center>
-            <VBox prefHeight="910.0" prefWidth="607.0" styleClass="deckFrame" stylesheets="@../CSSFiles/frame.css" BorderPane.alignment="CENTER">
-               <children>
-               </children></VBox>
+            <VBox prefHeight="910.0" prefWidth="607.0" styleClass="deckFrame" stylesheets="@../CSSFiles/frame.css" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
-      <Button fx:id="activateDeck" layoutX="1021.0" layoutY="297.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" onMouseClicked="#activateButtonPressed" text="Activate">
+      <Button fx:id="activateDeck" layoutX="1021.0" layoutY="297.0" mnemonicParsing="false" onMouseClicked="#activateButtonPressed" prefHeight="31.0" prefWidth="234.0" text="Activate">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="createDeck" layoutX="1024.0" layoutY="408.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="234.0" text="Create new Deck">
+      <Button fx:id="back" layoutX="775.0" layoutY="756.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="51.0" prefWidth="167.0" text="back">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Label fx:id="mainNumber" alignment="CENTER" layoutX="1024.0" layoutY="518.0" prefHeight="44.0" prefWidth="234.0" text="" textAlignment="CENTER">
+      <Button fx:id="createDeck" layoutX="1024.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#createDeck" prefHeight="44.0" prefWidth="234.0" text="Create new Deck">
          <font>
             <Font size="20.0" />
          </font>
-      </Label>
-      <Label fx:id="sideNumber" alignment="CENTER" layoutX="1024.0" layoutY="556.0" prefHeight="51.0" prefWidth="234.0" text="" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="validation" alignment="CENTER" layoutX="1024.0" layoutY="660" prefHeight="44.0" prefWidth="234.0" text="" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
+      </Button>
       <Label fx:id="activatedDeck" alignment="CENTER" layoutX="1010.0" layoutY="77.0" prefHeight="63.0" prefWidth="264.0" text="salam" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d4531530" height="63.0" layoutX="1006.0" layoutY="77.0" stroke="#9e6b0b" strokeType="INSIDE" strokeWidth="5.0" width="270.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8a57c30" height="63.0" layoutX="1016.0" layoutY="77.0" stroke="#fffffe" strokeType="INSIDE" strokeWidth="5.0" width="250.0" />
+      <VBox layoutX="1007.0" layoutY="469.0" prefHeight="219.0" prefWidth="264.0" style="-fx-background-color: white">
+         <children>
+            <Label fx:id="mainNumber" alignment="CENTER" layoutX="1024.0" layoutY="518.0" prefHeight="44.0" prefWidth="261.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="sideNumber" alignment="CENTER" layoutX="1024.0" layoutY="556.0" prefHeight="51.0" prefWidth="261.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="validation" alignment="CENTER" layoutX="1024.0" layoutY="660" prefHeight="44.0" prefWidth="261.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 
 </AnchorPane>

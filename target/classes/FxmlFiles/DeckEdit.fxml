@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
    <children>
-      <Pane layoutX="84.0" layoutY="52.0" prefHeight="749.0" prefWidth="1332.0">
+      <Pane layoutX="84.0" layoutY="52.0" prefHeight="750.0" prefWidth="1354.0">
          <children>
             <HBox prefHeight="707.0" prefWidth="1319.0">
                <children>
@@ -21,19 +21,30 @@
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>
                   </ScrollPane>
-                  <VBox alignment="CENTER" prefHeight="670.0" prefWidth="392.0">
+                  <VBox alignment="CENTER" prefHeight="707.0" prefWidth="412.0">
                      <children>
                         <ScrollPane fx:id="sideDeck" prefHeight="200.0" prefWidth="390.0">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                           </content>
                         </ScrollPane>
-                        <ToolBar prefHeight="40.0" prefWidth="200.0">
+                        <ToolBar prefHeight="70.0" prefWidth="408.0">
                           <items>
-                              <Button mnemonicParsing="false" text="Button" />
-                              <Button mnemonicParsing="false" text="Button" />
-                              <Button mnemonicParsing="false" text="Button" />
-                              <Button mnemonicParsing="false" text="Button" />
+                              <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="139.0" text="add to main deck" onMouseClicked="#addCardToMain">
+                                  <font>
+                                      <Font size="15.0" />
+                                  </font>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="130.0" text="add to side deck" onMouseClicked="#addCardToSide">
+                                  <font>
+                                      <Font size="15.0" />
+                                  </font>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="107.0" text="remove" onMouseClicked="#removeCard">
+                                  <font>
+                                      <Font size="15.0" />
+                                  </font>
+                              </Button>
                           </items>
                         </ToolBar>
                         <HBox prefHeight="346.0" prefWidth="390.0">
@@ -43,7 +54,7 @@
                               <Pane prefHeight="200.0" prefWidth="200.0" />
                            </children>
                         </HBox>
-                        <Label alignment="CENTER" prefHeight="122.0" prefWidth="393.0" text="kk">
+                        <Label alignment="CENTER" prefHeight="122.0" prefWidth="393.0" text="jj">
                             <font>
                                 <Font size="25.0" />
                             </font>

@@ -8,6 +8,8 @@ module YuGiOhG15 {
     requires opencsv;
     requires cloning;
     requires gson.extras;
+    opens sample.model.cards to cloning;
+    exports sample.model.cards;
     opens sample to javafx.fxml;
     exports sample;
     opens sample.view to javafx.fxml;

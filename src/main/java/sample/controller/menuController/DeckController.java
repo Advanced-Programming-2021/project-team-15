@@ -52,38 +52,28 @@ public class DeckController extends MenuController {
         }
     }
 
-    public DeckMenuResponses removeCardFromDeck(String cardName, String deckName, Deck.DeckType deckType) {
-        if (user.getDeckByName(deckName) == null)
-            return DeckMenuResponses.DECK_NAME_NOT_EXIST;
+    public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType) {
         Deck addingDeck = user.getDeckByName(deckName);
-        if (addingDeck.getCardByName(cardName, deckType) == null)
-            return DeckMenuResponses.CARD_NAME_NOT_EXIST_IN_DECK;
-        else {
-            user.addCard(addingDeck.getCardByName(cardName, deckType));
-            addingDeck.removeCardFromDeckByName(cardName, deckType);
+            user.addCard(card);
+            addingDeck.removeCardFromDeck(card, deckType);
             if (addingDeck.getMainDeck().size() < Deck.mainDeckMinCardCount)
                 addingDeck.setValid(false);
             databaseController.refreshUsersToFileJson();
             return DeckMenuResponses.CARD_REMOVE_SUCCESSFUL;
         }
 
-    }
 
-    public DeckMenuResponses addCardToDeck(String cardName, String deckName, Deck.DeckType deckType) {
-        if (user.getCardByName(cardName) == null)
-            return DeckMenuResponses.CARD_NAME_NOT_EXIST;
-        else if (user.getDeckByName(deckName) == null)
-            return DeckMenuResponses.DECK_NAME_NOT_EXIST;
+    public DeckMenuResponses addCardToDeck(Card card, String deckName, Deck.DeckType deckType) {
         Deck addingDeck = user.getDeckByName(deckName);
         if (deckType == Deck.DeckType.MAIN && addingDeck.getMainDeck().size() == Deck.mainDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
         if (deckType == Deck.DeckType.SIDE && addingDeck.getSideDeck().size() == Deck.sideDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
-        else if (addingDeck.getSpecifiedCardCountInDeckByName(cardName) >= Deck.DeckMaxSpecifiedCardCount)
+        else if (addingDeck.getSpecifiedCardCountInDeckByName(card.getCardName()) >= Deck.DeckMaxSpecifiedCardCount)
             return DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK;
         else {
-            addingDeck.addCardToDeck(cloner.deepClone(Card.getCardByName(cardName)), deckType);
-            user.removeUserCardByName(cardName);
+            addingDeck.addCardToDeck(cloner.deepClone(card), deckType);
+           user.getAllCardsOfUser().remove(card);
             if (addingDeck.getMainDeck().size() >= Deck.mainDeckMinCardCount)
                 addingDeck.setValid(true);
             databaseController.refreshUsersToFileJson();
@@ -91,7 +81,7 @@ public class DeckController extends MenuController {
         }
     }
 
-    private ArrayList<Deck> sortDecks(ArrayList<Deck> decks) {
+    public ArrayList<Deck> sortDecks(ArrayList<Deck> decks) {
         ArrayList<Deck> sortedDecks = new ArrayList<>(decks);
         sortedDecks.sort(Comparator.comparing(Deck::getName));
         return sortedDecks;
