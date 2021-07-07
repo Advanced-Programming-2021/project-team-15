@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Main;
 import sample.controller.menuController.ImportExportController;
+import sample.controller.menuController.MenuController;
 import sample.controller.responses.ImportExportResponses;
 import sample.controller.responses.ShopMenuResponses;
 import sample.controller.utilizationController.DatabaseController;
@@ -32,8 +33,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
-public class ImportExportMenu {
+public class ImportExportMenu{
     private static ImportExportMenu importExportMenu;
     private final ImportExportController importExportController = ImportExportController.getInstance();
     private static ArrayList<Card> toImportCards = new ArrayList<>();
@@ -52,6 +54,9 @@ public class ImportExportMenu {
     @FXML
     private Label exportLabel;
 
+//    private ImportExportMenu() {
+//        super("ImportExport Menu");
+//    }
 
     public static ImportExportMenu getInstance() {
         if (importExportMenu == null)
@@ -73,7 +78,7 @@ public class ImportExportMenu {
 
     public void importCards(MouseEvent mouseEvent) throws IOException {
         for (Card card : toImportCards)
-        printResponse(importExportController.importCard(card.getCardName()));
+            printResponse(importExportController.importCard(card.getCardName()));
         cardsPreShow.setContent(null);
         cardsPreShow.setVisible(false);
         toImportCards.clear();
@@ -154,16 +159,21 @@ public class ImportExportMenu {
         });
     }
 
-    public void checkAndCallImportExportCard(String input) throws IOException {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.importExportRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String cardName = enteredDetails.get("name");
-            if (enteredDetails.get("action").equals("import"))
-                printResponse(importExportController.importCard(cardName));
-            else printResponse(importExportController.exportCard(cardName));
+    private void initializeExportContainer() {
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        GridPane cardsGridPane = new GridPane();
+        setScrollPaneProps(cardsList);
+        for (int i = 0; i < rowsCount; i++) {
+            for (int j = 0; j < maximumCardsInRow; j++) {
+                if (i * maximumCardsInRow + j >= Card.getAllCards().size()) break;
+                Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
+                ImageView showingCardImage = new ImageView(cardImage);
+                setShowingCardImageProps(showingCardImage);
+                cardsGridPane.add(showingCardImage, j, i);
+            }
         }
+        cardsList.setBackground(Background.EMPTY);
+        cardsList.setContent(cardsGridPane);
     }
 
     private void setShowingCardImageProps(ImageView showingCardImage) {
@@ -274,17 +284,17 @@ public class ImportExportMenu {
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case CARD_EXPORT_SUCCESSFUL:
-                output = "Card exported successfully!";
+                output = "card exported successfully";
                 UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/AnimeGirl3.jpg" ))));
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_IMPORT_SUCCESSFUL:
-                output = "Card imported successfully!";
+                output = "card imported successfully";
                 UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/AnimeGirl3.jpg" ))));
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_ALREADY_EXISTS:
-                output = "Card with this name already exists!";
+                output = "card with this name already exists";
                 UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
