@@ -38,7 +38,7 @@ public class User {
         if (!(object instanceof User)) return false;
         User user = (User) object;
         if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
-        || user.money!=money || user.score!=score || !user.activeDeckName.equals(activeDeckName)) return false;
+                || user.money!=money || user.score!=score || !user.activeDeckName.equals(activeDeckName)) return false;
         return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
     }
 
@@ -197,5 +197,13 @@ public class User {
 
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
+    }
+
+    public int getUserSpecificCardCount(Card searchCard) {
+        int count = 0;
+        for (Card card : allCardsOfUser) {
+            if (card.equals(searchCard)) count++;
+        }
+        return count;
     }
 }
