@@ -26,12 +26,14 @@ import sample.controller.responses.ImportExportResponses;
 import sample.controller.responses.ShopMenuResponses;
 import sample.controller.utilizationController.DatabaseController;
 import sample.controller.utilizationController.UtilityController;
+import sample.model.cards.Card;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ImportExportMenu extends Menu {
+public class ImportExportMenu {
     private static ImportExportMenu importExportMenu;
     private final ImportExportController importExportController = ImportExportController.getInstance();
     private static ArrayList<Card> toImportCards = new ArrayList<>();
@@ -50,9 +52,6 @@ public class ImportExportMenu extends Menu {
     @FXML
     private Label exportLabel;
 
-    private ImportExportMenu() {
-        super("ImportExport Menu");
-    }
 
     public static ImportExportMenu getInstance() {
         if (importExportMenu == null)
