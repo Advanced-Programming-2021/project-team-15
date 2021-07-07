@@ -63,12 +63,12 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="priceLabel" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Price : " textFill="#581845">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Price : " textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
+                        <Label fx:id="priceLabel" alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
