@@ -1,214 +1,304 @@
-package sample.controller.utilizationController;
+package sample.view;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Path;
-import sample.model.Deck;
-import sample.model.User;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import sample.Main;
+import sample.controller.menuController.ImportExportController;
+import sample.controller.menuController.MenuController;
+import sample.controller.responses.ImportExportResponses;
+import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.DatabaseController;
+import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
-import sample.model.cards.MagicCard;
-import sample.model.cards.MonsterCard;
 
-import java.io.*;
-import java.lang.reflect.Type;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
-public class DatabaseController {
-    private static DatabaseController databaseController;
+public class ImportExportMenu{
+    private static ImportExportMenu importExportMenu;
+    private final ImportExportController importExportController = ImportExportController.getInstance();
+    private static ArrayList<Card> toImportCards = new ArrayList<>();
+    private static Card toExportCard;
+    private final int maximumCardsInRow = 4;
+    @FXML
+    private ScrollPane cardsList;
+    @FXML
+    private Pane importPane;
+    @FXML
+    private VBox importPlace;
+    @FXML
+    private ScrollPane cardsPreShow;
+    @FXML
+    private Label importLabel;
+    @FXML
+    private Label exportLabel;
 
-    public static DatabaseController getInstance() {
-        if (databaseController == null)
-            databaseController = new DatabaseController();
-        return databaseController;
+//    private ImportExportMenu() {
+//        super("ImportExport Menu");
+//    }
+
+    public static ImportExportMenu getInstance() {
+        if (importExportMenu == null)
+            importExportMenu = new ImportExportMenu();
+        return importExportMenu;
     }
 
-    public void loadGameCards() throws IOException, CsvValidationException {
-        Card.getAllCards().clear();
-        File file = new File("src/main/resources/Monster.csv");
-        FileReader fileReader = new FileReader(file);
-        CSVReader reader = new CSVReader(fileReader);
-        readMonsterCardsFromCSV(reader);
-        file = new File("src/main/resources/Magic.csv");
-        fileReader = new FileReader(file);
-        reader = new CSVReader(fileReader);
-        readMagicCardsFromCSV(reader);
-        fileReader.close();
-        reader.close();
+    public void initializeScene() {
+        initializeExportContainer();
+        initializeImportContainer();
     }
 
-    private void setAllCardsImages() {
-        for (Card card : Card.getAllCards()) {
-            Image cardImage = getImageByCard(card);
-            Card.getAllCardsImages().put(card.getCardName(), cardImage);
-        }
+    private GridPane setCardsPreShow() {
+        cardsPreShow.setVisible(true);
+        GridPane showCards = new GridPane();
+        cardsPreShow.setContent(showCards);
+        return showCards;
     }
 
-    public Image getImageByCard(Card card) {
-        StringBuilder address = new StringBuilder();
-        String[] nameParts = card.getCardName().split(" ");
-        for (String part : nameParts) {
-            part = part.toLowerCase();
-            StringBuilder temp = new StringBuilder(part);
-            temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
-            part = temp.toString();
-            address.append(part);
-        }
-        address.append(".jpg");
-        try {
-            return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
-        }catch (IllegalArgumentException e) {
-            return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl.jpg")));
-        }
+    public void importCards(MouseEvent mouseEvent) throws IOException {
+        for (Card card : toImportCards)
+            printResponse(importExportController.importCard(card.getCardName()));
+        cardsPreShow.setContent(null);
+        cardsPreShow.setVisible(false);
+        toImportCards.clear();
+        inactivateButton(importLabel);
     }
 
-    public void writeMonsterCardToCSV(MonsterCard card) throws IOException {
-        String path = "src/main/resources/Monster.csv";
-        CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
-                CSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
-        String[] monsterDetails = new String[9];
-        monsterDetails[0] = card.getCardName();
-        monsterDetails[1] = String.valueOf(card.getLevel());
-        monsterDetails[2] = String.valueOf(card.getMonsterAttribute().getName());
-        monsterDetails[3] = String.valueOf(card.getMonsterType().getName());
-        monsterDetails[4] = String.valueOf(card.getMonsterEffectType().getName());
-        monsterDetails[5] = String.valueOf(card.getAttackPoint());
-        monsterDetails[6] = String.valueOf(card.getDefensePoint());
-        monsterDetails[7] = card.getCardDescription();
-        monsterDetails[8] = String.valueOf(card.getPrice());
-        writer.writeNext(monsterDetails);
-        writer.close();
+    public void exportCards(MouseEvent mouseEvent) throws IOException {
+        printResponse(importExportController.exportCard(toExportCard.getCardName()));
+        inactivateButton(exportLabel);
     }
 
-    public void writeMagicCardToCSV(MagicCard card) throws IOException {
-        String path = "src/main/resources/Magic.csv";
-        CSVWriter writer = new CSVWriter(new FileWriter(path, true), ',',
-                CSVWriter.DEFAULT_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
-        String[] magicDetails = new String[6];
-        magicDetails[0] = card.getCardName();
-        magicDetails[1] = String.valueOf(card.getMagicType().getName());
-        magicDetails[2] = String.valueOf(card.getCardIcon().getName());
-        magicDetails[3] = card.getCardDescription();
-        magicDetails[4] = String.valueOf(card.getStatus().getName());
-        magicDetails[5] = String.valueOf(card.getPrice());
-        writer.writeNext(magicDetails);
-        writer.close();
+    public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
     }
 
-    private void readMonsterCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
-        String[] monsterArray = reader.readNext();
-        while ((monsterArray = reader.readNext()) != null) {
-            MonsterCard monsterCard = new MonsterCard(monsterArray[7], monsterArray[0], "0", Card.CardType.MONSTER);
-            monsterCard.setLevel(Integer.parseInt(monsterArray[1]));
-            monsterCard.setMonsterAttribute(MonsterCard.MonsterAttribute.getAttribute(monsterArray[2]));
-            monsterCard.setMonsterType(MonsterCard.MonsterType.getMonsterTypeByName(monsterArray[3]));
-            monsterCard.setMonsterEffectType(MonsterCard.MonsterEffectType.getMonsterEffectType(monsterArray[4]));
-            monsterCard.setAttackPoint(Integer.parseInt(monsterArray[5]));
-            monsterCard.setDefensePoint(Integer.parseInt(monsterArray[6]));
-            monsterCard.setPrice(Integer.parseInt(monsterArray[8]));
-            monsterCard.setGameATK(monsterCard.getAttackPoint());
-            monsterCard.setGameDEF(monsterCard.getDefensePoint());
-            monsterCard.setMode(MonsterCard.Mode.DEFENSE);
-            Card.addCard(monsterCard);
-        }
+    private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {
+        Image cardImage = DatabaseController.getInstance().getImageByCard(card);
+        Card.getAllCardsImages().put(card.getCardName(),cardImage);
+        ImageView showingCardImage = new ImageView(cardImage);
+        showingCardImage.setFitWidth(100);
+        showingCardImage.setFitHeight(100);
+        gridPane.add(showingCardImage,0,cardCounter);
+        Label cardNameLabel = new Label();
+        cardNameLabel.setPrefWidth(150);
+        cardNameLabel.setPrefHeight(50);
+        cardNameLabel.setAlignment(Pos.CENTER);
+        cardNameLabel.setText("Name : "+card.getCardName());
+        gridPane.add(cardNameLabel,1,cardCounter);
+    }
+    private void initializeImportContainer() {
+        importPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                importPlace.setOpacity(1);
+                importPlace.setCursor(Cursor.HAND);
+            }
+        });
+        importPlace.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                importPlace.setOpacity(0.2);
+            }
+        });
+        importPlace.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                GridPane showCardsGridPane = setCardsPreShow();
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasFiles()) {
+                    success = true;
+                    String filePath;
+                    int cardCounter=0;
+                    for (File file:db.getFiles()) {
+                        filePath = file.getAbsolutePath();
+                        Card toImportCard = DatabaseController.getInstance().deserializeCard(file);
+                        addCardToGridPane(toImportCard,showCardsGridPane,cardCounter);
+                        toImportCards.add(toImportCard);
+                        cardCounter++;
+                    }
+                    activateButton(importLabel,true);
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+        importPlace.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if (db.hasFiles()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                } else {
+                    event.consume();
+                }
+            }
+        });
     }
 
-    private void readMagicCardsFromCSV(CSVReader reader) throws IOException, CsvValidationException {
-        String[] magicArray = reader.readNext();
-        while ((magicArray = reader.readNext()) != null) {
-            MagicCard magicCard = new MagicCard(magicArray[3], magicArray[0], "0", Card.CardType.MAGIC);
-            magicCard.setMagicType(MagicCard.MagicType.getMagicType(magicArray[1]));
-            magicCard.setCardIcon(MagicCard.CardIcon.getCardIcon(magicArray[2]));
-            magicCard.setStatus(MagicCard.Status.getStatus(magicArray[4]));
-            magicCard.setPrice(Integer.parseInt(magicArray[5]));
-            Card.addCard(magicCard);
-        }
-    }
-
-    public void serializeCard(Card card) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        File cardFile = new File("src/main/resources/Cards/" + card.getCardName() + ".json");
-        try (Writer writer = new FileWriter(cardFile)) {
-            gson.toJson(card, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Card deserializeCard(String cardName) {
-        Card card;
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader("src/main/resources/Cards/" + cardName + ".json")) {
-            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                    .of(Card.class, "type").
-                            registerSubtype(MonsterCard.class, "MONSTER").
-                            registerSubtype(MagicCard.class, "MAGIC");
-            Type cardType = new TypeToken<Card>() {}.getType();
-            card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardType);
-            return card;
-        } catch (IOException e) {
-            //e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void refreshUsersToFileJson() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (Writer writer = new FileWriter("src/main/resources/Users.json")) {
-            setAllCardsType();
-            gson.toJson(User.getAllUsers(), writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setAllCardsType() {
-        for (User user : User.getAllUsers()) {
-            for (Card card : user.getAllCardsOfUser())
-                setType(card);
-            for (Deck deck : user.getAllDecksOfUser())
-                for (Card card : deck.getMainDeck())
-                    setType(card);
-            for (Deck deck : user.getAllDecksOfUser())
-                for (Card card : deck.getSideDeck())
-                    setType(card);
-            if (user.getActiveDeck() != null) {
-                for (Card card : user.getActiveDeck().getMainDeck())
-                    setType(card);
-                for (Card card : user.getActiveDeck().getSideDeck())
-                    setType(card);
+    private void initializeExportContainer() {
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        GridPane cardsGridPane = new GridPane();
+        setScrollPaneProps(cardsList);
+        for (int i = 0; i < rowsCount; i++) {
+            for (int j = 0; j < maximumCardsInRow; j++) {
+                if (i * maximumCardsInRow + j >= Card.getAllCards().size()) break;
+                Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
+                ImageView showingCardImage = new ImageView(cardImage);
+                setShowingCardImageProps(showingCardImage);
+                cardsGridPane.add(showingCardImage, j, i);
             }
         }
+        cardsList.setBackground(Background.EMPTY);
+        cardsList.setContent(cardsGridPane);
     }
 
-    private void setType(Card card) {
-        if (card instanceof MonsterCard) {
-            card.setType("MONSTER");
-        } else if (card instanceof MagicCard) {
-            card.setType("MAGIC");
-        } else card.setType("NULL");
+    private void setShowingCardImageProps(ImageView showingCardImage) {
+        showingCardImage.setOnMouseEntered(mouseEvent -> {
+            showingCardImage.setFitHeight(130);
+            showingCardImage.setFitWidth(130);
+        });
+        showingCardImage.setOnMouseExited(mouseEvent -> {
+            showingCardImage.setFitWidth(120);
+            showingCardImage.setFitHeight(120);
+        });
+        showingCardImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                selectCard(Objects.requireNonNull(Card.getCardByImage(showingCardImage.getImage())));
+            }
+        });
+        showingCardImage.setFitWidth(120);
+        showingCardImage.setFitHeight(120);
     }
 
-    public void refreshUsersFromFileJson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader("src/main/resources/Users.json")) {
-            RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
-                    .of(Card.class, "type").
-                            registerSubtype(MonsterCard.class, "MONSTER").
-                            registerSubtype(MagicCard.class, "MAGIC");
-            Type usersListType = new TypeToken<ArrayList<User>>() {
-            }.getType();
-            User.setAllUsers(gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, usersListType));
-        } catch (IOException e) {
-            System.out.println("Welcome to this Game!\nFrom: Group15 AP- 2021 Spring");
-            //e.printStackTrace();
+    private void setScrollPaneProps(ScrollPane scrollPane) {
+        scrollPane.setOnMouseEntered(new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardsList.setOpacity(1);
+            }
+        });
+        scrollPane.setOnMouseExited(new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                cardsList.setOpacity(0.3);
+            }
+        });
+        scrollPane.setCursor(Cursor.HAND);
+        scrollPane.setBackground(Background.EMPTY);
+//        cardsGridPane.setHgap(5);
+//        cardsGridPane.setVgap(5);
+    }
+
+    private void selectCard(Card selectedCard) {
+        toExportCard = selectedCard;
+        activateButton(exportLabel,false);
+    }
+
+    private void activateButton(Label button,boolean importing) {
+        button.setCursor(Cursor.HAND);
+        button.setOpacity(1);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    if (importing) importCards(mouseEvent);
+                    else exportCards(mouseEvent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void inactivateButton(Label button) {
+        button.setCursor(Cursor.DEFAULT);
+        button.setOpacity(0.5);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                printResponse(ImportExportResponses.CARD_NOT_FOUND);
+            }
+        });
+    }
+//
+//    @Override
+//    public void scanInput() throws IOException {
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (input.startsWith("import") ||
+//                    input.startsWith("export")) checkAndCallImportExportCard(input);
+//            else if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+//            else if (input.startsWith("menu enter ")) System.out.println("Navigation is not possible hear");
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+//        }
+//    }
+//
+//    public void checkAndCallImportExportCard(String input) throws IOException {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.importExportRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String cardName = enteredDetails.get("name");
+//            if (enteredDetails.get("action").equals("import"))
+//                printResponse(importExportController.importCard(cardName));
+//            else printResponse(importExportController.exportCard(cardName));
+//        }
+//    }
+
+    private void printResponse(ImportExportResponses importExportResponses) {
+        String output = "";
+        switch (importExportResponses) {
+            case CARD_NOT_FOUND:
+                output = "Choose a card!";
+                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
+                break;
+            case CARD_EXPORT_SUCCESSFUL:
+                output = "Card exported successfully!";
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/AnimeGirl3.jpg" ))));
+                break;
+            case CARD_IMPORT_SUCCESSFUL:
+                output = "Card imported successfully!";
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/AnimeGirl3.jpg" ))));
+                break;
+            case CARD_ALREADY_EXISTS:
+                output = "Card with this name already exists!";
+                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
+                break;
         }
+        System.out.println(output);
     }
 }
