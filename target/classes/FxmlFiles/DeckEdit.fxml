@@ -54,7 +54,7 @@
                               <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(38,33,68,0.65)" />
                            </children>
                         </HBox>
-                        <Label alignment="CENTER" prefHeight="110.0" prefWidth="412.0" style="-fx-background-color: rgba(38,33,68,0.65)">
+                        <Label alignment="CENTER" prefHeight="142.0" prefWidth="406.0" style="-fx-background-color: rgba(38,33,68,0.65)">
                             <font>
                                 <Font size="25.0" />
                             </font>

@@ -1,12 +1,9 @@
 package sample.view;
 
-import com.opencsv.exceptions.CsvValidationException;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,20 +13,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import sample.Main;
-import sample.controller.menuController.MenuController;
+import javafx.stage.Stage;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class ShopMenu {
     private static ShopMenu shopMenu;
+    ShopMenuResponses responses;
+    String allCards;
+    private ShopController shopController = new ShopController();
     private final int maximumCardsInRow = 5;
-    //    private ShopMenu() {
+
+//    private ShopMenu() {
 //        super("Shop Menu");
 //    }
     @FXML
@@ -41,19 +40,11 @@ public class ShopMenu {
     @FXML
     public Label cardCount;
     @FXML
-    public Label priceLabel;
+    private ImageView cardImage;
     @FXML
     public VBox buyCardVBox;
     @FXML
     public Button buyCardButton;
-
-    ShopMenuResponses responses;
-    String allCards;
-    private ShopController shopController = new ShopController();
-    private boolean isBuyPossible = false;
-    private Card toBuyCard;
-    @FXML
-    private ImageView cardImage;
 
     public static ShopMenu getInstance() {
         if (shopMenu == null)
@@ -67,16 +58,16 @@ public class ShopMenu {
 //    }
 
     public void initializeContainer() {
-        int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
+        int rowsCount = Card.getAllCards().size() / maximumCardsInRow +1 ;
         GridPane cardsGridPane = new GridPane();
         setCardsGridPaneProps(cardsGridPane);
         for (int i = 0; i < rowsCount; i++) {
             for (int j = 0; j < maximumCardsInRow; j++) {
-                if (i * maximumCardsInRow + j >= Card.getAllCards().size()) break;
+                if (i*maximumCardsInRow+j>=Card.getAllCards().size()) break;
                 Image cardImage = Card.getAllCards().get(i * maximumCardsInRow + j).getCardImage();
                 ImageView showingCardImage = new ImageView(cardImage);
                 setShowingCardImageProps(showingCardImage);
-                cardsGridPane.add(showingCardImage, j, i);
+                cardsGridPane.add(showingCardImage,j,i);
             }
         }
         cardsContainer.setBackground(Background.EMPTY);
@@ -109,44 +100,8 @@ public class ShopMenu {
     }
 
     private void selectCard(Card selectedCard) {
-        toBuyCard = selectedCard;
         cardName.setText(selectedCard.getCardName());
         cardImage.setImage(selectedCard.getCardImage());
-        cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
-        int money = MenuController.getUser().getMoney();
-        moneyLabel.setText(String.valueOf(money));
-        priceLabel.setText(String.valueOf(selectedCard.getPrice()));
-        if (money>=selectedCard.getPrice()) activateBuyButton(buyCardButton);
-        else inactivateBuyButton(buyCardButton);
-    }
-
-    private void activateBuyButton(Button buyButton) {
-        buyButton.setCursor(Cursor.HAND);
-        buyButton.setOpacity(1);
-        buyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    printResponse(shopController.buyItem(toBuyCard.getCardName()));
-                    int money = MenuController.getUser().getMoney();
-                    moneyLabel.setText(String.valueOf(money));
-                    priceLabel.setText(String.valueOf(toBuyCard.getPrice()));
-                } catch (IOException | CsvValidationException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void inactivateBuyButton(Button buyButton) {
-        buyButton.setCursor(Cursor.DEFAULT);
-        buyButton.setOpacity(0.5);
-        buyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                printResponse(ShopMenuResponses.USER_MONEY_NOT_ENOUGH);
-            }
-        });
     }
 
     private void setCardsGridPaneProps(GridPane cardsGridPane) {
@@ -166,11 +121,6 @@ public class ShopMenu {
         cardsGridPane.setBackground(Background.EMPTY);
         cardsGridPane.setHgap(5);
         cardsGridPane.setVgap(5);
-    }
-
-    public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
-        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
     }
 //    @Override
 //    public void scanInput() throws IOException, CsvValidationException {
@@ -234,6 +184,7 @@ public class ShopMenu {
             default:
                 break;
         }
+        System.out.println(output);
     }
 
 //    private void UtilityController.makeAlert(String title,String header, String context, Image graphic) {

@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-<?import java.lang.*?>
-<?import java.util.*?>
-=======
 <?import javafx.geometry.*?>
->>>>>>> ghraphics-phase2
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<<<<<<< HEAD
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.view.ImportExportMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
-=======
 <AnchorPane maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ImportExportMenu">
    <children>
       <BorderPane prefHeight="1000.0" prefWidth="1500.0" styleClass="importExportMenu" stylesheets="@../CSSFiles/Menus.css">
@@ -83,5 +72,4 @@
                </BorderPane.margin></Pane>
          </left></BorderPane>
    </children>
->>>>>>> ghraphics-phase2
 </AnchorPane>
