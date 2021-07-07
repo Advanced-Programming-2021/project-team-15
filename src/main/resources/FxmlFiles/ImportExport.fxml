@@ -46,7 +46,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane fx:id="cardsPreShow" layoutX="99.0" layoutY="466.0" opacity="0.0" prefHeight="200.0" prefWidth="302.0">
+                  <ScrollPane fx:id="cardsPreShow" layoutX="99.0" layoutY="466.0" prefHeight="200.0" prefWidth="300.0" visible="false">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>

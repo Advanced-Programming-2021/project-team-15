@@ -2,7 +2,9 @@ package sample.view;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,10 +56,27 @@ public class ImportExportMenu{
         initializeImportContainer();
     }
 
-    private void setCardsPreShow() {
-        cardsPreShow.setOpacity(1);
+    private GridPane setCardsPreShow() {
+        cardsPreShow.setVisible(true);
+        GridPane showCards = new GridPane();
+        cardsPreShow.setContent(showCards);
+        return showCards;
     }
 
+    private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {
+        Image cardImage = DatabaseController.getInstance().getImageByCard(card);
+        Card.getAllCardsImages().put(card.getCardName(),cardImage);
+        ImageView showingCardImage = new ImageView(cardImage);
+        showingCardImage.setFitWidth(120);
+        showingCardImage.setFitHeight(100);
+        gridPane.add(showingCardImage,0,cardCounter);
+        Label cardNameLabel = new Label();
+        cardNameLabel.setPrefWidth(150);
+        cardNameLabel.setPrefHeight(50);
+        cardNameLabel.setAlignment(Pos.CENTER);
+        cardNameLabel.setText("Name : "+card.getCardName());
+        gridPane.add(cardNameLabel,1,cardCounter);
+    }
     private void initializeImportContainer() {
         importPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -75,16 +94,20 @@ public class ImportExportMenu{
         importPlace.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                setCardsPreShow();
+                GridPane showCardsGridPane = setCardsPreShow();
                 Dragboard db = event.getDragboard();
                 boolean success = false;
                 if (db.hasFiles()) {
                     success = true;
                     String filePath;
+                    int cardCounter=0;
                     for (File file:db.getFiles()) {
                         filePath = file.getAbsolutePath();
                         Card toImportCard = DatabaseController.getInstance().deserializeCard(file);
+                        System.out.println(toImportCard.getCardName());
+                        addCardToGridPane(toImportCard,showCardsGridPane,cardCounter);
                         System.out.println(filePath);
+                        cardCounter++;
                     }
                 }
                 event.setDropCompleted(success);
