@@ -2,6 +2,10 @@
     -fx-background-image: url("../Images/deckMenu.jpg");
     -fx-background-size: cover;
 }
+.deckEdit{
+    -fx-background-image: url("../Images/fusion.png");
+    -fx-background-size: cover;
+}
 .shopMenu {
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;

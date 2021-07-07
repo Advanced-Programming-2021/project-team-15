@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1500.0" styleClass="deckEdition" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
+<AnchorPane prefHeight="1000.0" prefWidth="1500.0" styleClass="deckEdit" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
    <children>
       <Pane layoutX="84.0" layoutY="52.0" prefHeight="750.0" prefWidth="1354.0">
          <children>
