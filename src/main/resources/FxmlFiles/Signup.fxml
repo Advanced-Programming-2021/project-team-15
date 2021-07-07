@@ -1,106 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1000" prefWidth="1500" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ShopMenu">
+<AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000" prefWidth="1500" styleClass="signup" stylesheets="@../CSSFiles/Signup.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.SignUpMenu">
     <children>
-        <BorderPane prefHeight="1000.0" prefWidth="1500.0" styleClass="shopMenu" stylesheets="@../CSSFiles/Menus.css">
-            <right>
-                <ScrollPane fx:id="cardsContainer" opacity="0.5" prefHeight="845.0" prefWidth="850.0" stylesheets="@../CSSFiles/Menus.css" BorderPane.alignment="CENTER_RIGHT">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                </ScrollPane>
-            </right>
-            <bottom>
-                <Label prefHeight="213.0" prefWidth="4.0" BorderPane.alignment="CENTER" />
-            </bottom>
-            <left>
-                <Pane prefHeight="743.0" prefWidth="645.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="5.0" styleClass="backBlue">
-                            <children>
-                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Name : " textAlignment="CENTER" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="cardName" alignment="CENTER" prefHeight="30.0" prefWidth="2510.0" textAlignment="CENTER" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <ImageView fx:id="cardImage" fitHeight="360.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="400.0" text="Number of this card in your hand :" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="cardCount" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" textFill="RED">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" opacity="0.5" prefHeight="30.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <cursor>
-                                        <Cursor fx:constant="DEFAULT" />
-                                    </cursor></Button>
-                                <Separator prefHeight="14.0" prefWidth="360.0" />
-                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" text="Your Money : " textAlignment="CENTER" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="moneyLabel" alignment="CENTER" prefHeight="30.0" prefWidth="400.0" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="priceLabel" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Price : " textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                            </children></VBox>
-                    </children>
-                </Pane>
-            </left>
-            <top>
-                <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="1500.0" spacing="50.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <Button minHeight="30.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefWidth="225.0" styleClass="backBlue" text="Back" textFill="#581845">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
-                        <Label alignment="CENTER" prefHeight="46.0" prefWidth="305.0" styleClass="backBlue" text="Buy Card" textFill="#581845">
-                            <font>
-                                <Font size="30.0" />
-                            </font>
-                        </Label>
-                        <Label alignment="CENTER" opacity="0.5" prefHeight="45.0" prefWidth="850.0" styleClass="backBlue" stylesheets="@../CSSFiles/Menus.css" text="List of Cards" textAlignment="CENTER" textFill="#581845">
-                            <font>
-                                <Font size="30.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </top>
-        </BorderPane>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="580.0" layoutX="360.0" layoutY="184.0" stroke="BLACK" strokeType="INSIDE" width="768.0" />
+        <Button layoutX="851.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#signupButtonClicked" prefHeight="52.0" prefWidth="135.0" text="Sign up" />
+        <VBox alignment="CENTER" layoutX="441.0" layoutY="276.0" prefHeight="409.0" prefWidth="620.0">
+            <Label layoutX="927.0" layoutY="259.0" text="SignUp" textFill="#7d95f2">
+                <font>
+                    <Font size="41.0" />
+                </font>
+            </Label>
+        <TextField fx:id="usernameField" layoutX="876.0" layoutY="365.0" prefHeight="52.0" prefWidth="234.0" promptText="Username" styleClass="UsernameTextField" stylesheets="@../CSSFiles/Text.css">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </TextField>
+            <Label fx:id="usernameError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+        <TextField fx:id="nicknameField" layoutX="876.0" layoutY="449.0" prefHeight="52.0" prefWidth="234.0" promptText="Nickname" styleClass="NicknameTextField" stylesheets="@../CSSFiles/Text.css">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </TextField>
+            <Label fx:id="nicknameError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+        <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="534.0" prefHeight="52.0" prefWidth="234.0" promptText="Password" styleClass="PasswordField" stylesheets="@../CSSFiles/Text.css">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </PasswordField>
+            <Label fx:id="passwordError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+            <Label fx:id="success" prefHeight="59.0" prefWidth="419.0" text="" textFill="green">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+
+        </VBox>
+        <Button layoutX="538.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="52.0" prefWidth="135.0" text="back" />
     </children>
 </AnchorPane>
