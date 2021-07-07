@@ -1,9 +1,13 @@
 package sample.view;
 
+import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -16,9 +20,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import sample.Main;
 import sample.controller.menuController.ImportExportController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.ImportExportResponses;
+import sample.controller.responses.ShopMenuResponses;
 import sample.controller.utilizationController.DatabaseController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
@@ -33,6 +39,7 @@ public class ImportExportMenu{
     private static ImportExportMenu importExportMenu;
     private final ImportExportController importExportController = ImportExportController.getInstance();
     private static ArrayList<Card> toImportCards = new ArrayList<>();
+    private static Card toExportCard;
     private final int maximumCardsInRow = 4;
     @FXML
     private ScrollPane cardsList;
@@ -42,6 +49,10 @@ public class ImportExportMenu{
     private VBox importPlace;
     @FXML
     private ScrollPane cardsPreShow;
+    @FXML
+    private Label importLabel;
+    @FXML
+    private Label exportLabel;
 
 //    private ImportExportMenu() {
 //        super("ImportExport Menu");
@@ -71,10 +82,17 @@ public class ImportExportMenu{
         cardsPreShow.setContent(null);
         cardsPreShow.setVisible(false);
         toImportCards.clear();
+        inactivateButton(importLabel);
     }
 
-    public void exportCards(MouseEvent mouseEvent) {
+    public void exportCards(MouseEvent mouseEvent) throws IOException {
+        printResponse(importExportController.exportCard(toExportCard.getCardName()));
+        inactivateButton(exportLabel);
+    }
 
+    public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
     }
 
     private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {
@@ -122,6 +140,7 @@ public class ImportExportMenu{
                         toImportCards.add(toImportCard);
                         cardCounter++;
                     }
+                    activateButton(importLabel,true);
                 }
                 event.setDropCompleted(success);
                 event.consume();
@@ -196,16 +215,35 @@ public class ImportExportMenu{
     }
 
     private void selectCard(Card selectedCard) {
-//        toBuyCard = selectedCard;
-//        cardName.setText(selectedCard.getCardName());
-//        cardImage.setImage(selectedCard.getCardImage());
-//        cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
-//        int money = MenuController.getUser().getMoney();
-//        moneyLabel.setText(String.valueOf(money));
-//        priceLabel.setText(String.valueOf(selectedCard.getPrice()));
-//        if (money>=selectedCard.getPrice()) activateBuyButton(buyCardButton);
-//        else inactivateBuyButton(buyCardButton);
-        System.out.println(selectedCard.getCardName());
+        toExportCard = selectedCard;
+        activateButton(exportLabel,false);
+    }
+
+    private void activateButton(Label button,boolean importing) {
+        button.setCursor(Cursor.HAND);
+        button.setOpacity(1);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    if (importing) importCards(mouseEvent);
+                    else exportCards(mouseEvent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void inactivateButton(Label button) {
+        button.setCursor(Cursor.DEFAULT);
+        button.setOpacity(0.5);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                printResponse(ImportExportResponses.CARD_NOT_FOUND);
+            }
+        });
     }
 //
 //    @Override
@@ -241,7 +279,9 @@ public class ImportExportMenu{
         String output = "";
         switch (importExportResponses) {
             case CARD_NOT_FOUND:
-                output = "card with this name doesn't exist";
+                output = "Choose a card!";
+                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case CARD_EXPORT_SUCCESSFUL:
                 output = "card exported successfully";
