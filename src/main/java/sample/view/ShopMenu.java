@@ -20,6 +20,7 @@ import sample.Main;
 import sample.controller.menuController.MenuController;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 
 import java.io.IOException;
@@ -217,17 +218,17 @@ public class ShopMenu {
                 break;
             case BUY_SUCCESSFUL:
                 output = "Bought item successfully!";
-                makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_NAME_NOT_EXIST:
                 output = "There is no card with this name";
-                makeAlert("Confused!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Confused!!","What are you doing?!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case USER_MONEY_NOT_ENOUGH:
                 output = "Not enough money";
-                makeAlert("Sad!!","You are so bad!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Sad!!","You are so bad!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             default:
@@ -235,21 +236,21 @@ public class ShopMenu {
         }
     }
 
-    private void makeAlert(String title,String header, String context, Image graphic) {
-        ImageView imageView = new ImageView(graphic);
-        imageView.setFitHeight(80);
-        imageView.setFitWidth(80);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getDialogPane().getStylesheets().add(
-                getClass().getResource("/CSSFiles/Dialogs.css").toExternalForm());
-        alert.getDialogPane().getStyleClass().add("dialog-pane");
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(context);
-        alert.setGraphic(imageView);
-        alert.setWidth(550);
-        alert.setHeight(250);
-        alert.show();
-    }
+//    private void UtilityController.makeAlert(String title,String header, String context, Image graphic) {
+//        ImageView imageView = new ImageView(graphic);
+//        imageView.setFitHeight(80);
+//        imageView.setFitWidth(80);
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.getDialogPane().getStylesheets().add(
+//                getClass().getResource("/CSSFiles/Dialogs.css").toExternalForm());
+//        alert.getDialogPane().getStyleClass().add("dialog-pane");
+//        alert.setTitle(title);
+//        alert.setHeaderText(header);
+//        alert.setContentText(context);
+//        alert.setGraphic(imageView);
+//        alert.setWidth(550);
+//        alert.setHeight(250);
+//        alert.show();
+//    }
 
 }

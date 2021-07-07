@@ -21,11 +21,11 @@
          <top>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="250.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" text="Import Card">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" text="Import Card" onMouseClicked="#importCards">
                      <font>
                         <Font size="30.0" />
                      </font></Label>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" stylesheets="@../CSSFiles/Menus.css" text="Export Card" textFill="#34495e">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" stylesheets="@../CSSFiles/Menus.css" text="Export Card" textFill="#34495e" onMouseClicked="#exportCards">
                      <font>
                         <Font size="30.0" />
                      </font></Label>

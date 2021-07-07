@@ -63,6 +63,14 @@ public class ImportExportMenu{
         return showCards;
     }
 
+    public void importCards(MouseEvent mouseEvent) {
+
+    }
+
+    public void exportCards(MouseEvent mouseEvent) {
+
+    }
+
     private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {
         Image cardImage = DatabaseController.getInstance().getImageByCard(card);
         Card.getAllCardsImages().put(card.getCardName(),cardImage);
