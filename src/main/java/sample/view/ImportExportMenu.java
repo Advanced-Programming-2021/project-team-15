@@ -78,7 +78,7 @@ public class ImportExportMenu{
 
     public void importCards(MouseEvent mouseEvent) throws IOException {
         for (Card card : toImportCards)
-            printResponse(importExportController.importCard(card.getCardName()));
+        printResponse(importExportController.importCard(card.getCardName()));
         cardsPreShow.setContent(null);
         cardsPreShow.setVisible(false);
         toImportCards.clear();
