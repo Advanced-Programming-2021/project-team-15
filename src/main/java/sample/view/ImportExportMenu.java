@@ -284,17 +284,17 @@ public class ImportExportMenu{
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case CARD_EXPORT_SUCCESSFUL:
-                output = "card exported successfully";
+                output = "Card exported successfully!";
                 UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/okAnimeGirl.png" ))));
+                        getResource("/Images/AnimeGirl3.jpg" ))));
                 break;
             case CARD_IMPORT_SUCCESSFUL:
-                output = "card imported successfully";
+                output = "Card imported successfully!";
                 UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/okAnimeGirl.png" ))));
+                        getResource("/Images/AnimeGirl3.jpg" ))));
                 break;
             case CARD_ALREADY_EXISTS:
-                output = "card with this name already exists";
+                output = "Card with this name already exists!";
                 UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
