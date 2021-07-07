@@ -12,10 +12,26 @@
 .scroll-pane {
     -fx-background-color: transparent;
 }
-.labelList {
+.backBlue {
     -fx-background-color: #90ebff;
     -fx-opacity: 0.5;
 }
-.labelList:hover {
+.backBlue:hover {
     -fx-opacity: 1;
+}
+.backYellow {
+    -fx-background-color:  #DAF7A6;
+    -fx-text-fill:  #34495e;
+    -fx-opacity: 0.5;
+}
+.backYellow:hover {
+    -fx-opacity: 1;
+}
+.importExportMenu {
+    -fx-background-image: url("../Images/AnimeGirls2.jpg");
+    -fx-background-size: cover;
+}
+.importVBox {
+    -fx-background-image: url("../Images/AnimeGirl2.jpg");
+    -fx-background-size: cover;
 }

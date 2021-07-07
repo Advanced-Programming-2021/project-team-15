@@ -134,10 +134,10 @@ public class DatabaseController {
         }
     }
 
-    public Card deserializeCard(String cardName) {
+    public Card deserializeCard(File cardFile) {
         Card card;
         GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader("src/main/resources/Cards/" + cardName + ".json")) {
+        try (Reader reader = new FileReader(cardFile.getPath())) {
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").

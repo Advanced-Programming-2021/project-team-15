@@ -27,12 +27,11 @@ public class ImportExportController extends MenuController {
         File cardFile = new File("src/main/resources/Cards/"+cardName+".json");
         if (!cardFile.exists()) return ImportExportResponses.CARD_NOT_FOUND;
         if (Card.getCardByName(cardName)!=null) return ImportExportResponses.CARD_ALREADY_EXISTS;
-        Card card = databaseController.deserializeCard(cardName);
+        Card card = databaseController.deserializeCard(cardFile);
         if (card.getCardType()== Card.CardType.MONSTER)
             databaseController.writeMonsterCardToCSV((MonsterCard) card);
         else if (card.getCardType()== Card.CardType.MAGIC)
             databaseController.writeMagicCardToCSV((MagicCard) card);
-        else System.out.println("rid");
         Card.getAllCards().add(card);
         return ImportExportResponses.CARD_IMPORT_SUCCESSFUL;
     }

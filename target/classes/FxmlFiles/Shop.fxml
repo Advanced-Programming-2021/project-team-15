@@ -22,7 +22,7 @@
          <left>
             <Pane prefHeight="743.0" prefWidth="645.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="5.0" styleClass="labelList">
+                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="5.0" styleClass="backBlue">
                      <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Name : " textAlignment="CENTER" textFill="#581845">
                            <font>
@@ -80,7 +80,7 @@
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="1500.0" spacing="50.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button minHeight="30.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefWidth="225.0" styleClass="labelList" text="Back" textFill="#581845">
+                  <Button minHeight="30.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefWidth="225.0" styleClass="backBlue" text="Back" textFill="#581845">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -88,12 +88,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="305.0" styleClass="labelList" text="Buy Card" textFill="#581845">
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="305.0" styleClass="backBlue" text="Buy Card" textFill="#581845">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" opacity="0.5" prefHeight="45.0" prefWidth="850.0" styleClass="labelList" stylesheets="@../CSSFiles/Menus.css" text="List of Cards" textAlignment="CENTER" textFill="#581845">
+                  <Label alignment="CENTER" opacity="0.5" prefHeight="45.0" prefWidth="850.0" styleClass="backBlue" stylesheets="@../CSSFiles/Menus.css" text="List of Cards" textAlignment="CENTER" textFill="#581845">
                      <font>
                         <Font size="30.0" />
                      </font>
