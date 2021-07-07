@@ -198,12 +198,4 @@ public class User {
     public void setActiveDeck(Deck activeDeck) {
         this.activeDeck = activeDeck;
     }
-
-    public int getUserSpecificCardCount(Card searchCard) {
-        int count = 0;
-        for (Card card : allCardsOfUser) {
-            if (card.equals(searchCard)) count++;
-        }
-        return count;
-    }
 }

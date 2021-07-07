@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane  prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
+<AnchorPane prefHeight="1000.0" prefWidth="1500.0" styleClass="deckEdition" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DeckEdit">
    <children>
       <Pane layoutX="84.0" layoutY="52.0" prefHeight="750.0" prefWidth="1354.0">
          <children>
-            <HBox prefHeight="707.0" prefWidth="1319.0">
+            <HBox layoutX="4.0" layoutY="29.0" prefHeight="678.0" prefWidth="1315.0">
                <children>
-                  <ScrollPane fx:id="trunk" prefHeight="707.0" prefWidth="493.0">
+                  <ScrollPane fx:id="trunk" prefHeight="689.0" prefWidth="480.0">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                     </content>
@@ -30,17 +30,17 @@
                         </ScrollPane>
                         <ToolBar prefHeight="70.0" prefWidth="408.0">
                           <items>
-                              <Button mnemonicParsing="false" onMouseClicked="#addCardToMain" prefHeight="43.0" prefWidth="139.0" text="add to main deck">
+                              <Button mnemonicParsing="false" onMouseClicked="#addCardToMain" prefHeight="43.0" prefWidth="139.0" styleClass="green" stylesheets="@../CSSFiles/Button.css" text="add to main deck">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#addCardToSide" prefHeight="42.0" prefWidth="130.0" text="add to side deck">
+                              <Button mnemonicParsing="false" onMouseClicked="#addCardToSide" prefHeight="42.0" prefWidth="130.0" styleClass="green" stylesheets="@../CSSFiles/Button.css" text="add to side deck">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
                               </Button>
-                              <Button mnemonicParsing="false" onMouseClicked="#removeCard" prefHeight="39.0" prefWidth="107.0" text="remove">
+                              <Button mnemonicParsing="false" onMouseClicked="#removeCard" prefHeight="39.0" prefWidth="107.0" styleClass="red" stylesheets="@../CSSFiles/Button.css" text="remove">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
@@ -49,12 +49,12 @@
                         </ToolBar>
                         <HBox prefHeight="346.0" prefWidth="390.0">
                            <children>
-                              <Pane prefHeight="266.0" prefWidth="213.0" />
-                              <ImageView fx:id="chosenCard" fitHeight="307" fitWidth="217.5" pickOnBounds="true" preserveRatio="true" />
-                              <Pane prefHeight="200.0" prefWidth="200.0" />
+                              <Pane prefHeight="343.0" prefWidth="195.0" style="-fx-background-color: rgba(38,33,68,0.65)" />
+                              <ImageView fx:id="chosenCard" fitHeight="343.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true" />
+                              <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(38,33,68,0.65)" />
                            </children>
                         </HBox>
-                        <Label alignment="CENTER" prefHeight="122.0" prefWidth="393.0" text="jj">
+                        <Label alignment="CENTER" prefHeight="110.0" prefWidth="412.0" style="-fx-background-color: rgba(38,33,68,0.65)">
                             <font>
                                 <Font size="25.0" />
                             </font>
@@ -63,7 +63,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Button layoutX="405.0" layoutY="707.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="158.0" text="back" onMouseClicked="#backButtonClicked" />
+            <Button layoutX="377.0" layoutY="707.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="43.0" prefWidth="198.0" styleClass="round-blue" stylesheets="@../CSSFiles/Button.css" text="back" />
          </children>
       </Pane>
    </children>

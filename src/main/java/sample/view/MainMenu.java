@@ -107,11 +107,8 @@ public class MainMenu {
     }
 
     public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/ImportExport.fxml"));
-        Scene scene = new Scene(loader.load());
-        ImportExportMenu importExportMenu = loader.getController();
-        importExportMenu.initializeScene();
-        Main.stage.setScene(scene);
+        Scene importExportScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ImportExport.fxml")));
+        Main.stage.setScene(importExportScene);
     }
 
     public void logoutButtonClicked(MouseEvent mouseEvent) throws IOException {

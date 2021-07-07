@@ -8,7 +8,6 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
-import javafx.scene.image.Image;
 import sample.model.Deck;
 import sample.model.User;
 import sample.model.cards.Card;
@@ -18,7 +17,6 @@ import sample.model.cards.MonsterCard;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DatabaseController {
     private static DatabaseController databaseController;
@@ -41,24 +39,6 @@ public class DatabaseController {
         readMagicCardsFromCSV(reader);
         fileReader.close();
         reader.close();
-        setAllCardsImages();
-    }
-
-    private void setAllCardsImages() {
-        for (Card card : Card.getAllCards()) {
-            StringBuilder address = new StringBuilder();
-            String[] nameParts = card.getCardName().split(" ");
-            for (String part : nameParts) {
-                part = part.toLowerCase();
-                StringBuilder temp = new StringBuilder(part);
-                temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
-                part = temp.toString();
-                address.append(part);
-            }
-            address.append(".jpg");
-            Image cardImage = new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
-            Card.getAllCardsImages().put(card.getCardName(), cardImage);
-        }
     }
 
     public void writeMonsterCardToCSV(MonsterCard card) throws IOException {
@@ -134,10 +114,10 @@ public class DatabaseController {
         }
     }
 
-    public Card deserializeCard(File cardFile) {
+    public Card deserializeCard(String cardName) {
         Card card;
         GsonBuilder gsonBuilder = new GsonBuilder();
-        try (Reader reader = new FileReader(cardFile.getPath())) {
+        try (Reader reader = new FileReader("src/main/resources/Cards/" + cardName + ".json")) {
             RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").

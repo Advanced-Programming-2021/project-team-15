@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,6 +27,7 @@ import sample.model.cards.Card;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static sample.controller.responses.DeckMenuResponses.*;
 
@@ -96,6 +98,7 @@ public class DeckEdit {
                 if ((6 * i + j) < userCards.size()) {
                     trunkCards[i][j] = userCards.get((6 * i + j));
                     rectangle.setFill(new ImagePattern(userCards.get((6 * i + j)).getCardImage()));
+                    setShowingCardImageProps(rectangle);
                 } else {
                     trunkCards[i][j] = null;
                     rectangle.setFill(Color.valueOf("#0d253b7c"));
@@ -135,6 +138,7 @@ public class DeckEdit {
             if ( i <deck.getSideDeck().size()) {
                sideCards[i] = deck.getSideDeck().get(i)  ;
                 rectangle.setFill(new ImagePattern(sideCards[i].getCardImage()));
+                setShowingCardImageProps(rectangle);
             } else {
                 sideCards[i] = null;
                 rectangle.setFill(Color.valueOf("#0d253b7c"));
@@ -176,6 +180,7 @@ public class DeckEdit {
                 if ((4 * i + j) < deck.getMainDeck().size()) {
                    mainCards[i][j] =  deck.getMainDeck().get((4 * i + j));
                     rectangle.setFill(new ImagePattern( deck.getMainDeck().get((4 * i + j)).getCardImage()));
+                    setShowingCardImageProps(rectangle);
                 } else {
                    mainCards[i][j] = null;
                     rectangle.setFill(Color.valueOf("#0d253b7c"));
@@ -252,6 +257,26 @@ public class DeckEdit {
                 new Alert(Alert.AlertType.INFORMATION, "card added to side deck successfully").show();
             }
         }
+    }
+    private void setShowingCardImageProps(Rectangle rectangle) {
+       rectangle.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if(rectangle.getFill()!=Color.valueOf("#0d253b7c"))
+                {rectangle.setHeight(163);
+                 rectangle.setWidth(110);}
+            }
+        });
+       rectangle.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                rectangle.setHeight(153.5);
+                rectangle.setWidth(105.25);
+            }
+        });
+        rectangle.setCursor(Cursor.HAND);
+        rectangle.setHeight(153.5);
+        rectangle.setWidth(105.25);
     }
 
 

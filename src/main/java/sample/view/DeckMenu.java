@@ -83,6 +83,11 @@ public class DeckMenu{
                         root.getChildren().add(region);
                         Button rmv = new Button("Remove");
                         rmv.setFont(new Font("Arial", 20));
+                        rmv.setStyle("-fx-background-radius: 30");
+                        rmv.setStyle("-fx-background-insets: 0,1,1");
+                        rmv.setStyle("-fx-background-color:\n" +
+                                "            linear-gradient(#ff3535, #ff0084),\n" +
+                                "            radial-gradient(center 50% -40%, radius 200%, #ee6136 45%, #c82800 50%)");
                         rmv.setOnAction(event -> {
                             if(selectedDeck==deck)
                             { if(selectedDeck.isActive())
@@ -94,7 +99,14 @@ public class DeckMenu{
                             deckController.removeDeck(deck.getName());
                         });
                         Button edit = new Button("Edit");
-                        edit.setFont(new Font("Arial", 25));
+                        edit.setFont(new Font("Arial", 20));
+                        edit.setStyle("-fx-background-radius: 30");
+                        edit.setStyle("-fx-background-insets: 0,1,1");
+                        edit.setStyle("-fx-text-fill: black");
+                        edit.setStyle(" -fx-background-color:\n" +
+                                "            #c3c4c4,\n" +
+                                "            linear-gradient(#d6d6d6 50%, white 100%),\n" +
+                                "            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
                        edit.setOnAction(event -> {
                            try {
                                goToEditDeckMenu(deck);
