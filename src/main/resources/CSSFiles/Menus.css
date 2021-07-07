@@ -23,3 +23,7 @@
 .labelList:hover {
     -fx-opacity: 1;
 }
+.gameMenu{
+    -fx-background-image: url("../Images/GameMenu.jpg");
+    -fx-background-size: cover;
+}
