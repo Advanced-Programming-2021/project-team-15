@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -21,14 +22,20 @@
          <top>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="250.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" text="Import Card" onMouseClicked="#importCards">
+                  <Label alignment="CENTER" onMouseClicked="#importCards" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" text="Import Card">
                      <font>
                         <Font size="30.0" />
-                     </font></Label>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" stylesheets="@../CSSFiles/Menus.css" text="Export Card" textFill="#34495e" onMouseClicked="#exportCards">
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
+                  <Label alignment="CENTER" onMouseClicked="#exportCards" prefHeight="50.0" prefWidth="500.0" styleClass="backYellow" stylesheets="@../CSSFiles/Menus.css" text="Export Card" textFill="#34495e">
                      <font>
                         <Font size="30.0" />
-                     </font></Label>
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
                </children></HBox>
          </top>
          <bottom>

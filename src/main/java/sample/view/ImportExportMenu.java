@@ -25,12 +25,14 @@ import sample.model.cards.Card;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class ImportExportMenu{
     private static ImportExportMenu importExportMenu;
     private final ImportExportController importExportController = ImportExportController.getInstance();
+    private static ArrayList<Card> toImportCards = new ArrayList<>();
     private final int maximumCardsInRow = 4;
     @FXML
     private ScrollPane cardsList;
@@ -63,8 +65,12 @@ public class ImportExportMenu{
         return showCards;
     }
 
-    public void importCards(MouseEvent mouseEvent) {
-
+    public void importCards(MouseEvent mouseEvent) throws IOException {
+        for (Card card : toImportCards)
+        printResponse(importExportController.importCard(card.getCardName()));
+        cardsPreShow.setContent(null);
+        cardsPreShow.setVisible(false);
+        toImportCards.clear();
     }
 
     public void exportCards(MouseEvent mouseEvent) {
@@ -75,7 +81,7 @@ public class ImportExportMenu{
         Image cardImage = DatabaseController.getInstance().getImageByCard(card);
         Card.getAllCardsImages().put(card.getCardName(),cardImage);
         ImageView showingCardImage = new ImageView(cardImage);
-        showingCardImage.setFitWidth(120);
+        showingCardImage.setFitWidth(100);
         showingCardImage.setFitHeight(100);
         gridPane.add(showingCardImage,0,cardCounter);
         Label cardNameLabel = new Label();
@@ -112,9 +118,8 @@ public class ImportExportMenu{
                     for (File file:db.getFiles()) {
                         filePath = file.getAbsolutePath();
                         Card toImportCard = DatabaseController.getInstance().deserializeCard(file);
-                        System.out.println(toImportCard.getCardName());
                         addCardToGridPane(toImportCard,showCardsGridPane,cardCounter);
-                        System.out.println(filePath);
+                        toImportCards.add(toImportCard);
                         cardCounter++;
                     }
                 }
@@ -240,12 +245,18 @@ public class ImportExportMenu{
                 break;
             case CARD_EXPORT_SUCCESSFUL:
                 output = "card exported successfully";
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_IMPORT_SUCCESSFUL:
                 output = "card imported successfully";
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_ALREADY_EXISTS:
                 output = "card with this name already exists";
+                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
         }
         System.out.println(output);

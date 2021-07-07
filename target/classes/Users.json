@@ -11680,12 +11680,28 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 1500
+      },
+      {
+        "Attack": 100,
+        "gameATK": 100,
+        "Defence": 100,
+        "gameDEF": 100,
+        "Level": 1,
+        "Monster Type": "Cyberse",
+        "Monster Attribute": "DARK",
+        "Monster Effect Type": "Effect",
+        "Name": "Texchanger",
+        "Description": "Once per turn, when your monster is targeted for an attack: You can negate that attack, then Special Summon 1 Cyberse Normal Monster from your hand, Deck, or GY.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 200
       }
     ],
     "userName": "aaa",
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 500
+    "money": 300
   }
 ]
