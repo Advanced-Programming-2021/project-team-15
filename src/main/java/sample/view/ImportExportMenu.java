@@ -299,6 +299,5 @@ public class ImportExportMenu{
                         getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
         }
-        System.out.println(output);
     }
 }
