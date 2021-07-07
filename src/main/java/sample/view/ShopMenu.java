@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 
 import java.util.Objects;
@@ -166,13 +167,19 @@ public class ShopMenu {
                 output = allCards;
                 break;
             case BUY_SUCCESSFUL:
-                output = "bought item successfully!";
+                output = "Bought item successfully!";
+                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_NAME_NOT_EXIST:
-                output = "there is no card with this name";
+                output = "There is no card with this name";
+                UtilityController.makeAlert("Confused!!","What are you doing?!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg" ))));
                 break;
             case USER_MONEY_NOT_ENOUGH:
-                output = "not enough money";
+                output = "Not enough money";
+                UtilityController.makeAlert("Sad!!","You are so bad!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             default:
                 break;
@@ -180,5 +187,21 @@ public class ShopMenu {
         System.out.println(output);
     }
 
+//    private void UtilityController.makeAlert(String title,String header, String context, Image graphic) {
+//        ImageView imageView = new ImageView(graphic);
+//        imageView.setFitHeight(80);
+//        imageView.setFitWidth(80);
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.getDialogPane().getStylesheets().add(
+//                getClass().getResource("/CSSFiles/Dialogs.css").toExternalForm());
+//        alert.getDialogPane().getStyleClass().add("dialog-pane");
+//        alert.setTitle(title);
+//        alert.setHeaderText(header);
+//        alert.setContentText(context);
+//        alert.setGraphic(imageView);
+//        alert.setWidth(550);
+//        alert.setHeight(250);
+//        alert.show();
+//    }
 
 }

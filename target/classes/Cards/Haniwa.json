@@ -1,0 +1,16 @@
+{
+  "Attack": 500,
+  "gameATK": 500,
+  "Defence": 500,
+  "gameDEF": 500,
+  "Level": 2,
+  "Monster Type": "Rock",
+  "Monster Attribute": "EARTH",
+  "Monster Effect Type": "Normal",
+  "Name": "Haniwa",
+  "Description": "An earthen figure that protects the tomb of an ancient ruler.",
+  "cardNumber": "0",
+  "Card Type": "MONSTER",
+  "type": "MONSTER",
+  "Price": 600
+}

@@ -8,6 +8,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Path;
 import sample.model.Deck;
 import sample.model.User;
 import sample.model.cards.Card;
@@ -16,6 +18,7 @@ import sample.model.cards.MonsterCard;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class DatabaseController {
@@ -39,6 +42,31 @@ public class DatabaseController {
         readMagicCardsFromCSV(reader);
         fileReader.close();
         reader.close();
+    }
+
+    private void setAllCardsImages() {
+        for (Card card : Card.getAllCards()) {
+            Image cardImage = getImageByCard(card);
+            Card.getAllCardsImages().put(card.getCardName(), cardImage);
+        }
+    }
+
+    public Image getImageByCard(Card card) {
+        StringBuilder address = new StringBuilder();
+        String[] nameParts = card.getCardName().split(" ");
+        for (String part : nameParts) {
+            part = part.toLowerCase();
+            StringBuilder temp = new StringBuilder(part);
+            temp.setCharAt(0, Character.toUpperCase(part.charAt(0)));
+            part = temp.toString();
+            address.append(part);
+        }
+        address.append(".jpg");
+        try {
+            return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+        }catch (IllegalArgumentException e) {
+            return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl.jpg")));
+        }
     }
 
     public void writeMonsterCardToCSV(MonsterCard card) throws IOException {
