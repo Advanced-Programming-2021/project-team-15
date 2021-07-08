@@ -1,0 +1,4 @@
+.scoreboard{
+    -fx-background-image: url("../Images/scoreboard1.jpg");
+    -fx-background-size: cover;
+}

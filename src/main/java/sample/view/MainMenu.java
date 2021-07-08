@@ -80,8 +80,9 @@ public class MainMenu {
     }
 
     public void scoreboardButtonClicked(MouseEvent mouseEvent) throws IOException {
-        Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
-        Main.stage.setScene(scoreboardScene);
+       // Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
+        //Main.stage.setScene(scoreboardScene);
+        ScoreboardMenu.getInstance().showScoreBoard(Main.stage);
     }
 
     public void deckButtonClicked(MouseEvent mouseEvent) throws Exception {

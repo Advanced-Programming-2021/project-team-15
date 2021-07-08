@@ -12,6 +12,7 @@ module YuGiOhG15 {
     exports sample.model.cards;
 //    opens javafx.scene.image to cloning;
     opens sample to javafx.fxml;
+    opens sample.model to javafx.base;
     exports sample;
     opens sample.view to javafx.fxml;
     exports sample.view;

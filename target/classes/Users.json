@@ -11446,5 +11446,14 @@
     "nickName": "aa",
     "score": 0,
     "money": 0
+  },
+  {
+    "allDecksOfUser": [],
+    "allCardsOfUser": [],
+    "userName": "er",
+    "passWord": "8181",
+    "nickName": "er",
+    "score": 0,
+    "money": 0
   }
 ]
