@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -49,14 +50,11 @@
          <bottom>
             <HBox prefHeight="220.0" prefWidth="1500.0" BorderPane.alignment="CENTER" />
          </bottom>
-         <center>
-            <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" BorderPane.alignment="CENTER" />
-         </center>
          <left>
             <Pane fx:id="importPane" prefHeight="800.0" prefWidth="500.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox fx:id="importPlace" alignment="TOP_CENTER" layoutX="100.0" layoutY="67.0" opacity="0.2" prefHeight="380.0" prefWidth="300.0" spacing="20.0" styleClass="importVBox" stylesheets="@../CSSFiles/Menus.css" />
-                  <Label alignment="CENTER" layoutX="125.0" layoutY="14.0" prefHeight="40.0" prefWidth="250.0" text="Drag &amp; Drop Here :" textFill="#daf7a6">
+                  <Label alignment="CENTER" layoutY="14.0" prefHeight="40.0" prefWidth="500.0" text="Drag &amp; Drop File Here to Import :" textFill="#daf7a6">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -70,6 +68,31 @@
                <BorderPane.margin>
                   <Insets left="75.0" />
                </BorderPane.margin></Pane>
-         </left></BorderPane>
+         </left>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="282.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" layoutX="-75.0" layoutY="14.0" prefHeight="40.0" prefWidth="500.0" text="Drag &amp; Drop Card Here to Export :" textFill="#daf7a6">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="25.0" layoutY="447.0" prefHeight="240.0" prefWidth="300.0">
+                     <children>
+                        <Label fx:id="exportCardName" alignment="CENTER" layoutX="-2.0" layoutY="-3.0" prefHeight="45.0" prefWidth="300.0" textAlignment="CENTER" textFill="#daf7a6">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="exportCardImage" fitHeight="180.0" fitWidth="150.0" layoutX="89.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Pane>
+                  <ImageView fx:id="exportPlace" fitHeight="350.0" fitWidth="300.0" layoutX="65.0" layoutY="67.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/AnimeGirl2.jpg" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+         </center></BorderPane>
    </children>
 </AnchorPane>

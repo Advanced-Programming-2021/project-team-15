@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,7 +29,6 @@ import sample.model.cards.Card;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class ImportExportMenu{
@@ -41,10 +37,9 @@ public class ImportExportMenu{
     private static ArrayList<Card> toImportCards = new ArrayList<>();
     private static Card toExportCard;
     private final int maximumCardsInRow = 4;
+    private ImageView toDragCard;
     @FXML
     private ScrollPane cardsList;
-    @FXML
-    private Pane importPane;
     @FXML
     private VBox importPlace;
     @FXML
@@ -53,6 +48,12 @@ public class ImportExportMenu{
     private Label importLabel;
     @FXML
     private Label exportLabel;
+    @FXML
+    private ImageView exportPlace;
+    @FXML
+    private Label exportCardName;
+    @FXML
+    private ImageView exportCardImage;
 
 //    private ImportExportMenu() {
 //        super("ImportExport Menu");
@@ -67,6 +68,7 @@ public class ImportExportMenu{
     public void initializeScene() {
         initializeExportContainer();
         initializeImportContainer();
+        initializeExportDropBox();
     }
 
     private GridPane setCardsPreShow() {
@@ -88,6 +90,8 @@ public class ImportExportMenu{
     public void exportCards(MouseEvent mouseEvent) throws IOException {
         printResponse(importExportController.exportCard(toExportCard.getCardName()));
         inactivateButton(exportLabel);
+        exportCardImage.setImage(null);
+        exportCardName.setText(null);
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -108,6 +112,49 @@ public class ImportExportMenu{
         cardNameLabel.setAlignment(Pos.CENTER);
         cardNameLabel.setText("Name : "+card.getCardName());
         gridPane.add(cardNameLabel,1,cardCounter);
+    }
+    private void initializeExportDropBox() {
+        exportPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                exportPlace.setOpacity(1);
+                exportPlace.setCursor(Cursor.HAND);
+            }
+        });
+        exportPlace.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                exportPlace.setOpacity(0.2);
+            }
+        });
+        exportPlace.setOnDragOver(new EventHandler <DragEvent>()
+        {
+            public void handle(DragEvent event)
+            {
+                Dragboard dragboard = event.getDragboard();
+                if (dragboard.hasString()) {
+                    event.acceptTransferModes(TransferMode.ANY);
+                }
+                event.consume();
+            }
+        });
+
+        exportPlace.setOnDragDropped(new EventHandler <DragEvent>()
+        {
+            public void handle(DragEvent event)
+            {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    exportCardName.setText(toExportCard.getCardName());
+                    exportCardImage.setImage(toExportCard.getCardImage());
+                    selectCard(toExportCard);
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
     }
     private void initializeImportContainer() {
         importPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -142,6 +189,7 @@ public class ImportExportMenu{
                     }
                     activateButton(importLabel,true);
                 }
+                else System.out.println("are da");
                 event.setDropCompleted(success);
                 event.consume();
             }
@@ -185,10 +233,23 @@ public class ImportExportMenu{
             showingCardImage.setFitWidth(120);
             showingCardImage.setFitHeight(120);
         });
-        showingCardImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                selectCard(Objects.requireNonNull(Card.getCardByImage(showingCardImage.getImage())));
+//        showingCardImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                selectCard(Objects.requireNonNull(Card.getCardByImage(showingCardImage.getImage())));
+//            }
+//        });
+        showingCardImage.setOnDragDetected(new EventHandler <MouseEvent>()
+        {
+            public void handle(MouseEvent event)
+            {
+//                System.out.println("Event on Source: drag detected");
+                toExportCard = Card.getCardByImage(showingCardImage.getImage());
+                Dragboard db = showingCardImage.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putString("Hello!");
+                db.setContent(content);
+                event.consume();
             }
         });
         showingCardImage.setFitWidth(120);
