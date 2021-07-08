@@ -15,7 +15,7 @@
     -fx-background-size: cover;
 }
 .RPS{
-    -fx-background-image: url("../Images/PreGame.jpg");
+    -fx-background-image: url("../Images/rps.jpg");
     -fx-background-size: cover;
 }
 .gameMenu {
