@@ -1,0 +1,4 @@
+.fieldPane {
+    -fx-background-image: url("../Images/Field/fie_normal.bmp");
+    -fx-background-size: cover;
+}

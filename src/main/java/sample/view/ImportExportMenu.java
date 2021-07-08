@@ -210,8 +210,6 @@ public class ImportExportMenu{
         });
         scrollPane.setCursor(Cursor.HAND);
         scrollPane.setBackground(Background.EMPTY);
-//        cardsGridPane.setHgap(5);
-//        cardsGridPane.setVgap(5);
     }
 
     private void selectCard(Card selectedCard) {

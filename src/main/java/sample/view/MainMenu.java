@@ -94,8 +94,12 @@ public class MainMenu {
     }
 
     public void duelButtonClicked(MouseEvent mouseEvent) throws IOException {
-        Scene duelScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Duel.fxml")));
-        Main.stage.setScene(duelScene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Duel.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        DuelMenu duelMenu = loader.getController();
+        duelMenu.initialGame();
     }
 
     public void shopButtonClicked(MouseEvent mouseEvent) throws Exception {
