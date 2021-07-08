@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
-<?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
-   <children>
-      <BorderPane prefHeight="1000.0" prefWidth="1500.0">
-         <top>
-            <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </top>
-         <left>
-            <Pane prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-         </left>
-         <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </center>
-         <right>
-            <Pane prefHeight="200.0" prefWidth="800.0" styleClass="fieldPane" BorderPane.alignment="CENTER" />
-         </right>
-         <bottom>
-            <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </bottom>
-      </BorderPane>
-   </children>
-=======
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -164,5 +140,4 @@
          </children>
       </VBox>
     </children>
->>>>>>> ghraphics-phase2
 </AnchorPane>

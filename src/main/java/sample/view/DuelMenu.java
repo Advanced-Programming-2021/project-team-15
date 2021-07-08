@@ -2,13 +2,18 @@ package sample.view;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Main;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
@@ -18,6 +23,7 @@ import sample.model.Game;
 import sample.model.Player;
 import sample.model.zones.Zone;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,9 +69,6 @@ public class DuelMenu {
     @FXML
     private ImageView selectedCardPic;
 
-    private DuelMenu() {
-        super("Duel Menu");
-    }
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)

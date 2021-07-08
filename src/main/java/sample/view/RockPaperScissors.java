@@ -1,12 +1,18 @@
 package sample.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.utilizationController.UtilityController;
+
+import java.io.IOException;
 
 public class RockPaperScissors {
     private boolean second = false;
@@ -29,8 +35,7 @@ public class RockPaperScissors {
     }
 
 
-    public void submit()
-    {
+    public void submit() throws IOException {
         if(!second)
             submittedByFirstPlayer();
         else submittedBySecondPlayer();
@@ -48,16 +53,19 @@ public class RockPaperScissors {
 
         }
     }
-    public void submittedBySecondPlayer()
-    {   if (secondPlayerMove.equals(""))
+    public void submittedBySecondPlayer() throws IOException {   if (secondPlayerMove.equals(""))
             UtilityController.makeAlert("Confused!!", "What are you doing?!", "you haven't select anything!", new Image(String.valueOf(getClass().
                     getResource("/Images/confusedAnimeGirl.jpg"))));
         else {
             if(!playRPS())
                 start();
             else {
-                UtilityController.makeAlert("Happy!!", "", "game started and the first player is " + GamePlayController.getInstance().getGame().getFirstPlayer().getUser().getNickName(), new Image(String.valueOf(getClass().
-                        getResource("/Images/okAnimeGirl.png"))));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Duel.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Main.stage.setScene(scene);
+                DuelMenu duelMenu = loader.getController();
+                duelMenu.initialGame();
             }
         }
     }

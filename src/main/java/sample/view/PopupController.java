@@ -87,7 +87,7 @@ public class PopupController  {
             stage.close();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/RockPaperScissors.fxml"));
                 Scene scene = new Scene(loader.load());
-              RockPaperScissors rockPaperScissors = loader.getController();
+                RockPaperScissors rockPaperScissors = loader.getController();
                 rockPaperScissors.start();
                 Main.stage.setScene(scene);
             }

@@ -6746,7 +6746,6 @@
             "Card Type": "MONSTER",
             "type": "MONSTER",
             "Price": 8000
-<<<<<<< HEAD
           },
           {
             "Attack": 300,
@@ -6763,8 +6762,6 @@
             "Card Type": "MONSTER",
             "type": "MONSTER",
             "Price": 700
-=======
->>>>>>> ghraphics-phase2
           }
         ],
         "mainDeck": [
@@ -7460,25 +7457,6 @@
     ],
     "allCardsOfUser": [
       {
-<<<<<<< HEAD
-=======
-        "Attack": 300,
-        "gameATK": 300,
-        "Defence": 500,
-        "gameDEF": 500,
-        "Level": 3,
-        "Monster Type": "Fairy",
-        "Monster Attribute": "LIGHT",
-        "Monster Effect Type": "Effect",
-        "Name": "Marshmallon",
-        "Description": "Cannot be destroyed by battle. After damage calculation, if this card was attacked, and was face-down at the start of the Damage Step: The attacking player takes 1000 damage.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 700
-      },
-      {
->>>>>>> ghraphics-phase2
         "Attack": 800,
         "gameATK": 800,
         "Defence": 1400,
