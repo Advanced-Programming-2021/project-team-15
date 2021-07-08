@@ -1,10 +1,13 @@
 package sample.view;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
@@ -12,6 +15,8 @@ import sample.controller.menuController.MenuController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
+import sample.model.Player;
+import sample.model.zones.Zone;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -123,11 +128,19 @@ public class DuelMenu {
 //                GridPane.setRowIndex(stackPane, i);
 //                GridPane.setColumnIndex(stackPane, j);
 //                playerCardsInBoard.getChildren().add(stackPane);
-                Image image = new Image(String.valueOf(getClass().
-                        getResource("/Images/mamal.jpg")));
-                ImageView imageView = new ImageView(image);
+//                Image image = new Image(backOfCard);
+                ImageView imageView = new ImageView(backOfCard);
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(80);
+                imageView.setCursor(Cursor.HAND);
+                int finalI = i;
+                int finalJ = j;
+                imageView.setOnMouseClicked(mouseEvent -> {
+                    Zone.ZoneType zoneType;
+                    if (finalI ==0) zoneType= Zone.ZoneType.MAGIC_CARD;
+                    else zoneType= Zone.ZoneType.MONSTER_CARD;
+                    //TODO gamePlayController.selectNumericZone(finalJ,zoneType,)
+                });
                 playerCardsInBoard.add(imageView, j, i);
                 playerCardsInBoard.setHgap(27);
             }
