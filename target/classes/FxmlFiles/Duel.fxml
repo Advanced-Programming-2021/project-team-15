@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
@@ -22,4 +23,146 @@
          </bottom>
       </BorderPane>
    </children>
+=======
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
+    <children>
+        <Pane layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
+            <children>
+                <GridPane fx:id="firstPlayerBoardCards" layoutX="160.0" layoutY="430.0" prefHeight="285.0" prefWidth="550.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                </GridPane>
+            <GridPane fx:id="secondPlayerBoardCards" layoutX="120.0" layoutY="125.0" prefHeight="285.0" prefWidth="550.0" rotate="180.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            </children>
+        </Pane>
+      <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">
+         <children>
+            <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Current Phase :" textFill="#de3163">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="phaseNameShow" alignment="CENTER" prefHeight="40.0" prefWidth="135.0" text="Draw Phase" textFill="#de3163">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="100.0" />
+               </VBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" onMouseClicked="#nextPhase" prefHeight="45.0" prefWidth="135.0" styleClass="back" text="Next Phase" textFill="#de3163">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Pause">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Surrender">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children></VBox>
+      <VBox prefHeight="840.0" prefWidth="566.0" styleClass="playersTexture" stylesheets="@../CSSFiles/Duel.css">
+         <children>
+            <Pane prefHeight="155.0" prefWidth="566.0">
+               <children>
+                  <ProgressBar fx:id="opponentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
+                  <ImageView fx:id="opponentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/fightAnimeGirl.jpg" />
+                     </image></ImageView>
+                  <Label fx:id="opponentPlayerLifePoint" alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="70.0" prefWidth="224.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Life Point :">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="opponentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Pari">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="485.0" prefWidth="566.0">
+               <children>
+                  <ImageView fx:id="selectedCardPic" fitHeight="500.0" fitWidth="300.0" layoutX="252.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/cardAnimeGirl.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="selectedCardDescription" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="-7.0" prefHeight="500.0" prefWidth="200.0" text="Select a card..." textAlignment="CENTER" textFill="#22e200" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="566.0">
+               <children>
+                  <ProgressBar fx:id="currentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
+                  <ImageView fx:id="currentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/fightAnimeGirl.jpg" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="currentPlayerLifePoint" alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="70.0" prefWidth="224.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Life Point :">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+    </children>
+>>>>>>> ghraphics-phase2
 </AnchorPane>

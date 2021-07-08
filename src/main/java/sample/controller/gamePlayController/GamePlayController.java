@@ -923,7 +923,7 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses goNextPhase() {
-        DuelMenu.getInstance().printString(showGameBoard());
+//        DuelMenu.getInstance().printString(showGameBoard());
         if (currentPhaseNumber == 5) {
             currentPhaseNumber = 0;
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;

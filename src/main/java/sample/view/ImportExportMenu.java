@@ -210,8 +210,6 @@ public class ImportExportMenu{
         });
         scrollPane.setCursor(Cursor.HAND);
         scrollPane.setBackground(Background.EMPTY);
-//        cardsGridPane.setHgap(5);
-//        cardsGridPane.setVgap(5);
     }
 
     private void selectCard(Card selectedCard) {
@@ -285,12 +283,12 @@ public class ImportExportMenu{
                 break;
             case CARD_EXPORT_SUCCESSFUL:
                 output = "Card exported successfully!";
-                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/AnimeGirl3.jpg" ))));
                 break;
             case CARD_IMPORT_SUCCESSFUL:
                 output = "Card imported successfully!";
-                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/AnimeGirl3.jpg" ))));
                 break;
             case CARD_ALREADY_EXISTS:

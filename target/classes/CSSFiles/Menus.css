@@ -10,6 +10,7 @@
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
 }
+<<<<<<< HEAD
 .shopMenu {
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
@@ -26,6 +27,8 @@
     -fx-background-image: url("../Images/PreGame.jpg");
     -fx-background-size: cover;
 }
+=======
+>>>>>>> ghraphics-phase2
 .gridPane {
     -fx-background-color: transparent;
 }
@@ -36,6 +39,12 @@
     -fx-background-color: #90ebff;
     -fx-opacity: 0.5;
 }
+<<<<<<< HEAD
+=======
+.backBlue:hover {
+    -fx-opacity: 1;
+}
+>>>>>>> ghraphics-phase2
 .backYellow {
     -fx-background-color:  #DAF7A6;
     -fx-text-fill:  #34495e;

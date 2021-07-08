@@ -5,7 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<<<<<<< HEAD
 <BorderPane fx:id="Welcome" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
+=======
+<BorderPane fx:id="Welcome" prefHeight="1000" prefWidth="1500" style="-fx-background-color: black" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
+>>>>>>> ghraphics-phase2
    <left>
       <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
          <image>
