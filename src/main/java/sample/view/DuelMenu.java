@@ -1,14 +1,11 @@
 package sample.view;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
@@ -16,13 +13,14 @@ import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuelMenu {
-    private static DuelMenu duelMenu;
     private static final GamePlayController gamePlayController;
+    private static DuelMenu duelMenu;
+    private static Image backOfCard = new Image(String.valueOf(DuelMenu.class.
+            getResource("/Images/cardAnimeGirl.jpg" )));
 
     static {
         gamePlayController = GamePlayController.getInstance();
@@ -32,6 +30,32 @@ public class DuelMenu {
     private boolean weAreOnGame = false;
     private String secondUsername;
     private Boolean cantDoThisKindsOfMove = false;
+    @FXML
+    private GridPane firstPlayerBoardCards;
+    @FXML
+    private GridPane secondPlayerBoardCards;
+    @FXML
+    private Label phaseNameShow;
+    @FXML
+    private Label currentPlayerLifePoint;
+    @FXML
+    private ProgressBar currentPlayerLifePointProgressBar;
+    @FXML
+    private Label currentPlayerName;
+    @FXML
+    private ImageView currentPlayerPic;
+    @FXML
+    private Label opponentPlayerLifePoint;
+    @FXML
+    private ProgressBar opponentPlayerLifePointProgressBar;
+    @FXML
+    private Label opponentPlayerName;
+    @FXML
+    private ImageView opponentPlayerPic;
+    @FXML
+    private Label selectedCardDescription;
+    @FXML
+    private ImageView selectedCardPic;
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
@@ -55,13 +79,6 @@ public class DuelMenu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-    @FXML
-    private GridPane firstPlayerBoardCards;
-    @FXML
-    private GridPane secondPlayerBoardCards;
-    @FXML
-    private Label phaseNameShow;
-
     public void initialGame() {
         fillZones(firstPlayerBoardCards);
         fillZones(secondPlayerBoardCards);
@@ -74,6 +91,23 @@ public class DuelMenu {
 
     public void refreshPhaseBox() {
         phaseNameShow.setText(Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
+    }
+
+    public void refreshPlayersBox() {
+        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getNickName());
+        currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint()/8000);
+        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getNickName());
+        opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
+        if (gamePlayController.getSelectedCard()==null) {
+            selectedCardPic.setImage(backOfCard);
+            selectedCardDescription.setText("Select a card...");
+        }
+        else {
+            selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
+        }
     }
 
     private void fillZones(GridPane playerCardsInBoard) {
@@ -90,11 +124,11 @@ public class DuelMenu {
 //                GridPane.setColumnIndex(stackPane, j);
 //                playerCardsInBoard.getChildren().add(stackPane);
                 Image image = new Image(String.valueOf(getClass().
-                        getResource("/Images/mamal.jpg" )));
+                        getResource("/Images/mamal.jpg")));
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(80);
-                playerCardsInBoard.add(imageView,j,i);
+                playerCardsInBoard.add(imageView, j, i);
                 playerCardsInBoard.setHgap(27);
             }
         }
@@ -162,7 +196,8 @@ public class DuelMenu {
             String input = UtilityController.getNextLine();
             if (input.equals("back"))
                 break;
-            else if (input.equals("show graveyard")) System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
+            else if (input.equals("show graveyard"))
+                System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
             else System.out.println("invalid command! you should go back to game!");
         }
     }
@@ -206,7 +241,7 @@ public class DuelMenu {
 
     }
 
-//    public void checkAndCallSelectNumericZone(String input) {
+    //    public void checkAndCallSelectNumericZone(String input) {
 //        HashMap<String, String> enteredDetails = new HashMap<>();
 //        if (!regexController.selectFromNumericZone(input, enteredDetails))
 //            System.out.println("invalid command");
@@ -231,9 +266,9 @@ public class DuelMenu {
 //        }
 //
 //    }
-    public void increaseLp(String input)
-    {  Matcher matcher = Pattern.compile("increase LP (\\d+)").matcher(input);
-        if(matcher.find())  gamePlayController.increaseLp(Integer.parseInt(matcher.group(1)));
+    public void increaseLp(String input) {
+        Matcher matcher = Pattern.compile("increase LP (\\d+)").matcher(input);
+        if (matcher.find()) gamePlayController.increaseLp(Integer.parseInt(matcher.group(1)));
     }
 
     public void checkAndCallDeselect(String input) {
@@ -427,8 +462,8 @@ public class DuelMenu {
                 break;
             case SHOW_NEW_PHASE:
                 output = "Phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName();
-                UtilityController.makeAlert("Nice!!","You're playing good!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg" ))));
+                UtilityController.makeAlert("Nice!!", "You're playing good!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case CARD_EQUIPPED:
                 System.out.println("card equipped!");

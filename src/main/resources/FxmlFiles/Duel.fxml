@@ -77,12 +77,12 @@
          <children>
             <Pane prefHeight="155.0" prefWidth="566.0">
                <children>
-                  <ProgressBar layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
-                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ProgressBar fx:id="opponentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
+                  <ImageView fx:id="opponentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/fightAnimeGirl.jpg" />
                      </image></ImageView>
-                  <Label alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
+                  <Label fx:id="opponentPlayerLifePoint" alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
                      <font>
                         <Font size="48.0" />
                      </font>
@@ -92,7 +92,7 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
+                  <Label fx:id="opponentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Pari">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -101,12 +101,12 @@
             </Pane>
             <Pane prefHeight="485.0" prefWidth="566.0">
                <children>
-                  <ImageView fitHeight="500.0" fitWidth="300.0" layoutX="252.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="selectedCardPic" fitHeight="500.0" fitWidth="300.0" layoutX="252.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/Cards/BeastKingBarbaros.jpg" />
+                        <Image url="@../Images/cardAnimeGirl.jpg" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="-7.0" prefHeight="500.0" prefWidth="200.0" text="jenwjfkrnfkrelkfmrlkmlkeglkmkrlgmklemlrkgmrelkgmrlkmgflreglrekngjkengrbveyubvirvfnejkfneruifuewrjkreuyuhjerjkveruyveruhv erk vklermnreifvrewnfkewmfpewojfuiewhkjecopcvjsdkuvesdvrevrv" textAlignment="CENTER" textFill="#22e200" wrapText="true">
+                  <Label fx:id="selectedCardDescription" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="-7.0" prefHeight="500.0" prefWidth="200.0" text="Select a card..." textAlignment="CENTER" textFill="#22e200" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -114,13 +114,13 @@
                </children></Pane>
             <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="566.0">
                <children>
-                  <ProgressBar layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
-                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ProgressBar fx:id="currentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
+                  <ImageView fx:id="currentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/fightAnimeGirl.jpg" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
+                  <Label fx:id="currentPlayerLifePoint" alignment="CENTER" layoutX="248.0" layoutY="78.0" prefHeight="70.0" prefWidth="122.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="8000">
                      <font>
                         <Font size="48.0" />
                      </font>
@@ -130,7 +130,7 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
+                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
                      <font>
                         <Font size="36.0" />
                      </font>
