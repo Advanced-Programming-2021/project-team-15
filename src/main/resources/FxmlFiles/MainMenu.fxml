@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="mainMenu" stylesheets="@../CSSFiles/MainMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.MainMenu">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="633.0" layoutX="439.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="984.0" />
+        <Label layoutX="768.0" layoutY="186.0" text="Main Menu" textFill="#ffe922">
+            <font>
+                <Font size="50.0" />
+            </font>
+        </Label>
+      <VBox alignment="CENTER" layoutX="527.0" layoutY="260.0" prefHeight="447.0" prefWidth="325.0" spacing="60.0">
+         <children>
+              <Button fx:id="scoreBoardButton" mnemonicParsing="false" onMouseClicked="#scoreboardButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="scoreBoardButton" stylesheets="@../CSSFiles/Button.css" text="ScoreBoard" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+              <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#profileButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="profileButton" stylesheets="@../CSSFiles/Button.css" text="Profile" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+              <Button fx:id="shopButton" mnemonicParsing="false" onMouseClicked="#shopButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="shopButton" stylesheets="@../CSSFiles/Button.css" text="Shop" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="1021.0" layoutY="260.0" prefHeight="447.0" prefWidth="280.0" spacing="60.0">
+         <children>
+              <Button fx:id="deckButton" mnemonicParsing="false" onMouseClicked="#deckButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="Deck" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+              <Button fx:id="duelButton" mnemonicParsing="false" onMouseClicked="#duelButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="duelButton" stylesheets="@../CSSFiles/Button.css" text="Duel" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+              <Button fx:id="importExport" mnemonicParsing="false" onMouseClicked="#importExportButtonClicked" prefHeight="66.0" prefWidth="280.0" stylesheets="@../CSSFiles/Button.css" text="Import/Export" textFill="#9e4f3a">
+                  <font>
+                      <Font size="25.0" />
+                  </font>
+              </Button>
+         </children>
+      </VBox>
+      <Button layoutX="791.0" layoutY="680.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" text="Logout" textFill="#9e4f3a" onMouseClicked="#logoutButtonClicked">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
