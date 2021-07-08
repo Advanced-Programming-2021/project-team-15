@@ -174,7 +174,7 @@ public class GamePlayController extends MenuController {
         for (Card card : opponentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(opponentPlayer);
             card.setHidden(true);
-            ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
+            if (card instanceof MonsterCard)  ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
             card.setSummoned(false);
         }
         shuffle();

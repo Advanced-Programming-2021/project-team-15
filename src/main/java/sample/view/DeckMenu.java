@@ -214,24 +214,24 @@ public class DeckMenu{
 
     }
     public void createDeck(MouseEvent mouseEvent) throws Exception {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("create deck");
-        dialog.setHeaderText("create a deck");
-        dialog.setContentText("please enter name for the new deck :");
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
-            DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
-            System.out.println(result.get());
-            if(deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS))
-                new Alert(Alert.AlertType.ERROR,"this deck name already exists").show();
-            else if(deckMenuResponses.equals(DeckMenuResponses.DECK_CREATE_SUCCESSFUL))
-            { new Alert(Alert.AlertType.INFORMATION,"new deck created successfully!").show();
-                listView.getItems().add(MenuController.getUser().getDeckByName(result.get()));
-                listView.refresh();
-               }
-
+        while (true) {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("create deck");
+            dialog.setContentText("please enter name for the new deck :");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
+                System.out.println(result.get());
+                if (deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS))
+                    new Alert(Alert.AlertType.ERROR, "this deck name already exists").show();
+                else if (deckMenuResponses.equals(DeckMenuResponses.DECK_CREATE_SUCCESSFUL)) {
+                    new Alert(Alert.AlertType.INFORMATION, "new deck created successfully!").show();
+                    listView.getItems().add(MenuController.getUser().getDeckByName(result.get()));
+                    listView.refresh();
+                    return;
+                }
+            }
         }
-
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));

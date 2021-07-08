@@ -1,5 +1,12 @@
 package sample.view;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Main;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
@@ -7,11 +14,11 @@ import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DuelMenu extends Menu {
+public class DuelMenu {
     private static DuelMenu duelMenu;
     private static GamePlayController gamePlayController;
 
@@ -24,14 +31,32 @@ public class DuelMenu extends Menu {
     private String secondUsername;
     private Boolean cantDoThisKindsOfMove = false;
 
-    private DuelMenu() {
-        super("Duel Menu");
-    }
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
             duelMenu = new DuelMenu();
         return duelMenu;
+    }
+
+    public void settingButtonClicked(MouseEvent mouseEvent)
+    {
+
+    }
+    public void mainMenuButtonClicked() throws IOException {
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
+    }
+
+    public void newDuelButtonClicked(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/PopUp.fxml"));
+        Scene scene = new Scene(loader.load());
+        PopupController popupController = loader.getController();
+        Stage popupStage = new Stage();
+        popupController.setStage(popupStage);
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.setScene(scene);
+       popupController.initialize();
+        popupStage.showAndWait();
     }
 
     public boolean isWeAreOnGame() {
@@ -50,62 +75,63 @@ public class DuelMenu extends Menu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-    @Override
-    public void scanInput() {
-        while (true) {
-            String input = UtilityController.getNextLine();
-            if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
-            else if (input.startsWith("duel")) {
-                checkAndCallNewDuel(input);
-                if (weAreOnGame) {
-                    printResponse(gamePlayController.goNextPhase());
-                    break;
-                }
-            } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
-            else System.out.println("invalid command");
-            if (super.isExit) {
-                super.isExit = false;
-                return;
-            }
-        }
-        while (true) {
-            String input = UtilityController.getNextLine();
-            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
-                System.out.println("you can't do this kind of moves");
-                continue;
-            }
-            if (input.equals("menu exit")) checkAndCallMenuExit();
-            else if (input.equals("show graveyard")) showGraveYard();
-            else if (input.equals("surrender")) gamePlayController.surrender();
-            else if (input.matches("duel set-winner (\\.+)")) {
-                Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
-                if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
-            } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
-            else if (input.equals("select -d")) checkAndCallDeselect(input);
-            else if(input.matches("increase LP (\\d+)")) increaseLp(input);
-            else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
-            else if (input.equals("card show")) checkAndCallShowSelectedCard();
-            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
-            else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
-            else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
-            else if (input.equals("set")) printResponse(gamePlayController.setCommand());
-            else if (input.matches("set --position (attack|defense)")) {
-                Matcher matcher = Pattern.compile("set --position (attack|defense)").matcher(input);
-                if (matcher.find()) printResponse(gamePlayController.setPosCommand(matcher.group(1)));
-            } else if (input.equals("flip-summon")) printResponse(gamePlayController.flipSummonCommand());
-            else if (input.matches("attack (\\d+)")) {
-                Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
-                if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
-            } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
-            else System.out.println("invalid command");
-            if (super.isExit) {
-                super.isExit = false;
-                return;
-            }
-        }
-    }
+
+//    @Override
+//    public void scanInput() {
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
+//            else if (input.startsWith("duel")) {
+//                checkAndCallNewDuel(input);
+//                if (weAreOnGame) {
+//                    printResponse(gamePlayController.goNextPhase());
+//                    break;
+//                }
+//            } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+////        }
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
+//                System.out.println("you can't do this kind of moves");
+//                continue;
+//            }
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.equals("show graveyard")) showGraveYard();
+//            else if (input.equals("surrender")) gamePlayController.surrender();
+//            else if (input.matches("duel set-winner (\\.+)")) {
+//                Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
+//                if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
+//            } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
+//            else if (input.equals("select -d")) checkAndCallDeselect(input);
+//            else if(input.matches("increase LP (\\d+)")) increaseLp(input);
+//            else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
+//            else if (input.equals("card show")) checkAndCallShowSelectedCard();
+//            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
+//            else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
+//            else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
+//            else if (input.equals("set")) printResponse(gamePlayController.setCommand());
+//            else if (input.matches("set --position (attack|defense)")) {
+//                Matcher matcher = Pattern.compile("set --position (attack|defense)").matcher(input);
+//                if (matcher.find()) printResponse(gamePlayController.setPosCommand(matcher.group(1)));
+//            } else if (input.equals("flip-summon")) printResponse(gamePlayController.flipSummonCommand());
+//            else if (input.matches("attack (\\d+)")) {
+//                Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
+//                if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
+//            } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
+//            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+//        }
+//    }
 
     public void showGraveYard() {
         System.out.println(gamePlayController.showGraveYard(gamePlayController.getCurrentPlayer()));
@@ -135,53 +161,53 @@ public class DuelMenu extends Menu {
         printResponse(duelMenuResponses);
     }
 
-    public void checkAndCallNewDuel(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.newDuelRegex(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String secondPlayer = enteredDetails.get("second player");
-            secondUsername = secondPlayer;
-            int rounds = Integer.parseInt(enteredDetails.get("rounds"));
-            duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
-            printResponse(duelMenuResponses);
-            if (duelMenuResponses == DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
-                weAreOnGame = true;
-                playRPS();
-            }
-        }
-    }
-
-    public void checkAndCallNewAiDuel(String input) {
-
-
-    }
-
-    public void checkAndCallSelectNumericZone(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.selectFromNumericZone(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String opponentOrPlayer = enteredDetails.get("opponentOrPlayer");
-            String zoneType = enteredDetails.get("zone type");
-            int cardNumber = Integer.parseInt(enteredDetails.get("cardNumber"));
-            duelMenuResponses = gamePlayController.selectNumericZone(cardNumber, zoneType, opponentOrPlayer);
-            printResponse(duelMenuResponses);
-        }
-    }
-
-    public void checkAndCallSelectNotNumericZone(String input) {
-        HashMap<String, String> enteredDetails = new HashMap<>();
-        if (!regexController.selectFromNotNumericZone(input, enteredDetails))
-            System.out.println("invalid command");
-        else {
-            String opponentOrPlayer = enteredDetails.get("opponentOrPlayer");
-            String zoneType = enteredDetails.get("zone type");
-            duelMenuResponses = gamePlayController.selectNotNumericZone(zoneType, opponentOrPlayer);
-            printResponse(duelMenuResponses);
-        }
-
-    }
+//    public void checkAndCallNewDuel(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.newDuelRegex(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String secondPlayer = enteredDetails.get("second player");
+//            secondUsername = secondPlayer;
+//            int rounds = Integer.parseInt(enteredDetails.get("rounds"));
+//            duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
+//            printResponse(duelMenuResponses);
+//            if (duelMenuResponses == DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
+//                weAreOnGame = true;
+//                playRPS();
+//            }
+//        }
+//    }
+////
+//    public void checkAndCallNewAiDuel(String input) {
+//
+//
+//    }
+//
+//    public void checkAndCallSelectNumericZone(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.selectFromNumericZone(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String opponentOrPlayer = enteredDetails.get("opponentOrPlayer");
+//            String zoneType = enteredDetails.get("zone type");
+//            int cardNumber = Integer.parseInt(enteredDetails.get("cardNumber"));
+//            duelMenuResponses = gamePlayController.selectNumericZone(cardNumber, zoneType, opponentOrPlayer);
+//            printResponse(duelMenuResponses);
+//        }
+//    }
+//
+//    public void checkAndCallSelectNotNumericZone(String input) {
+//        HashMap<String, String> enteredDetails = new HashMap<>();
+//        if (!regexController.selectFromNotNumericZone(input, enteredDetails))
+//            System.out.println("invalid command");
+//        else {
+//            String opponentOrPlayer = enteredDetails.get("opponentOrPlayer");
+//            String zoneType = enteredDetails.get("zone type");
+//            duelMenuResponses = gamePlayController.selectNotNumericZone(zoneType, opponentOrPlayer);
+//            printResponse(duelMenuResponses);
+//        }
+//
+//    }
     public void increaseLp(String input)
     {  Matcher matcher = Pattern.compile("increase LP (\\d+)").matcher(input);
         if(matcher.find())  gamePlayController.increaseLp(Integer.parseInt(matcher.group(1)));
@@ -495,20 +521,7 @@ public class DuelMenu extends Menu {
         System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
     }
 
-    public void playRPS() {
-        while (true) {
-            System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String firstPlayerMove = UtilityController.getNextLine();
-            System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String secondPlayerMove = UtilityController.getNextLine();
-            if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
-                System.out.println("GAME STARTED!");
-                System.out.println("now it will be " +
-                        gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + "'s turn");
-                break;
-            }
-        }
-    }
+
 
     public void roundFinished(String winner) {
         System.out.println(winner + " won the game!");
