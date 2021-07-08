@@ -2,3 +2,15 @@
     -fx-background-image: url("../Images/Field/fie_normal.bmp");
     -fx-background-size: cover;
 }
+.phaseTexture {
+    -fx-background-image: url("../Images/Textures/RockTexture.png");
+    -fx-background-size: cover;
+}
+.back {
+    -fx-background-color:  #9FE2BF;
+    -fx-text-fill:  #DE3163;
+    -fx-opacity: 0.5;
+}
+.back:hover {
+    -fx-opacity: 1;
+}

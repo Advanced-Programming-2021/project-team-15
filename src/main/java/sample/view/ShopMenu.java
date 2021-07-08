@@ -218,7 +218,7 @@ public class ShopMenu {
                 break;
             case BUY_SUCCESSFUL:
                 output = "Bought item successfully!";
-                UtilityController.makeAlert("Happy!!","Your doing great!",output, new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
                         getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case CARD_NAME_NOT_EXIST:

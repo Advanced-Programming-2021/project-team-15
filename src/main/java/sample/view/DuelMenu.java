@@ -2,6 +2,7 @@ package sample.view;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -58,10 +59,16 @@ public class DuelMenu {
     private GridPane firstPlayerBoardCards;
     @FXML
     private GridPane secondPlayerBoardCards;
+    @FXML
+    private Label phaseNameShow;
 
     public void initialGame() {
         fillZones(firstPlayerBoardCards);
         fillZones(secondPlayerBoardCards);
+    }
+
+    public void nextPhase() {
+        printResponse(gamePlayController.goNextPhase());
     }
 
     private void fillZones(GridPane playerCardsInBoard) {
@@ -230,6 +237,7 @@ public class DuelMenu {
     }
 
     public void printResponse(DuelMenuResponses duelMenuResponses) {
+        String output;
         switch (duelMenuResponses) {
             case NO_PLAYER_WITH_THIS_USERNAME_EXISTS:
                 System.out.println("there is no player with this username");
@@ -413,7 +421,9 @@ public class DuelMenu {
                 System.out.println("You can't access this card!");
                 break;
             case SHOW_NEW_PHASE:
-                System.out.println("phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
+                output = "Phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName();
+                UtilityController.makeAlert("Nice!!","You're playing good!",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg" ))));
                 break;
             case CARD_EQUIPPED:
                 System.out.println("card equipped!");
