@@ -69,6 +69,11 @@ public class DuelMenu {
 
     public void nextPhase() {
         printResponse(gamePlayController.goNextPhase());
+        refreshPhaseBox();
+    }
+
+    public void refreshPhaseBox() {
+        phaseNameShow.setText(Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
     }
 
     private void fillZones(GridPane playerCardsInBoard) {

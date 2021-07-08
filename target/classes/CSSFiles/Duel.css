@@ -4,7 +4,11 @@
 }
 .phaseTexture {
     -fx-background-image: url("../Images/Textures/RockTexture.png");
-    -fx-background-size: cover;
+    -fx-background-size: repeat;
+}
+.playersTexture {
+    -fx-background-image: url("../Images/Textures/BrickTexture.jpg");
+    -fx-background-size: repeat;
 }
 .back {
     -fx-background-color:  #9FE2BF;
@@ -13,4 +17,22 @@
 }
 .back:hover {
     -fx-opacity: 1;
+}
+.progress-bar .bar {
+    -fx-background-color:linear-gradient(to right,#DE3163,#CCCCFF);
+            /*-fx-box-border,*/
+            /*Red,*/
+    -fx-background-insets: 0, 1, 2;
+    -fx-padding: 0.416667em; /* 5 */
+}
+.progress-bar {
+    -fx-border-color: #9FE2BF;
+    -fx-border-width: 2;
+}
+.progress-bar .track {
+    -fx-background-color: transparent;
+}
+.progressLabel {
+    -fx-text-fill:linear-gradient(to right,#DE3163,#CCCCFF);
+
 }
