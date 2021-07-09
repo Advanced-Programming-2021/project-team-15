@@ -36,6 +36,7 @@ public class UtilityController {
     }
 
     public static void makeAlert(String title,String header, String context, Image graphic) {
+        AudioController.playAlert();
         ImageView imageView = new ImageView(graphic);
         imageView.setFitHeight(80);
         imageView.setFitWidth(80);
