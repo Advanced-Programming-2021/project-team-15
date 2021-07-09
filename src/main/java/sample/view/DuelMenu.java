@@ -20,6 +20,7 @@ import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DuelMenuResponses;
+import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 import sample.model.Player;
@@ -79,7 +80,6 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
-
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
@@ -167,6 +167,7 @@ public class DuelMenu {
 
     }
     public void mainMenuButtonClicked() throws IOException {
+        AudioController.playMenu();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }
@@ -179,7 +180,7 @@ public class DuelMenu {
         popupController.setStage(popupStage);
         popupStage.initModality(Modality.WINDOW_MODAL);
         popupStage.setScene(scene);
-       popupController.initialize();
+        popupController.initialize();
         popupStage.showAndWait();
     }
 
@@ -199,6 +200,10 @@ public class DuelMenu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
+    public void initialGame() {
+        fillZones(firstPlayerBoardCards);
+        fillZones(secondPlayerBoardCards);
+    }
 
     public void nextPhase() {
         printResponse(gamePlayController.goNextPhase());

@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.controller.menuController.MainMenuController;
 import sample.controller.responses.MainMenuResponses;
+import sample.controller.utilizationController.AudioController;
 
 import java.io.IOException;
 
@@ -94,6 +95,7 @@ public class MainMenu {
     }
 
     public void duelButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playGame();
         Scene duelScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/GameMenu.fxml")));
         Main.stage.setScene(duelScene);
     }
