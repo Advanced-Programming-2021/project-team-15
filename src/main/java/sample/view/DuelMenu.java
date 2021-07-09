@@ -1,7 +1,6 @@
 package sample.view;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -24,14 +23,10 @@ import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 import sample.model.Player;
-import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
-import sample.model.zones.Zone;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -43,7 +38,7 @@ public class DuelMenu {
     private static final GamePlayController gamePlayController;
     private static DuelMenu duelMenu;
     private static Image backOfCard = new Image(String.valueOf(DuelMenu.class.
-            getResource("/Images/cardAnimeGirl.jpg" )));
+            getResource("/Images/cardAnimeGirl.jpg")));
 
     static {
         gamePlayController = GamePlayController.getInstance();
@@ -52,7 +47,7 @@ public class DuelMenu {
     DuelMenuResponses duelMenuResponses;
     private boolean weAreOnGame = false;
     private String secondUsername;
-    private ImageView[][] playerCards ;
+    private ImageView[][] playerCards;
     private ImageView[][] opponentCards;
     private Boolean cantDoThisKindsOfMove = false;
     @FXML
@@ -85,12 +80,15 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
+    private Timer timer;
+    private boolean isPause;
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
             duelMenu = new DuelMenu();
         return duelMenu;
     }
+
     public void initialGame() {
         isPause = false;
         refreshPlayersBox();
@@ -98,108 +96,113 @@ public class DuelMenu {
         runAndUpdate();
         startTimerAndRun();
     }
+
     public void initializeBoard() {
-         playerCards = new ImageView[2][5];
-         opponentCards = new ImageView[2][5] ;
+        playerCards = new ImageView[2][5];
+        opponentCards = new ImageView[2][5];
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 ImageView imageView = new ImageView();
                 imageView.setFitHeight(100);
                 imageView.setFitWidth(80);
-                playerCards[i][j]=imageView;
-                setOnMouseClickedForCardImage(imageView,"player");
-                firstPlayerBoardCards.add(imageView,j,i);
+                playerCards[i][j] = imageView;
+                setOnMouseClickedForCardImage(imageView, "player");
+                firstPlayerBoardCards.add(imageView, j, i);
                 firstPlayerBoardCards.setHgap(27);
                 ImageView imageView1 = new ImageView();
                 imageView1.setFitHeight(100);
                 imageView1.setFitWidth(80);
-                opponentCards[i][j]=imageView1;
-                setOnMouseClickedForCardImage(imageView1,"opponent");
-                secondPlayerBoardCards.add(imageView1,j,i);
-                secondPlayerBoardCards.setHgap(27);}
+                opponentCards[i][j] = imageView1;
+                setOnMouseClickedForCardImage(imageView1, "opponent");
+                secondPlayerBoardCards.add(imageView1, j, i);
+                secondPlayerBoardCards.setHgap(27);
+            }
         }
     }
-    private Timer timer;
-    private boolean isPause;
-    public void startTimerAndRun()
-    { timer = new java.util.Timer();
+
+    public void startTimerAndRun() {
+        timer = new java.util.Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if(!isPause)
+                        if (!isPause)
                             runAndUpdate();
 
                     }
                 });
             }
         };
-        long frameTimeInMilliseconds = (long)(200.0);
+        long frameTimeInMilliseconds = (long) (200.0);
         timer.schedule(timerTask, 0, frameTimeInMilliseconds);
 
     }
-    public void runAndUpdate()
-    {  setHandCards();
-        setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
-       setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
+
+    public void runAndUpdate() {
+        setHandCards();
+        setPlayersCards(gamePlayController.getCurrentPlayer(), playerCards);
+        setPlayersCards(gamePlayController.getOpponentPlayer(), opponentCards);
     }
-    public void setHandCards(){
+
+    public void setHandCards() {
         firstPlayerHand.getColumnConstraints().clear();
         secondPlayerHand.getColumnConstraints().clear();
         int handCount = gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand();
-        if(handCount!=0){
-        for (int i = 0  ;  i< handCount ; i++)
-        {   ImageView imageView = new ImageView();
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(80);
-            imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
-            selectHandCard(imageView, "player");
-            firstPlayerHand.add(imageView,i,0);
-            firstPlayerHand.setHgap(30);
-        }}
+        if (handCount != 0) {
+            for (int i = 0; i < handCount; i++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(80);
+                imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
+                imageView.setCursor(Cursor.HAND);
+                selectHandCard(imageView, "player");
+                firstPlayerHand.add(imageView, i, 0);
+                firstPlayerHand.setHgap(30);
+            }
+        }
         int handCount1 = gamePlayController.getOpponentPlayer().getHand().getNumberOfCardsInHand();
-        if(handCount1!=0){
-        for (int i =0 ; i < handCount1  ; i ++) {
-            ImageView imageView1 = new ImageView();
-            imageView1.setFitHeight(100);
-            imageView1.setFitWidth(80);
-            imageView1.setImage(backOfCard);
-            selectHandCard(imageView1, "opponent");
-            secondPlayerHand.add(imageView1, i, 0);
-            secondPlayerHand.setHgap(30);
-        }}
+        if (handCount1 != 0) {
+            for (int i = 0; i < handCount1; i++) {
+                ImageView imageView1 = new ImageView();
+                imageView1.setFitHeight(100);
+                imageView1.setFitWidth(80);
+                imageView1.setImage(backOfCard);
+                selectHandCard(imageView1, "opponent");
+                secondPlayerHand.add(imageView1, i, 0);
+                secondPlayerHand.setHgap(30);
+            }
         }
+    }
 
-    public void setPlayersCards(Player player ,ImageView[][] imageViews)
-    {
+    public void setPlayersCards(Player player, ImageView[][] imageViews) {
         for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 5; j++) {
-            if( i==0 && !player.getMagicCardZone().toStringPos(i+1).equals("E"))
-            { if(player.getMagicCardZone().toStringPos(i+1).equals("O"))
-            { MagicCard magicCard= (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
-                imageViews[i][j].setImage(magicCard.getCardImage());
+            for (int j = 0; j < 5; j++) {
+                if (i == 0 && !player.getMagicCardZone().toStringPos(i + 1).equals("E")) {
+                    if (player.getMagicCardZone().toStringPos(i + 1).equals("O")) {
+                        MagicCard magicCard = (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
+                        imageViews[i][j].setImage(magicCard.getCardImage());
+                        imageViews[i][j].setCursor(Cursor.HAND);
+                    } else imageViews[i][j].setImage(backOfCard);
+                } else if (i == 1 && !player.getMonsterCardZone().toStringPos(i + 1).equals("E")) {
+                    MonsterCard monsterCard = (MonsterCard) player.getMonsterCardZone().getZoneCards().get(i + 1);
+                    if (monsterCard.getHidden())
+                        imageViews[i][j].setImage(backOfCard);
+                    else {
+                        imageViews[i][j].setImage(monsterCard.getCardImage());
+                        imageViews[i][j].setCursor(Cursor.HAND);
+                    }
+                } else imageViews[i][j].setImage(null);
             }
-            else  imageViews[i][j].setImage(backOfCard);
-            }
-            else if( i==1 && !player.getMonsterCardZone().toStringPos(i+1).equals("E"))
-            {
-                MonsterCard monsterCard  = (MonsterCard) player.getMonsterCardZone().getZoneCards().get(i+1);
-                if(monsterCard.getHidden())
-                    imageViews[i][j].setImage(backOfCard);
-                else   imageViews[i][j].setImage(monsterCard.getCardImage());
-            } else  imageViews[i][j].setImage(null);
         }
     }
-    }
 
 
-
-    public void settingButtonClicked(MouseEvent mouseEvent)
-    {
+    public void settingButtonClicked(MouseEvent mouseEvent) {
 
     }
+
     public void mainMenuButtonClicked() throws IOException {
         AudioController.playMenu();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
@@ -244,36 +247,39 @@ public class DuelMenu {
     }
 
     public void refreshPlayersBox() {
-        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getNickName());
+        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getCurrentPlayer().getUser().getNickName());
         currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint()/8000);
-        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getNickName());
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint() / 8000);
+        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getOpponentPlayer().getUser().getNickName());
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
-        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
-        if (gamePlayController.getSelectedCard()==null) {
+        opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
+        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint() / 8000);
+        if (gamePlayController.getSelectedCard() == null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
-        }
-        else {
+        } else {
             selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
         }
-        if (gamePlayController.getCurrentPlayer().getLifePoint()<=2000) AudioController.playHeartbeat();
+        if (gamePlayController.getCurrentPlayer().getLifePoint() <= 2000) AudioController.playHeartbeat();
     }
+
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
-        for (Node node :gridPane.getChildren()) {
-            if(GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column){
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 return node;
             }
         }
         return null;
     }
-    private void setDeckZone()
-    {
+
+    private void setDeckZone() {
 
     }
 
-    private void setCardsInGrid(GridPane playerCardsInBoard ,ImageView[][] imageView) {
+    private void setCardsInGrid(GridPane playerCardsInBoard, ImageView[][] imageView) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 playerCardsInBoard.add(imageView[i][j], j, i);
@@ -281,29 +287,33 @@ public class DuelMenu {
             }
         }
     }
-    public void selectHandCard(ImageView imageView ,String  opponentOrPlayer){
+
+    public void selectHandCard(ImageView imageView, String opponentOrPlayer) {
         imageView.setOnMouseClicked(mouseEvent -> {
-            imageView.setCursor(Cursor.HAND);
             DuelMenuResponses duelMenuResponses;
             int column = GridPane.getColumnIndex(imageView);
-           duelMenuResponses = gamePlayController.selectNumericZone(column+1,"hand",opponentOrPlayer);
-            if(duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED));
-            if(gamePlayController.showCard().equals(SHOW_CARD))
-                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "hand", opponentOrPlayer);
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+                refreshPlayersBox();
         });
     }
-    public void setOnMouseClickedForCardImage(ImageView imageView ,String  opponentOrPlayer)
-    {   imageView.setOnMouseClicked(mouseEvent -> {
-        imageView.setCursor(Cursor.HAND);
-        DuelMenuResponses duelMenuResponses;
-        int row = GridPane.getRowIndex(imageView);
-        int column = GridPane.getColumnIndex(imageView);
-        if (row == 0) duelMenuResponses = gamePlayController.selectNumericZone(column+1,"spell",opponentOrPlayer);
-        else duelMenuResponses =  gamePlayController.selectNumericZone(column+1,"monster",opponentOrPlayer);
-        if(duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED));
-        if(gamePlayController.showCard().equals(SHOW_CARD))
-            selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
-    });
+
+    public void setOnMouseClickedForCardImage(ImageView imageView, String opponentOrPlayer) {
+        imageView.setOnMouseClicked(mouseEvent -> {
+            DuelMenuResponses duelMenuResponses;
+            int row = GridPane.getRowIndex(imageView);
+            int column = GridPane.getColumnIndex(imageView);
+            if (row == 0)
+                duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "spell", opponentOrPlayer);
+            else duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "monster", opponentOrPlayer);
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            refreshPlayersBox();
+
+        });
     }
 //    @Override
 //    public void scanInput() {
@@ -810,7 +820,6 @@ public class DuelMenu {
     public void hiddenDefensePosNoCardDestroyedWithDamage(String name) {
         System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
     }
-
 
 
     public void roundFinished(String winner) {
