@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
@@ -54,6 +55,10 @@ public class DuelMenu {
     private String secondUsername;
     private ImageView[][] playerCards ;
     private ImageView[][] opponentCards;
+    @FXML
+    private Pane opponentDeck;
+    @FXML
+    private Pane playerDeck;
     private Boolean cantDoThisKindsOfMove = false;
     @FXML
     private GridPane firstPlayerBoardCards;
