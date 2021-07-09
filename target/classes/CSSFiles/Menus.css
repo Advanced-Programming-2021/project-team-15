@@ -36,6 +36,9 @@
     -fx-background-color: #90ebff;
     -fx-opacity: 0.5;
 }
+.backBlue:hover {
+    -fx-opacity: 1;
+}
 .backYellow {
     -fx-background-color:  #DAF7A6;
     -fx-text-fill:  #34495e;
