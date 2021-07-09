@@ -29,6 +29,7 @@ import sample.model.cards.MonsterCard;
 import sample.model.zones.Zone;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,6 +58,10 @@ public class DuelMenu {
     private GridPane firstPlayerBoardCards;
     @FXML
     private GridPane secondPlayerBoardCards;
+    @FXML
+    private GridPane firstPlayerHand;
+    @FXML
+    private GridPane secondPlayerHand;
     @FXML
     private Label phaseNameShow;
     @FXML
@@ -135,12 +140,40 @@ public class DuelMenu {
 
     }
     public void runAndUpdate()
-    {  setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
+    {  setHandCards();
+        setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
        setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
     }
+    public void setHandCards(){
+        firstPlayerHand.getColumnConstraints().clear();
+        secondPlayerHand.getColumnConstraints().clear();
+        int handCount = gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand();
+        if(handCount!=0){
+        for (int i = 0  ;  i< handCount ; i++)
+        {   ImageView imageView = new ImageView();
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(80);
+            imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
+            selectHandCard(imageView, "player");
+            firstPlayerHand.add(imageView,i,0);
+            firstPlayerHand.setHgap(30);
+        }}
+        int handCount1 = gamePlayController.getOpponentPlayer().getHand().getNumberOfCardsInHand();
+        if(handCount1!=0){
+        for (int i =0 ; i < handCount1  ; i ++) {
+            ImageView imageView1 = new ImageView();
+            imageView1.setFitHeight(100);
+            imageView1.setFitWidth(80);
+            imageView1.setImage(backOfCard);
+            selectHandCard(imageView1, "opponent");
+            secondPlayerHand.add(imageView1, i, 0);
+            secondPlayerHand.setHgap(30);
+        }}
+        }
 
     public void setPlayersCards(Player player ,ImageView[][] imageViews)
-    {   for (int i = 0; i < 2; i++) {
+    {
+        for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 5; j++) {
             if( i==0 && !player.getMagicCardZone().toStringPos(i+1).equals("E"))
             { if(player.getMagicCardZone().toStringPos(i+1).equals("O"))
@@ -246,8 +279,20 @@ public class DuelMenu {
             }
         }
     }
+    public void selectHandCard(ImageView imageView ,String  opponentOrPlayer){
+        imageView.setOnMouseClicked(mouseEvent -> {
+            imageView.setCursor(Cursor.HAND);
+            DuelMenuResponses duelMenuResponses;
+            int column = GridPane.getColumnIndex(imageView);
+           duelMenuResponses = gamePlayController.selectNumericZone(column+1,"hand",opponentOrPlayer);
+            if(duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED));
+            if(gamePlayController.showCard().equals(SHOW_CARD))
+                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+        });
+    }
     public void setOnMouseClickedForCardImage(ImageView imageView ,String  opponentOrPlayer)
     {   imageView.setOnMouseClicked(mouseEvent -> {
+        imageView.setCursor(Cursor.HAND);
         DuelMenuResponses duelMenuResponses;
         int row = GridPane.getRowIndex(imageView);
         int column = GridPane.getColumnIndex(imageView);
