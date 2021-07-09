@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.Cursor?>
 <AnchorPane prefHeight="1000" prefWidth="1500" styleClass="RPS" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.RockPaperScissors">
    <children>
-      <HBox layoutX="366.0" layoutY="464.0" prefHeight="291.0" prefWidth="929.0">
+      <HBox layoutX="378.0" layoutY="332.0" prefHeight="290.0" prefWidth="912.0">
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#scissorsButtonClicked" prefHeight="371.0" prefWidth="363.0" style="-fx-background-color: white" styleClass="scissor" stylesheets="@../CSSFiles/Button.css" text="">
                <cursor>
@@ -34,7 +34,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <Button layoutX="670.0" layoutY="818.0" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="142.0" prefWidth="272.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Submit">
+      <Button layoutX="698.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="124.0" prefWidth="259.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Submit">
          <font>
             <Font size="41.0" />
          </font>
