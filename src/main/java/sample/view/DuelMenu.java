@@ -199,12 +199,7 @@ public class DuelMenu {
     public void setCantDoThisKindsOfMove(Boolean cantDoThisKindsOfMove) {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
-
-    public void initialGame() {
-        fillZones(firstPlayerBoardCards);
-        fillZones(secondPlayerBoardCards);
-    }
-
+    
     public void nextPhase() {
         printResponse(gamePlayController.goNextPhase());
         refreshPhaseBox();
