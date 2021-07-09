@@ -88,6 +88,7 @@ public class DuelMenu {
     }
     public void initialGame() {
         isPause = false;
+        refreshPlayersBox();
         initializeBoard();
         runAndUpdate();
         startTimerAndRun();
@@ -215,7 +216,7 @@ public class DuelMenu {
         currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint()/8000);
         opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getNickName());
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
+        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
         if (gamePlayController.getSelectedCard()==null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
@@ -224,6 +225,7 @@ public class DuelMenu {
             selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
         }
+        if (gamePlayController.getCurrentPlayer().getLifePoint()<=2000) AudioController.playHeartbeat();
     }
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
         for (Node node :gridPane.getChildren()) {

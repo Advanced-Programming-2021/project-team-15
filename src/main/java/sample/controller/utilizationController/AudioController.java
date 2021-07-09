@@ -2,6 +2,9 @@ package sample.controller.utilizationController;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import sample.controller.gamePlayController.GamePlayController;
+import sample.model.Game;
+import sample.view.DuelMenu;
 
 public class AudioController {
     private static MediaPlayer mainMusic;
@@ -35,7 +38,14 @@ public class AudioController {
     public static void playHeartbeat() {
         if (mute) return;
         heartbeat.play();
-        heartbeat.setOnEndOfMedia(heartbeat::stop);
+        heartbeat.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                if (GamePlayController.getInstance().getCurrentPlayer().getLifePoint()<2000)
+                    heartbeat.play();
+                else heartbeat.stop();
+            }
+        });
     }
 
     public static void playMenu() {
