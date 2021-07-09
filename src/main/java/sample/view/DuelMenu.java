@@ -1,9 +1,11 @@
 package sample.view;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -21,12 +23,19 @@ import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 import sample.model.Player;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 import sample.model.zones.Zone;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static sample.controller.responses.DuelMenuResponses.SHOW_CARD;
 
 public class DuelMenu {
     private static final GamePlayController gamePlayController;
@@ -41,6 +50,8 @@ public class DuelMenu {
     DuelMenuResponses duelMenuResponses;
     private boolean weAreOnGame = false;
     private String secondUsername;
+    private ImageView[][] playerCards ;
+    private ImageView[][] opponentCards;
     private Boolean cantDoThisKindsOfMove = false;
     @FXML
     private GridPane firstPlayerBoardCards;
@@ -75,6 +86,81 @@ public class DuelMenu {
             duelMenu = new DuelMenu();
         return duelMenu;
     }
+    public void initialGame() {
+        isPause = false;
+        initializeBoard();
+        runAndUpdate();
+        startTimerAndRun();
+    }
+    public void initializeBoard() {
+         playerCards = new ImageView[2][5];
+         opponentCards = new ImageView[2][5] ;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 5; j++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(80);
+                playerCards[i][j]=imageView;
+                setOnMouseClickedForCardImage(imageView,"player");
+                firstPlayerBoardCards.add(imageView,j,i);
+                firstPlayerBoardCards.setHgap(27);
+                ImageView imageView1 = new ImageView();
+                imageView1.setFitHeight(100);
+                imageView1.setFitWidth(80);
+                opponentCards[i][j]=imageView1;
+                setOnMouseClickedForCardImage(imageView1,"opponent");
+                secondPlayerBoardCards.add(imageView1,j,i);
+                secondPlayerBoardCards.setHgap(27);}
+        }
+    }
+    private Timer timer;
+    private boolean isPause;
+    public void startTimerAndRun()
+    { timer = new java.util.Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!isPause)
+                            runAndUpdate();
+
+                    }
+                });
+            }
+        };
+        long frameTimeInMilliseconds = (long)(200.0);
+        timer.schedule(timerTask, 0, frameTimeInMilliseconds);
+
+    }
+    public void runAndUpdate()
+    {  setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
+       setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
+    }
+
+    public void setPlayersCards(Player player ,ImageView[][] imageViews)
+    {   for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 5; j++) {
+            if( i==0 && !player.getMagicCardZone().toStringPos(i+1).equals("E"))
+            { if(player.getMagicCardZone().toStringPos(i+1).equals("O"))
+            { MagicCard magicCard= (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
+                imageViews[i][j].setImage(magicCard.getCardImage());
+            }
+            else  imageViews[i][j].setImage(backOfCard);
+            }
+            else if( i==1 && !player.getMonsterCardZone().toStringPos(i+1).equals("E"))
+            {
+                MonsterCard monsterCard  = (MonsterCard) player.getMonsterCardZone().getZoneCards().get(i+1);
+                if(monsterCard.getHidden())
+                    imageViews[i][j].setImage(backOfCard);
+                else   imageViews[i][j].setImage(monsterCard.getCardImage());
+            } else  imageViews[i][j].setImage(null);
+        }
+    }
+    }
+
+
 
     public void settingButtonClicked(MouseEvent mouseEvent)
     {
@@ -113,10 +199,6 @@ public class DuelMenu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-    public void initialGame() {
-        fillZones(firstPlayerBoardCards);
-        fillZones(secondPlayerBoardCards);
-    }
 
     public void nextPhase() {
         printResponse(gamePlayController.goNextPhase());
@@ -143,37 +225,38 @@ public class DuelMenu {
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
         }
     }
+    public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
+        for (Node node :gridPane.getChildren()) {
+            if(GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column){
+                return node;
+            }
+        }
+        return null;
+    }
+    private void setDeckZone()
+    {
 
-    private void fillZones(GridPane playerCardsInBoard) {
-        playerCardsInBoard.getColumnConstraints().clear();
+    }
+
+    private void setCardsInGrid(GridPane playerCardsInBoard ,ImageView[][] imageView) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-//                StackPane stackPane = new StackPane();
-////                stackPane.maxHeight(100);
-//                stackPane.prefHeight(100);
-////                stackPane.maxWidth(100);
-//                stackPane.prefWidth(100);
-//                stackPane.getChildren().add(new Rectangle(100, 180, Color.RED));
-//                GridPane.setRowIndex(stackPane, i);
-//                GridPane.setColumnIndex(stackPane, j);
-//                playerCardsInBoard.getChildren().add(stackPane);
-//                Image image = new Image(backOfCard);
-                ImageView imageView = new ImageView(backOfCard);
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(80);
-                imageView.setCursor(Cursor.HAND);
-                int finalI = i;
-                int finalJ = j;
-                imageView.setOnMouseClicked(mouseEvent -> {
-                    Zone.ZoneType zoneType;
-                    if (finalI ==0) zoneType= Zone.ZoneType.MAGIC_CARD;
-                    else zoneType= Zone.ZoneType.MONSTER_CARD;
-                    //TODO gamePlayController.selectNumericZone(finalJ,zoneType,)
-                });
-                playerCardsInBoard.add(imageView, j, i);
+                playerCardsInBoard.add(imageView[i][j], j, i);
                 playerCardsInBoard.setHgap(27);
             }
         }
+    }
+    public void setOnMouseClickedForCardImage(ImageView imageView ,String  opponentOrPlayer)
+    {   imageView.setOnMouseClicked(mouseEvent -> {
+        DuelMenuResponses duelMenuResponses;
+        int row = GridPane.getRowIndex(imageView);
+        int column = GridPane.getColumnIndex(imageView);
+        if (row == 0) duelMenuResponses = gamePlayController.selectNumericZone(column+1,"spell",opponentOrPlayer);
+        else duelMenuResponses =  gamePlayController.selectNumericZone(column+1,"monster",opponentOrPlayer);
+        if(duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED));
+        if(gamePlayController.showCard().equals(SHOW_CARD))
+            selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+    });
     }
 //    @Override
 //    public void scanInput() {

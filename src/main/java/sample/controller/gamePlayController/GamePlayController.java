@@ -272,7 +272,7 @@ public class GamePlayController extends MenuController {
         if (selectedCard == null) return NO_CARD_SELECTED;
         else if (selectedCard.getOwner() == opponentPlayer
                 && !selectedCard.getSummoned()) {
-            selectedCard = null;
+           selectedCard = null;
             return CANNOT_ACCESS_RIVAL_CARD;
         }
         else
