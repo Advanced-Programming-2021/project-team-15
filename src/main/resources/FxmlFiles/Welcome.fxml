@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="Welcome" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black" styleClass="welcome" stylesheets="@../CSSFiles/Welcome.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Main">
+   <left>
+      <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../Images/yugi2.png" />
+         </image>
+      </ImageView>
+   </left>
+   <center>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="262.0" fitWidth="534.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/yugiohTitle.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="140.0" text="Exit" textFill="#794d4d" onMouseClicked="#exitButtonClicked">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </center>
+
+
+
+</BorderPane>

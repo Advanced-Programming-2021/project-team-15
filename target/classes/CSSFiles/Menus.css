@@ -1,0 +1,57 @@
+.deckMenu{
+    -fx-background-image: url("../Images/deckMenu.jpg");
+    -fx-background-size: cover;
+}
+.deckEdit{
+    -fx-background-image: url("../Images/fusion.png");
+    -fx-background-size: cover;
+}
+.shopMenu {
+    -fx-background-image: url("../Images/AnimeGirls.jpg");
+    -fx-background-size: cover;
+}
+.shopMenu {
+    -fx-background-image: url("../Images/AnimeGirls.jpg");
+    -fx-background-size: cover;
+}
+.RPS{
+    -fx-background-image: url("../Images/rps.jpg");
+    -fx-background-size: cover;
+}
+.gameMenu {
+    -fx-background-image: url("../Images/GameMenu.png");
+    -fx-background-size: cover;
+}
+.preGame {
+    -fx-background-image: url("../Images/PreGame.jpg");
+    -fx-background-size: cover;
+}
+.gridPane {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.backBlue {
+    -fx-background-color: #90ebff;
+    -fx-opacity: 0.5;
+}
+.backBlue:hover {
+    -fx-opacity: 1;
+}
+.backYellow {
+    -fx-background-color:  #DAF7A6;
+    -fx-text-fill:  #34495e;
+    -fx-opacity: 0.5;
+}
+.backYellow:hover {
+    -fx-opacity: 1;
+}
+.importExportMenu {
+    -fx-background-image: url("../Images/AnimeGirls2.jpg");
+    -fx-background-size: cover;
+}
+.importVBox {
+    -fx-background-image: url("../Images/AnimeGirl2.jpg");
+    -fx-background-size: cover;
+}

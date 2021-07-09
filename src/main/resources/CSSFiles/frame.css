@@ -1,0 +1,5 @@
+.deckFrame{
+    -fx-background-image: url("../Images/deckBox.png");
+    -fx-background-size: cover;
+
+}

@@ -1,0 +1,16 @@
+{
+  "Attack": 2500,
+  "gameATK": 2500,
+  "Defence": 2100,
+  "gameDEF": 2100,
+  "Level": 7,
+  "Monster Type": "Spellcaster",
+  "Monster Attribute": "DARK",
+  "Monster Effect Type": "Normal",
+  "Name": "Dark magician",
+  "Description": "The ultimate wizard in terms of attack and defense.",
+  "cardNumber": "0",
+  "Card Type": "MONSTER",
+  "type": "MONSTER",
+  "Price": 8300
+}
