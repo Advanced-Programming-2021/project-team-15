@@ -26,6 +26,18 @@ public class AudioController {
         alert.setOnEndOfMedia(alert::stop);
     }
 
+    public static void playClick() {
+        if (mute) return;
+        click.play();
+        click.setOnEndOfMedia(click::stop);
+    }
+
+    public static void playHeartbeat() {
+        if (mute) return;
+        heartbeat.play();
+        heartbeat.setOnEndOfMedia(heartbeat::stop);
+    }
+
     public static void playMenu() {
         if (mute) return;
         mainMusic.stop();

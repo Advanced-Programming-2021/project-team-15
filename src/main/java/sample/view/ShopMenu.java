@@ -20,6 +20,7 @@ import sample.Main;
 import sample.controller.menuController.MenuController;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 
@@ -60,11 +61,6 @@ public class ShopMenu {
             shopMenu = new ShopMenu();
         return shopMenu;
     }
-
-//    @Override
-//    public void start(Stage stage) throws Exception {
-//        initializeContainer();
-//    }
 
     public void initializeContainer() {
         int rowsCount = Card.getAllCards().size() / maximumCardsInRow + 1;
@@ -127,6 +123,7 @@ public class ShopMenu {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    AudioController.playClick();
                     printResponse(shopController.buyItem(toBuyCard.getCardName()));
                     int money = MenuController.getUser().getMoney();
                     moneyLabel.setText(String.valueOf(money));
@@ -169,6 +166,7 @@ public class ShopMenu {
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }

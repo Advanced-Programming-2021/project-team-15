@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.controller.menuController.LoginController;
 import sample.controller.responses.LoginMenuResponses;
+import sample.controller.utilizationController.AudioController;
 
 import java.io.IOException;
 
@@ -33,12 +34,14 @@ public class LoginMenu {
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene welcomeMenu = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
         Main.stage.setScene(welcomeMenu);
 
     }
 
     public void submitButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         if (usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
             if (usernameTextField.getText().equals(""))
                 usernameError.setText("username field is empty");

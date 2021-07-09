@@ -40,17 +40,19 @@ public class Main extends Application {
 
 
     public void loginButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
         stage.setScene(loginScene);
-
     }
 
     public void signUpButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene signUpScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
         stage.setScene(signUpScene);
     }
 
     public void exitButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         System.exit(0);
     }
 

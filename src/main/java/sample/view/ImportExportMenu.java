@@ -22,6 +22,7 @@ import sample.controller.menuController.ImportExportController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.ImportExportResponses;
 import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.DatabaseController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
@@ -95,6 +96,7 @@ public class ImportExportMenu{
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }
@@ -285,6 +287,7 @@ public class ImportExportMenu{
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    AudioController.playClick();
                     if (importing) importCards(mouseEvent);
                     else exportCards(mouseEvent);
                 } catch (IOException e) {
