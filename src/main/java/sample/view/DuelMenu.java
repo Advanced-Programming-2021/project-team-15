@@ -178,6 +178,30 @@ public class DuelMenu {
        setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
     }
     public void setHandCards(){
+        firstPlayerHand.getColumnConstraints().clear();
+        secondPlayerHand.getColumnConstraints().clear();
+        int handCount = gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand();
+        if(handCount!=0){
+            for (int i = 0  ;  i< handCount ; i++)
+            {   ImageView imageView = new ImageView();
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(80);
+                imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
+                selectHandCard(imageView, "player");
+                firstPlayerHand.add(imageView,i,0);
+                firstPlayerHand.setHgap(30);
+            }}
+        int handCount1 = gamePlayController.getOpponentPlayer().getHand().getNumberOfCardsInHand();
+        if(handCount1!=0){
+            for (int i =0 ; i < handCount1  ; i ++) {
+                ImageView imageView1 = new ImageView();
+                imageView1.setFitHeight(100);
+                imageView1.setFitWidth(80);
+                imageView1.setImage(backOfCard);
+                selectHandCard(imageView1, "opponent");
+                secondPlayerHand.add(imageView1, i, 0);
+                secondPlayerHand.setHgap(30);
+            }}
     //     setObservableListForHand();
         }
      //   public void setObservableListForHand()
