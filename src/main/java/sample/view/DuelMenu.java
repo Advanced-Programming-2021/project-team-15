@@ -36,6 +36,9 @@ import sample.model.Player;
 import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
+import sample.model.zones.GraveyardZone;
+import sample.model.zones.Hand;
+import sample.model.zones.Zone;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -102,6 +105,16 @@ public class DuelMenu {
     private ScrollPane currentGraveyardShow;
     @FXML
     private ScrollPane opponentGraveyardShow;
+    @FXML
+    private Button setButton;
+    @FXML
+    private Button summonButton;
+    @FXML
+    private Button attackButton;
+    @FXML
+    private Button directAttackButton;
+    @FXML
+    private Button activateButton;
 
     private Timer timer;
     private boolean isPause;
@@ -117,6 +130,86 @@ public class DuelMenu {
 //        for ()
 //    }
 //  /
+
+    public void checkForActionButtonsActivity(Card selectedCard) {
+        if (selectedCard==null || selectedCard.getOwner()== gamePlayController.getOpponentPlayer()) {
+            inActiveButton(setButton);
+            inActiveButton(summonButton);
+            inActiveButton(attackButton);
+            inActiveButton(directAttackButton);
+            inActiveButton(activateButton);
+            return;
+        }
+        if (selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND) activeButton(setButton);
+        else inActiveButton(setButton);
+        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
+                && selectedCard.getCardType()== Card.CardType.MONSTER) ||
+                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MONSTER_CARD) activeButton(summonButton);
+        else inActiveButton(summonButton);
+        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(attackButton);
+        else inActiveButton(attackButton);
+        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(directAttackButton);
+        else inActiveButton(directAttackButton);
+        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
+                && selectedCard.getCardType()== Card.CardType.MAGIC) ||
+                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MAGIC_CARD) activeButton(activateButton);
+        else inActiveButton(activateButton);
+    }
+
+    public void setButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void summonButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void attackButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void directAttackButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void activateButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void activeButton(Button button) {
+        button.setCursor(Cursor.HAND);
+        button.setOpacity(1);
+        switch (button.getText()) {
+            case "Set" :
+                button.setOnMouseClicked(this::setButtonClicked);
+                break;
+            case "Summon" :
+                button.setOnMouseClicked(this::summonButtonClicked);
+                break;
+            case "Attack" :
+                button.setOnMouseClicked(this::attackButtonClicked);
+                break;
+            case "Direct Attack" :
+                button.setOnMouseClicked(this::directAttackButtonClicked);
+                break;
+            case "Activate" :
+                button.setOnMouseClicked(this::activateButtonClicked);
+                break;
+        }
+    }
+
+    public void inActiveButton(Button button) {
+        button.setCursor(Cursor.DEFAULT);
+        button.setOpacity(0.5);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "This action is not active for this card",  new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
+            }
+        });
+    }
 
     public void setShowGraveyard(StackPane graveyard) {
         graveyard.setCursor(Cursor.HAND);
@@ -348,6 +441,7 @@ public class DuelMenu {
     }
 
     public void refreshPlayersBox() {
+        checkForActionButtonsActivity(gamePlayController.getSelectedCard());
         currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getUserName() + " :   " +
                 gamePlayController.getCurrentPlayer().getUser().getNickName());
         currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
@@ -362,6 +456,7 @@ public class DuelMenu {
         if (gamePlayController.getSelectedCard() == null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
+
         } else {
             selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());

@@ -5712,7 +5712,8 @@
     "passWord": "m",
     "nickName": "milan",
     "score": 0,
-    "money": 2550600
+    "money": 2550600,
+    "rank": 0
   },
   {
     "allDecksOfUser": [],
@@ -5721,7 +5722,8 @@
     "passWord": "k",
     "nickName": "kia",
     "score": 0,
-    "money": 0
+    "money": 0,
+    "rank": 0
   },
   {
     "activeDeckName": "pedaret",
@@ -11436,7 +11438,8 @@
     "passWord": "p",
     "nickName": "parpari",
     "score": 0,
-    "money": 2545600
+    "money": 2551357,
+    "rank": 0
   },
   {
     "allDecksOfUser": [],
@@ -11445,7 +11448,8 @@
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 0
+    "money": 0,
+    "rank": 0
   },
   {
     "allDecksOfUser": [],
@@ -11454,6 +11458,7 @@
     "passWord": "8181",
     "nickName": "er",
     "score": 0,
-    "money": 0
+    "money": 0,
+    "rank": 0
   }
 ]

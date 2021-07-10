@@ -52,3 +52,7 @@
     -fx-text-fill: linear-gradient(to right,White,Black);
     -fx-prompt-text-fill: linear-gradient(to right,White,Black);
 }
+.actionButtonsBack {
+    -fx-background-color: linear-gradient(to right,#DE3163,#CCCCFF);
+    -fx-text-fill: #9FE2BF;
+}
