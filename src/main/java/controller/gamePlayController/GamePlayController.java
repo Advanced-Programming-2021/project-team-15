@@ -192,14 +192,205 @@ public class GamePlayController extends MenuController {
         refresh();
         changeTurn();
         if (currentPlayer.getCanDraw()) {
-            shuffle();
+            //     shuffle();
             currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
+            //DuelMenu.getInstance().printString(currentPlayer.getDeckZone().getZoneCards().get(0).getCardName());
             currentPlayer.getDeckZone().getZoneCards().remove(0);
             if (checkIfGameIsFinished())
                 defineWinner();
+
         } else {
-            currentPlayer.setCanDraw(true);
+            currentPlayer.
+                    setCanDraw(true);
+
         }
+        if ( currentPlayer.getUser().getNickName().equals("ai")) {
+            int j=0;
+            for(int i=1 ; i<=currentPlayer.getMagicCardZone().getZoneCards().size() ; i++){
+                if(currentPlayer.getMagicCardZone().getZoneCards().get(i)!=null){
+                    j+=1;
+                }
+            }
+            int x=  currentPlayer.getMonsterCardZone().getNumberOfCard();
+            int z=currentPlayer.getMagicCardZone().getNumberOfCard();
+            int k=currentPlayer.getMagicCardZone().getZoneCards().size();
+            int x1=opponentPlayer.getMagicCardZone().getNumberOfCard();
+            int x2=opponentPlayer.getMonsterCardZone().getNumberOfCard();
+            aiSummonOrSetLevel6Monster();
+            aiSetMagicCard();
+            aiDirectAttack();
+            aiAttackToAttackPos();
+            changeTurn();
+        }
+
+    }
+    public void aiSummonOrSetLevel6Monster(){
+        for(int i=1 ; i<=currentPlayer.getHand().getNumberOfCardsInHand() ; i++){
+            if(currentPlayer.getMonsterCardZone().getNumberOfCard()<5 && currentPlayer.getMonsterCardZone().getNumberOfCard()>=2){
+                if(currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() == 6 ){
+                    for(int j=0 ; j<2 ; j++){
+                        for(int k=1 ; k<=5 ; k++){
+                            currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(k));
+                            currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(k));
+                            //  DuelMenu.getInstance().printString(showGameBoard());
+                        }
+                    }
+                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    // DuelMenu.getInstance().printString(showGameBoard());
+                    return;
+                }
+            }
+        }
+        aiSummonOrSetLevel5Monster();
+    }
+
+    public void aiSummonOrSetLevel5Monster() {
+
+        for (int i = 1; i <= currentPlayer.getHand().getNumberOfCardsInHand(); i++) {
+            if (currentPlayer.getMonsterCardZone().getNumberOfCard() < 5 && gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() >= 1) {
+                if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() == 5) {
+                    if (((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameATK() >
+                            ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameDEF()) {
+                        for (int j = 1; j <= 5; j++) {
+                            if (currentPlayer.getMonsterCardZone().getZoneCards().get(j) != null) {
+                                currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                                currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                                // DuelMenu.getInstance().printString(showGameBoard());
+                                currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                                //   DuelMenu.getInstance().printString(showGameBoard());
+                                return;
+                            }
+                        }
+                    }else{
+                        for (int j = 1; j <= 5; j++) {
+                            if (currentPlayer.getMonsterCardZone().getZoneCards().get(j) != null) {
+                                currentPlayer.getGraveyardZone().addCardToGraveyardZone((Card) currentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                                currentPlayer.getMonsterCardZone().getZoneCards().remove(currentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                                //  DuelMenu.getInstance().printString(showGameBoard());
+                                currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                                //   DuelMenu.getInstance().printString(showGameBoard());
+                                return;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        aiSummonOrSetNormalMonster();
+    }
+
+    public void aiSummonOrSetNormalMonster() {
+        for (int i = 1; i <= currentPlayer.getHand().getNumberOfCardsInHand(); i++) {
+            if (currentPlayer.getMonsterCardZone().getNumberOfCard() < 5) {
+                if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameATK() > 1500 &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    //   DuelMenu.getInstance().printString(showGameBoard());
+                    break;
+
+                } else if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getGameDEF() > 1500 &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    //  DuelMenu.getInstance().printString(showGameBoard());
+                    break;
+                } else if (currentPlayer.getHand().getZoneCards().get(i) instanceof MonsterCard &&
+                        ((MonsterCard) currentPlayer.getHand().getZoneCards().get(i)).getLevel() <= 4) {
+                    currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    // DuelMenu.getInstance().printString(showGameBoard());
+                    break;
+                }
+            }
+        }
+    }
+
+    public void aiSetMagicCard() {
+        for (int i = 1; i <= currentPlayer.getHand().getNumberOfCardsInHand(); i++) {
+            if (currentPlayer.getMagicCardZone().getNumberOfCard() < 5) {
+                if (currentPlayer.getHand().getZoneCards().get(i) instanceof MagicCard) {
+                    currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) currentPlayer.getHand().getZoneCards().get(i), currentPlayer);
+                    //  ((MagicCard) currentPlayer.getMagicCardZone().getZoneCards().get(i)).setHidden(true);
+                    // DuelMenu.getInstance().printString(showGameBoard());
+                }
+            }
+        }
+
+    }
+
+    public void aiDirectAttack() {
+        System.out.println("real");
+        if (opponentPlayer.getMonsterCardZone().getNumberOfCard() == 0 && currentPlayer.getMonsterCardZone().getNumberOfCard() > 0) {
+            System.out.println("hi");
+            for (int i = 1; i <= 5; i++) {
+                if (currentPlayer.getMonsterCardZone().getZoneCards().get(i) != null && ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getMode() == MonsterCard.Mode.ATTACK) {
+                    opponentPlayer.reduceLifePoint(((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getGameATK());
+                    System.out.println("why");
+                    //   DuelMenu.getInstance().printString(showGameBoard());
+                }
+            }
+        }
+
+
+    }
+
+
+    public void aiAttackToAttackPos() {
+        int attacksCount = 0;
+        if (opponentPlayer.getMonsterCardZone().getNumberOfCard() > 0 && currentPlayer.getMonsterCardZone().getNumberOfCard() > 0) {
+            for (int i = 1; i <= 5; i++) {
+                if (currentPlayer.getMonsterCardZone().getZoneCards().get(i) != null && ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getMode() == MonsterCard.Mode.ATTACK) {
+                    int currentPlayerAttack = ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getGameATK();
+                    for (int j = 1; j <= 5; j++) {
+                        if (opponentPlayer.getMonsterCardZone().getZoneCards().get(j) != null && ((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j)).getMode() == MonsterCard.Mode.ATTACK) {
+                            int opponentPlayerAttack = ((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j)).getGameATK();
+                            if (currentPlayerAttack > opponentPlayerAttack) {
+                                opponentPlayer.getGraveyardZone().addCardToGraveyardZone((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                                opponentPlayer.getMonsterCardZone().getZoneCards().remove(opponentPlayer.getMonsterCardZone().getZoneCards().get(j));
+
+                                attacksCount += 1;
+                                opponentPlayer.reduceLifePoint(currentPlayerAttack - opponentPlayerAttack);
+                                //     DuelMenu.getInstance().printString(showGameBoard());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (attacksCount == 0) {
+                aiAttackToDefensePos();
+            }
+        }
+
+
+
+    }
+
+    public void aiAttackToDefensePos() {
+        for (int i = 1; i <= 5; i++) {
+            if (currentPlayer.getMonsterCardZone().getZoneCards().get(i) != null && ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getMode() == MonsterCard.Mode.ATTACK) {
+                int currentPlayerAttack = ((MonsterCard) currentPlayer.getMonsterCardZone().getZoneCards().get(i)).getGameATK();
+                for (int j = 1; j <= 5; j++) {
+                    if (opponentPlayer.getMonsterCardZone().getZoneCards().get(j) != null && ((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j)).getMode() == MonsterCard.Mode.DEFENSE) {
+                        ((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j)).setHidden(false);
+                        int opponentPlayerDefense = ((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j)).getGameDEF();
+                        if (currentPlayerAttack > opponentPlayerDefense) {
+                            opponentPlayer.getGraveyardZone().addCardToGraveyardZone((MonsterCard) opponentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                            opponentPlayer.getMonsterCardZone().getZoneCards().remove(opponentPlayer.getMonsterCardZone().getZoneCards().get(j));
+                            //   DuelMenu.getInstance().printString(showGameBoard());
+                            break;
+                        } else {
+                            currentPlayer.reduceLifePoint(opponentPlayerDefense - currentPlayerAttack);
+                            //    DuelMenu.getInstance().printString(showGameBoard());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     public Boolean RPS(String firstPlayerMove, String secondPlayerMove) {
@@ -924,6 +1115,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses goNextPhase() {
         DuelMenu.getInstance().printString(showGameBoard());
+
         if (currentPhaseNumber == 5) {
             currentPhaseNumber = 0;
             return DuelMenuResponses.RIVALS_TURN_AND_SHOW_DRAW_PHASE;
