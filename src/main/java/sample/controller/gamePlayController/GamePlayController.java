@@ -109,6 +109,10 @@ public class GamePlayController extends MenuController {
         GamePlayController.effectController = effectController;
     }
 
+    public static EffectController getEffectController() {
+        return effectController;
+    }
+
     public Player getMainCurrentPlayer() {
         return mainCurrentPlayer;
     }
