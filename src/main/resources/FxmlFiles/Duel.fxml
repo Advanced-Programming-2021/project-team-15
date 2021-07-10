@@ -151,26 +151,26 @@
                   </Label>
                   <HBox alignment="CENTER" layoutX="1.0" layoutY="380.0" prefHeight="100.0" prefWidth="565.0" spacing="10.0">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Set" textAlignment="CENTER" fx:id="setButton">
+                        <Button alignment="CENTER" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Set" textAlignment="CENTER" fx:id="setButton" onMouseClicked="#setButtonClicked">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Button>
-                        <Button alignment="CENTER" layoutX="192.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Summon" textAlignment="CENTER" fx:id="summonButton">
+                        <Button alignment="CENTER" layoutX="192.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Summon" textAlignment="CENTER" fx:id="summonButton" onMouseClicked="#summonButtonClicked">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="260.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Attack" textAlignment="CENTER" fx:id="attackButton">
+                        <Button alignment="CENTER" layoutX="260.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Attack" textAlignment="CENTER" fx:id="attackButton" onMouseClicked="#attackButtonClicked">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="328.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Direct Attack" textAlignment="CENTER" fx:id="directAttackButton">
+                        <Button alignment="CENTER" layoutX="328.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Direct Attack" textAlignment="CENTER" fx:id="directAttackButton" onMouseClicked="#directAttackButtonClicked">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="385.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Activate" textAlignment="CENTER" fx:id="activateButton">
+                        <Button alignment="CENTER" layoutX="385.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Activate" textAlignment="CENTER" fx:id="activateButton" onMouseClicked="#activateButtonClicked">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>

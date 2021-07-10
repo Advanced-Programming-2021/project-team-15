@@ -462,7 +462,6 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses set() {
-
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand())
             return DuelMenuResponses.CANT_SET_THIS_CARD;
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&

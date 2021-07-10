@@ -157,7 +157,8 @@ public class DuelMenu {
     }
 
     public void setButtonClicked(MouseEvent mouseEvent) {
-
+//        printResponse(gamePlayController.set());
+//        setHandCards();
     }
 
     public void summonButtonClicked(MouseEvent mouseEvent) {
