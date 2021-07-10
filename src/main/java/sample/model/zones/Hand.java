@@ -1,5 +1,6 @@
 package sample.model.zones;
 
+import sample.controller.gamePlayController.GamePlayController;
 import sample.model.cards.Card;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Hand extends Zone {
     }
 
     public void addCardToHand(Card card) {
+        GamePlayController.getInstance().getDuelMenu().addToHand(zoneCards.size(),card);
         card.setCardPlacedZone(this);
         zoneCards.add(card);
 
@@ -32,6 +34,7 @@ public class Hand extends Zone {
     }
 
     public void removeCardFromHand(Card card) {
+        GamePlayController.getInstance().getDuelMenu().removeFromHand(zoneCards.indexOf(card),card.getOwner());
         zoneCards.remove(card);
     }
 

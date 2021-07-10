@@ -227,11 +227,8 @@ public class GamePlayController extends MenuController {
         }
         shuffle();
         for (int i = 0; i < 5; i++) {
-            duelMenu.setHandCards();
-//            duelMenu.moveToPlayerHandFromDeck(currentPlayer.getHand().getNumberOfCardsInHand() ,currentPlayer.getDeckZone().getZoneCards().get(0));
             moveFirstCardFromHandToDeck(currentPlayer);
             moveFirstCardFromHandToDeck(opponentPlayer);
-            duelMenu.updateDecks();
         }
         currentPlayer.setCanDraw(true);
         opponentPlayer.setCanDraw(true);

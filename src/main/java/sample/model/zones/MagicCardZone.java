@@ -1,5 +1,6 @@
 package sample.model.zones;
 
+import sample.controller.gamePlayController.GamePlayController;
 import sample.model.Player;
 import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
@@ -14,15 +15,6 @@ public class MagicCardZone extends NumericZone {
             zoneCards.put(i, null);
     }
 
-    public void moveToFirstEmptyPlace(Card card) {
-        for (int key = 1; key <= 5; key++) {
-            if (zoneCards.get(key) == null) {
-                zoneCards.get(key).setCardPlacedZone(this);
-                zoneCards.put(key, card);
-                return;
-            }
-        }
-    }
 
     public void removeMagicCard(MagicCard magicCard) {
         //dont know
@@ -38,6 +30,7 @@ public class MagicCardZone extends NumericZone {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, magicCard);
                 magicCard.setCardPlacedZone(this);
+                GamePlayController.getInstance().getDuelMenu().runAndUpdate();
                 return;
             }
         }

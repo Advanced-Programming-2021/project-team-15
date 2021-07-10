@@ -24,6 +24,7 @@ public class MonsterCardZone extends NumericZone {
             if (zoneCards.get(key) == null) {
                 zoneCards.get(key).setCardPlacedZone(this);
                 zoneCards.put(key, card);
+                GamePlayController.getInstance().getDuelMenu().runAndUpdate();
                 return;
             }
         }
@@ -35,6 +36,7 @@ public class MonsterCardZone extends NumericZone {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, monsterCard);
                 monsterCard.setCardPlacedZone(this);
+                GamePlayController.getInstance().getDuelMenu().runAndUpdate();
                 GamePlayController.getInstance().checkForContinuesEffectsWhenNewCardAdded(monsterCard, currentPlayer);
                 return;
             }

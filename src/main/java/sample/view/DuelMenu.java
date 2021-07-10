@@ -132,6 +132,7 @@ public class DuelMenu {
                 secondPlayerBoardCards.add(imageView1,j,i);
                 secondPlayerBoardCards.setHgap(27);}
         }
+        runAndUpdate();
         updateDeck(playerDeck, gamePlayController.getCurrentPlayer());
         updateDeck(opponentDeck,gamePlayController.getOpponentPlayer());
     }
@@ -145,8 +146,8 @@ public class DuelMenu {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if(!isPause)
-                            runAndUpdate();
+//                        if(!isPause)
+//                            runAndUpdate();
 
                     }
                 });
@@ -174,8 +175,9 @@ public class DuelMenu {
 
     }
     public void runAndUpdate()
-    {  setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
-       setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
+    {
+        setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
+        setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
     }
     public void setHandCards(){
         firstPlayerHand.getColumnConstraints().clear();
@@ -184,8 +186,8 @@ public class DuelMenu {
         if(handCount!=0){
             for (int i = 0  ;  i< handCount ; i++)
             {   ImageView imageView = new ImageView();
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(80);
+                imageView.setFitHeight(150);
+                imageView.setFitWidth(105);
                 imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
                 selectHandCard(imageView, "player");
                 firstPlayerHand.add(imageView,i,0);
@@ -195,8 +197,8 @@ public class DuelMenu {
         if(handCount1!=0){
             for (int i =0 ; i < handCount1  ; i ++) {
                 ImageView imageView1 = new ImageView();
-                imageView1.setFitHeight(100);
-                imageView1.setFitWidth(80);
+                imageView1.setFitHeight(150);
+                imageView1.setFitWidth(105);
                 imageView1.setImage(backOfCard);
                 selectHandCard(imageView1, "opponent");
                 secondPlayerHand.add(imageView1, i, 0);
@@ -245,27 +247,47 @@ public class DuelMenu {
 //        });
 //    }
 
-        public void moveToFirstEmptyPlaceFromHand(Player player, Card card, int key, String type)
-        {  int row ;
-            if(type.equals("magic"))
-                row = 0;
-            else row = 1;
-         int i =  player.getHand().getZoneCards().indexOf(card);
-         double  toX, toY;
-            ImageView imageView;
-            if(player==gamePlayController.getCurrentPlayer()){
-                imageView  = (ImageView) getNodeByCoordinate(0,i,firstPlayerHand);
-                toX = getNodeByCoordinate(row,key-1,firstPlayerBoardCards).getLayoutX();
-                toY = getNodeByCoordinate(row,key-1, firstPlayerBoardCards).getLayoutY();}
-            else {
-                imageView  = (ImageView) getNodeByCoordinate(0,i,secondPlayerHand);
-                toX = getNodeByCoordinate(row,key-1,secondPlayerBoardCards).getLayoutX();
-                toY = getNodeByCoordinate(row,key-1, secondPlayerBoardCards).getLayoutY();}
-         PathTransition transition = newPathTransitionTo(imageView,toX,toY);
-         transition.play();
-
-        }
-
+       public void removeFromHand(int i , Player player) {
+           ImageView imageView;
+           if (player == gamePlayController.getCurrentPlayer()) {
+                imageView = (ImageView) getNodeByCoordinate(0, i, firstPlayerHand);}
+           else  imageView = (ImageView) getNodeByCoordinate(0, i, secondPlayerHand);
+               FadeTransition fadeTransition = new FadeTransition();
+               fadeTransition.setNode(imageView);
+               fadeTransition.setDuration(Duration.millis(1000));
+               fadeTransition.setFromValue(1);
+               fadeTransition.setToValue(0);
+               fadeTransition.play();
+               fadeTransition.setOnFinished(event -> {
+                   if (player == gamePlayController.getCurrentPlayer())
+                   firstPlayerHand.getChildren().remove(imageView);
+                   else secondPlayerHand.getChildren().remove(imageView);
+               });
+           }
+           public void addToHand(int i  ,Card card) {
+               ImageView imageView = new ImageView();
+               imageView.setFitHeight(150);
+               imageView.setFitWidth(105);
+               if(card.getOwner()==gamePlayController.getCurrentPlayer())
+               {   imageView.setImage(card.getCardImage());
+                   firstPlayerHand.add(imageView,i,0);
+                   firstPlayerHand.setHgap(30);
+                   selectHandCard(imageView, "player");}
+               else {
+                    imageView.setImage(backOfCard);
+                    secondPlayerHand.add(imageView,i,0);
+                    secondPlayerHand.setHgap(30);
+               }
+               FadeTransition fadeTransition = new FadeTransition();
+               fadeTransition.setNode(imageView);
+               fadeTransition.setDuration(Duration.millis(1000));
+               fadeTransition.setFromValue(0);
+               fadeTransition.setToValue(1);
+               fadeTransition.play();
+               fadeTransition.setOnFinished(event -> {
+                   updateDecks();
+                            });
+           }
 
         public void moveToPlayerHandFromDeck(int i,Card card)
         {   ImageView imageView= new ImageView(card.getCardImage());
@@ -292,18 +314,27 @@ public class DuelMenu {
             updateDeck(playerDeck, gamePlayController.getCurrentPlayer());
             updateDeck(opponentDeck,gamePlayController.getOpponentPlayer());
         }
-
-
+        public void updateFirstPlayerBoard()
+        { setPlayersCards(gamePlayController.getCurrentPlayer(), playerCards);
+        }
+        public void updateSecondPlayerBoard()
+        {setPlayersCards(gamePlayController.getOpponentPlayer(), opponentCards);
+        }
     public void setPlayersCards(Player player ,ImageView[][] imageViews)
     {
         for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 5; j++) {
+//            if(player==gamePlayController.getCurrentPlayer())
+//                setOnMouseClickedForCardImage( imageViews[i][j] ,"player");
+//            else  setOnMouseClickedForCardImage( imageViews[i][j] ,"opponent");
+            boolean appear  = (imageViews[i][j].getImage()==null);
             if( i==0 && !player.getMagicCardZone().toStringPos(i+1).equals("E"))
-            { if(player.getMagicCardZone().toStringPos(i+1).equals("O"))
-            { MagicCard magicCard= (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
+            {   if(player.getMagicCardZone().toStringPos(i+1).equals("O"))
+            {   MagicCard magicCard= (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
                 imageViews[i][j].setImage(magicCard.getCardImage());
             }
             else  imageViews[i][j].setImage(backOfCard);
+            if(appear) appearTransition(imageViews[i][j]);
             }
             else if( i==1 && !player.getMonsterCardZone().toStringPos(i+1).equals("E"))
             {
@@ -311,9 +342,36 @@ public class DuelMenu {
                 if(monsterCard.getHidden())
                     imageViews[i][j].setImage(backOfCard);
                 else   imageViews[i][j].setImage(monsterCard.getCardImage());
-            } else  imageViews[i][j].setImage(null);
+                if(appear) appearTransition(imageViews[i][j]);
+            } else {
+                if(imageViews[i][j].getImage()!=null)
+                { disAppearTransition(imageViews[i][j]);
+                } else imageViews[i][j].setImage(null);
+            }
         }
     }
+    }
+    public void disAppearTransition(ImageView imageView)
+    {  FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(imageView);
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.play();
+        fadeTransition.setOnFinished(event -> {
+            imageView.setImage(null);
+        });
+    }
+    public void appearTransition(ImageView imageView)
+    {  FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(imageView);
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+        fadeTransition.setOnFinished(event -> {
+            updateDecks();
+        });
     }
     private static PathTransition newPathTransitionTo(ImageView block, double toX, double toY) {
         double fromX = block.getLayoutBounds().getWidth() / 2;
@@ -432,8 +490,7 @@ public class DuelMenu {
     }
     public void setOnMouseClickedForCardImage(ImageView imageView ,String  opponentOrPlayer)
     {   imageView.setOnMouseClicked(mouseEvent -> {
-        imageView.setCursor(Cursor.HAND);
-        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && imageView.getImage()!=null) {
             DuelMenuResponses duelMenuResponses;
             int row = GridPane.getRowIndex(imageView);
             int column = GridPane.getColumnIndex(imageView);
