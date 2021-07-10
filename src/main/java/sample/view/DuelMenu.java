@@ -1,31 +1,44 @@
 package sample.view;
 
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Main;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DuelMenuResponses;
+import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 import sample.model.Player;
-import sample.model.zones.Zone;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static sample.controller.responses.DuelMenuResponses.SHOW_CARD;
 
 public class DuelMenu {
     private static final GamePlayController gamePlayController;
     private static DuelMenu duelMenu;
     private static Image backOfCard = new Image(String.valueOf(DuelMenu.class.
-            getResource("/Images/cardAnimeGirl.jpg" )));
+            getResource("/Images/cardAnimeGirl.jpg")));
 
     static {
         gamePlayController = GamePlayController.getInstance();
@@ -34,11 +47,17 @@ public class DuelMenu {
     DuelMenuResponses duelMenuResponses;
     private boolean weAreOnGame = false;
     private String secondUsername;
+    private ImageView[][] playerCards;
+    private ImageView[][] opponentCards;
     private Boolean cantDoThisKindsOfMove = false;
     @FXML
     private GridPane firstPlayerBoardCards;
     @FXML
     private GridPane secondPlayerBoardCards;
+    @FXML
+    private GridPane firstPlayerHand;
+    @FXML
+    private GridPane secondPlayerHand;
     @FXML
     private Label phaseNameShow;
     @FXML
@@ -61,11 +80,145 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
+    private Timer timer;
+    private boolean isPause;
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
             duelMenu = new DuelMenu();
         return duelMenu;
+    }
+
+    public void initialGame() {
+        isPause = false;
+        refreshPlayersBox();
+        initializeBoard();
+        runAndUpdate();
+        startTimerAndRun();
+    }
+
+    public void initializeBoard() {
+        playerCards = new ImageView[2][5];
+        opponentCards = new ImageView[2][5];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 5; j++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(80);
+                playerCards[i][j] = imageView;
+                setOnMouseClickedForCardImage(imageView, "player");
+                firstPlayerBoardCards.add(imageView, j, i);
+                firstPlayerBoardCards.setHgap(27);
+                ImageView imageView1 = new ImageView();
+                imageView1.setFitHeight(100);
+                imageView1.setFitWidth(80);
+                opponentCards[i][j] = imageView1;
+                setOnMouseClickedForCardImage(imageView1, "opponent");
+                secondPlayerBoardCards.add(imageView1, j, i);
+                secondPlayerBoardCards.setHgap(27);
+            }
+        }
+    }
+
+    public void startTimerAndRun() {
+        timer = new java.util.Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isPause)
+                            runAndUpdate();
+
+                    }
+                });
+            }
+        };
+        long frameTimeInMilliseconds = (long) (200.0);
+        timer.schedule(timerTask, 0, frameTimeInMilliseconds);
+
+    }
+
+    public void runAndUpdate() {
+        setHandCards();
+        setPlayersCards(gamePlayController.getCurrentPlayer(), playerCards);
+        setPlayersCards(gamePlayController.getOpponentPlayer(), opponentCards);
+    }
+
+    public void setHandCards() {
+        firstPlayerHand.getColumnConstraints().clear();
+        secondPlayerHand.getColumnConstraints().clear();
+        int handCount = gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand();
+        if (handCount != 0) {
+            for (int i = 0; i < handCount; i++) {
+                ImageView imageView = new ImageView();
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(80);
+                imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
+                imageView.setCursor(Cursor.HAND);
+                selectHandCard(imageView, "player");
+                firstPlayerHand.add(imageView, i, 0);
+                firstPlayerHand.setHgap(30);
+            }
+        }
+        int handCount1 = gamePlayController.getOpponentPlayer().getHand().getNumberOfCardsInHand();
+        if (handCount1 != 0) {
+            for (int i = 0; i < handCount1; i++) {
+                ImageView imageView1 = new ImageView();
+                imageView1.setFitHeight(100);
+                imageView1.setFitWidth(80);
+                imageView1.setImage(backOfCard);
+                selectHandCard(imageView1, "opponent");
+                secondPlayerHand.add(imageView1, i, 0);
+                secondPlayerHand.setHgap(30);
+            }
+        }
+    }
+
+    public void setPlayersCards(Player player, ImageView[][] imageViews) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i == 0 && !player.getMagicCardZone().toStringPos(i + 1).equals("E")) {
+                    if (player.getMagicCardZone().toStringPos(i + 1).equals("O")) {
+                        MagicCard magicCard = (MagicCard) player.getMagicCardZone().getZoneCards().get(i + 1);
+                        imageViews[i][j].setImage(magicCard.getCardImage());
+                        imageViews[i][j].setCursor(Cursor.HAND);
+                    } else imageViews[i][j].setImage(backOfCard);
+                } else if (i == 1 && !player.getMonsterCardZone().toStringPos(i + 1).equals("E")) {
+                    MonsterCard monsterCard = (MonsterCard) player.getMonsterCardZone().getZoneCards().get(i + 1);
+                    if (monsterCard.getHidden())
+                        imageViews[i][j].setImage(backOfCard);
+                    else {
+                        imageViews[i][j].setImage(monsterCard.getCardImage());
+                        imageViews[i][j].setCursor(Cursor.HAND);
+                    }
+                } else imageViews[i][j].setImage(null);
+            }
+        }
+    }
+
+
+    public void settingButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void mainMenuButtonClicked() throws IOException {
+        AudioController.playMenu();
+        Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+        Main.stage.setScene(mainMenuScene);
+    }
+
+    public void newDuelButtonClicked(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/PopUp.fxml"));
+        Scene scene = new Scene(loader.load());
+        PopupController popupController = loader.getController();
+        Stage popupStage = new Stage();
+        popupController.setStage(popupStage);
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.setScene(scene);
+        popupController.initialize();
+        popupStage.showAndWait();
     }
 
     public boolean isWeAreOnGame() {
@@ -84,11 +237,6 @@ public class DuelMenu {
         this.cantDoThisKindsOfMove = cantDoThisKindsOfMove;
     }
 
-    public void initialGame() {
-        fillZones(firstPlayerBoardCards);
-        fillZones(secondPlayerBoardCards);
-    }
-
     public void nextPhase() {
         printResponse(gamePlayController.goNextPhase());
         refreshPhaseBox();
@@ -99,52 +247,73 @@ public class DuelMenu {
     }
 
     public void refreshPlayersBox() {
-        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getNickName());
+        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getCurrentPlayer().getUser().getNickName());
         currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint()/8000);
-        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getNickName());
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint() / 8000);
+        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getOpponentPlayer().getUser().getNickName());
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
-        if (gamePlayController.getSelectedCard()==null) {
+        opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
+        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint() / 8000);
+        if (gamePlayController.getSelectedCard() == null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
-        }
-        else {
+        } else {
             selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
         }
+        if (gamePlayController.getCurrentPlayer().getLifePoint() <= 2000) AudioController.playHeartbeat();
     }
 
-    private void fillZones(GridPane playerCardsInBoard) {
-        playerCardsInBoard.getColumnConstraints().clear();
+    public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private void setDeckZone() {
+
+    }
+
+    private void setCardsInGrid(GridPane playerCardsInBoard, ImageView[][] imageView) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-//                StackPane stackPane = new StackPane();
-////                stackPane.maxHeight(100);
-//                stackPane.prefHeight(100);
-////                stackPane.maxWidth(100);
-//                stackPane.prefWidth(100);
-//                stackPane.getChildren().add(new Rectangle(100, 180, Color.RED));
-//                GridPane.setRowIndex(stackPane, i);
-//                GridPane.setColumnIndex(stackPane, j);
-//                playerCardsInBoard.getChildren().add(stackPane);
-//                Image image = new Image(backOfCard);
-                ImageView imageView = new ImageView(backOfCard);
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(80);
-                imageView.setCursor(Cursor.HAND);
-                int finalI = i;
-                int finalJ = j;
-                imageView.setOnMouseClicked(mouseEvent -> {
-                    Zone.ZoneType zoneType;
-                    if (finalI ==0) zoneType= Zone.ZoneType.MAGIC_CARD;
-                    else zoneType= Zone.ZoneType.MONSTER_CARD;
-                    //TODO gamePlayController.selectNumericZone(finalJ,zoneType,)
-                });
-                playerCardsInBoard.add(imageView, j, i);
+                playerCardsInBoard.add(imageView[i][j], j, i);
                 playerCardsInBoard.setHgap(27);
             }
         }
+    }
+
+    public void selectHandCard(ImageView imageView, String opponentOrPlayer) {
+        imageView.setOnMouseClicked(mouseEvent -> {
+            DuelMenuResponses duelMenuResponses;
+            int column = GridPane.getColumnIndex(imageView);
+            duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "hand", opponentOrPlayer);
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+                refreshPlayersBox();
+        });
+    }
+
+    public void setOnMouseClickedForCardImage(ImageView imageView, String opponentOrPlayer) {
+        imageView.setOnMouseClicked(mouseEvent -> {
+            DuelMenuResponses duelMenuResponses;
+            int row = GridPane.getRowIndex(imageView);
+            int column = GridPane.getColumnIndex(imageView);
+            if (row == 0)
+                duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "spell", opponentOrPlayer);
+            else duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "monster", opponentOrPlayer);
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            refreshPlayersBox();
+
+        });
     }
 //    @Override
 //    public void scanInput() {
@@ -165,6 +334,63 @@ public class DuelMenu {
 //                return;
 //            }
 //        }
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
+//                System.out.println("you can't do this kind of moves");
+//                continue;
+//            }
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.equals("show graveyard")) showGraveYard();
+//            else if (input.equals("surrender")) gamePlayController.surrender();
+//            else if (input.matches("duel set-winner (\\.+)")) {
+//                Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
+//                if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
+//            } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
+//            else if (input.equals("select -d")) checkAndCallDeselect(input);
+//            else if(input.matches("increase LP (\\d+)")) increaseLp(input);
+//            else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
+//            else if (input.equals("card show")) checkAndCallShowSelectedCard();
+//            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
+//            else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
+//            else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
+//            else if (input.equals("set")) printResponse(gamePlayController.setCommand());
+//            else if (input.matches("set --position (attack|defense)")) {
+//                Matcher matcher = Pattern.compile("set --position (attack|defense)").matcher(input);
+//                if (matcher.find()) printResponse(gamePlayController.setPosCommand(matcher.group(1)));
+//            } else if (input.equals("flip-summon")) printResponse(gamePlayController.flipSummonCommand());
+//            else if (input.matches("attack (\\d+)")) {
+//                Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
+//                if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
+//            } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
+//            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+//        }
+//    }
+
+//    @Override
+//    public void scanInput() {
+//        while (true) {
+//            String input = UtilityController.getNextLine();
+//            if (input.equals("menu exit")) checkAndCallMenuExit();
+//            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
+//            else if (input.startsWith("duel")) {
+//                checkAndCallNewDuel(input);
+//                if (weAreOnGame) {
+//                    printResponse(gamePlayController.goNextPhase());
+//                    break;
+//                }
+//            } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
+//            else System.out.println("invalid command");
+//            if (super.isExit) {
+//                super.isExit = false;
+//                return;
+//            }
+////        }
 //        while (true) {
 //            String input = UtilityController.getNextLine();
 //            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
@@ -595,20 +821,6 @@ public class DuelMenu {
         System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
     }
 
-    public void playRPS() {
-        while (true) {
-            System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String firstPlayerMove = UtilityController.getNextLine();
-            System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String secondPlayerMove = UtilityController.getNextLine();
-            if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
-                System.out.println("GAME STARTED!");
-                System.out.println("now it will be " +
-                        gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + "'s turn");
-                break;
-            }
-        }
-    }
 
     public void roundFinished(String winner) {
         System.out.println(winner + " won the game!");

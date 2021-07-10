@@ -33,3 +33,15 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
+.rock{
+    -fx-background-image: url("../Images/1.png");
+    -fx-background-size: cover;
+}
+.paper{
+    -fx-background-image: url("../Images/2.png");
+    -fx-background-size: cover;
+}
+.scissor{
+    -fx-background-image: url("../Images/3.png");
+    -fx-background-size: cover;
+}

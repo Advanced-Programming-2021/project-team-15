@@ -1,13 +1,14 @@
 package sample;
 
 import com.opencsv.exceptions.CsvValidationException;
-import sample.controller.utilizationController.DatabaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sample.controller.utilizationController.AudioController;
+import sample.controller.utilizationController.DatabaseController;
 
 import java.io.IOException;
 
@@ -22,10 +23,10 @@ public class Main extends Application {
     public static Stage stage;
 
     public static void main(String[] args) throws IOException, CsvValidationException {
-       DatabaseController databaseController = new DatabaseController();
+        DatabaseController databaseController = new DatabaseController();
         databaseController.loadGameCards();
+        AudioController.playMenu();
         launch(args);
-
     }
 
     @Override
@@ -38,16 +39,20 @@ public class Main extends Application {
     }
 
 
-    public void loginButtonClicked(MouseEvent mouseEvent)throws IOException{
-        Scene loginScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
+    public void loginButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
+        Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
         stage.setScene(loginScene);
-
     }
-    public void signUpButtonClicked(MouseEvent mouseEvent) throws IOException{
-        Scene signUpScene= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
+
+    public void signUpButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
+        Scene signUpScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Signup.fxml")));
         stage.setScene(signUpScene);
     }
-    public void exitButtonClicked(MouseEvent mouseEvent) throws IOException{
+
+    public void exitButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         System.exit(0);
     }
 

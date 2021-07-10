@@ -1,30 +1,23 @@
 package sample.view;
 
-import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Main;
 import sample.controller.menuController.ImportExportController;
-import sample.controller.menuController.MenuController;
 import sample.controller.responses.ImportExportResponses;
-import sample.controller.responses.ShopMenuResponses;
+import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.DatabaseController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
@@ -32,19 +25,16 @@ import sample.model.cards.Card;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 
-public class ImportExportMenu{
+public class ImportExportMenu {
     private static ImportExportMenu importExportMenu;
-    private final ImportExportController importExportController = ImportExportController.getInstance();
     private static ArrayList<Card> toImportCards = new ArrayList<>();
     private static Card toExportCard;
+    private final ImportExportController importExportController = ImportExportController.getInstance();
     private final int maximumCardsInRow = 4;
+    private ImageView toDragCard;
     @FXML
     private ScrollPane cardsList;
-    @FXML
-    private Pane importPane;
     @FXML
     private VBox importPlace;
     @FXML
@@ -53,10 +43,12 @@ public class ImportExportMenu{
     private Label importLabel;
     @FXML
     private Label exportLabel;
-
-//    private ImportExportMenu() {
-//        super("ImportExport Menu");
-//    }
+    @FXML
+    private ImageView exportPlace;
+    @FXML
+    private Label exportCardName;
+    @FXML
+    private ImageView exportCardImage;
 
     public static ImportExportMenu getInstance() {
         if (importExportMenu == null)
@@ -67,6 +59,7 @@ public class ImportExportMenu{
     public void initializeScene() {
         initializeExportContainer();
         initializeImportContainer();
+        initializeExportDropBox();
     }
 
     private GridPane setCardsPreShow() {
@@ -78,7 +71,7 @@ public class ImportExportMenu{
 
     public void importCards(MouseEvent mouseEvent) throws IOException {
         for (Card card : toImportCards)
-        printResponse(importExportController.importCard(card.getCardName()));
+            printResponse(importExportController.importCard(card.getCardName()));
         cardsPreShow.setContent(null);
         cardsPreShow.setVisible(false);
         toImportCards.clear();
@@ -88,27 +81,71 @@ public class ImportExportMenu{
     public void exportCards(MouseEvent mouseEvent) throws IOException {
         printResponse(importExportController.exportCard(toExportCard.getCardName()));
         inactivateButton(exportLabel);
+        exportCardImage.setImage(null);
+        exportCardName.setText(null);
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }
 
     private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {
         Image cardImage = DatabaseController.getInstance().getImageByCard(card);
-        Card.getAllCardsImages().put(card.getCardName(),cardImage);
+        Card.getAllCardsImages().put(card.getCardName(), cardImage);
         ImageView showingCardImage = new ImageView(cardImage);
         showingCardImage.setFitWidth(100);
         showingCardImage.setFitHeight(100);
-        gridPane.add(showingCardImage,0,cardCounter);
+        gridPane.add(showingCardImage, 0, cardCounter);
         Label cardNameLabel = new Label();
         cardNameLabel.setPrefWidth(150);
         cardNameLabel.setPrefHeight(50);
         cardNameLabel.setAlignment(Pos.CENTER);
-        cardNameLabel.setText("Name : "+card.getCardName());
-        gridPane.add(cardNameLabel,1,cardCounter);
+        cardNameLabel.setText("Name : " + card.getCardName());
+        gridPane.add(cardNameLabel, 1, cardCounter);
     }
+
+    private void initializeExportDropBox() {
+        exportPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                exportPlace.setOpacity(1);
+                exportPlace.setCursor(Cursor.HAND);
+            }
+        });
+        exportPlace.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                exportPlace.setOpacity(0.2);
+            }
+        });
+        exportPlace.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                Dragboard dragboard = event.getDragboard();
+                if (dragboard.hasString()) {
+                    event.acceptTransferModes(TransferMode.ANY);
+                }
+                event.consume();
+            }
+        });
+
+        exportPlace.setOnDragDropped(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    exportCardName.setText(toExportCard.getCardName());
+                    exportCardImage.setImage(toExportCard.getCardImage());
+                    selectCard(toExportCard);
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            }
+        });
+    }
+
     private void initializeImportContainer() {
         importPlace.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -132,16 +169,16 @@ public class ImportExportMenu{
                 if (db.hasFiles()) {
                     success = true;
                     String filePath;
-                    int cardCounter=0;
-                    for (File file:db.getFiles()) {
+                    int cardCounter = 0;
+                    for (File file : db.getFiles()) {
                         filePath = file.getAbsolutePath();
                         Card toImportCard = DatabaseController.getInstance().deserializeCard(file);
-                        addCardToGridPane(toImportCard,showCardsGridPane,cardCounter);
+                        addCardToGridPane(toImportCard, showCardsGridPane, cardCounter);
                         toImportCards.add(toImportCard);
                         cardCounter++;
                     }
-                    activateButton(importLabel,true);
-                }
+                    activateButton(importLabel, true);
+                } else System.out.println("are da");
                 event.setDropCompleted(success);
                 event.consume();
             }
@@ -185,10 +222,15 @@ public class ImportExportMenu{
             showingCardImage.setFitWidth(120);
             showingCardImage.setFitHeight(120);
         });
-        showingCardImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                selectCard(Objects.requireNonNull(Card.getCardByImage(showingCardImage.getImage())));
+        showingCardImage.setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+//                System.out.println("Event on Source: drag detected");
+                toExportCard = Card.getCardByImage(showingCardImage.getImage());
+                Dragboard db = showingCardImage.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putString("Hello!");
+                db.setContent(content);
+                event.consume();
             }
         });
         showingCardImage.setFitWidth(120);
@@ -214,16 +256,17 @@ public class ImportExportMenu{
 
     private void selectCard(Card selectedCard) {
         toExportCard = selectedCard;
-        activateButton(exportLabel,false);
+        activateButton(exportLabel, false);
     }
 
-    private void activateButton(Label button,boolean importing) {
+    private void activateButton(Label button, boolean importing) {
         button.setCursor(Cursor.HAND);
         button.setOpacity(1);
         button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
+                    AudioController.playClick();
                     if (importing) importCards(mouseEvent);
                     else exportCards(mouseEvent);
                 } catch (IOException e) {
@@ -278,23 +321,23 @@ public class ImportExportMenu{
         switch (importExportResponses) {
             case CARD_NOT_FOUND:
                 output = "Choose a card!";
-                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/confusedAnimeGirl.jpg" ))));
+                UtilityController.makeAlert("WTF!!", "What are you doing?!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CARD_EXPORT_SUCCESSFUL:
                 output = "Card exported successfully!";
-                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/AnimeGirl3.jpg" ))));
+                UtilityController.makeAlert("Happy!!", "You're doing great!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/AnimeGirl3.jpg"))));
                 break;
             case CARD_IMPORT_SUCCESSFUL:
                 output = "Card imported successfully!";
-                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/AnimeGirl3.jpg" ))));
+                UtilityController.makeAlert("Happy!!", "You're doing great!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/AnimeGirl3.jpg"))));
                 break;
             case CARD_ALREADY_EXISTS:
                 output = "Card with this name already exists!";
-                UtilityController.makeAlert("WTF!!","What are you doing?!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/confusedAnimeGirl.jpg" ))));
+                UtilityController.makeAlert("WTF!!", "What are you doing?!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
         }
     }

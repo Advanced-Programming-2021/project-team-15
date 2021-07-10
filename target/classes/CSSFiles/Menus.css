@@ -10,6 +10,22 @@
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
 }
+.shopMenu {
+    -fx-background-image: url("../Images/AnimeGirls.jpg");
+    -fx-background-size: cover;
+}
+.RPS{
+    -fx-background-image: url("../Images/rps.jpg");
+    -fx-background-size: cover;
+}
+.gameMenu {
+    -fx-background-image: url("../Images/GameMenu.png");
+    -fx-background-size: cover;
+}
+.preGame {
+    -fx-background-image: url("../Images/PreGame.jpg");
+    -fx-background-size: cover;
+}
 .gridPane {
     -fx-background-color: transparent;
 }

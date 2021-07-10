@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sample.controller.utilizationController.AudioController;
 
 import java.io.IOException;
 
@@ -37,11 +38,13 @@ public class SignUpMenu {
         return signUpMenu;
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene welcomeMenu= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
         Main.stage.setScene(welcomeMenu);
     }
 
      public void signupButtonClicked(MouseEvent mouseEvent){
+         AudioController.playClick();
         if(usernameField.getText().equals("") || passwordField.getText().equals("") || nicknameField.getText().equals("")) {
             if(usernameField.getText().equals(""))
                 usernameError.setText("username field is empty");

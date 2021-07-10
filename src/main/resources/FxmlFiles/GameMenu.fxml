@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.view.DuelMenu"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
+<AnchorPane prefHeight="1000" prefWidth="1500" styleClass="gameMenu" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
+   <children>
+      <VBox alignment="CENTER" layoutX="104.0" layoutY="312.0" prefHeight="524.0" prefWidth="574.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" text="normal" styleClass="white" onMouseClicked="#newDuelButtonClicked" stylesheets="@../CSSFiles/Button.css" >
+               <font>
+                  <Font size="41.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label prefHeight="44.0" prefWidth="331.0" text="" />
+            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" text="ai"  styleClass="white" stylesheets="@../CSSFiles/Button.css" >
+               <font>
+                  <Font size="41.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label prefHeight="44.0" prefWidth="331.0" text="" />
+            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" text="setting"  styleClass="white"  stylesheets="@../CSSFiles/Button.css">
+               <font>
+                  <Font size="41.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label prefHeight="44.0" prefWidth="331.0" text="" />
+            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" text="MainMenu"  onMouseClicked="#mainMenuButtonClicked" styleClass="white"  stylesheets="@../CSSFiles/Button.css" >
+               <font>
+                  <Font size="41.0"/>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label prefHeight="44.0" prefWidth="331.0" text="" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </children>
 </AnchorPane>

@@ -10,6 +10,7 @@ import sample.Main;
 import sample.controller.menuController.ProfileController;
 import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ProfileMenuResponses;
+import sample.controller.utilizationController.AudioController;
 
 import java.io.IOException;
 
@@ -38,20 +39,24 @@ public class  ProfileMenu {
         return profileMenu;
     }
     public void changePasswordButtonClicked(MouseEvent mouseEvent) throws IOException{
+        AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangePassword.fxml")));
         Main.stage.setScene(profileScene);
 
     }
     public void changeNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
+        AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangeNickname.fxml")));
         Main.stage.setScene(profileScene);
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException{
+        AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }
 
     public void submitNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
+        AudioController.playClick();
         if ( newNicknameTextField.getText().equals("")) {
                 newNicknameError.setText("new-nickname field is empty");
             return;
@@ -86,16 +91,19 @@ public class  ProfileMenu {
 
 
     public void backFromNicknameButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
         Main.stage.setScene(profileScene);
     }
 
     public void backFromPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
         Main.stage.setScene(profileScene);
     }
 
     public void submitPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
         if ( newPasswordTextField.getText().equals("") || oldPasswordTextField.getText().equals("")) {
             if (newPasswordTextField.getText().equals(""))
                 newPasswordError.setText("new-password field is empty");
