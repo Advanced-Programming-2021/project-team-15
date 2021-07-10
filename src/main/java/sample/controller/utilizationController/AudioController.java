@@ -8,19 +8,29 @@ import sample.view.DuelMenu;
 
 public class AudioController {
     private static MediaPlayer mainMusic;
-    private static MediaPlayer alert;
-    private static MediaPlayer click;
-    private static MediaPlayer heartbeat;
+    private static final MediaPlayer alert;
+    private static final MediaPlayer click;
+    private static final MediaPlayer heartbeat;
+    private static final MediaPlayer swamp;
+
     private static boolean mute;
     static {
         Media menuMedia = new Media(AudioController.class.getResource("/Audios/Menu.mp3").toExternalForm());
         Media alertMedia = new Media(AudioController.class.getResource("/Audios/Alert.mp3").toExternalForm());
         Media clickMedia = new Media(AudioController.class.getResource("/Audios/Click.mp3").toExternalForm());
         Media heartbeatMedia = new Media(AudioController.class.getResource("/Audios/Heartbeat.mp3").toExternalForm());
+        Media swampMedia = new Media(AudioController.class.getResource("/Audios/Swamp.mp3").toExternalForm());
         mainMusic = new MediaPlayer(menuMedia);
         alert = new MediaPlayer(alertMedia);
         click = new MediaPlayer(clickMedia);
         heartbeat = new MediaPlayer(heartbeatMedia);
+        swamp = new MediaPlayer(swampMedia);
+    }
+
+    public static void playSwamp() {
+        if (mute) return;
+        swamp.play();
+        swamp.setOnEndOfMedia(swamp::stop);
     }
 
     public static void playAlert() {

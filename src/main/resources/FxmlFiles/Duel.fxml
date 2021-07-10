@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
     <children>
-        <Pane layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
+        <Pane fx:id="father" layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
             <children>
                 <GridPane fx:id="firstPlayerBoardCards" layoutX="160.0" layoutY="430.0" prefHeight="285.0" prefWidth="550.0">
                     <columnConstraints>
