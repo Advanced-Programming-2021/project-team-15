@@ -7,6 +7,7 @@ import sample.model.cards.Card;
 import sample.model.cards.MonsterCard;
 import sample.view.DuelMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static sample.controller.responses.DuelMenuResponses.*;
@@ -45,7 +46,7 @@ public class AttackController {
         this.attackedCardsInTurn = attackedCardsInTurn;
     }
 
-    public DuelMenuResponses normalAttack(int number) //TODO RESET CARD IN NEEDED PLACES
+    public DuelMenuResponses normalAttack(int number) throws IOException //TODO RESET CARD IN NEEDED PLACES
     {
         damage = 0;
         if (gamePlayController.getSelectedCard() == null)
@@ -81,7 +82,7 @@ public class AttackController {
         else return attackToDefencePos(attacker, target, number, true);
     }
 
-    public void checkerForEffects() {
+    public void checkerForEffects() throws IOException {
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder") != null) {
             gamePlayController.changeTurn();
             DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
@@ -117,7 +118,7 @@ public class AttackController {
         else return false;
     }
 
-    public DuelMenuResponses attackToDefencePos(MonsterCard attacker, MonsterCard target, int number, Boolean hidden) {
+    public DuelMenuResponses attackToDefencePos(MonsterCard attacker, MonsterCard target, int number, Boolean hidden) throws IOException {
         attackedCardsInTurn.add(attacker);
         target.setHidden(false);
         int difference = attacker.getGameATK() - target.getGameDEF();
@@ -161,7 +162,7 @@ public class AttackController {
         return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses attackTOAttackPos(MonsterCard attacker, MonsterCard target, int number) {
+    public DuelMenuResponses attackTOAttackPos(MonsterCard attacker, MonsterCard target, int number) throws IOException {
         target.setHidden(false);
         int difference = attacker.getGameATK() - target.getGameATK();
         damage = difference;
@@ -206,7 +207,7 @@ public class AttackController {
         return false;
     }
 
-    public DuelMenuResponses directAttack() {
+    public DuelMenuResponses directAttack() throws IOException {
         if (gamePlayController.getSelectedCard() == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         if (!(gamePlayController.getSelectedCard() instanceof MonsterCard)) return YOU_CANT_ATTACK_WITH_THIS_CARD;

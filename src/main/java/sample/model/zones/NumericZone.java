@@ -3,6 +3,7 @@ package sample.model.zones;
 import sample.model.Player;
 import sample.model.cards.Card;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -45,7 +46,7 @@ public class NumericZone extends Zone {
             zoneCards.put(i, null);
     }
 
-    public void moveCardToGraveyardWithoutAddress(Card card, Player player) {
+    public void moveCardToGraveyardWithoutAddress(Card card, Player player) throws IOException {
         for (Map.Entry<Integer, Card> entry : zoneCards.entrySet()) {
             if (card == entry.getValue()) {
                 zoneCards.put(entry.getKey(), null);
@@ -54,7 +55,7 @@ public class NumericZone extends Zone {
         }
     }
 
-    public void moveCardToGraveyard(int address, Player player) {
+    public void moveCardToGraveyard(int address, Player player) throws IOException {
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         zoneCards.put(address, null);
     }

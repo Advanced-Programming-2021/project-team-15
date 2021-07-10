@@ -7,6 +7,7 @@ import sample.model.cards.MonsterCard;
 import sample.model.Player;
 import sample.view.DuelMenu;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,14 +18,14 @@ public class TrapEffectController {
     DuelMenu duelMenu = DuelMenu.getInstance();
     private boolean doIt = false;
 
-    public void magicCylinder(Card trap) {
+    public void magicCylinder(Card trap) throws IOException {
         gamePlayController.activateCard(trap);
         gamePlayController.getOpponentPlayer().reduceLifePoint(((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
         duelMenu.printResponse(DuelMenuResponses.EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void mirrorForce(Card trap) {
+    public void mirrorForce(Card trap) throws IOException {
         gamePlayController.activateCard(trap);
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         for (Map.Entry<Integer, MonsterCard> entry : map.entrySet()) {
@@ -35,7 +36,7 @@ public class TrapEffectController {
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void mindCrush(Card trap) {
+    public void mindCrush(Card trap) throws IOException {
         if (!doIt) {
             gamePlayController.activateCard(trap);
             return;
@@ -67,21 +68,21 @@ public class TrapEffectController {
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void trapHole(Card trap, MonsterCard victim) {
+    public void trapHole(Card trap, MonsterCard victim) throws IOException {
         gamePlayController.activateCard(trap);
         gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(victim, gamePlayController.getOpponentPlayer());
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void torrentialTribute(Card trap) {
+    public void torrentialTribute(Card trap) throws IOException {
         gamePlayController.activateCard(trap);
         GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, true);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void timeSeal(Card trap) {
+    public void timeSeal(Card trap) throws IOException {
         if (!doIt) {
             gamePlayController.activateCard(trap);
             return;
@@ -92,14 +93,14 @@ public class TrapEffectController {
 
     }
 
-    public void negateAttack(Card trap) {
+    public void negateAttack(Card trap) throws IOException {
         gamePlayController.activateCard(trap);
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
         gamePlayController.goNextPhase();
         gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(trap, gamePlayController.getCurrentPlayer());
     }
 
-    public void magicJammer(Card trap) {
+    public void magicJammer(Card trap) throws IOException {
         if(!doIt)
         {  if(gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand() != 0 && !gamePlayController.getChainCards().isEmpty())
             gamePlayController.activateCard(trap);

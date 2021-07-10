@@ -6,6 +6,7 @@ import sample.model.cards.Card;
 import sample.model.cards.MonsterCard;
 import sample.view.DuelMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class MonsterEffectController {
         monsterCard.setGameATK(monsterCard.getGameATK() + 400);
     }
 
-    public void Suijin(int num)  //ATK
+    public void Suijin(int num) throws IOException  //ATK
     {
         MonsterCard suijin = (MonsterCard) gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards().get(num);
         if (suijin.isActivated())
@@ -44,7 +45,7 @@ public class MonsterEffectController {
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
     }
 
-    public void manEaterBug(MonsterCard manEaterBug)  //flip or change pos from down to up
+    public void manEaterBug(MonsterCard manEaterBug) throws IOException  //flip or change pos from down to up
     {
         manEaterBug.setActivated(true);
         manEaterBug.setActivated(true);
@@ -67,7 +68,7 @@ public class MonsterEffectController {
         }
     }
 
-    public boolean gateGuardian() {
+    public boolean gateGuardian() throws IOException {
         if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() < 3) {
             duelMenu.printResponse(CANT_SPECIAL_SUMMON);
             return false;
@@ -80,7 +81,7 @@ public class MonsterEffectController {
     }
 
 
-    public boolean BeastKingBarbaros() {
+    public boolean BeastKingBarbaros() throws IOException {
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_NORMAL_SUMMON);
         String string = duelMenu.getString();
         if (string.equals("yes")) {
@@ -109,7 +110,7 @@ public class MonsterEffectController {
     }
 
 
-    public void chooseThreeMonsterAndTribute() {
+    public void chooseThreeMonsterAndTribute() throws IOException {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
@@ -127,7 +128,7 @@ public class MonsterEffectController {
         }
     }
 
-    public void textChanger(MonsterCard textChanger) {
+    public void textChanger(MonsterCard textChanger) throws IOException {
         duelMenu.printResponse(ATTACK_CANCELED);
         gamePlayController.changeTurn();
         duelMenu.printResponse(DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD);
@@ -184,7 +185,7 @@ public class MonsterEffectController {
             gamePlayController.getOpponentPlayer().getLimits().add(Limit.CANT_ACTIVATE_TRAP);
     }
 
-    public void yomiShip(MonsterCard attacker, MonsterCard yomiShip) {
+    public void yomiShip(MonsterCard attacker, MonsterCard yomiShip) throws IOException {
         yomiShip.setActivated(true);
         gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
         duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -200,7 +201,7 @@ public class MonsterEffectController {
         return false;
     }
 
-    public void checkFindAskTextChanger(ArrayList<Card> zoneCards) {
+    public void checkFindAskTextChanger(ArrayList<Card> zoneCards) throws IOException {
         int i = 0;
         while (i<zoneCards.size()) {
             if (zoneCards.get(i) != null && zoneCards.get(i).getCardType() == Card.CardType.MONSTER
@@ -225,7 +226,7 @@ public class MonsterEffectController {
         }
     }
 
-    public void heraldOfCreation() {
+    public void heraldOfCreation() throws IOException {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int n = duelMenu.getNum();
@@ -275,7 +276,7 @@ public class MonsterEffectController {
         return false;
     }
 
-    public void terratigertheEmpoweredWarrior() {
+    public void terratigertheEmpoweredWarrior() throws IOException {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int num = duelMenu.getNum();
@@ -295,7 +296,7 @@ public class MonsterEffectController {
         }
     }
 
-    public boolean theTricky(MonsterCard theTricky)    //WHEN CAN I CALL ?
+    public boolean theTricky(MonsterCard theTricky) throws IOException    //WHEN CAN I CALL ?
     {
         duelMenu.printResponse(DO_YOU_WANNA_SPECIAL_SUMMON);
         String string = duelMenu.getString();

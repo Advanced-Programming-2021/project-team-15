@@ -6620,22 +6620,6 @@
         "ownerUsername": "parnian",
         "sideDeck": [
           {
-            "Attack": 500,
-            "gameATK": 500,
-            "Defence": 500,
-            "gameDEF": 500,
-            "Level": 2,
-            "Monster Type": "Rock",
-            "Monster Attribute": "EARTH",
-            "Monster Effect Type": "Normal",
-            "Name": "Haniwa",
-            "Description": "An earthen figure that protects the tomb of an ancient ruler.",
-            "cardNumber": "0",
-            "Card Type": "MONSTER",
-            "type": "MONSTER",
-            "Price": 600
-          },
-          {
             "Attack": 450,
             "gameATK": 450,
             "Defence": 600,
@@ -6765,28 +6749,6 @@
           }
         ],
         "mainDeck": [
-          {
-            "Type": "Trap",
-            "Status": "Unlimited",
-            "Icon (Property)": "Normal",
-            "Name": "Trap Hole",
-            "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 2000
-          },
-          {
-            "Type": "Trap",
-            "Status": "Unlimited",
-            "Icon (Property)": "Normal",
-            "Name": "Mirror Force",
-            "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
-            "cardNumber": "0",
-            "Card Type": "MAGIC",
-            "type": "MAGIC",
-            "Price": 2000
-          },
           {
             "Type": "Trap",
             "Status": "Unlimited",
@@ -7449,30 +7411,86 @@
             "Card Type": "MONSTER",
             "type": "MONSTER",
             "Price": 1000
+          },
+          {
+            "Attack": 1000,
+            "gameATK": 1000,
+            "Defence": 1000,
+            "gameDEF": 1000,
+            "Level": 4,
+            "Monster Type": "Warrior",
+            "Monster Effect Type": "Effect",
+            "Name": "Command Knight",
+            "Description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
+            "cardNumber": "0",
+            "Card Type": "MONSTER",
+            "type": "MONSTER",
+            "Price": 2100
+          },
+          {
+            "Attack": 500,
+            "gameATK": 500,
+            "Defence": 500,
+            "gameDEF": 500,
+            "Level": 2,
+            "Monster Type": "Rock",
+            "Monster Attribute": "EARTH",
+            "Monster Effect Type": "Normal",
+            "Name": "Haniwa",
+            "Description": "An earthen figure that protects the tomb of an ancient ruler.",
+            "cardNumber": "0",
+            "Card Type": "MONSTER",
+            "type": "MONSTER",
+            "Price": 600
           }
         ],
         "isActive": true,
         "isValid": true
+      },
+      {
+        "name": "asali",
+        "ownerUsername": "parnian",
+        "sideDeck": [],
+        "mainDeck": [
+          {
+            "Attack": 1800,
+            "gameATK": 1800,
+            "Defence": 1200,
+            "gameDEF": 1200,
+            "Level": 4,
+            "Monster Type": "Warrior",
+            "Monster Attribute": "EARTH",
+            "Monster Effect Type": "Effect",
+            "Name": "Terratiger, the Empowered Warrior",
+            "Description": "When this card is Normal Summoned: You can Special Summon 1 Level 4 or lower Normal Monster from your hand in Defense Position.",
+            "cardNumber": "0",
+            "Card Type": "MONSTER",
+            "type": "MONSTER",
+            "Price": 3200
+          },
+          {
+            "Attack": 800,
+            "gameATK": 800,
+            "Defence": 1400,
+            "gameDEF": 1400,
+            "Level": 3,
+            "Monster Type": "Aqua",
+            "Monster Attribute": "WATER",
+            "Monster Effect Type": "Effect",
+            "Name": "Yomi Ship",
+            "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
+            "cardNumber": "0",
+            "Card Type": "MONSTER",
+            "type": "MONSTER",
+            "Price": 1700
+          }
+        ],
+        "isActive": false,
+        "isValid": false
       }
     ],
     "allCardsOfUser": [
       {
-        "Attack": 800,
-        "gameATK": 800,
-        "Defence": 1400,
-        "gameDEF": 1400,
-        "Level": 3,
-        "Monster Type": "Aqua",
-        "Monster Attribute": "WATER",
-        "Monster Effect Type": "Effect",
-        "Name": "Yomi Ship",
-        "Description": "If this card is destroyed by battle and sent to the GY: Destroy the monster that destroyed this card.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 1700
-      },
-      {
         "Attack": 100,
         "gameATK": 100,
         "Defence": 100,
@@ -7503,22 +7521,6 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 2700
-      },
-      {
-        "Attack": 1800,
-        "gameATK": 1800,
-        "Defence": 1200,
-        "gameDEF": 1200,
-        "Level": 4,
-        "Monster Type": "Warrior",
-        "Monster Attribute": "EARTH",
-        "Monster Effect Type": "Effect",
-        "Name": "Terratiger, the Empowered Warrior",
-        "Description": "When this card is Normal Summoned: You can Special Summon 1 Level 4 or lower Normal Monster from your hand in Defense Position.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 3200
       },
       {
         "Attack": 2000,
@@ -7599,21 +7601,6 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 3900
-      },
-      {
-        "Attack": 1000,
-        "gameATK": 1000,
-        "Defence": 1000,
-        "gameDEF": 1000,
-        "Level": 4,
-        "Monster Type": "Warrior",
-        "Monster Effect Type": "Effect",
-        "Name": "Command Knight",
-        "Description": "All Warrior-Type monsters you control gain 400 ATK. If you control another monster, monsters your opponent controls cannot target this card for an attack.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 2100
       },
       {
         "Attack": 3000,
@@ -8164,22 +8151,6 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 7500
-      },
-      {
-        "Attack": 500,
-        "gameATK": 500,
-        "Defence": 500,
-        "gameDEF": 500,
-        "Level": 2,
-        "Monster Type": "Rock",
-        "Monster Attribute": "EARTH",
-        "Monster Effect Type": "Normal",
-        "Name": "Haniwa",
-        "Description": "An earthen figure that protects the tomb of an ancient ruler.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 600
       },
       {
         "Attack": 450,
@@ -11430,6 +11401,44 @@
         "Card Type": "MAGIC",
         "type": "MAGIC",
         "Price": 3500
+      },
+      {
+        "Type": "Trap",
+        "Status": "Unlimited",
+        "Icon (Property)": "Normal",
+        "Name": "Mirror Force",
+        "Description": "When an opponent\u0027s monster declares an attack: Destroy all your opponent\u0027s Attack Position monsters.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 2000
+      },
+      {
+        "Type": "Trap",
+        "Status": "Unlimited",
+        "Icon (Property)": "Normal",
+        "Name": "Trap Hole",
+        "Description": "When your opponent Normal or Flip Summons 1 monster with 1000 or more ATK: Target that monster; destroy that target.",
+        "cardNumber": "0",
+        "Card Type": "MAGIC",
+        "type": "MAGIC",
+        "Price": 2000
+      },
+      {
+        "Attack": 500,
+        "gameATK": 500,
+        "Defence": 500,
+        "gameDEF": 500,
+        "Level": 2,
+        "Monster Type": "Rock",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Normal",
+        "Name": "Haniwa",
+        "Description": "An earthen figure that protects the tomb of an ancient ruler.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 600
       }
     ],
     "userName": "parnian",

@@ -3,6 +3,7 @@ package sample.model.zones;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.model.cards.Card;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DeckZone extends Zone{
@@ -16,8 +17,7 @@ public class DeckZone extends Zone{
     {
         zoneCards.add(card);
     }
-    public void removeCardFromDeckZone(Card card)
-    {
+    public void removeCardFromDeckZone(Card card) throws IOException {
         zoneCards.remove(card);
        if(GamePlayController.getInstance().checkIfGameIsFinished())
            GamePlayController.getInstance().defineWinner();

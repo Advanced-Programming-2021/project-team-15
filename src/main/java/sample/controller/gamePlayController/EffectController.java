@@ -5,6 +5,7 @@ import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class EffectController {
         return i;
     }
 
-    public void destroyCards(Card.CardType type, Boolean both) {
+    public void destroyCards(Card.CardType type, Boolean both) throws IOException {
         Map<Integer, MonsterCard> monster = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         Map<Integer, MagicCard> magic = gamePlayController.getOpponentPlayer().getMagicCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {

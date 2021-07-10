@@ -3,6 +3,7 @@ package sample.model.zones;
 import sample.model.Player;
 import sample.model.cards.MagicCard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FieldZone extends Zone {
@@ -13,7 +14,7 @@ public class FieldZone extends Zone {
         zoneCards = new ArrayList<>();
     }
 
-    public void moveCardToFieldZone(MagicCard card, Player player) {
+    public void moveCardToFieldZone(MagicCard card, Player player) throws IOException {
         if (zoneCards.isEmpty())
             zoneCards.add(card);
         else {

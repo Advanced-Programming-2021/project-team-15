@@ -6,6 +6,7 @@ import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
 import sample.view.DuelMenu;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class SpellEffectController {
         this.doIt = doIt;
     }
 
-    public void yami(Boolean x, MagicCard card) {
+    public void yami(Boolean x, MagicCard card) throws IOException {
         if (!doIt) {
             if (x) gamePlayController.activateSelectedCard();
             return;
@@ -58,7 +59,7 @@ public class SpellEffectController {
         GamePlayController.getEffectController().addDEF(MonsterCard.MonsterType.FAIRY, true, -amount, card.getOwner());
     }
 
-    public void spellAbsorption() {
+    public void spellAbsorption() throws IOException {
         if (!doIt) {
             gamePlayController.activateSelectedCard();
             return;
@@ -82,7 +83,7 @@ public class SpellEffectController {
         }
     }
 
-    public void forest(Boolean x, MagicCard card) {
+    public void forest(Boolean x, MagicCard card) throws IOException {
         if (!doIt) {
             if (x) gamePlayController.activateSelectedCard();
             return;
@@ -108,7 +109,7 @@ public class SpellEffectController {
         }
     }
 
-    public void closedForest(Boolean x, Card card) {
+    public void closedForest(Boolean x, Card card) throws IOException {
         if (!doIt) {
             if (x) gamePlayController.activateSelectedCard();
             return;
@@ -131,7 +132,7 @@ public class SpellEffectController {
         GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.BEAST, false, 100, closedForest.getOwner());
     }
 
-    public void umiiruka(Boolean x, Card card) {
+    public void umiiruka(Boolean x, Card card) throws IOException {
         if (!doIt) {
             if (x) gamePlayController.activateSelectedCard();
             return;
@@ -168,7 +169,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void swordOfDarkDestruction(MagicCard swordOfDarkDestruction) {
+    public void swordOfDarkDestruction(MagicCard swordOfDarkDestruction) throws IOException {
         if (!doIt) {
             if (checkSwordOfDarkDestruction()) gamePlayController.activateSelectedCard();
             return;
@@ -199,7 +200,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void blackPendant(MagicCard blackPendant) {
+    public void blackPendant(MagicCard blackPendant) throws IOException {
         if (!doIt) {
             if (checkBlackPendant()) gamePlayController.activateSelectedCard();
             return;
@@ -231,7 +232,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void unitedWeStand(MagicCard unitedWeStand) {
+    public void unitedWeStand(MagicCard unitedWeStand) throws IOException {
         if (!doIt) {
             if (checkUnitedWeStand()) gamePlayController.activateSelectedCard();
             return;
@@ -267,7 +268,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void magnumShield(MagicCard magnumShield) {
+    public void magnumShield(MagicCard magnumShield) throws IOException {
         if (!doIt) {
             if (checkMagnumShield())
                 gamePlayController.activateSelectedCard();
@@ -307,7 +308,7 @@ public class SpellEffectController {
         return false;
     }
 
-    public void terraforming(MagicCard terraforming) {
+    public void terraforming(MagicCard terraforming) throws IOException {
         if (!doIt) {
             if (checkTerraforming()) gamePlayController.activateSelectedCard();
             return;
@@ -334,7 +335,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void potOfGReed(MagicCard potOfGreed) {
+    public void potOfGReed(MagicCard potOfGreed) throws IOException {
         if (!doIt) {
             if (checkPotOfGReed()) gamePlayController.activateSelectedCard();
             return;
@@ -355,7 +356,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void raigeki(MagicCard raigeki) {
+    public void raigeki(MagicCard raigeki) throws IOException {
         if (!doIt) {
             if (checkRaigeki()) gamePlayController.activateSelectedCard();
             return;
@@ -371,7 +372,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void harpiesFeatherDuster(MagicCard harpiesFeatherDuster) {
+    public void harpiesFeatherDuster(MagicCard harpiesFeatherDuster) throws IOException {
         if (!doIt) {
             if (checkHarpiesFeatherDuster()) gamePlayController.activateSelectedCard();
             return;
@@ -387,7 +388,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void darkHole(MagicCard darkHole) {
+    public void darkHole(MagicCard darkHole) throws IOException {
         if (!doIt) {
             if (checkDarkHole()) gamePlayController.activateSelectedCard();
             return;
@@ -407,7 +408,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void mysticalSpaceTyphoon(MagicCard mysticalSpaceTyphoon, Player ownerOfCard) {
+    public void mysticalSpaceTyphoon(MagicCard mysticalSpaceTyphoon, Player ownerOfCard) throws IOException {
         if (!doIt) {
             if (checkMysticalSpaceTyphoon(ownerOfCard) && !gamePlayController.isSpellSSetInThisTurn(mysticalSpaceTyphoon))
                 gamePlayController.activateSelectedCard();
@@ -451,7 +452,7 @@ public class SpellEffectController {
         else return false;
     }
 
-    public void ringOfDefense(MagicCard ringOfDefense) {
+    public void ringOfDefense(MagicCard ringOfDefense) throws IOException {
         if (!doIt) {
             if (checkRingOfDefense() && !gamePlayController.isSpellSSetInThisTurn(ringOfDefense))
                 gamePlayController.activateSelectedCard();
@@ -472,7 +473,7 @@ public class SpellEffectController {
         else return true;
     }
 
-    public void twinTwisters(MagicCard twinTwisters, Player ownerOfCard) {
+    public void twinTwisters(MagicCard twinTwisters, Player ownerOfCard) throws IOException {
         if (!doIt) {
             if (checkTwinTwisters(ownerOfCard) && !gamePlayController.isSpellSSetInThisTurn(twinTwisters))
                 gamePlayController.activateSelectedCard();
@@ -548,7 +549,7 @@ public class SpellEffectController {
 //        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
 //    }
 
-    public void changeOfHeart(MagicCard magicCard) {
+    public void changeOfHeart(MagicCard magicCard) throws IOException {
         if (!doIt) {
             if (checkChangeOfHeart()) gamePlayController.activateSelectedCard();
             return;
@@ -586,7 +587,7 @@ public class SpellEffectController {
         } else return true;
     }
 
-    public void monsterReborn(MagicCard monsterReborn) {
+    public void monsterReborn(MagicCard monsterReborn) throws IOException {
         if (!doIt) {
             if (checkMonsterReborn()) gamePlayController.activateSelectedCard();
             return;
@@ -658,7 +659,7 @@ public class SpellEffectController {
         return monsters;
     }
 
-    public boolean checkAdvancedRitualArt() {
+    public boolean checkAdvancedRitualArt() throws IOException {
         if (canWeRitualSummon(gamePlayController.getCurrentPlayer()))
             return true;
         else {
@@ -686,7 +687,7 @@ public class SpellEffectController {
     }
 
 
-    public void advancedRitualArt(MagicCard advancedRitualArt) {
+    public void advancedRitualArt(MagicCard advancedRitualArt) throws IOException {
         if (!doIt) {
             if (checkAdvancedRitualArt()) gamePlayController.activateSelectedCard();
             return;

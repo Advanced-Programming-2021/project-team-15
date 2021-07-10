@@ -13,7 +13,9 @@ import sample.model.zones.Hand;
 import sample.model.zones.NumericZone;
 import sample.model.zones.Zone;
 import sample.view.DuelMenu;
+import sample.view.RockPaperScissors;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +35,7 @@ public class GamePlayController extends MenuController {
     public Player mainCurrentPlayer;
     private ArrayList<MagicCard> chainCards = new ArrayList<>();
     private ArrayList<Player> chainPlayers = new ArrayList<>();
-    private DuelMenu duelMenu = DuelMenu.getInstance();
+    private  DuelMenu duelMenu ;
     private HashMap<MonsterCard, Integer> suijinVictims = new HashMap<>();
     private boolean isWinCheating;
     private MonsterCard trapHoleVictim;
@@ -91,6 +93,50 @@ public class GamePlayController extends MenuController {
 
     public static void setSpellEffectController(SpellEffectController spellEffectController) {
         GamePlayController.spellEffectController = spellEffectController;
+    }
+
+    public static GamePlayController getGamePlayController() {
+        return gamePlayController;
+    }
+
+    public static void setGamePlayController(GamePlayController gamePlayController) {
+        GamePlayController.gamePlayController = gamePlayController;
+    }
+
+    public static void setEffectController(EffectController effectController) {
+        GamePlayController.effectController = effectController;
+    }
+
+    public Player getMainCurrentPlayer() {
+        return mainCurrentPlayer;
+    }
+
+    public void setMainCurrentPlayer(Player mainCurrentPlayer) {
+        this.mainCurrentPlayer = mainCurrentPlayer;
+    }
+
+    public boolean isWinCheating() {
+        return isWinCheating;
+    }
+
+    public void setWinCheating(boolean winCheating) {
+        isWinCheating = winCheating;
+    }
+
+    public MonsterCard getTrapHoleVictim() {
+        return trapHoleVictim;
+    }
+
+    public void setTrapHoleVictim(MonsterCard trapHoleVictim) {
+        this.trapHoleVictim = trapHoleVictim;
+    }
+
+    public boolean isSurrender() {
+        return isSurrender;
+    }
+
+    public void setSurrender(boolean surrender) {
+        isSurrender = surrender;
     }
 
     public ArrayList<MagicCard> getChainCards() {
@@ -154,7 +200,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public void startRound() {
+    public void startRound() throws IOException {
         refresh();
         currentPlayer.setCanDraw(true);
         game.setRoundCount(game.getRoundCount() + 1);
@@ -165,6 +211,8 @@ public class GamePlayController extends MenuController {
         game.getSecondPlayer().startNewGame();
         currentPlayer.getDeckZone().setZoneCards(cloner.deepClone(currentPlayer.getUser().getActiveDeck()).getMainDeck());
         opponentPlayer.getDeckZone().setZoneCards(cloner.deepClone(opponentPlayer.getUser().getActiveDeck()).getMainDeck());
+        RockPaperScissors.getInstance().startNewGame();
+        duelMenu.updateDecks();
         for (Card card : currentPlayer.getDeckZone().getZoneCards()) {
             card.setOwner(currentPlayer);
             card.setHidden(true);
@@ -179,22 +227,26 @@ public class GamePlayController extends MenuController {
         }
         shuffle();
         for (int i = 0; i < 5; i++) {
-            currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-            currentPlayer.getDeckZone().getZoneCards().remove(0);
-            opponentPlayer.getHand().addCardToHand(opponentPlayer.getDeckZone().getZoneCards().get(0));
-            opponentPlayer.getDeckZone().getZoneCards().remove(0);
+            duelMenu.setHandCards();
+//            duelMenu.moveToPlayerHandFromDeck(currentPlayer.getHand().getNumberOfCardsInHand() ,currentPlayer.getDeckZone().getZoneCards().get(0));
+            moveFirstCardFromHandToDeck(currentPlayer);
+            moveFirstCardFromHandToDeck(opponentPlayer);
+            duelMenu.updateDecks();
         }
         currentPlayer.setCanDraw(true);
         opponentPlayer.setCanDraw(true);
     }
+    public void moveFirstCardFromHandToDeck(Player player)
+    { player.getHand().addCardToHand(player.getDeckZone().getZoneCards().get(0));
+      player.getDeckZone().getZoneCards().remove(0);
+    }
 
-    public void drawPhase() {
+    public void drawPhase() throws IOException {
         refresh();
         changeTurn();
         if (currentPlayer.getCanDraw()) {
             shuffle();
-            currentPlayer.getHand().addCardToHand(currentPlayer.getDeckZone().getZoneCards().get(0));
-            currentPlayer.getDeckZone().getZoneCards().remove(0);
+           moveFirstCardFromHandToDeck(currentPlayer);
             if (checkIfGameIsFinished())
                 defineWinner();
         } else {
@@ -202,7 +254,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public Boolean RPS(String firstPlayerMove, String secondPlayerMove) {
+    public Boolean RPS(String firstPlayerMove, String secondPlayerMove) throws IOException {
         Player winner;
         Player loser;
         if (firstPlayerMove.equals(secondPlayerMove))
@@ -302,7 +354,7 @@ public class GamePlayController extends MenuController {
         } else return DuelMenuResponses.NO_CARD_SELECTED;
     }
 
-    public DuelMenuResponses summonCommand() {
+    public DuelMenuResponses summonCommand() throws IOException {
         if (selectedCard == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
@@ -353,7 +405,7 @@ public class GamePlayController extends MenuController {
         return board.toString();
     }
 
-    public DuelMenuResponses summon() {
+    public DuelMenuResponses summon() throws IOException {
 //        if (selectedCard instanceof MonsterCard) System.out.println("monster");
 //        else if (selectedCard instanceof  MagicCard) System.out.println("magic");
 //        else System.out.println("what");
@@ -409,7 +461,7 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public DuelMenuResponses oneMonsterTribute() {
+    public DuelMenuResponses oneMonsterTribute() throws IOException {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
             int num = duelMenu.getNum();
@@ -424,7 +476,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public DuelMenuResponses twoMonsterTribute() {
+    public DuelMenuResponses twoMonsterTribute() throws IOException {
         while (true) {
             duelMenu.printResponse(ENTER_FIRST_NUMBER);
             int firstAddress = duelMenu.getNum();
@@ -449,7 +501,7 @@ public class GamePlayController extends MenuController {
         return DuelMenuResponses.CARD_SUMMONED;
     }
 
-    public DuelMenuResponses setCommand() {
+    public DuelMenuResponses setCommand() throws IOException {
         if (selectedCard == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
@@ -460,7 +512,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public DuelMenuResponses set() {
+    public DuelMenuResponses set() throws IOException {
 
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand())
             return DuelMenuResponses.CANT_SET_THIS_CARD;
@@ -530,7 +582,7 @@ public class GamePlayController extends MenuController {
         return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses setSpell() {
+    public DuelMenuResponses setSpell() throws IOException {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
@@ -556,7 +608,7 @@ public class GamePlayController extends MenuController {
         return CARD_SET_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses flipSummonCommand() {
+    public DuelMenuResponses flipSummonCommand() throws IOException {
         if (selectedCard == null)
             return NO_CARD_SELECTED;
         else {
@@ -567,7 +619,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public DuelMenuResponses flipSummon() {
+    public DuelMenuResponses flipSummon() throws IOException {
         if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone())
             return CANT_CHANGE_THIS_CARD_POSITION;
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
@@ -587,8 +639,7 @@ public class GamePlayController extends MenuController {
             selectedCard = null;
         return FLIP_SUMMONED_SUCCESSFULLY;
     }
-    public void checkForTrapHole()
-    {
+    public void checkForTrapHole() throws IOException {
             if(trapHoleVictim!=null){
             gamePlayController.changeTurn();
             duelMenu.doYouWannaActivateSpecialCard("Trap Hole");
@@ -600,7 +651,7 @@ public class GamePlayController extends MenuController {
 
     }
 
-    public void checkForEffectsAfterSummon() {
+    public void checkForEffectsAfterSummon() throws IOException {
         checkForTrapHole();
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(),
                 "Torrential Tribute") != null) {
@@ -625,7 +676,7 @@ public class GamePlayController extends MenuController {
 
     }
 
-    public void activateSpellCard() {
+    public void activateSpellCard() throws IOException {
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -700,7 +751,7 @@ public class GamePlayController extends MenuController {
         else return false;
     }
 
-    public void doChainActions() {
+    public void doChainActions() throws IOException {
         for (int i = chainCards.size() - 1; i >= 0; i--) {
             spellEffectController.setDoIt(true);
             trapEffectController.setDoIt(true);
@@ -747,7 +798,7 @@ public class GamePlayController extends MenuController {
         else return 1;
     }
 
-    public void activateCard(Card card) {
+    public void activateCard(Card card) throws IOException {
         card.setHidden(false);
         card.setActivated(true);
         activatedCards.put(currentPlayer, card);
@@ -756,7 +807,7 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public void activateSelectedCard() {
+    public void activateSelectedCard() throws IOException {
         selectedCard.setHidden(false);
         selectedCard.setActivated(true);
         activatedCards.put(currentPlayer, selectedCard);
@@ -785,7 +836,7 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public void callSpellOrTrap(MagicCard card, Player player) {  //TODO
+    public void callSpellOrTrap(MagicCard card, Player player) throws IOException {  //TODO
         String cardName = card.getCardName();
         switch (cardName) {
             case "Yami":
@@ -859,13 +910,13 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public void surrender() {
+    public void surrender() throws IOException {
         isSurrender = true;
         defineWinner();
 
     }
 
-    public boolean askForActivatingInRivalsTurn() {
+    public boolean askForActivatingInRivalsTurn() throws IOException {
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
@@ -900,14 +951,14 @@ public class GamePlayController extends MenuController {
         return null;
     }
 
-    public DuelMenuResponses normalAttack(int number) {
+    public DuelMenuResponses normalAttack(int number) throws IOException {
         DuelMenuResponses responses = attackController.normalAttack(number);
         selectedCard = null;
         DuelMenu.getInstance().printString(showGameBoard());
         return responses;
     }
 
-    public DuelMenuResponses directAttack() {
+    public DuelMenuResponses directAttack() throws IOException {
         DuelMenuResponses responses = attackController.directAttack();
         selectedCard = null;
         DuelMenu.getInstance().printString(showGameBoard());
@@ -922,7 +973,7 @@ public class GamePlayController extends MenuController {
         return false;
     }
 
-    public DuelMenuResponses goNextPhase() {
+    public DuelMenuResponses goNextPhase() throws IOException {
 //        DuelMenu.getInstance().printString(showGameBoard());
         if (currentPhaseNumber == 5) {
             currentPhaseNumber = 0;
@@ -935,7 +986,7 @@ public class GamePlayController extends MenuController {
         }
     }
 
-    public void checkHeraldOfCreation() {
+    public void checkHeraldOfCreation() throws IOException {
         Map<Integer, MonsterCard> monsterZone = currentPlayer.getMonsterCardZone().getZoneCards();
         for (int i = 1; i <= 5; i++) {
             if (monsterZone.get(i) != null && monsterZone.get(i).getCardName().equals("Herald of Creation") && !monsterZone.get(i).getHidden()) {
@@ -972,7 +1023,7 @@ public class GamePlayController extends MenuController {
         checkForMonsters((MonsterCard) selectedCard);
     }
 
-    public void cheatAndWin(String name) {
+    public void cheatAndWin(String name) throws IOException {
         if (name.equals(currentPlayer.getUser().getNickName())) {
             isWinCheating = true;
             defineWinner();
@@ -1072,7 +1123,7 @@ public class GamePlayController extends MenuController {
                 opponentPlayer.getDeckZone().getZoneCards().size() == 0);
     }
 
-    public void defineStarter(Player winner, Player loser) {
+    public void defineStarter(Player winner, Player loser) throws IOException {
         String ans = duelMenu.defineStarterOfNextRound(loser.getUser().getUserName());
         if (ans.equals("yes")) {
             currentPlayer = loser;
@@ -1087,7 +1138,7 @@ public class GamePlayController extends MenuController {
     }
 
 
-    public void defineWinner() {
+    public void defineWinner() throws IOException {
         Player winner;
         Player loser;
         if (isWinCheating) {

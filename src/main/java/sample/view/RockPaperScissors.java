@@ -20,7 +20,14 @@ public class RockPaperScissors {
     private String secondPlayerMove  = "";
     @FXML
     private Label turn;
-
+    private static  RockPaperScissors rockPaperScissors= null;
+    public static RockPaperScissors getInstance(){
+     if(rockPaperScissors==null)
+     {  rockPaperScissors = new RockPaperScissors();
+         return  rockPaperScissors;
+     }
+     else return  rockPaperScissors;
+    }
     public void start()
     {   firstPlayerMove = "";
         secondPlayerMove  = "";
@@ -29,7 +36,7 @@ public class RockPaperScissors {
         UtilityController.makeAlert("Hi", "lets play!", "please choose rock, paper or scissors", new Image(String.valueOf(getClass().
             getResource("/Images/okAnimeGirl.png"))));
     }
-    public boolean playRPS() {
+    public boolean playRPS() throws IOException {
        return  GamePlayController.getInstance().RPS(firstPlayerMove, secondPlayerMove);
 
     }
@@ -59,15 +66,17 @@ public class RockPaperScissors {
         else {
             if(!playRPS())
                 start();
-            else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Duel.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Main.stage.setScene(scene);
-                DuelMenu duelMenu = loader.getController();
-                duelMenu.initialGame();
-            }
         }
+    }
+    public void startNewGame() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Duel.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Main.stage.setScene(scene);
+        DuelMenu duelMenu = loader.getController();
+        GamePlayController.getInstance().setDuelMenu(duelMenu);
+        duelMenu.initialGame();
+
     }
     public void scissorsButtonClicked(MouseEvent mouseEvent)
     {   if(second)

@@ -7,6 +7,7 @@ import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GraveyardZone extends Zone {
@@ -20,8 +21,7 @@ public class GraveyardZone extends Zone {
     {
         zoneCards.clear();
     }
-    public void addCardToGraveyardZone(Card card)
-    {   if(card.getCardName().equals("Yami") && card.isActivated())
+    public void addCardToGraveyardZone(Card card) throws IOException {   if(card.getCardName().equals("Yami") && card.isActivated())
            spellEffectController.yami(false , (MagicCard) card);
         else if(card.getCardName().equals("Forest") &&  card.isActivated())
             spellEffectController.forest(false, (MagicCard) card);
