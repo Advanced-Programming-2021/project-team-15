@@ -34,9 +34,4 @@ public class MainMenuController extends MenuController {
         return MainMenuResponses.USER_LOGOUT_SUCCESSFUL;
     }
 
-    public MainMenuResponses increaseMoneyCheat(int amount) {
-        user.changeMoney(amount);
-        databaseController.refreshUsersToFileJson();
-        return MainMenuResponses.INCREASED_MONEY_SUCCESSFULLY;
-    }
 }

@@ -7,15 +7,21 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Reflection;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -25,6 +31,9 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -40,9 +49,15 @@ import sample.model.Player;
 import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
+import sample.model.zones.GraveyardZone;
+import sample.model.zones.Hand;
+import sample.model.zones.Zone;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +67,7 @@ public class DuelMenu {
     private static final GamePlayController gamePlayController;
     private static DuelMenu duelMenu;
     private static Image backOfCard = new Image(String.valueOf(DuelMenu.class.
-            getResource("/Images/cardAnimeGirl.jpg" )));
+            getResource("/Images/cardAnimeGirl.jpg")));
 
     static {
         gamePlayController = GamePlayController.getInstance();
@@ -68,6 +83,8 @@ public class DuelMenu {
     @FXML
     private StackPane playerDeck;
     private Boolean cantDoThisKindsOfMove = false;
+    @FXML
+    private Pane father;
     @FXML
     private GridPane firstPlayerBoardCards;
     @FXML
@@ -98,12 +115,159 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
+    @FXML
+    private StackPane currentGraveyard;
+    @FXML
+    private StackPane opponentGraveyard;
+    @FXML
+    private ScrollPane currentGraveyardShow;
+    @FXML
+    private ScrollPane opponentGraveyardShow;
+    @FXML
+    private Button setButton;
+    @FXML
+    private Button summonButton;
+    @FXML
+    private Button attackButton;
+    @FXML
+    private Button directAttackButton;
+    @FXML
+    private Button activateButton;
+
+    private Timer timer;
+    private boolean isPause;
 
     public static DuelMenu getInstance() {
         if (duelMenu == null)
             duelMenu = new DuelMenu();
         return duelMenu;
     }
+
+//    private void refreshGraveyard(StackPane graveyard) {
+//        graveyard.getChildren().clear();
+//        for ()
+//    }
+//  /
+
+    public void checkForActionButtonsActivity(Card selectedCard) {
+        if (selectedCard==null || selectedCard.getOwner()== gamePlayController.getOpponentPlayer()) {
+            inActiveButton(setButton);
+            inActiveButton(summonButton);
+            inActiveButton(attackButton);
+            inActiveButton(directAttackButton);
+            inActiveButton(activateButton);
+            return;
+        }
+        if (selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND) activeButton(setButton);
+        else inActiveButton(setButton);
+        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
+                && selectedCard.getCardType()== Card.CardType.MONSTER) ||
+                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MONSTER_CARD) activeButton(summonButton);
+        else inActiveButton(summonButton);
+        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(attackButton);
+        else inActiveButton(attackButton);
+        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(directAttackButton);
+        else inActiveButton(directAttackButton);
+        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
+                && selectedCard.getCardType()== Card.CardType.MAGIC) ||
+                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MAGIC_CARD) activeButton(activateButton);
+        else inActiveButton(activateButton);
+    }
+
+    public void setButtonClicked(MouseEvent mouseEvent) {
+//        printResponse(gamePlayController.set());
+//        setHandCards();
+    }
+
+    public void summonButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void attackButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void directAttackButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void activateButtonClicked(MouseEvent mouseEvent) {
+
+    }
+
+    public void activeButton(Button button) {
+        button.setCursor(Cursor.HAND);
+        button.setOpacity(1);
+        switch (button.getText()) {
+            case "Set" :
+                button.setOnMouseClicked(this::setButtonClicked);
+                break;
+            case "Summon" :
+                button.setOnMouseClicked(this::summonButtonClicked);
+                break;
+            case "Attack" :
+                button.setOnMouseClicked(this::attackButtonClicked);
+                break;
+            case "Direct Attack" :
+                button.setOnMouseClicked(this::directAttackButtonClicked);
+                break;
+            case "Activate" :
+                button.setOnMouseClicked(this::activateButtonClicked);
+                break;
+        }
+    }
+
+    public void inActiveButton(Button button) {
+        button.setCursor(Cursor.DEFAULT);
+        button.setOpacity(0.5);
+        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "This action is not active for this card",  new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
+            }
+        });
+    }
+
+    public void setShowGraveyard(StackPane graveyard) {
+        graveyard.setCursor(Cursor.HAND);
+        graveyard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ScrollPane scrollPane;
+                Player player;
+                if (graveyard==currentGraveyard) {
+                    player = gamePlayController.getCurrentPlayer();
+                    scrollPane=currentGraveyardShow;
+                }
+                else {
+                    player = gamePlayController.getOpponentPlayer();
+                    scrollPane=opponentGraveyardShow;
+                }
+                if (scrollPane.isVisible()) {
+                    scrollPane.setVisible(false);
+                    return;
+                }
+                scrollPane.setContent(null);
+                GridPane gridPane = new GridPane();
+                int counter = 0;
+                for (Card card : player.getGraveyardZone().getZoneCards()) {
+                    ImageView imageView = new ImageView(card.getCardImage());
+                    gridPane.add(imageView, 0, counter);
+                    Label cardNameLabel = new Label();
+                    cardNameLabel.setPrefWidth(150);
+                    cardNameLabel.setPrefHeight(50);
+                    cardNameLabel.setAlignment(Pos.CENTER);
+                    cardNameLabel.setText("Name : " +
+                            Objects.requireNonNull(Card.getCardByImage(imageView.getImage())).getCardName());
+                    gridPane.add(cardNameLabel, 1, counter);
+                }
+                scrollPane.setVisible(true);
+            }
+        });
+    }
+
     public void initialGame() {
         setHandCards();
         isPause = false;
@@ -111,7 +275,40 @@ public class DuelMenu {
         initializeBoard();
         runAndUpdate();
         startTimerAndRun();
+        initialCheatBox();
+        ImageView imageView = new ImageView(new Image(String.valueOf(DuelMenu.class.
+                getResource("/Images/Cards/Yami.jpg"))));
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(120);
+        setShowGraveyard(currentGraveyard);
+        setShowGraveyard(opponentGraveyard);
+        currentGraveyard.getChildren().add(imageView);
     }
+
+    private void initialCheatBox() {
+        father.getScene().getAccelerators().put(new KeyCodeCombination(
+                KeyCode.C, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN), new Runnable() {
+            @Override
+            public void run() {
+                //Insert conditions here
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/CheatBox.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(loader.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                CheatController cheatController = loader.getController();
+                Stage popupStage = new Stage();
+                cheatController.setStage(popupStage);
+                popupStage.initModality(Modality.WINDOW_MODAL);
+                popupStage.setScene(scene);
+                cheatController.init();
+                popupStage.showAndWait();
+            }
+        });
+    }
+
     public void initializeBoard() {
          playerCards = new ImageView[2][5];
          opponentCards = new ImageView[2][5];
@@ -136,10 +333,9 @@ public class DuelMenu {
         updateDeck(playerDeck, gamePlayController.getCurrentPlayer());
         updateDeck(opponentDeck,gamePlayController.getOpponentPlayer());
     }
-    private Timer timer;
-    private boolean isPause;
-    public void startTimerAndRun()
-    { timer = new java.util.Timer();
+
+    public void startTimerAndRun() {
+        timer = new java.util.Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -153,7 +349,7 @@ public class DuelMenu {
                 });
             }
         };
-        long frameTimeInMilliseconds = (long)(200.0);
+        long frameTimeInMilliseconds = (long) (200.0);
         timer.schedule(timerTask, 0, frameTimeInMilliseconds);
 
     }
@@ -179,7 +375,8 @@ public class DuelMenu {
         setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
         setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
     }
-    public void setHandCards(){
+
+    public void setHandCards() {
         firstPlayerHand.getColumnConstraints().clear();
         secondPlayerHand.getColumnConstraints().clear();
         int handCount = gamePlayController.getCurrentPlayer().getHand().getNumberOfCardsInHand();
@@ -389,11 +586,10 @@ public class DuelMenu {
     }
 
 
-
-    public void settingButtonClicked(MouseEvent mouseEvent)
-    {
+    public void settingButtonClicked(MouseEvent mouseEvent) {
 
     }
+
     public void mainMenuButtonClicked() throws IOException {
         AudioController.playMenu();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
@@ -434,26 +630,34 @@ public class DuelMenu {
     }
 
     public void refreshPhaseBox() {
+
         phaseNameShow.setText(Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
     }
 
     public void refreshPlayersBox() {
-        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getNickName());
+        checkForActionButtonsActivity(gamePlayController.getSelectedCard());
+        currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getCurrentPlayer().getUser().getNickName());
         currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint()/8000);
-        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getNickName());
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint() /
+                GamePlayController.lP);
+        opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getUserName() + " :   " +
+                gamePlayController.getOpponentPlayer().getUser().getNickName());
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
-        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint()/8000);
-        if (gamePlayController.getSelectedCard()==null) {
+        opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
+        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint() /
+                GamePlayController.lP);
+        if (gamePlayController.getSelectedCard() == null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
-        }
-        else {
+
+        } else {
             selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
             selectedCardDescription.setText(gamePlayController.getSelectedCard().getCardDescription());
         }
-        if (gamePlayController.getCurrentPlayer().getLifePoint()<=2000) AudioController.playHeartbeat();
+        if (gamePlayController.getCurrentPlayer().getLifePoint() <= 2000) AudioController.playHeartbeat();
     }
+
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
         for (Node node :gridPane.getChildren()) {
             if(GridPane.getColumnIndex(node) == column && GridPane.getRowIndex(node) == row){
@@ -462,12 +666,12 @@ public class DuelMenu {
         }
         return null;
     }
-    private void setDeckZone()
-    {
+
+    private void setDeckZone() {
 
     }
 
-    private void setCardsInGrid(GridPane playerCardsInBoard ,ImageView[][] imageView) {
+    private void setCardsInGrid(GridPane playerCardsInBoard, ImageView[][] imageView) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 playerCardsInBoard.add(imageView[i][j], j, i);
@@ -475,7 +679,8 @@ public class DuelMenu {
             }
         }
     }
-    public void selectHandCard(ImageView imageView ,String  opponentOrPlayer){
+
+    public void selectHandCard(ImageView imageView, String opponentOrPlayer) {
         imageView.setOnMouseClicked(mouseEvent -> {
             imageView.setCursor(Cursor.HAND);
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
@@ -1009,7 +1214,6 @@ public class DuelMenu {
     public void hiddenDefensePosNoCardDestroyedWithDamage(String name) {
         System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
     }
-
 
 
     public void roundFinished(String winner) {

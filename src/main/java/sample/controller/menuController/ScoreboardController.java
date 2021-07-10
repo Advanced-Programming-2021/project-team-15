@@ -6,8 +6,8 @@ import sample.model.User;
 import java.util.*;
 
 public class ScoreboardController extends MenuController {
-    public ScoreboardController(String menuName) {
-        super(menuName);
+    public ScoreboardController() {
+        super("Scoreboard Menu");
     }
 
     public ScoreboardMenuResponses showScoreboard(StringBuilder usersListStringBuilder) {

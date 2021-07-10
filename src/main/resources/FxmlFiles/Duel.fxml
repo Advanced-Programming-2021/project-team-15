@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
     <children>
-        <Pane layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
+        <Pane fx:id="father" layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
             <children>
                 <GridPane fx:id="firstPlayerBoardCards" layoutX="160.0" layoutY="430.0" prefHeight="285.0" prefWidth="550.0">
                     <columnConstraints>
@@ -37,7 +37,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="firstPlayerHand" layoutX="133.0" layoutY="743.0" prefHeight="155.0" prefWidth="615.0">
+            <GridPane fx:id="firstPlayerHand" layoutX="150.0" layoutY="690.0" prefHeight="155.0" prefWidth="615.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,7 +49,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <GridPane fx:id="secondPlayerHand" layoutX="136.0" prefHeight="80.0" prefWidth="566.0" rotate="180.0">
+            <GridPane fx:id="secondPlayerHand" layoutX="110.0" prefHeight="80.0" prefWidth="566.0" rotate="180.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -63,6 +63,18 @@
             </GridPane>
             <StackPane fx:id="playerDeck" layoutX="687.0" layoutY="574.0" prefHeight="155.0" prefWidth="107.0" />
             <StackPane fx:id="opponentDeck" layoutX="29.0" layoutY="123.0" prefHeight="155.0" prefWidth="107.0" rotate="180" />
+            <StackPane fx:id="currentGraveyard" layoutX="40.0" layoutY="430.0" prefHeight="120.0" prefWidth="80.0" />
+            <ScrollPane fx:id="currentGraveyardShow" layoutX="136.0" layoutY="320.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+            <StackPane fx:id="opponentGraveyard" layoutX="710.0" layoutY="272.0" prefHeight="120.0" prefWidth="80.0" />
+            <ScrollPane fx:id="opponentGraveyardShow" layoutX="487.0" layoutY="310.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
             </children>
         </Pane>
       <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">
@@ -118,7 +130,7 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Label fx:id="opponentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Pari">
+                  <Label fx:id="opponentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="400.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Pari">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -127,16 +139,44 @@
             </Pane>
             <Pane prefHeight="485.0" prefWidth="566.0">
                <children>
-                  <ImageView fx:id="selectedCardPic" fitHeight="500.0" fitWidth="300.0" layoutX="252.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="selectedCardPic" fitHeight="380.0" fitWidth="300.0" layoutX="235.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/cardAnimeGirl.jpg" />
                      </image>
                   </ImageView>
-                  <Label fx:id="selectedCardDescription" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="-7.0" prefHeight="500.0" prefWidth="200.0" text="Select a card..." textAlignment="CENTER" textFill="#22e200" wrapText="true">
+                  <Label fx:id="selectedCardDescription" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="-7.0" prefHeight="400.0" prefWidth="200.0" text="Select a card..." textAlignment="CENTER" textFill="#22e200" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <HBox alignment="CENTER" layoutX="1.0" layoutY="380.0" prefHeight="100.0" prefWidth="565.0" spacing="10.0">
+                     <children>
+                        <Button alignment="CENTER" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Set" textAlignment="CENTER" fx:id="setButton" onMouseClicked="#setButtonClicked">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Button>
+                        <Button alignment="CENTER" layoutX="192.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Summon" textAlignment="CENTER" fx:id="summonButton" onMouseClicked="#summonButtonClicked">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button alignment="CENTER" layoutX="260.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Attack" textAlignment="CENTER" fx:id="attackButton" onMouseClicked="#attackButtonClicked">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button alignment="CENTER" layoutX="328.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Direct Attack" textAlignment="CENTER" fx:id="directAttackButton" onMouseClicked="#directAttackButtonClicked">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                        <Button alignment="CENTER" layoutX="385.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Activate" textAlignment="CENTER" fx:id="activateButton" onMouseClicked="#activateButtonClicked">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children></Pane>
             <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="566.0">
                <children>
@@ -156,7 +196,7 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="184.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
+                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="94.0" layoutY="5.0" prefHeight="70.0" prefWidth="400.0" styleClass="progressLabel" stylesheets="@../CSSFiles/Duel.css" text="Milanelo">
                      <font>
                         <Font size="36.0" />
                      </font>

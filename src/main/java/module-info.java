@@ -9,7 +9,7 @@ module YuGiOhG15 {
     requires cloning;
     requires gson.extras;
     opens sample.model.cards to cloning;
-    opens sample.model to cloning;
+    opens sample.model to cloning, javafx.base;
     exports sample.model;
     exports sample.model.cards;
 //    opens javafx.scene.image to cloning;

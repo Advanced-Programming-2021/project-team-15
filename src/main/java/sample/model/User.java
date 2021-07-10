@@ -20,7 +20,7 @@ public class User {
     private String nickName;
     private int score;
     private int money;
-
+private int rank=1;
     public User(String userName, String nickName, String passWord) {
         this.userName = userName;
         this.nickName = nickName;
@@ -205,5 +205,13 @@ public class User {
             if (card.equals(searchCard)) count++;
         }
         return count;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }
