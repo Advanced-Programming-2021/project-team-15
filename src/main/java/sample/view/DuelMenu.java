@@ -10,8 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
@@ -51,6 +55,8 @@ public class DuelMenu {
     private ImageView[][] opponentCards;
     private Boolean cantDoThisKindsOfMove = false;
     @FXML
+    private Pane father;
+    @FXML
     private GridPane firstPlayerBoardCards;
     @FXML
     private GridPane secondPlayerBoardCards;
@@ -80,6 +86,7 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
+
     private Timer timer;
     private boolean isPause;
 
@@ -95,6 +102,31 @@ public class DuelMenu {
         initializeBoard();
         runAndUpdate();
         startTimerAndRun();
+        initialCheatBox();
+    }
+
+    private void initialCheatBox() {
+        father.getScene().getAccelerators().put(new KeyCodeCombination(
+                KeyCode.C, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN), new Runnable() {
+            @Override
+            public void run() {
+                //Insert conditions here
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/CheatBox.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(loader.load());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                CheatController cheatController = loader.getController();
+                Stage popupStage = new Stage();
+                cheatController.setStage(popupStage);
+                popupStage.initModality(Modality.WINDOW_MODAL);
+                popupStage.setScene(scene);
+                cheatController.init();
+                popupStage.showAndWait();
+            }
+        });
     }
 
     public void initializeBoard() {
@@ -243,6 +275,7 @@ public class DuelMenu {
     }
 
     public void refreshPhaseBox() {
+
         phaseNameShow.setText(Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
     }
 
@@ -250,12 +283,14 @@ public class DuelMenu {
         currentPlayerName.setText(gamePlayController.getCurrentPlayer().getUser().getUserName() + " :   " +
                 gamePlayController.getCurrentPlayer().getUser().getNickName());
         currentPlayerLifePoint.setText(String.valueOf(gamePlayController.getCurrentPlayer().getLifePoint()));
-        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint() / 8000);
+        currentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getCurrentPlayer().getLifePoint() /
+                GamePlayController.lP);
         opponentPlayerName.setText(gamePlayController.getOpponentPlayer().getUser().getUserName() + " :   " +
                 gamePlayController.getOpponentPlayer().getUser().getNickName());
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
         opponentPlayerLifePoint.setText(String.valueOf(gamePlayController.getOpponentPlayer().getLifePoint()));
-        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint() / 8000);
+        opponentPlayerLifePointProgressBar.setProgress((double) gamePlayController.getOpponentPlayer().getLifePoint() /
+                GamePlayController.lP);
         if (gamePlayController.getSelectedCard() == null) {
             selectedCardPic.setImage(backOfCard);
             selectedCardDescription.setText("Select a card...");
@@ -268,7 +303,7 @@ public class DuelMenu {
 
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
         for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+            if (GridPane.getColumnIndex(node).equals(row) && GridPane.getColumnIndex(node).equals(column)) {
                 return node;
             }
         }
@@ -311,7 +346,7 @@ public class DuelMenu {
             if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
             if (gamePlayController.showCard().equals(SHOW_CARD))
 //                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
-            refreshPlayersBox();
+                refreshPlayersBox();
 
         });
     }
