@@ -1,13 +1,17 @@
 package sample.view;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -16,6 +20,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Main;
@@ -27,10 +33,12 @@ import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
 import sample.model.Player;
+import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -86,6 +94,14 @@ public class DuelMenu {
     private Label selectedCardDescription;
     @FXML
     private ImageView selectedCardPic;
+    @FXML
+    private StackPane currentGraveyard;
+    @FXML
+    private StackPane opponentGraveyard;
+    @FXML
+    private ScrollPane currentGraveyardShow;
+    @FXML
+    private ScrollPane opponentGraveyardShow;
 
     private Timer timer;
     private boolean isPause;
@@ -96,6 +112,50 @@ public class DuelMenu {
         return duelMenu;
     }
 
+//    private void refreshGraveyard(StackPane graveyard) {
+//        graveyard.getChildren().clear();
+//        for ()
+//    }
+//  /
+
+    public void setShowGraveyard(StackPane graveyard) {
+        graveyard.setCursor(Cursor.HAND);
+        graveyard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ScrollPane scrollPane;
+                Player player;
+                if (graveyard==currentGraveyard) {
+                    player = gamePlayController.getCurrentPlayer();
+                    scrollPane=currentGraveyardShow;
+                }
+                else {
+                    player = gamePlayController.getOpponentPlayer();
+                    scrollPane=opponentGraveyardShow;
+                }
+                if (scrollPane.isVisible()) {
+                    scrollPane.setVisible(false);
+                    return;
+                }
+                scrollPane.setContent(null);
+                GridPane gridPane = new GridPane();
+                int counter = 0;
+                for (Card card : player.getGraveyardZone().getZoneCards()) {
+                    ImageView imageView = new ImageView(card.getCardImage());
+                    gridPane.add(imageView, 0, counter);
+                    Label cardNameLabel = new Label();
+                    cardNameLabel.setPrefWidth(150);
+                    cardNameLabel.setPrefHeight(50);
+                    cardNameLabel.setAlignment(Pos.CENTER);
+                    cardNameLabel.setText("Name : " +
+                            Objects.requireNonNull(Card.getCardByImage(imageView.getImage())).getCardName());
+                    gridPane.add(cardNameLabel, 1, counter);
+                }
+                scrollPane.setVisible(true);
+            }
+        });
+    }
+
     public void initialGame() {
         isPause = false;
         refreshPlayersBox();
@@ -103,6 +163,13 @@ public class DuelMenu {
         runAndUpdate();
         startTimerAndRun();
         initialCheatBox();
+        ImageView imageView = new ImageView(new Image(String.valueOf(DuelMenu.class.
+                getResource("/Images/Cards/Yami.jpg"))));
+        imageView.setFitWidth(80);
+        imageView.setFitHeight(120);
+        setShowGraveyard(currentGraveyard);
+        setShowGraveyard(opponentGraveyard);
+        currentGraveyard.getChildren().add(imageView);
     }
 
     private void initialCheatBox() {
@@ -189,6 +256,7 @@ public class DuelMenu {
                 imageView.setFitWidth(80);
                 imageView.setImage(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(i).getCardImage());
                 imageView.setCursor(Cursor.HAND);
+//                setCardPopOver(imageView,true,true,true,true);
                 selectHandCard(imageView, "player");
                 firstPlayerHand.add(imageView, i, 0);
                 firstPlayerHand.setHgap(30);

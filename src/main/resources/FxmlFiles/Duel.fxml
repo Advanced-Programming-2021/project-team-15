@@ -63,6 +63,18 @@
             </GridPane>
             <Pane fx:id="playerDeck" layoutX="687.0" layoutY="574.0" prefHeight="155.0" prefWidth="107.0" />
             <Pane fx:id="opponentDeck" layoutX="29.0" layoutY="123.0" prefHeight="149.0" prefWidth="107.0" />
+            <StackPane fx:id="currentGraveyard" layoutX="40.0" layoutY="430.0" prefHeight="120.0" prefWidth="80.0" />
+            <ScrollPane fx:id="currentGraveyardShow" layoutX="136.0" layoutY="320.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+            <StackPane fx:id="opponentGraveyard" layoutX="710.0" layoutY="272.0" prefHeight="120.0" prefWidth="80.0" />
+            <ScrollPane fx:id="opponentGraveyardShow" layoutX="487.0" layoutY="310.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
             </children>
         </Pane>
       <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">
