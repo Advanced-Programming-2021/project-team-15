@@ -78,7 +78,7 @@
         <CheckBox fx:id="increaseLPEffect" layoutX="587.0" layoutY="381.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="200.0" text="increase user life point by 1000" />
         <CheckBox fx:id="decreaseLPEffect" layoutX="587.0" layoutY="411.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="229.0" text="decrease opponent life point by 1000" />
         <CheckBox fx:id="killAllMonsterEffect" layoutX="587.0" layoutY="439.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="207.0" text="kill all opponent monsters in zone" />
-        <CheckBox fx:id="killHighestLevelMonster" layoutX="587.0" layoutY="465.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="286.0" text="kill the opponent's highest level  monster in zone" />
+        <CheckBox fx:id="killHighestLevelMonsterEffect" layoutX="587.0" layoutY="465.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="286.0" text="kill the opponent's highest level  monster in zone" />
         <Label fx:id="errorLBL" layoutX="4.0" layoutY="273.0" prefHeight="17.0" prefWidth="556.0">
             <font>
                 <Font size="21.0" />
