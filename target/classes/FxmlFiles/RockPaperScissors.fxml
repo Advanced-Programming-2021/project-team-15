@@ -2,39 +2,49 @@
 
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="1000" prefWidth="1500" styleClass="RPS" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.RockPaperScissors">
    <children>
-      <HBox layoutX="378.0" layoutY="332.0" prefHeight="290.0" prefWidth="912.0">
+      <HBox alignment="CENTER" layoutX="300.0" layoutY="400.0" prefHeight="190.0" prefWidth="900.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#scissorsButtonClicked" prefHeight="371.0" prefWidth="363.0" style="-fx-background-color: white" styleClass="scissor" stylesheets="@../CSSFiles/Button.css" text="">
+            <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#rockButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/rock.png" />
+               </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#paperButtonClicked" prefHeight="371.0" prefWidth="387.0" style="-fx-background-color: white" styleClass="paper" stylesheets="@../CSSFiles/Button.css" text="">
+            </ImageView>
+            <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#paperButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/paper.png" />
+               </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#rockButtonClicked" prefHeight="371.0" prefWidth="388.0" style="-fx-background-color: white" styleClass="rock" stylesheets="@../CSSFiles/Button.css" text="">
+            </ImageView>
+            <ImageView fitHeight="250.0" fitWidth="250.0" onMouseClicked="#scissorsButtonClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/scissors.png" />
+               </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-              </Button>
+            </ImageView>
          </children>
       </HBox>
-      <Label fx:id="turn" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="76.0" prefHeight="92.0" prefWidth="426.0" text="" textFill="WHITE">
+      <Label fx:id="turn" alignment="CENTER" contentDisplay="CENTER" layoutX="536.0" layoutY="291.0" prefHeight="92.0" prefWidth="426.0" text="">
          <font>
-            <Font size="40.0" />
+            <Font name="System Bold" size="40.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Label>
-      <Button layoutX="698.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="124.0" prefWidth="259.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Submit">
+      <Button layoutX="620.0" layoutY="635.0" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="124.0" prefWidth="259.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Submit">
          <font>
             <Font size="41.0" />
          </font>

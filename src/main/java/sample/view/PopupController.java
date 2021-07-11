@@ -1,5 +1,6 @@
 package sample.view;
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -7,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.responses.DuelMenuResponses;
@@ -28,18 +31,27 @@ public class PopupController {
     private VBox vbox;
     @FXML
     private TextField usernameTF;
+    @FXML
+    private ChoiceBox<Object> choiceBox;
+    @FXML
+    private Button button;
+
     private String round = "";
     private Stage stage;
 
     public void initialize() {
+        TranslateTransition trans = new TranslateTransition(Duration.millis(1500), vbox);
+        trans.setFromY(300);
+        trans.setToY(0);
+        trans.play();
         String[] values = {"1", "3"};
-        ChoiceBox choiceBox = new ChoiceBox<Object>(FXCollections.observableArrayList(values));
+        choiceBox.setItems(FXCollections.observableArrayList(values));
         choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
                 round = values[new_value.intValue()];
             }
         });
-        Button button = new Button();
+        choiceBox.setCursor(Cursor.HAND);
         button.setText("start new game");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -51,8 +63,6 @@ public class PopupController {
                 }
             }
         });
-        vbox.getChildren().add(choiceBox);
-        vbox.getChildren().add(button);
     }
 
     public void startGameButtonClicked() throws IOException {
@@ -93,6 +103,3 @@ public class PopupController {
     }
 
 }
-
-
-

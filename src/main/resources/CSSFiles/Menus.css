@@ -1,86 +1,135 @@
 .loginButton {
-    -fx-background-color:  #F9E79F;
-    -fx-text-fill:  #7B241C;
+    -fx-background-color: #F9E79F;
+    -fx-text-fill: #7B241C;
     -fx-opacity: 0.7;
 }
+
 .loginButton:hover {
-    -fx-background-color:  #7B241C;
-    -fx-text-fill:  #F9E79F;
+    -fx-background-color: #7B241C;
+    -fx-text-fill: #F9E79F;
     -fx-opacity: 1;
 }
+
 .mainMenuButton {
-    -fx-background-color:  #D7BDE2;
-    -fx-text-fill:  #4A235A;
+    -fx-background-color: #D7BDE2;
+    -fx-text-fill: #4A235A;
     -fx-opacity: 0.7;
 }
+
 .mainMenuButton:hover {
     -fx-background-color: #4A235A;
     -fx-text-fill: #D7BDE2;
     -fx-opacity: 1;
 }
-.profileButton {
-    -fx-background-color:  #5D6D7E;
-    -fx-text-fill:  #17202A;
+
+.blueButton {
+    -fx-background-color: #34495E;
+    -fx-text-fill: #3498DB;
     -fx-opacity: 0.7;
 }
+
+.blueButton:hover {
+    -fx-background-color: #3498DB;
+    -fx-text-fill: #34495E;
+    -fx-opacity: 1;
+}
+
+.profileButton {
+    -fx-background-color: #5D6D7E;
+    -fx-text-fill: #17202A;
+    -fx-prompt-text-fill: #17202A;
+    -fx-opacity: 0.7;
+}
+
 .profileButton:hover {
     -fx-background-color: #17202A;
+    -fx-prompt-text-fill: #5D6D7E;
     -fx-text-fill: #5D6D7E;
     -fx-opacity: 1;
 }
-.deckMenu{
+
+.duelStart {
+    -fx-background-color: radial-gradient(focus-distance 0%, center 50% 50%, radius 80%, #34495E, #3498DB);
+    -fx-prompt-text-fill: #A93226;
+    -fx-text-fill: #A93226;
+}
+
+.choice-box {
+    -fx-background-color: #34495E;
+    -fx-text-fill: #ADD8E6;
+    -fx-focus-color: #ADD8E6;
+    -fx-faint-focus-color: #ADD8E6;
+    -fx-control-inner-background: #34495E;
+    -fx-selection-bar: #A93226;
+}
+
+.deckMenu {
     -fx-background-image: url("../Images/AnimeGirls3.jpg");
     -fx-background-size: cover;
 }
-.deckEdit{
+
+.deckEdit {
     -fx-background-image: url("../Images/fusion.png");
     -fx-background-size: cover;
 }
+
 .shopMenu {
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
 }
+
 .shopMenu {
     -fx-background-image: url("../Images/AnimeGirls.jpg");
     -fx-background-size: cover;
 }
-.RPS{
+
+.RPS {
     -fx-background-image: url("../Images/rps.jpg");
     -fx-background-size: cover;
 }
+
 .gameMenu {
     -fx-background-image: url("../Images/GameMenu.png");
     -fx-background-size: cover;
 }
+
 .preGame {
     -fx-background-image: url("../Images/PreGame.jpg");
     -fx-background-size: cover;
 }
+
 .gridPane {
     -fx-background-color: transparent;
 }
+
 .scroll-pane {
     -fx-background-color: transparent;
 }
+
 .backBlue {
-    -fx-background-color: #90ebff;
+    -fx-background-color: #3498DB;
     -fx-opacity: 0.5;
 }
+
 .backBlue:hover {
     -fx-opacity: 1;
 }
+
 .backYellow {
-    -fx-background-color:  #DAF7A6;
-    -fx-text-fill:  #34495e;
+    -fx-background-color: #DAF7A6;
+    -fx-text-fill: #34495e;
     -fx-opacity: 0.5;
 }
+
 .backYellow:hover {
     -fx-opacity: 1;
 }
+
 .importExportMenu {
     -fx-background-image: url("../Images/AnimeGirls2.jpg");
     -fx-background-size: cover;
 }
+
 .importVBox {
     -fx-background-image: url("../Images/AnimeGirl2.jpg");
     -fx-background-size: cover;
