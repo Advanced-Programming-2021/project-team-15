@@ -5,11 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="CreateCard" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black" styleClass="createCard" stylesheets="@../CSSFiles/CreateCard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.CreateCardMenu">
+<BorderPane fx:id="CreateCard" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black"
+            styleClass="createCard" stylesheets="@../CSSFiles/CreateCard.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.CreateCardMenu">
     <left>
-        <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+        <ImageView fitHeight="734.0" fitWidth="920.0" pickOnBounds="true" preserveRatio="true"
+                   BorderPane.alignment="CENTER">
             <image>
-                <Image url="@../Images/yugi2.png" />
+                <Image url="@../Images/yugi2.png"/>
             </image>
         </ImageView>
     </left>
@@ -18,28 +21,34 @@
             <children>
                 <ImageView fitHeight="262.0" fitWidth="534.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Images/yugiohTitle.png" />
+                        <Image url="@../Images/yugiohTitle.png"/>
                     </image>
                 </ImageView>
-                <Button fx:id="createMonsterButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#createMonsterButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="CreateMonsterButton" stylesheets="@../CSSFiles/Button.css" text="Create Monster" textFill="#764d4d">
+                <Button fx:id="createMonsterButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false"
+                        onMouseClicked="#createMonsterButtonClicked" prefHeight="54.0" prefWidth="438.0"
+                        styleClass="CreateMonsterButton" stylesheets="@../CSSFiles/Button.css" text="Create Monster"
+                        textFill="#764d4d">
                     <font>
-                        <Font size="25.0" />
+                        <Font size="25.0"/>
                     </font>
                 </Button>
-                <Button fx:id="createMagicButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#createMagicButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="CreateMagicButton" stylesheets="@../CSSFiles/Button.css" text="Create Magic" textFill="#844c4c">
+                <Button fx:id="createMagicButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false"
+                        onMouseClicked="#createMagicButtonClicked" prefHeight="54.0" prefWidth="303.0"
+                        styleClass="CreateMagicButton" stylesheets="@../CSSFiles/Button.css" text="Create Magic"
+                        textFill="#844c4c">
                     <font>
-                        <Font size="25.0" />
+                        <Font size="25.0"/>
                     </font>
                 </Button>
-                <Button fx:id="backButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="140.0" text="Back" textFill="#794d4d" onMouseClicked="#backButtonClicked">
+                <Button fx:id="backButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0"
+                        prefWidth="140.0" text="Back" textFill="#794d4d" onMouseClicked="#backButtonClicked">
                     <font>
-                        <Font size="25.0" />
+                        <Font size="25.0"/>
                     </font>
                 </Button>
             </children>
         </VBox>
     </center>
-
 
 
 </BorderPane>

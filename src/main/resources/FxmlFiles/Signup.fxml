@@ -5,53 +5,62 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000" prefWidth="1500" styleClass="signup" stylesheets="@../CSSFiles/Signup.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.SignUpMenu">
+<AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="1000" prefWidth="1500" styleClass="signup" stylesheets="@../CSSFiles/Signup.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.view.SignUpMenu">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="580.0" layoutX="360.0" layoutY="184.0" stroke="BLACK" strokeType="INSIDE" width="768.0" />
-        <Button layoutX="851.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#signupButtonClicked" prefHeight="52.0" prefWidth="135.0" text="Sign up" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d253b7c" height="580.0" layoutX="360.0" layoutY="184.0"
+                   stroke="BLACK" strokeType="INSIDE" width="768.0"/>
+        <Button layoutX="851.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#signupButtonClicked"
+                prefHeight="52.0" prefWidth="135.0" text="Sign up"/>
         <VBox alignment="CENTER" layoutX="441.0" layoutY="276.0" prefHeight="409.0" prefWidth="620.0">
             <Label layoutX="927.0" layoutY="259.0" text="SignUp" textFill="#7d95f2">
                 <font>
-                    <Font size="41.0" />
+                    <Font size="41.0"/>
                 </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="876.0" layoutY="365.0" prefHeight="52.0" prefWidth="234.0" promptText="Username" styleClass="UsernameTextField" stylesheets="@../CSSFiles/Text.css">
+            <TextField fx:id="usernameField" layoutX="876.0" layoutY="365.0" prefHeight="52.0" prefWidth="234.0"
+                       promptText="Username" styleClass="UsernameTextField" stylesheets="@../CSSFiles/Text.css">
                 <font>
-                    <Font size="16.0" />
+                    <Font size="16.0"/>
                 </font>
             </TextField>
             <Label fx:id="usernameError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </Label>
-            <TextField fx:id="nicknameField" layoutX="876.0" layoutY="449.0" prefHeight="52.0" prefWidth="234.0" promptText="Nickname" styleClass="NicknameTextField" stylesheets="@../CSSFiles/Text.css">
+            <TextField fx:id="nicknameField" layoutX="876.0" layoutY="449.0" prefHeight="52.0" prefWidth="234.0"
+                       promptText="Nickname" styleClass="NicknameTextField" stylesheets="@../CSSFiles/Text.css">
                 <font>
-                    <Font size="16.0" />
+                    <Font size="16.0"/>
                 </font>
             </TextField>
             <Label fx:id="nicknameError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </Label>
-            <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="534.0" prefHeight="52.0" prefWidth="234.0" promptText="Password" styleClass="PasswordField" stylesheets="@../CSSFiles/Text.css">
+            <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="534.0" prefHeight="52.0" prefWidth="234.0"
+                           promptText="Password" styleClass="PasswordField" stylesheets="@../CSSFiles/Text.css">
                 <font>
-                    <Font size="17.0" />
+                    <Font size="17.0"/>
                 </font>
             </PasswordField>
             <Label fx:id="passwordError" prefHeight="59.0" prefWidth="419.0" text="" textFill="red">
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </Label>
             <Label fx:id="success" prefHeight="59.0" prefWidth="419.0" text="" textFill="green">
                 <font>
-                    <Font size="25.0" />
+                    <Font size="25.0"/>
                 </font>
             </Label>
 
         </VBox>
-        <Button layoutX="538.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="52.0" prefWidth="135.0" text="back" />
+        <Button layoutX="538.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked"
+                prefHeight="52.0" prefWidth="135.0" text="back"/>
     </children>
 </AnchorPane>
