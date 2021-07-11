@@ -29,12 +29,12 @@ import java.util.ResourceBundle;
 public class CreateMonsterController implements Initializable {
     public ImageView cardImage;
     public Label cardImageLBL;
-    public Button back;
+    public Button backButton;
     public ChoiceBox<String> attributesBox;
     public ChoiceBox<String> typesOfMonster;
     public Spinner<Integer> attackPower;
     public Spinner<Integer> defensePower;
-    public Button calculateBTN;
+    public Button calculateButton;
     public CheckBox increaseDefenseEffect;
     public CheckBox increaseAttackEffect;
     public CheckBox increaseLPEffect;
@@ -48,7 +48,7 @@ public class CreateMonsterController implements Initializable {
     public TextField nameTextField;
     public Label errorLBL;
     public TextArea descriptionOfCard;
-    public Button createBTN;
+    public Button createButton;
 
 
     @Override
@@ -72,13 +72,13 @@ public class CreateMonsterController implements Initializable {
             }
         });
 
-        back.setOnAction(new EventHandler<ActionEvent>() {
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage) back.getScene().getWindow();
+                Stage stage = (Stage) backButton.getScene().getWindow();
                 URL url = null;
                 try {
-                    url = new File("src/main/java/FXMLFiles/CreateCard.fxml").toURI().toURL();
+                    url = new File("src/main/resources/FxmlFiles/CreateCard.fxml").toURI().toURL();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -96,14 +96,14 @@ public class CreateMonsterController implements Initializable {
             }
         });
 
-        calculateBTN.setOnAction(new EventHandler<ActionEvent>() {
+        calculateButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 calculate();
             }
         });
 
-        createBTN.setOnAction(new EventHandler<ActionEvent>() {
+        createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
