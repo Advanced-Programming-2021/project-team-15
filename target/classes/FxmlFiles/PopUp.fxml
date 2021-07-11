@@ -10,13 +10,13 @@
    <children>
 <VBox fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="469.0" spacing="5.0" styleClass="duelStart" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="266.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="500.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/fightAnimeGirl.jpg" />
+            <Image url="@../Images/fightAnimeGirl3.jpg" />
          </image></ImageView>
       <HBox alignment="CENTER">
          <children>
-            <Label prefWidth="70.0" text="Username" textFill="#34495e" />
+            <Label prefWidth="70.0" text="Username" textFill="#a93226" />
             <TextField fx:id="usernameTF" alignment="CENTER" promptText="Opponent Username" styleClass="duelStart">
                      <cursor>
                         <Cursor fx:constant="TEXT" />

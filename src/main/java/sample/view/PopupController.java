@@ -1,5 +1,6 @@
 package sample.view;
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.responses.DuelMenuResponses;
@@ -38,9 +40,11 @@ public class PopupController {
     private Stage stage;
 
     public void initialize() {
+        TranslateTransition trans = new TranslateTransition(Duration.millis(1500), vbox);
+        trans.setFromY(300);
+        trans.setToY(0);
+        trans.play();
         String[] values = {"1", "3"};
-//        ChoiceBox choiceBox = new ChoiceBox<Object>(FXCollections.observableArrayList(values));
-//        choiceBox.setValue(values[0]);
         choiceBox.setItems(FXCollections.observableArrayList(values));
         choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
@@ -48,7 +52,6 @@ public class PopupController {
             }
         });
         choiceBox.setCursor(Cursor.HAND);
-//        Button button = new Button();
         button.setText("start new game");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -60,8 +63,6 @@ public class PopupController {
                 }
             }
         });
-//        vbox.getChildren().add(choiceBox);
-//        vbox.getChildren().add(button);
     }
 
     public void startGameButtonClicked() throws IOException {
@@ -102,6 +103,3 @@ public class PopupController {
     }
 
 }
-
-
-
