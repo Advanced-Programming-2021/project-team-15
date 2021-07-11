@@ -159,32 +159,38 @@ public class DuelMenu {
             inActiveButton(activateButton);
             return;
         }
-        if (selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND) activeButton(setButton);
+        if (selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getHand()) activeButton(setButton);
         else inActiveButton(setButton);
-        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
-                && selectedCard.getCardType()== Card.CardType.MONSTER) ||
-                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MONSTER_CARD) activeButton(summonButton);
+        if ((selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getHand()
+                && selectedCard instanceof MonsterCard)) activeButton(summonButton);
         else inActiveButton(summonButton);
-        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(attackButton);
+        if (selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard)selectedCard).toStringPosition().equals("OO")) activeButton(attackButton);
         else inActiveButton(attackButton);
-        if (selectedCard.getCardType()== Card.CardType.MONSTER && selectedCard.isSummoned) activeButton(directAttackButton);
+        if (selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard)selectedCard).toStringPosition().equals("OO")) activeButton(directAttackButton);
         else inActiveButton(directAttackButton);
-        if ((selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.HAND
-                && selectedCard.getCardType()== Card.CardType.MAGIC) ||
-                selectedCard.getCardPlacedZone().getZoneType() == Zone.ZoneType.MAGIC_CARD) activeButton(activateButton);
+        if ((selectedCard instanceof MagicCard) && ( ((MagicCard) selectedCard).getMagicType()== MagicCard.MagicType.SPELL
+         ||(((MagicCard) selectedCard).getMagicType()== MagicCard.MagicType.TRAP && selectedCard.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getMagicCardZone()))) activeButton(activateButton);
         else inActiveButton(activateButton);
     }
 
     public void setButtonClicked(MouseEvent mouseEvent) {
-//        printResponse(gamePlayController.set());
-//        setHandCards();
+        try {
+           printResponse(gamePlayController.setCommand());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void summonButtonClicked(MouseEvent mouseEvent) {
-
+        try {
+            printResponse(gamePlayController.summonCommand());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void attackButtonClicked(MouseEvent mouseEvent) {
+
 
     }
 
@@ -343,8 +349,8 @@ public class DuelMenu {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-//                        if(!isPause)
-//                            runAndUpdate();
+                        if(!isPause)
+                            runAndUpdate();
 
                     }
                 });
@@ -373,8 +379,9 @@ public class DuelMenu {
     }
     public void runAndUpdate()
     {
-        setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
-        setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
+        checkForActionButtonsActivity(gamePlayController.getSelectedCard());
+//        setPlayersCards(gamePlayController.getCurrentPlayer(),playerCards);
+//        setPlayersCards(gamePlayController.getOpponentPlayer(),opponentCards);
     }
 
     public void setHandCards() {
@@ -703,9 +710,12 @@ public class DuelMenu {
             if (row == 0)
                 duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "spell", opponentOrPlayer);
             else duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "monster", opponentOrPlayer);
-            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
-            if (gamePlayController.showCard().equals(SHOW_CARD))
-                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) {
+                if (gamePlayController.showCard().equals(SHOW_CARD))
+                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+                checkForActionButtonsActivity(gamePlayController.getSelectedCard());
+
+            }
         }
     });
     }
@@ -955,24 +965,34 @@ public class DuelMenu {
             }
             break;
             case CANT_SUMMON_THIS_CARD:
-                System.out.println("you can't summon this card");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't summon this card",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case NOT_ALLOWED_IN_THIS_PHASE:
-                System.out.println("action not allowed in this phase");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "action not allowed in this phase",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case MONSTER_ZONE_IS_FULL:
-                System.out.println("monster card zone is full");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "monster card zone is full!",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case ALREADY_SUMMONED_SET:
-                System.out.println("you already summoned/set on this turn");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you already summoned/set on this turn",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CARD_SUMMONED: {
-                System.out.println("summoned successfully");
+                AudioController.playSummoned();
                 gamePlayController.checkForEffectsAfterSummon();
             }
             break;
             case GET_ONE_NUMBER_TO_BE_TRIBUTE:
-                System.out.println("this card needs one tribute");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "choose a Card to tribute",  new Image(String.valueOf(getClass().
+                                getResource("/Images/AnimeGirl3.jpg"))));
                 break;
             case GET_TWO_NUMBERS_TO_BE_TRIBUTE:
                 System.out.println("this card needs two tributes");
@@ -996,13 +1016,18 @@ public class DuelMenu {
                 System.out.println("there is no monster on one of these addresses");
                 break;
             case CANT_SET_THIS_CARD:
-                System.out.println("you can't set this card");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't set this card",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_DO_THIS_ACTION_IN_THIS_PHASE:
-                System.out.println("you can't do this action in this phase");
+                CANT_SET_THIS_CARD:
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't do this action in this phase",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CARD_SET_SUCCESSFULLY:
-                System.out.println("set successfully");
+               AudioController.playSet();
                 break;
             case CANT_CHANGE_THIS_CARD_POSITION:
                 System.out.println("you can't change this card position");

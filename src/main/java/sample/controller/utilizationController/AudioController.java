@@ -12,14 +12,23 @@ public class AudioController {
     private static final MediaPlayer click;
     private static final MediaPlayer heartbeat;
     private static final MediaPlayer swamp;
+    private static final MediaPlayer set;
+    private static final MediaPlayer summoned;
+    private static final MediaPlayer activated;
 
     private static boolean mute;
     static {
+        Media setMedia  = new Media(AudioController.class.getResource("/Audios/set.mp3").toExternalForm());
+        Media summonedMedia  = new Media(AudioController.class.getResource("/Audios/summoned.mp3").toExternalForm());
+        Media activatedMedia = new Media(AudioController.class.getResource("/Audios/activated.mp3").toExternalForm());
         Media menuMedia = new Media(AudioController.class.getResource("/Audios/Menu.mp3").toExternalForm());
         Media alertMedia = new Media(AudioController.class.getResource("/Audios/Alert.mp3").toExternalForm());
         Media clickMedia = new Media(AudioController.class.getResource("/Audios/Click.mp3").toExternalForm());
         Media heartbeatMedia = new Media(AudioController.class.getResource("/Audios/Heartbeat.mp3").toExternalForm());
         Media swampMedia = new Media(AudioController.class.getResource("/Audios/Swamp.mp3").toExternalForm());
+        set = new MediaPlayer(setMedia);
+        summoned = new MediaPlayer(summonedMedia);
+        activated = new MediaPlayer(activatedMedia);
         mainMusic = new MediaPlayer(menuMedia);
         alert = new MediaPlayer(alertMedia);
         click = new MediaPlayer(clickMedia);
@@ -32,6 +41,22 @@ public class AudioController {
         swamp.play();
         swamp.setOnEndOfMedia(swamp::stop);
     }
+    public static void playSet() {
+        if (mute) return;
+        set.play();
+       set.setOnEndOfMedia(set::stop);
+    }
+    public static void playSummoned() {
+        if (mute) return;
+        summoned.play();
+        summoned.setOnEndOfMedia(summoned::stop);
+    }
+    public static void playActivated()
+    { if(mute) return;
+        activated.play();
+        activated.setOnEndOfMedia(activated::stop);
+    }
+
 
     public static void playAlert() {
         if (mute) return;

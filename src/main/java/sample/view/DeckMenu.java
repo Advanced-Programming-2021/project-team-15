@@ -222,8 +222,9 @@ public class DeckMenu{
             if (result.isPresent()) {
                 DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
                 System.out.println(result.get());
-                if (deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS))
+                if (deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS)) {
                     new Alert(Alert.AlertType.ERROR, "this deck name already exists").show();
+                }
                 else if (deckMenuResponses.equals(DeckMenuResponses.DECK_CREATE_SUCCESSFUL)) {
                     new Alert(Alert.AlertType.INFORMATION, "new deck created successfully!").show();
                     listView.getItems().add(MenuController.getUser().getDeckByName(result.get()));
