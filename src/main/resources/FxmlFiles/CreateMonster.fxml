@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
       prefWidth="883.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.view.CreateCardMenu">
+      fx:controller="sample.view.CreateMonsterController">
     <children>
         <TextField fx:id="nameTextField" layoutX="44.0" layoutY="33.0" promptText="Name"/>
         <ImageView fx:id="cardImage" fitHeight="243.0" fitWidth="257.0" layoutX="558.0" layoutY="18.0"
@@ -25,11 +25,11 @@
             </font>
         </Label>
         <Spinner fx:id="attackPower" layoutX="44.0" layoutY="108.0"/>
-        <Label layoutX="47.0" layoutY="82.0" text="AttcakPower"/>
+        <Label layoutX="47.0" layoutY="82.0" text="AttackPower"/>
         <Spinner fx:id="defensePower" layoutX="44.0" layoutY="193.0"/>
         <Label layoutX="43.0" layoutY="167.0" text="DefensePower"/>
         <ChoiceBox fx:id="attributesBox" layoutX="286.0" layoutY="33.0" prefWidth="150.0"/>
-        <Label layoutX="294.0" layoutY="10.0" text="Atrribute"/>
+        <Label layoutX="294.0" layoutY="10.0" text="Attribute"/>
         <ChoiceBox fx:id="typesOfMonster" layoutX="286.0" layoutY="108.0" prefWidth="150.0"/>
         <Label layoutX="286.0" layoutY="82.0" text="TypeOfMonster"/>
         <TextArea fx:id="descriptionOfCard" layoutX="283.0" layoutY="184.0" prefHeight="194.0" prefWidth="220.0"
