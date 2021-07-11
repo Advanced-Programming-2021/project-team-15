@@ -141,7 +141,7 @@ public class CreateMagicController implements Initializable {
         } else {
             String status = "Limited";
             calculate();
-         //   File outputFile = new File("src/main/resource/SpellTrap/" + nameTextField.getText() + ".JPG");
+         //   File outputFile = new File("src/main/resources/Images/Cards" + nameTextField.getText() + ".JPG");
            // BufferedImage bImage = SwingFXUtils.fromFXImage(cardImage.getImage(), null);
             //ImageIO.write(bImage, "JPG", outputFile);
 
