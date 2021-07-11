@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
@@ -27,20 +28,21 @@
             <VBox prefHeight="910.0" prefWidth="607.0" styleClass="deckFrame" stylesheets="@../CSSFiles/frame.css" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
-      <Button fx:id="activateDeck" layoutX="1021.0" layoutY="297.0" mnemonicParsing="false" onMouseClicked="#activateButtonPressed" prefHeight="31.0" prefWidth="234.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Activate">
+      <Button fx:id="activateDeck" alignment="CENTER" contentDisplay="CENTER" layoutX="1021.0" layoutY="297.0" mnemonicParsing="false" onMouseClicked="#activateButtonPressed" prefHeight="31.0" prefWidth="234.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Activate" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="back" layoutX="775.0" layoutY="756.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="51.0" prefWidth="167.0" text="back">
+      <Button fx:id="createDeck" alignment="CENTER" contentDisplay="CENTER" layoutX="1024.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#createDeck" prefHeight="44.0" prefWidth="234.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Create new Deck" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
-      </Button>
-      <Button fx:id="createDeck" layoutX="1024.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#createDeck" prefHeight="44.0" prefWidth="234.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Create new Deck">
-         <font>
-            <Font size="20.0" />
-         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Label fx:id="activatedDeck" alignment="CENTER" layoutX="1010.0" layoutY="77.0" prefHeight="63.0" prefWidth="264.0" text="" textAlignment="CENTER" textFill="WHITE">
          <font>
@@ -67,6 +69,14 @@
             </Label>
          </children>
       </VBox>
+      <Button fx:id="back" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="51.0" prefWidth="167.0" styleClass="white" stylesheets="@../CSSFiles/Button.css" text="Back">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 
 </AnchorPane>
