@@ -24,8 +24,8 @@ public class Hand extends Zone {
 
     public void addCardToHand(Card card) {
         GamePlayController.getInstance().getDuelMenu().addToHand(zoneCards.size(),card);
-        card.setCardPlacedZone(this);
         zoneCards.add(card);
+        card.setCardPlacedZone(this);
 
     }
 
@@ -34,8 +34,9 @@ public class Hand extends Zone {
     }
 
     public void removeCardFromHand(Card card) {
-        GamePlayController.getInstance().getDuelMenu().removeFromHand(zoneCards.indexOf(card),card.getOwner());
+        int i = zoneCards.indexOf(card);
         zoneCards.remove(card);
+        GamePlayController.getInstance().getDuelMenu().removeFromHand(i,card.getOwner());
     }
 
     public Boolean isExist(Card card) {

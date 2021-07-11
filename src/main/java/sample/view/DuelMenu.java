@@ -8,15 +8,13 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -38,6 +36,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import sample.Main;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
@@ -134,6 +133,7 @@ public class DuelMenu {
     private Button directAttackButton;
     @FXML
     private Button activateButton;
+
 
     private Timer timer;
     private boolean isPause;
@@ -392,6 +392,7 @@ public class DuelMenu {
            if (player == gamePlayController.getCurrentPlayer()) {
                 imageView = (ImageView) getNodeByCoordinate(0, i, firstPlayerHand);}
            else  imageView = (ImageView) getNodeByCoordinate(0, i, secondPlayerHand);
+           System.out.println("print "+imageView.getImage().getUrl());
                FadeTransition fadeTransition = new FadeTransition();
                fadeTransition.setNode(imageView);
                fadeTransition.setDuration(Duration.millis(1000));
@@ -400,24 +401,37 @@ public class DuelMenu {
                fadeTransition.play();
                fadeTransition.setOnFinished(event -> {
                    if (player == gamePlayController.getCurrentPlayer())
-                   firstPlayerHand.getChildren().remove(imageView);
-                   else secondPlayerHand.getChildren().remove(imageView);
-                   updateHandSelect();
+                   {firstPlayerHand.getChildren().remove(imageView); }
+                   else {
+                       secondPlayerHand.getChildren().remove(imageView);
+                       updateHandGrid(player);
+                   }
                });
            }
-           public void updateHandSelect()
-           {   if(firstPlayerHand.getChildren().size()==0)
-               return;
-               for(int i = 0 ;i  < firstPlayerHand.getChildren().size(); i++)
-             {
-                 ImageView imageView = (ImageView) getNodeByCoordinate(0 , i , firstPlayerHand);
-                 System.out.println("print "+imageView.getImage().getUrl());
-               selectHandCard(imageView,"player", i );
-              }
-               for(int i = 0 ;i  < secondPlayerHand.getChildren().size(); i++)
-               {  ImageView imageView = (ImageView) getNodeByCoordinate(0 , i ,secondPlayerHand);
-                   selectHandCard(imageView,"opponent", i );
+
+
+           public void updateHandGrid(Player player)
+           {  if(player== gamePlayController.getCurrentPlayer())
+           { firstPlayerHand.getChildren().clear();
+           }else {
+               secondPlayerHand.getChildren().clear();
+           }
+           for (Card  card : player.getHand().getZoneCards())
+           { ImageView imageView = new ImageView();
+               imageView.setFitHeight(150);
+               imageView.setFitWidth(105);
+               if(card.getOwner()==gamePlayController.getCurrentPlayer())
+               {   imageView.setImage(card.getCardImage());
+                   selectHandCard(imageView,"player",player.getHand().getZoneCards().indexOf(card));
+                   firstPlayerHand.add(imageView,player.getHand().getZoneCards().indexOf(card),0);
+                   firstPlayerHand.setHgap(30);}
+               else {
+                   imageView.setImage(backOfCard);
+                   selectHandCard(imageView,"opponent",player.getHand().getZoneCards().indexOf(card));
+                   secondPlayerHand.add(imageView,player.getHand().getZoneCards().indexOf(card),0);
+                   secondPlayerHand.setHgap(30);
                }
+           }
 
            }
            public void addToHand(int i  ,Card card) {
@@ -426,10 +440,12 @@ public class DuelMenu {
                imageView.setFitWidth(105);
                if(card.getOwner()==gamePlayController.getCurrentPlayer())
                {   imageView.setImage(card.getCardImage());
+                   selectHandCard(imageView,"player",i);
                    firstPlayerHand.add(imageView,i,0);
                    firstPlayerHand.setHgap(30);}
                else {
                     imageView.setImage(backOfCard);
+                   selectHandCard(imageView,"opponent",i);
                     secondPlayerHand.add(imageView,i,0);
                     secondPlayerHand.setHgap(30);
                }
@@ -440,8 +456,6 @@ public class DuelMenu {
                fadeTransition.setToValue(1);
                fadeTransition.play();
                fadeTransition.setOnFinished(event -> {
-                   setOnMouseClickedForCardImage(imageView,"");
-                   updateHandSelect();
                    updateDecks();
                             });
            }
@@ -658,7 +672,7 @@ public class DuelMenu {
     }
 
     public void selectHandCard(ImageView imageView, String opponentOrPlayer, int i) {
-        imageView.setCursor(Cursor.HAND);
+
         imageView.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 DuelMenuResponses duelMenuResponses;
@@ -877,6 +891,8 @@ public class DuelMenu {
 //        }
 //
 //    }
+
+
     public void increaseLp(String input) {
         Matcher matcher = Pattern.compile("increase LP (\\d+)").matcher(input);
         if (matcher.find()) gamePlayController.increaseLp(Integer.parseInt(matcher.group(1)));
@@ -885,6 +901,48 @@ public class DuelMenu {
     public void checkAndCallDeselect(String input) throws IOException {
         duelMenuResponses = gamePlayController.deSelect();
         printResponse(duelMenuResponses);
+    }
+    public void oneTribute() throws IOException {  TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("We need one Sacrifice");
+        dialog.setContentText("please choose a monster");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent())
+        { printResponse(gamePlayController.oneMonsterTribute(Integer.parseInt(result.get())));
+        }
+    }
+    public void twoMonsterTribute()
+    {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("We need 2 sacrifices!!");
+        ButtonType loginButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(20, 150, 10, 10));
+        TextField one = new TextField();
+        one.setPromptText("first");
+        TextField to = new TextField();
+        to.setPromptText("second");
+        gridPane.add(one, 0, 0);
+        gridPane.add(new Label(" and "), 1, 0);
+        gridPane.add(to, 2, 0);
+        dialog.getDialogPane().setContent(gridPane);
+        Platform.runLater(() -> one.requestFocus());
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButtonType) {
+                return new Pair<>(one.getText(), to.getText());
+            }
+            return null;
+        });
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(pair -> {
+            try {
+                printResponse(gamePlayController.twoMonsterTribute(Integer.parseInt(pair.getKey()),Integer.parseInt(pair.getValue())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void printResponse(DuelMenuResponses duelMenuResponses) throws IOException {
@@ -958,12 +1016,10 @@ public class DuelMenu {
             }
             break;
             case GET_ONE_NUMBER_TO_BE_TRIBUTE:
-                UtilityController.makeAlert("No!!","Can't be done!",
-                        "choose a Card to tribute",  new Image(String.valueOf(getClass().
-                                getResource("/Images/AnimeGirl3.jpg"))));
+             oneTribute();
                 break;
             case GET_TWO_NUMBERS_TO_BE_TRIBUTE:
-                System.out.println("this card needs two tributes");
+            twoMonsterTribute();
                 break;
             case ENTER_ONE_NUMBER:
                 System.out.println("enter number");
@@ -975,13 +1031,19 @@ public class DuelMenu {
                 System.out.println("enter second number : ");
                 break;
             case NOT_ENOUGH_CARD_TO_BE_TRIBUTE:
-                System.out.println("there are not enough cards for tribute");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "there are not enough cards for tribute",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case ONE_TRIBUTE_NO_MONSTER:
-                System.out.println("there no monsters one this address");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "there no monsters one this address",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case TWO_TRIBUTE_NO_MONSTER:
-                System.out.println("there is no monster on one of these addresses");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "there is no monster on one of these addresses",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_SET_THIS_CARD:
                 UtilityController.makeAlert("No!!","Can't be done!",
@@ -989,7 +1051,6 @@ public class DuelMenu {
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_DO_THIS_ACTION_IN_THIS_PHASE:
-                CANT_SET_THIS_CARD:
                 UtilityController.makeAlert("No!!","Can't be done!",
                         "you can't do this action in this phase",  new Image(String.valueOf(getClass().
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
@@ -998,7 +1059,9 @@ public class DuelMenu {
                AudioController.playSet();
                 break;
             case CANT_CHANGE_THIS_CARD_POSITION:
-                System.out.println("you can't change this card position");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't change this card position",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_CHANGE_HIDDEN_CARD_POSITION:
                 System.out.println("You can't change hidden cards position");
@@ -1072,7 +1135,7 @@ public class DuelMenu {
                 System.out.println("preparations of this spell are not done yet");
                 break;
             case SPELL_ACTIVATED:
-                System.out.println("spell activated");
+                AudioController.playActivated();
                 break;
             case CANT_BE_ADDED_TO_CHAIN:
                 System.out.println("you can't add this card ro chain");

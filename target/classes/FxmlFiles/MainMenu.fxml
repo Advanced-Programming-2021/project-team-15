@@ -72,11 +72,7 @@
               </Button>
          </children>
       </VBox>
-<<<<<<< HEAD
-      <Button layoutX="1021.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#logoutButtonClicked" prefHeight="66.0" prefWidth="280.0" text="Logout" textFill="#9e4f3a">
-=======
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="610.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#logoutButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Logout" textAlignment="CENTER" textFill="#9e4f3a">
->>>>>>> master
          <font>
             <Font name="System Bold" size="25.0" />
          </font>

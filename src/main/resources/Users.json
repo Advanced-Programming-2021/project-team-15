@@ -5713,7 +5713,7 @@
     "nickName": "milan",
     "score": 0,
     "money": 2550600,
-    "rank": 0
+    "rank": 1
   },
   {
     "allDecksOfUser": [],
@@ -5723,7 +5723,7 @@
     "nickName": "kia",
     "score": 0,
     "money": 0,
-    "rank": 0
+    "rank": 1
   },
   {
     "activeDeckName": "pedaret",
@@ -7444,6 +7444,22 @@
             "Card Type": "MONSTER",
             "type": "MONSTER",
             "Price": 600
+          },
+          {
+            "Attack": 3000,
+            "gameATK": 3000,
+            "Defence": 1200,
+            "gameDEF": 1200,
+            "Level": 8,
+            "Monster Type": "Beast-Warrior",
+            "Monster Attribute": "EARTH",
+            "Monster Effect Type": "Effect",
+            "Name": "Beast King Barbaros",
+            "Description": "You can Normal Summon/Set this card without Tributing, but its original ATK becomes 1900. You can Tribute 3 monsters to Tribute Summon (but not Set) this card. If Summoned this way: Destroy all cards your opponent controls.",
+            "cardNumber": "0",
+            "Card Type": "MONSTER",
+            "type": "MONSTER",
+            "Price": 9200
           }
         ],
         "isActive": true,
@@ -7539,22 +7555,6 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 4300
-      },
-      {
-        "Attack": 3000,
-        "gameATK": 3000,
-        "Defence": 1200,
-        "gameDEF": 1200,
-        "Level": 8,
-        "Monster Type": "Beast-Warrior",
-        "Monster Attribute": "EARTH",
-        "Monster Effect Type": "Effect",
-        "Name": "Beast King Barbaros",
-        "Description": "You can Normal Summon/Set this card without Tributing, but its original ATK becomes 1900. You can Tribute 3 monsters to Tribute Summon (but not Set) this card. If Summoned this way: Destroy all cards your opponent controls.",
-        "cardNumber": "0",
-        "Card Type": "MONSTER",
-        "type": "MONSTER",
-        "Price": 9200
       },
       {
         "Attack": 1100,
@@ -11448,7 +11448,7 @@
     "nickName": "parpari",
     "score": 0,
     "money": 2551357,
-    "rank": 0
+    "rank": 1
   },
   {
     "allDecksOfUser": [],
@@ -11458,7 +11458,7 @@
     "nickName": "aa",
     "score": 0,
     "money": 0,
-    "rank": 0
+    "rank": 1
   },
   {
     "allDecksOfUser": [],
@@ -11468,6 +11468,6 @@
     "nickName": "er",
     "score": 0,
     "money": 0,
-    "rank": 0
+    "rank": 1
   }
 ]
