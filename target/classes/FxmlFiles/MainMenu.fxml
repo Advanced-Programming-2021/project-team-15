@@ -1,60 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="mainMenu" stylesheets="@../CSSFiles/MainMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.MainMenu">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainMenu" stylesheets="@../CSSFiles/MainMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.MainMenu">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="633.0" layoutX="439.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="984.0" />
-        <Label layoutX="768.0" layoutY="186.0" text="Main Menu" textFill="#ffe922">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="650.0" layoutX="250.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" width="1000.0" />
+        <Label layoutX="634.0" layoutY="191.0" text="Main Menu" textFill="#d7bde2">
             <font>
                 <Font size="50.0" />
             </font>
         </Label>
-      <VBox alignment="CENTER" layoutX="527.0" layoutY="260.0" prefHeight="447.0" prefWidth="325.0" spacing="60.0">
+      <VBox alignment="CENTER" layoutX="275.0" layoutY="275.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
          <children>
-              <Button fx:id="scoreBoardButton" mnemonicParsing="false" onMouseClicked="#scoreboardButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="scoreBoardButton" stylesheets="@../CSSFiles/Button.css" text="ScoreBoard" textFill="#9e4f3a">
+              <Button fx:id="scoreBoardButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#scoreboardButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="ScoreBoard" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
-              <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#profileButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="profileButton" stylesheets="@../CSSFiles/Button.css" text="Profile" textFill="#9e4f3a">
+              <Button fx:id="profileButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#profileButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Profile" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
-              <Button fx:id="shopButton" mnemonicParsing="false" onMouseClicked="#shopButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="shopButton" stylesheets="@../CSSFiles/Button.css" text="Shop" textFill="#9e4f3a">
+              <Button fx:id="shopButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#shopButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Shop" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="1021.0" layoutY="260.0" prefHeight="447.0" prefWidth="280.0" spacing="60.0">
+      <VBox alignment="CENTER" layoutX="900.0" layoutY="277.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
          <children>
-              <Button fx:id="deckButton" mnemonicParsing="false" onMouseClicked="#deckButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="deckButton" stylesheets="@../CSSFiles/Button.css" text="Deck" textFill="#9e4f3a">
+              <Button fx:id="deckButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deckButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Deck" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
-              <Button fx:id="duelButton" mnemonicParsing="false" onMouseClicked="#duelButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="duelButton" stylesheets="@../CSSFiles/Button.css" text="Duel" textFill="#9e4f3a">
+              <Button fx:id="duelButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#duelButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Duel" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
-              <Button fx:id="importExport" mnemonicParsing="false" onMouseClicked="#importExportButtonClicked" prefHeight="66.0" prefWidth="280.0" stylesheets="@../CSSFiles/Button.css" text="Import/Export" textFill="#9e4f3a">
+              <Button fx:id="importExport" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#importExportButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Import/Export" textFill="#9e4f3a">
                   <font>
-                      <Font size="25.0" />
+                      <Font name="System Bold" size="25.0" />
                   </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
               </Button>
          </children>
       </VBox>
-      <Button layoutX="791.0" layoutY="680.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" text="Logout" textFill="#9e4f3a" onMouseClicked="#logoutButtonClicked">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="620.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#logoutButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Logout" textAlignment="CENTER" textFill="#9e4f3a">
          <font>
-            <Font size="24.0" />
+            <Font name="System Bold" size="25.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
     </children>
 </AnchorPane>

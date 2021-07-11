@@ -1,3 +1,23 @@
+.loginButton {
+    -fx-background-color:  #F9E79F;
+    -fx-text-fill:  #7B241C;
+    -fx-opacity: 0.7;
+}
+.loginButton:hover {
+    -fx-background-color:  #7B241C;
+    -fx-text-fill:  #F9E79F;
+    -fx-opacity: 1;
+}
+.mainMenuButton {
+    -fx-background-color:  #D7BDE2;
+    -fx-text-fill:  #4A235A;
+    -fx-opacity: 0.7;
+}
+.mainMenuButton:hover {
+    -fx-background-color: #4A235A;
+    -fx-text-fill: #D7BDE2;
+    -fx-opacity: 1;
+}
 .deckMenu{
     -fx-background-image: url("../Images/deckMenu.jpg");
     -fx-background-size: cover;

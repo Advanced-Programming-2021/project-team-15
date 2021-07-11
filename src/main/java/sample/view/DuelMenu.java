@@ -144,11 +144,16 @@ public class DuelMenu {
         return duelMenu;
     }
 
-//    private void refreshGraveyard(StackPane graveyard) {
-//        graveyard.getChildren().clear();
-//        for ()
-//    }
-//  /
+    private void refreshGraveyard(StackPane graveyard) {
+        Player player;
+        if (graveyard==currentGraveyard) player= gamePlayController.getCurrentPlayer();
+        else player= gamePlayController.getOpponentPlayer();
+        graveyard.getChildren().clear();
+        for (Card card : player.getGraveyardZone().getZoneCards()) {
+            ImageView imageView = new ImageView(card.getCardImage());
+            graveyard.getChildren().add(imageView);
+        }
+    }
 
     public void checkForActionButtonsActivity(Card selectedCard) {
         if (selectedCard==null || selectedCard.getOwner()== gamePlayController.getOpponentPlayer()) {
@@ -277,13 +282,8 @@ public class DuelMenu {
         runAndUpdate();
         startTimerAndRun();
         initialCheatBox();
-        ImageView imageView = new ImageView(new Image(String.valueOf(DuelMenu.class.
-                getResource("/Images/Cards/Yami.jpg"))));
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(120);
         setShowGraveyard(currentGraveyard);
         setShowGraveyard(opponentGraveyard);
-        currentGraveyard.getChildren().add(imageView);
     }
 
     private void initialCheatBox() {
