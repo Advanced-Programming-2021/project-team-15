@@ -56,5 +56,10 @@
             <Font size="24.0" />
          </font>
       </Button>
+        <Button layoutX="791.0" layoutY="680.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="280.0" text="Creat Card" textFill="#9e4f3a" onMouseClicked="#createCardButtonClicked">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

@@ -85,9 +85,10 @@ public class MainMenu {
 //<<<<<<< HEAD
        // Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
         //Main.stage.setScene(scoreboardScene);
+        AudioController.playClick();
         ScoreboardMenu.getInstance().showScoreBoard(Main.stage);
 //=======
-        AudioController.playClick();
+
       //  Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
     //    Main.stage.setScene(scoreboardScene);
 //>>>>>>> ghraphics-phase2
@@ -133,6 +134,12 @@ public class MainMenu {
         Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
         mainMenuController.logout();
         Main.stage.setScene(loginScene);
+    }
+
+    public void createCardButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/CreateCard.fxml")));
+        Main.stage.setScene(scene);
     }
 
 //    private void printResponse(MainMenuResponses mainMenuResponses) {
