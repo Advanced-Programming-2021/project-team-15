@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -21,20 +22,29 @@
                   <Image url="@../Images/yugiohTitle.png" />
                </image>
             </ImageView>
-            <Button fx:id="loginButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="LoginButton" stylesheets="@../CSSFiles/Button.css" text="Login" textFill="#764d4d">
+            <Button fx:id="loginButton" alignment="CENTER" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#loginButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css" text="Login" textFill="#764d4d">
                <font>
                   <Font size="25.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="SignUpButton" stylesheets="@../CSSFiles/Button.css" text="SignUp" textFill="#844c4c">
+            <Button fx:id="signUpButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#signUpButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css" text="SignUp" textFill="#844c4c">
                <font>
                   <Font size="25.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="exitButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="140.0" text="Exit" textFill="#794d4d" onMouseClicked="#exitButtonClicked">
+            <Button fx:id="exitButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#exitButtonClicked" prefHeight="49.0" prefWidth="140.0" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css" text="Exit" textFill="#794d4d">
                <font>
                   <Font size="25.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </VBox>

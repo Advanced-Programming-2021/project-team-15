@@ -144,11 +144,16 @@ public class DuelMenu {
         return duelMenu;
     }
 
-//    private void refreshGraveyard(StackPane graveyard) {
-//        graveyard.getChildren().clear();
-//        for ()
-//    }
-//  /
+    private void refreshGraveyard(StackPane graveyard) {
+        Player player;
+        if (graveyard==currentGraveyard) player= gamePlayController.getCurrentPlayer();
+        else player= gamePlayController.getOpponentPlayer();
+        graveyard.getChildren().clear();
+        for (Card card : player.getGraveyardZone().getZoneCards()) {
+            ImageView imageView = new ImageView(card.getCardImage());
+            graveyard.getChildren().add(imageView);
+        }
+    }
 
     public void checkForActionButtonsActivity(Card selectedCard) {
         if (selectedCard==null || selectedCard.getOwner()== gamePlayController.getOpponentPlayer()) {
@@ -283,13 +288,8 @@ public class DuelMenu {
         runAndUpdate();
         startTimerAndRun();
         initialCheatBox();
-        ImageView imageView = new ImageView(new Image(String.valueOf(DuelMenu.class.
-                getResource("/Images/Cards/Yami.jpg"))));
-        imageView.setFitWidth(80);
-        imageView.setFitHeight(120);
         setShowGraveyard(currentGraveyard);
         setShowGraveyard(opponentGraveyard);
-        currentGraveyard.getChildren().add(imageView);
     }
 
     private void initialCheatBox() {
@@ -668,7 +668,7 @@ public class DuelMenu {
 
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
         for (Node node :gridPane.getChildren()) {
-            if(GridPane.getColumnIndex(node) == column && GridPane.getRowIndex(node) == row){
+            if(GridPane.getColumnIndex(node).equals(column) && GridPane.getRowIndex(node).equals(row)){
                 return node;
             }
         }
@@ -697,7 +697,8 @@ public class DuelMenu {
                 duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "hand", opponentOrPlayer);
                 if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
                 if (gamePlayController.showCard().equals(SHOW_CARD))
-                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+//                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+                refreshPlayersBox();
             }
         });
     }
@@ -710,12 +711,10 @@ public class DuelMenu {
             if (row == 0)
                 duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "spell", opponentOrPlayer);
             else duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "monster", opponentOrPlayer);
-            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) {
-                if (gamePlayController.showCard().equals(SHOW_CARD))
-                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
-                checkForActionButtonsActivity(gamePlayController.getSelectedCard());
-
-            }
+            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            refreshPlayersBox();
         }
     });
     }
