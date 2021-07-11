@@ -8,9 +8,9 @@
 
 <AnchorPane prefHeight="1000" prefWidth="1500" styleClass="RPS" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.RockPaperScissors">
    <children>
-      <HBox alignment="CENTER" layoutX="300.0" layoutY="400.0" prefHeight="190.0" prefWidth="900.0" spacing="10.0">
+      <HBox alignment="CENTER" layoutX="300.0" layoutY="400.0" prefHeight="190.0" prefWidth="900.0" spacing="20.0">
          <children>
-            <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#scissorsButtonClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#rockButtonClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/rock.png" />
                </image>
@@ -18,7 +18,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="200.0" fitWidth="200.0" onMouseClicked="#paperButtonClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/paper.png" />
                </image>
@@ -26,7 +26,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="250.0" fitWidth="250.0" onMouseClicked="#scissorsButtonClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Images/scissors.png" />
                </image>

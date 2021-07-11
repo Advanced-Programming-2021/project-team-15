@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="469.0"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.PopupController">
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.PopupController">
    <children>
-<VBox fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="469.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="469.0" spacing="5.0" styleClass="duelStart" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="266.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -14,10 +16,25 @@
          </image></ImageView>
       <HBox alignment="CENTER">
          <children>
-            <Label prefWidth="70.0" text="Username" />
-            <TextField fx:id="usernameTF" promptText="opponent username" />
+            <Label prefWidth="70.0" text="Username" textFill="#34495e" />
+            <TextField fx:id="usernameTF" alignment="CENTER" promptText="Opponent Username" styleClass="duelStart">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor></TextField>
          </children>
       </HBox>
+            <ChoiceBox fx:id="choiceBox" prefHeight="26.0" prefWidth="65.0" stylesheets="@../CSSFiles/Menus.css">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ChoiceBox>
+            <Button fx:id="button" mnemonicParsing="false" prefHeight="30.0" prefWidth="149.0" styleClass="blueButton" stylesheets="@../CSSFiles/Menus.css" textAlignment="CENTER" textFill="LIGHTBLUE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
    </children>
 </VBox>
    </children>

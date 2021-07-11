@@ -8,13 +8,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainMenu" stylesheets="@../CSSFiles/MainMenu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.MainMenu">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="650.0" layoutX="250.0" layoutY="175.0" stroke="BLACK" strokeType="INSIDE" width="1000.0" />
-        <Label layoutX="634.0" layoutY="191.0" text="Main Menu" textFill="#d7bde2">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0c0a26ba" height="600.0" layoutX="300.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
+        <Label layoutX="624.0" layoutY="201.0" text="Main Menu" textFill="#d7bde2">
             <font>
                 <Font size="50.0" />
             </font>
         </Label>
-      <VBox alignment="CENTER" layoutX="275.0" layoutY="275.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="255.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
          <children>
               <Button fx:id="scoreBoardButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#scoreboardButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="ScoreBoard" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
@@ -42,7 +42,7 @@
               </Button>
          </children>
       </VBox>
-      <VBox alignment="CENTER" layoutX="900.0" layoutY="277.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
+      <VBox alignment="CENTER" layoutX="877.0" layoutY="255.0" prefHeight="445.0" prefWidth="325.0" spacing="60.0">
          <children>
               <Button fx:id="deckButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#deckButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Deck" textAlignment="CENTER" textFill="#9e4f3a">
                   <font>
@@ -70,7 +70,7 @@
               </Button>
          </children>
       </VBox>
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="620.0" layoutY="687.0" mnemonicParsing="false" onMouseClicked="#logoutButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Logout" textAlignment="CENTER" textFill="#9e4f3a">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="610.0" layoutY="677.0" mnemonicParsing="false" onMouseClicked="#logoutButtonClicked" prefHeight="66.0" prefWidth="280.0" styleClass="mainMenuButton" stylesheets="@../CSSFiles/Menus.css" text="Logout" textAlignment="CENTER" textFill="#9e4f3a">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
