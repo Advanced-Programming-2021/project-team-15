@@ -661,7 +661,7 @@ public class DuelMenu {
 
     public Node getNodeByCoordinate(Integer row, Integer column, GridPane gridPane) {
         for (Node node :gridPane.getChildren()) {
-            if(GridPane.getColumnIndex(node) == column && GridPane.getRowIndex(node) == row){
+            if(GridPane.getColumnIndex(node).equals(column) && GridPane.getRowIndex(node).equals(row)){
                 return node;
             }
         }
@@ -690,7 +690,8 @@ public class DuelMenu {
                 duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "hand", opponentOrPlayer);
                 if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
                 if (gamePlayController.showCard().equals(SHOW_CARD))
-                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+//                    selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+                refreshPlayersBox();
             }
         });
     }
@@ -705,7 +706,8 @@ public class DuelMenu {
             else duelMenuResponses = gamePlayController.selectNumericZone(column + 1, "monster", opponentOrPlayer);
             if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
             if (gamePlayController.showCard().equals(SHOW_CARD))
-                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+//                selectedCardPic.setImage(gamePlayController.getSelectedCard().getCardImage());
+            refreshPlayersBox();
         }
     });
     }
