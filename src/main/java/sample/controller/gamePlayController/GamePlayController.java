@@ -532,11 +532,11 @@ public class GamePlayController extends MenuController {
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
         if (selectedCard.getCardName().equals("Gate Guardian"))
             return CANT_NORMAL_SET_THIS_MONSTER;
-        currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         setSetCard(selectedCard);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
         selectedCard.setHidden(true);
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.DEFENSE);
+        currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         selectedCard = null;
         return DuelMenuResponses.CARD_SET_SUCCESSFULLY;
     }
@@ -583,6 +583,7 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setSpell() throws IOException {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
+        selectedCard.setHidden(true);
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
             currentPlayer.getHand().removeCardFromHand(selectedCard);
@@ -597,8 +598,8 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setTrap() {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             return SPELL_ZONE_CARD_IS_FULL;
-        currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         selectedCard.setHidden(true);
+        currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         setTrapCardsInTurn.add((MagicCard) selectedCard);
         setTrapAndSpellCardsInTurn.add((MagicCard) selectedCard);
         selectedCard = null;
@@ -1024,8 +1025,8 @@ public class GamePlayController extends MenuController {
     public void doSummon() {
         selectedCard.setHidden(false);
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
-        currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
+        currentPlayer.getMonsterCardZone().summonOrSetMonster((MonsterCard) selectedCard, currentPlayer);
         checkForMonsters((MonsterCard) selectedCard);
     }
 

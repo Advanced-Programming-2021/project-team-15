@@ -210,8 +210,6 @@ public class MonsterEffectController {
                 duelMenu.printString("wanna special summon this " + zoneCards.get(i).getCardName());
                 String ans = duelMenu.getString();
                 if (ans.equals("yes")) {
-                    gamePlayController.getCurrentPlayer().getMonsterCardZone().
-                            summonOrSetMonster((MonsterCard) zoneCards.get(i), gamePlayController.getCurrentPlayer());
                     duelMenu.printResponse(ENTER_POS);
                     String ans1 = duelMenu.getString();
                     if (ans1.equals("ATK"))
@@ -219,6 +217,8 @@ public class MonsterEffectController {
                     else
                         ((MonsterCard) zoneCards.get(i)).setMode(MonsterCard.Mode.DEFENSE);
                     (zoneCards.get(i)).setHidden(false);
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().
+                            summonOrSetMonster((MonsterCard) zoneCards.get(i), gamePlayController.getCurrentPlayer());
                     return;
                 }
             }
@@ -283,10 +283,10 @@ public class MonsterEffectController {
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
             if ((card instanceof MonsterCard) && ((MonsterCard) card).getLevel() <= 4 &&
                     ((MonsterCard) card).getMonsterEffectType() == MonsterCard.MonsterEffectType.NORMAL) {
-                gamePlayController.getCurrentPlayer().getMonsterCardZone().
-                        summonOrSetMonster((MonsterCard) card, gamePlayController.getCurrentPlayer());
                 ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
                 card.setHidden(false);
+                gamePlayController.getCurrentPlayer().getMonsterCardZone().
+                        summonOrSetMonster((MonsterCard) card, gamePlayController.getCurrentPlayer());
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                 return;
             } else {
@@ -313,8 +313,6 @@ public class MonsterEffectController {
             if (card != null) {
                 gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
-                gamePlayController.getCurrentPlayer().getMonsterCardZone().
-                        summonOrSetMonster(theTricky, gamePlayController.getCurrentPlayer());
                 theTricky.setHidden(false);
                 duelMenu.printResponse(ENTER_POS);  //special summon?
                 String ans = duelMenu.getString();
@@ -322,6 +320,8 @@ public class MonsterEffectController {
                     theTricky.setMode(MonsterCard.Mode.ATTACK);
                 else
                     theTricky.setMode(MonsterCard.Mode.DEFENSE);
+                gamePlayController.getCurrentPlayer().getMonsterCardZone().
+                        summonOrSetMonster(theTricky, gamePlayController.getCurrentPlayer());
                 return true;
             } else {
                 duelMenu.printResponse(INVALID_CELL_NUMBER);

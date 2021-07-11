@@ -30,7 +30,7 @@ public class MagicCardZone extends NumericZone {
             if (zoneCards.get(key) == null) {
                 zoneCards.put(key, magicCard);
                 magicCard.setCardPlacedZone(this);
-                GamePlayController.getInstance().getDuelMenu().runAndUpdate();
+                GamePlayController.getInstance().getDuelMenu().addCard(magicCard,key);
                 return;
             }
         }

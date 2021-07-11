@@ -1,5 +1,6 @@
 package sample.model.zones;
 
+import sample.controller.gamePlayController.GamePlayController;
 import sample.model.Player;
 import sample.model.cards.Card;
 
@@ -50,6 +51,7 @@ public class NumericZone extends Zone {
         for (Map.Entry<Integer, Card> entry : zoneCards.entrySet()) {
             if (card == entry.getValue()) {
                 zoneCards.put(entry.getKey(), null);
+                GamePlayController.getInstance().getDuelMenu().removeCard(card,entry.getKey());
                 player.getGraveyardZone().addCardToGraveyardZone(card);
             }
         }
@@ -57,6 +59,7 @@ public class NumericZone extends Zone {
 
     public void moveCardToGraveyard(int address, Player player) throws IOException {
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
+        GamePlayController.getInstance().getDuelMenu().removeCard(zoneCards.get(address),address);
         zoneCards.put(address, null);
     }
 

@@ -99,6 +99,7 @@ public class EffectController {
     public void removeControl() {
         for (MonsterCard monsterCard : monstersWeTookControl) {
             gamePlayController.getCurrentPlayer().getMonsterCardZone().removeCardFromZone(monsterCard);
+            monsterCard.setHidden(false);
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveToFirstEmptyPlace(monsterCard);
             monstersWeTookControl.remove(monsterCard);
         }

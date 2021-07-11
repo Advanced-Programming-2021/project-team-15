@@ -612,7 +612,6 @@ public class SpellEffectController {
             int num = Integer.parseInt(ans);
             if (num <= player.getGraveyardZone().getZoneCards().size() && (player.getGraveyardZone().getZoneCards().get(num - 1) instanceof MonsterCard)) {
                 Card card = player.getGraveyardZone().getZoneCards().get(num - 1);
-                player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);
                 card.setHidden(false);
                 duelMenu.printResponse(ENTER_POS);
                 String answer = duelMenu.getString();
@@ -620,6 +619,7 @@ public class SpellEffectController {
                     ((MonsterCard) card).setMode(MonsterCard.Mode.ATTACK);
                 else
                     ((MonsterCard) card).setMode(MonsterCard.Mode.DEFENSE);
+                player.getMonsterCardZone().summonOrSetMonster((MonsterCard) card, player);
                 gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(monsterReborn, gamePlayController.getCurrentPlayer());
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                 break;
@@ -727,6 +727,7 @@ public class SpellEffectController {
                         getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setMode(MonsterCard.Mode.DEFENSE);
                     gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster(getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()), gamePlayController.getCurrentPlayer());
                     getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()).setHidden(false);
+                    gamePlayController.getCurrentPlayer().getMonsterCardZone().summonOrSetMonster(getRitualMonsterOfHand(gamePlayController.getCurrentPlayer()), gamePlayController.getCurrentPlayer());
                     duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
                     gamePlayController.getCurrentPlayer().getMagicCardZone().moveCardToGraveyardWithoutAddress(advancedRitualArt, gamePlayController.getCurrentPlayer());
                     break;
