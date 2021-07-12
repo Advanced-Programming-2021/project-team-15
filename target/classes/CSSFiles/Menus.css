@@ -124,7 +124,24 @@
 .backYellow:hover {
     -fx-opacity: 1;
 }
-
+.backLight {
+    -fx-background-color:  #D6EAF8;
+    -fx-text-fill:  #34495e;
+    -fx-opacity: 0.5;
+}
+.backLight:hover {
+    -fx-opacity: 1;
+}
+.backDarkButton {
+    -fx-background-color:  #34495e;
+    -fx-text-fill:  #D6EAF8;
+    -fx-opacity: 0.5;
+}
+.backDarkButton:hover {
+    -fx-background-color:  #D6EAF8;
+    -fx-text-fill:  #34495e;
+    -fx-opacity: 1;
+}
 .importExportMenu {
     -fx-background-image: url("../Images/AnimeGirls2.jpg");
     -fx-background-size: cover;
@@ -133,4 +150,46 @@
 .importVBox {
     -fx-background-image: url("../Images/AnimeGirl2.jpg");
     -fx-background-size: cover;
+}
+.monsterCreat {
+    -fx-background-image: url("../Images/AnimeGirl9.jpg");
+    -fx-background-size: cover;
+}
+.magicCreate {
+    -fx-background-image: url("../Images/AnimeGirl10.jpg");
+    -fx-background-size: cover;
+}
+.backLightRed {
+    -fx-background-color: #CEADC5;
+    -fx-text-fill:  #50003B;
+    -fx-opacity: 0.5;
+}
+.backLightRed:hover {
+    -fx-opacity: 1;
+}
+.backDarkButtonRed {
+    -fx-background-color:  #50003B;
+    -fx-text-fill: #CEADC5;
+    -fx-opacity: 0.5;
+}
+.backDarkButtonRed:hover {
+    -fx-background-color:  #CEADC5;
+    -fx-text-fill:  #50003B;
+    -fx-opacity: 1;
+}
+.toggle-button {
+    -fx-text-fill: #50003B;
+    -fx-cursor: Hand;
+    -fx-border-color: #50003B;
+    -fx-background-color: #CEADC5;
+    -fx-opacity: 0.5;
+}
+.toggle-button:selected {
+    -fx-background-color: #50003B;
+    -fx-text-fill: #CEADC5;
+    -fx-opacity: 1;
+}
+.createCard {
+    -fx-background-image: url("../Images/AnimeGirl11.jpg");
+    -fx-background-size: contain;
 }
