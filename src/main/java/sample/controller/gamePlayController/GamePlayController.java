@@ -524,18 +524,17 @@ public class GamePlayController extends MenuController {
         return DuelMenuResponses.CARD_SET_SUCCESSFULLY;
     }
 
-    public DuelMenuResponses setPosCommand(String wantedPosition) {
+    public DuelMenuResponses setPosCommand() {
         if (selectedCard == null)
             return DuelMenuResponses.NO_CARD_SELECTED;
         else {
-            DuelMenuResponses duelMenuResponses = setPosition(wantedPosition);
+            DuelMenuResponses duelMenuResponses = setPosition();
             selectedCard = null;
             return duelMenuResponses;
         }
     }
 
-    public DuelMenuResponses setPosition(String wantedPosition) {
-        // kiarash goft
+    public DuelMenuResponses setPosition() {
         if (isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard) ||
                 attackController.alreadyAttackedThisTurn((MonsterCard) selectedCard))
             return CANT_CHANGE_THIS_CARD_POSITION;
@@ -545,20 +544,18 @@ public class GamePlayController extends MenuController {
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
-        else if ((wantedPosition.equals("attack") && ((MonsterCard) selectedCard).getMode() == MonsterCard.Mode.ATTACK)
-                || (wantedPosition.equals("defense") && ((MonsterCard) selectedCard).getMode() == MonsterCard.Mode.DEFENSE))
-            return ALREADY_WANTED_POSITION;
         else if (((MonsterCard) selectedCard).toStringPosition().equals("DH"))
             return CANT_CHANGE_HIDDEN_CARD_POSITION;
         else if (isSelectCardChangedBefore())
             return ALREADY_CHANGED_POSITION;
-        if (wantedPosition.equals("defense"))
+        if (((MonsterCard) selectedCard).getMode()== MonsterCard.Mode.ATTACK)
             ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.DEFENSE);
-        else if (wantedPosition.equals("attack")) {
+        else if (((MonsterCard) selectedCard).getMode()== MonsterCard.Mode.DEFENSE) {
             selectedCard.setHidden(false);
             ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         }
         changedPositionCardsInTurn.add(selectedCard);
+        duelMenu.changePos(currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1, currentPlayer,((MonsterCard) selectedCard).getMode());
         selectedCard = null;
         return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }

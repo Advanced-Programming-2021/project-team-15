@@ -56,7 +56,13 @@ public class NumericZone extends Zone {
             }
         }
     }
-
+    public int getPlace(Card card)
+    {   for (int key = 1; key <= 5; key++)
+    { if(zoneCards.get(key)==card)
+        return key;
+    }
+    return 0;
+    }
     public void moveCardToGraveyard(int address, Player player) throws IOException {
         player.getGraveyardZone().addCardToGraveyardZone(zoneCards.get(address));
         GamePlayController.getInstance().getDuelMenu().removeCard(zoneCards.get(address),address);

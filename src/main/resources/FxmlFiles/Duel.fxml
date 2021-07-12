@@ -55,6 +55,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
+            <ImageView  fx:id="viewImage" fitHeight="182.0" fitWidth="528.0" layoutX="150.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </Pane>
       <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">
@@ -96,7 +97,7 @@
             <Pane prefHeight="155.0" prefWidth="566.0">
                <children>
                   <ProgressBar fx:id="opponentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
-                  <ImageView fx:id="opponentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="opponentPlayerPic" fitHeight="98.0" fitWidth="94.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/fightAnimeGirl.jpg" />
                      </image></ImageView>
@@ -129,39 +130,51 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER" layoutX="1.0" layoutY="380.0" prefHeight="100.0" prefWidth="565.0" spacing="10.0">
+                  <HBox alignment="CENTER" layoutX="1.0" layoutY="380.0" prefHeight="70.0" prefWidth="565.0" spacing="10.0">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Set" textAlignment="CENTER" fx:id="setButton" onMouseClicked="#setButtonClicked">
+                        <Button fx:id="setButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#setButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Set" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font></Button>
-                        <Button alignment="CENTER" layoutX="192.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Summon" textAlignment="CENTER" fx:id="summonButton" onMouseClicked="#summonButtonClicked">
+                        <Button fx:id="summonButton" alignment="CENTER" layoutX="192.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#summonButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Summon" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="260.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Attack" textAlignment="CENTER" fx:id="attackButton" onMouseClicked="#attackButtonClicked">
+                        <Button fx:id="attackButton" alignment="CENTER" layoutX="260.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#attackButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Attack" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="328.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Direct Attack" textAlignment="CENTER" fx:id="directAttackButton" onMouseClicked="#directAttackButtonClicked">
+                        <Button fx:id="directAttackButton" alignment="CENTER" layoutX="328.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#directAttackButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Direct Attack" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
-                        <Button alignment="CENTER" layoutX="385.0" layoutY="40.0" mnemonicParsing="false" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Activate" textAlignment="CENTER" fx:id="activateButton" onMouseClicked="#activateButtonClicked">
+                        <Button fx:id="activateButton" alignment="CENTER" layoutX="385.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#activateButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Activate" textAlignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
+                   <HBox alignment="CENTER" layoutX="1.0" layoutY="442.0" prefHeight="46.0" prefWidth="565.0" spacing="10.0">
+                   <children>
+                       <Button fx:id="changePosition" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#changePositionButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Change Position" textAlignment="CENTER">
+                           <font>
+                               <Font name="System Bold" size="18.0" />
+                           </font></Button>
+                       <Button fx:id="flipSummon" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#flipSummonButtonClicked" opacity="0.5" styleClass="actionButtonsBack" stylesheets="@../CSSFiles/Duel.css" text="Flip Summon" textAlignment="CENTER">
+                           <font>
+                               <Font name="System Bold" size="18.0" />
+                           </font></Button>
+                   </children>
+                   </HBox>
                </children></Pane>
             <Pane layoutX="10.0" layoutY="10.0" prefHeight="155.0" prefWidth="566.0">
                <children>
                   <ProgressBar fx:id="currentPlayerLifePointProgressBar" layoutX="375.0" layoutY="93.0" prefHeight="40.0" prefWidth="184.0" progress="0.61" stylesheets="@../CSSFiles/Duel.css" />
-                  <ImageView fx:id="currentPlayerPic" fitHeight="80.0" fitWidth="80.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="currentPlayerPic" fitHeight="94.0" fitWidth="100.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Images/fightAnimeGirl.jpg" />
                      </image>
