@@ -37,7 +37,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane fx:id="firstPlayerHand" layoutX="150.0" layoutY="690.0" prefHeight="155.0" prefWidth="615.0">
+            <GridPane fx:id="firstPlayerHand" layoutX="110.0" layoutY="685.0" prefHeight="155.0" prefWidth="615.0">
             </GridPane>
             <GridPane fx:id="secondPlayerHand" layoutX="110.0" prefHeight="80.0" prefWidth="566.0" rotate="180.0">
             </GridPane>
