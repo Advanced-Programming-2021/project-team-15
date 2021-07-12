@@ -1,5 +1,6 @@
 package sample.view;
 
+import javafx.scene.image.Image;
 import sample.Main;
 import sample.controller.menuController.LoginController;
 import sample.controller.responses.LoginMenuResponses;
@@ -12,20 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.controller.utilizationController.AudioController;
+import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 
 public class SignUpMenu {
     private static SignUpMenu signUpMenu;
     LoginController loginController = new LoginController();
-    @FXML
-    private Label passwordError;
-    @FXML
-    private Label usernameError;
-    @FXML
-    private Label success;
-    @FXML
-    private Label nicknameError;
     @FXML
     private TextField nicknameField;
     @FXML
@@ -47,17 +41,19 @@ public class SignUpMenu {
          AudioController.playClick();
         if(usernameField.getText().equals("") || passwordField.getText().equals("") || nicknameField.getText().equals("")) {
             if(usernameField.getText().equals(""))
-                usernameError.setText("username field is empty");
+                UtilityController.makeAlert("Error!!","Can't do action!","username field is empty",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
             if (passwordField.getText().equals(""))
-                passwordError.setText("password field is empty");
+                UtilityController.makeAlert("Error!!","Can't do action!","password field is empty",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
             if (nicknameField.getText().equals(""))
-                nicknameError.setText("nickname field is empty");
+                UtilityController.makeAlert("Error!!","Can't do action!","nickname field is empty",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
             return;
         }
-        success.setText("");
-        nicknameError.setText("");
-        passwordError.setText("");
-        usernameError.setText("");
         showResponse(loginController.registerUser(usernameField.getText(),nicknameField.getText(),passwordField.getText()));
         passwordField.setText("");
         usernameField.setText("");
@@ -68,16 +64,24 @@ public class SignUpMenu {
         String output = "";
         switch (loginMenuResponses) {
             case USER_CREATE_SUCCESSFUL:
-                success.setText("user created successfully!");
+                UtilityController.makeAlert("Happy!!","Good job!","User created successfully!",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/okAnimeGirl.png" ))));
                 break;
             case USER_NICKNAME_ALREADY_EXISTS:
-                nicknameError.setText("user with this nickname already exists");
+                UtilityController.makeAlert("Error!!","Can't do action!","User with this nickname already exists",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             case USER_USERNAME_ALREADY_EXISTS:
-                usernameError.setText("user with this username  already exists");
+                UtilityController.makeAlert("Error!!","Can't do action!","User with this username  already exists",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             case USER_USERNAME_PASSWORD_NOT_MATCHED:
-                passwordError.setText("Username and password didn't match");
+                UtilityController.makeAlert("Error!!","Can't do action!","Username and password does not match",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             default:
                 break;

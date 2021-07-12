@@ -5,23 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import sample.Main;
 import sample.controller.menuController.LoginController;
 import sample.controller.responses.LoginMenuResponses;
 import sample.controller.utilizationController.AudioController;
+import sample.controller.utilizationController.UtilityController;
 
 import java.io.IOException;
 
 public class LoginMenu {
     private static LoginMenu loginMenu;
     LoginController loginController = new LoginController();
-    @FXML
-    private Label passwordError;
-    @FXML
-    private Label usernameError;
-    @FXML
-    private Label result;
     @FXML
     private TextField passwordTextField;
     @FXML
@@ -44,13 +40,15 @@ public class LoginMenu {
         AudioController.playClick();
         if (usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
             if (usernameTextField.getText().equals(""))
-                usernameError.setText("username field is empty");
+                UtilityController.makeAlert("Error!!","Can't do action!","username field is empty",
+                        new Image(String.valueOf(getClass().
+                    getResource("/Images/sadAnimeGirl.jpg" ))));
             if (passwordTextField.getText().equals(""))
-                passwordError.setText("password field is empty");
+                UtilityController.makeAlert("Error!!","Can't do action!","password field is empty",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
             return;
         }
-        passwordError.setText("");
-        usernameError.setText("");
         LoginMenuResponses responses = loginController.loginUser(usernameTextField.getText(), passwordTextField.getText());
         showResponse(responses);
         passwordTextField.setText("");
@@ -66,7 +64,9 @@ public class LoginMenu {
         String output = "";
         switch (loginMenuResponses) {
             case USER_USERNAME_PASSWORD_NOT_MATCHED:
-                result.setText("Username and password didn't match");
+                UtilityController.makeAlert("Error!!","Can't do action!","Username and password didn't match",
+                        new Image(String.valueOf(getClass().
+                                getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             default:
                 break;
