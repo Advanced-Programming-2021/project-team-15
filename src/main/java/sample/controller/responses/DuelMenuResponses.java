@@ -95,7 +95,8 @@ public enum DuelMenuResponses {
     CARD_DESTROYED_BY_TRAP_HOLE,
     GIVE_A_NAME,
     CANCELED,
-    TRAP_ACTIVATED;
+    TRAP_ACTIVATED,
+    TURN_CHANGED;
 
 
 

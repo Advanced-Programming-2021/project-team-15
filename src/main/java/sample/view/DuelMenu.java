@@ -222,7 +222,11 @@ public class DuelMenu {
     }
     public void flipSummonButtonClicked(MouseEvent mouseEvent)
     {
-
+        try {
+            printResponse(gamePlayController.flipSummonCommand());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void changePositionButtonClicked(MouseEvent mouseEvent)
     {
@@ -232,6 +236,48 @@ public class DuelMenu {
             e.printStackTrace();
         }
 
+    }
+    public void flipMonster(Player player, int i, Card card, MonsterCard.Mode mode)
+    {     Flip flip = new Flip() ;
+        if(player ==gamePlayController.getCurrentPlayer())
+      {     flip.setNode(playerCards[1][i]);
+            flip.setFrontImage(card.getCardImage());
+            flip.setBackOfCard(backOfCard);
+            if(mode == MonsterCard.Mode.DEFENSE)
+            flip.setRightToLeft(true);
+            else  flip.setRightToLeft(false);
+            flip.setFrontToBack(false);
+            flip.play();
+            }
+    else {  flip.setNode(opponentCards[1][i]);
+            flip.setFrontImage(card.getCardImage());
+            flip.setBackOfCard(backOfCard);
+            if(mode == MonsterCard.Mode.DEFENSE)
+                flip.setRightToLeft(true);
+            else  flip.setRightToLeft(false);
+            flip.setFrontToBack(false);
+            flip.play();
+        }
+    AudioController.playFlipSound();
+    }
+    public void flipMagic(Player player, int i , Card card)
+    {  Flip flip = new Flip() ;
+        if(player ==gamePlayController.getCurrentPlayer())
+        {     flip.setNode(playerCards[0][i]);
+            flip.setFrontImage(card.getCardImage());
+            flip.setBackOfCard(backOfCard);
+            flip.setRightToLeft(false);
+            flip.setFrontToBack(false);
+            flip.play();
+        }
+        else {  flip.setNode(opponentCards[0][i]);
+            flip.setFrontImage(card.getCardImage());
+            flip.setBackOfCard(backOfCard);
+            flip.setRightToLeft(false);
+            flip.setFrontToBack(false);
+            flip.play();
+        }
+        AudioController.playFlipSound();
     }
 
     public void attackButtonClicked(MouseEvent mouseEvent) {
@@ -1297,8 +1343,8 @@ public class DuelMenu {
                 AudioController.playActivated();
                 break;
             case CANT_BE_ADDED_TO_CHAIN:
-                UtilityController.makeAlert("No!!", "you can't add this card ro chain",
-                        "preparations of this spell are not done yet", new Image(String.valueOf(getClass().
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you can't add this card ro chain", new Image(String.valueOf(getClass().
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case EFFECT_DONE_SUCCESSFULLY:
@@ -1309,7 +1355,9 @@ public class DuelMenu {
                 gamePlayController.setSelectedCard(null);
                 break;
             case CANNOT_ACCESS_RIVAL_CARD:
-                System.out.println("You can't access this card!");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "You can't access this card!", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case SHOW_NEW_PHASE:
                 output = "Phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName();
@@ -1415,22 +1463,55 @@ public class DuelMenu {
             case TRAP_ACTIVATED:
                 System.out.println("trap activated");
                 break;
-
+            case TURN_CHANGED:
+            {
+            }
             default:
                 break;
         }
     }
 
     public void hiddenDefensePositionMonsterDestroyed(String name) {
-        System.out.println("opponent's monster card was " + name + " and the defense position monster is destroyed");
+        Timeline timeline = attackFire();
+        timeline.setOnFinished(vent -> {
+            UtilityController.makeAlert("Well done!!", "You are a true warrior...!", "opponent's monster card was " + name + " and the defense position monster is destroyed", new Image(String.valueOf(getClass().
+                    getResource("/Images/fightAnimeGirl.jpg"))));
+        });
+        timeline.play();
+    }
+
+    public String yesNoQuestionAlert(String question)
+    {   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(question);
+        ButtonType buttonTypeOne = new ButtonType("yes");
+        ButtonType buttonTypeTwo = new ButtonType("no");
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne){
+            return "yes";
+        } else if (result.get() == buttonTypeTwo) {
+            return "no";
+        } else {
+          return "no";
+        }
     }
 
     public void hiddenDefensePosNoCardDestroyed(String name) {
-        System.out.println("opponent's monster card was " + name + " and no card is destroyed");
+        Timeline timeline = attackFire();
+        timeline.setOnFinished(vent -> {
+            UtilityController.makeAlert("hmmm...", "nothing special!...", "opponent's monster card was " + name + " and no card is destroyed", new Image(String.valueOf(getClass().
+                    getResource("/Images/fightAnimeGirl.jpg"))));
+        });
+        timeline.play();
     }
 
     public void hiddenDefensePosNoCardDestroyedWithDamage(String name) {
-        System.out.println("opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
+        Timeline timeline = attackFire();
+        timeline.setOnFinished(vent -> {
+            UtilityController.makeAlert("hmmm...", "nothing special!...", "opponent's monster card was " + name + " no card is destroyed and you received " + AttackController.getDamage() + " battle damage", new Image(String.valueOf(getClass().
+                    getResource("/Images/fightAnimeGirl.jpg"))));
+        });
+        timeline.play();
     }
 
 

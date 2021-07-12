@@ -232,6 +232,7 @@ public class GamePlayController extends MenuController {
             moveFirstCardFromHandToDeck(currentPlayer);
             moveFirstCardFromHandToDeck(opponentPlayer);
         }
+        goNextPhase();
         currentPlayer.setCanDraw(true);
         opponentPlayer.setCanDraw(true);
     }
@@ -607,7 +608,9 @@ public class GamePlayController extends MenuController {
                 isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard))
             return CANT_FLIP_SUMMON;
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
+        duelMenu.changePos(currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,currentPlayer, MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
+        duelMenu.flipMonster(currentPlayer,currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,selectedCard , MonsterCard.Mode.ATTACK);
         checkForMonsters((MonsterCard) selectedCard);
         if (selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
             monsterEffectController.manEaterBug((MonsterCard) selectedCard);
@@ -899,7 +902,7 @@ public class GamePlayController extends MenuController {
         duelMenu.setCantDoThisKindsOfMove(true);
         duelMenu.showRivalTurn(currentPlayer.getUser().getUserName(), showGameBoard());
         duelMenu.printResponse(DO_YOU_WANT_ACTIVATE_SPELL_AND_TRAP);
-        String ans = duelMenu.getString();
+        String ans = duelMenu.yesNoQuestionAlert("do you wanna activate spell or trap?");
         if (ans.equals("yes")) {
             return true;
         } else return false;
@@ -999,6 +1002,11 @@ public class GamePlayController extends MenuController {
         } else {
             currentPlayer = game.getFirstPlayer();
             opponentPlayer = game.getSecondPlayer();
+        }
+        try {
+            duelMenu.printResponse(TURN_CHANGED);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

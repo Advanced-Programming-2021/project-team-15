@@ -18,6 +18,7 @@ public class AudioController {
     private static final MediaPlayer posChanged;
     private static final MediaPlayer flipSummoned;
     private static final MediaPlayer effectDone;
+    private static final MediaPlayer  flipSound;
     private static boolean mute;
     static {
         Media setMedia  = new Media(AudioController.class.getResource("/Audios/set.mp3").toExternalForm());
@@ -31,6 +32,8 @@ public class AudioController {
         Media posChangedMedia = new  Media(AudioController.class.getResource("/Audios/posChanged.mp3").toExternalForm());
         Media flipSummonedMedia = new Media(AudioController.class.getResource("/Audios/flipSummoned.mp3").toExternalForm());
         Media effectDoneMedia = new Media(AudioController.class.getResource("/Audios/effectDone.mp3").toExternalForm());
+        Media flipSoundMedia = new Media(AudioController.class.getResource("/Audios/effectDone.mp3").toExternalForm());
+        flipSound = new MediaPlayer(flipSoundMedia);
         effectDone = new MediaPlayer(effectDoneMedia);
         set = new MediaPlayer(setMedia);
         summoned = new MediaPlayer(summonedMedia);
@@ -42,6 +45,12 @@ public class AudioController {
         swamp = new MediaPlayer(swampMedia);
         posChanged = new MediaPlayer(posChangedMedia);
         flipSummoned = new MediaPlayer(flipSummonedMedia);
+    }
+
+    public static void playFlipSound(){
+        if (mute) return;
+        flipSound.play();
+        flipSound.setOnEndOfMedia(flipSound::stop);
     }
 
     public static void playSwamp() {
