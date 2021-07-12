@@ -99,36 +99,39 @@
       </VBox>
       <VBox layoutX="249.0" layoutY="11.0" prefHeight="200.0" prefWidth="290.0" spacing="10.0" styleClass="backLight">
          <children>
-              <Label text="Effects :">
+              <Label text="Effects :" textFill="#34495e">
                   <font>
-                      <Font size="21.0" />
+                      <Font name="System Bold" size="20.0" />
                   </font>
               </Label>
-              <CheckBox fx:id="increaseDefenseEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="214.0" text="increase defense power by 400">
+              <CheckBox fx:id="increaseDefenseEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="214.0" text="increase defense power by 400" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
-              <CheckBox fx:id="increaseAttackEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="214.0" text="increase attack power by 200">
+              <CheckBox fx:id="increaseAttackEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="214.0" text="increase attack power by 200" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
-              <CheckBox fx:id="increaseLPEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="200.0" text="increase user life point by 1000">
+              <CheckBox fx:id="increaseLPEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="200.0" text="increase user life point by 1000" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
-              <CheckBox fx:id="decreaseLPEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="229.0" text="decrease opponent life point by 1000">
+              <CheckBox fx:id="decreaseLPEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="229.0" text="decrease opponent life point by 1000" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
-              <CheckBox fx:id="killAllMonsterEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="207.0" text="kill all opponent monsters in zone">
+              <CheckBox fx:id="killAllMonsterEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="207.0" text="kill all opponent monsters in zone" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
-              <CheckBox fx:id="killHighestLevelMonsterEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="286.0" text="kill the opponent's highest level  monster in zone">
+              <CheckBox fx:id="killHighestLevelMonsterEffect" mnemonicParsing="false" prefHeight="17.0" prefWidth="286.0" text="kill the opponent's highest level  monster in zone" textFill="#34495e">
                <cursor>
                   <Cursor fx:constant="CROSSHAIR" />
                </cursor></CheckBox>
          </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
       </VBox>
       <VBox layoutX="654.0" layoutY="203.0" prefHeight="155.0" prefWidth="163.0" styleClass="backLight">
          <children>
@@ -175,6 +178,9 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
       </VBox>
     </children>
 </AnchorPane>

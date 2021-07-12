@@ -120,11 +120,8 @@
     -fx-text-fill: #34495e;
     -fx-opacity: 0.5;
 }
-<<<<<<< HEAD
 
 .backYellow:hover {
-=======
-.backBlue:hover {
     -fx-opacity: 1;
 }
 .backLight {
@@ -143,10 +140,8 @@
 .backDarkButton:hover {
     -fx-background-color:  #D6EAF8;
     -fx-text-fill:  #34495e;
->>>>>>> ghraphics-phase2
     -fx-opacity: 1;
 }
-
 .importExportMenu {
     -fx-background-image: url("../Images/AnimeGirls2.jpg");
     -fx-background-size: cover;
