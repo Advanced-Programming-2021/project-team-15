@@ -71,7 +71,7 @@ public class DatabaseController {
         try {
             return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + getAddressByCard(card))));
         }catch (IllegalArgumentException e) {
-            return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl.jpg")));
+            return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl2.jpg")));
         }
     }
 

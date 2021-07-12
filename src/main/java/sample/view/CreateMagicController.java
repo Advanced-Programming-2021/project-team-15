@@ -134,10 +134,10 @@ public class CreateMagicController implements Initializable {
             if (trapButton.isSelected()) magicCard.setMagicType(MagicCard.MagicType.TRAP);
             else magicCard.setMagicType(MagicCard.MagicType.SPELL);
             Card.addCard(magicCard);
-            DatabaseController.getInstance().writeMagicCardToCSV(magicCard);
+            DatabaseController.getInstance().serializeCard(magicCard);
             MenuController.getUser().setMoney(MenuController.getUser().getMoney()
                     - magicCard.getPrice() / 10);
-            UtilityController.makeAlert("Happy!!", "Good job!", error, new Image(String.valueOf(getClass().
+            UtilityController.makeAlert("Happy!!", "Good job!", "Card created successfully", new Image(String.valueOf(getClass().
                     getResource("/Images/okAnimeGirl.png"))));
         }
     }

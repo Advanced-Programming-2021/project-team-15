@@ -100,19 +100,10 @@ public class CreateMonsterController implements Initializable {
 
     public void handleDropImage(DragEvent dragEvent) {
         List<File> files = dragEvent.getDragboard().getFiles();
-//        try {
-//            Image image = new Image(new FileInputStream(files.get(files.size() - 1)));
-//            System.out.println(files.get(files.size() - 1).getAbsolutePath());
-//            System.out.println((files.get(files.size() - 1)).toURI());
         Image image = new Image(String.valueOf(files.get(files.size() - 1).toURI()));
-        System.out.println(cardImage.getImage().getUrl());
         cardImage.setImage(image);
         path = cardImage.getImage().getUrl();
-        System.out.println("Path : " + path);
         cardImageLBL.setText("");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void handleDragOverImage(DragEvent dragEvent) {
@@ -204,11 +195,6 @@ public class CreateMonsterController implements Initializable {
             return;
         } else
             calculate();
-
-        // File outputFile = new File("src/main/resources/Images/Cards" + nameTextField.getText() + ".JPG");
-        //  BufferedImage bImage = SwingFXUtils.fromFXImage(cardImage.getImage(), null);
-        // ImageIO.write(bImage, "JPG", outputFile);
-//        BufferedImage bImage = ImageIO.read(new File(path));
         MonsterCard monsterCard = new MonsterCard(descriptionOfCard.getText(), nameTextField.getText(), "0",
                 MonsterCard.CardType.MONSTER);
         monsterCard.setLevel(Integer.parseInt(levelLBL.getText()));
@@ -222,21 +208,17 @@ public class CreateMonsterController implements Initializable {
         monsterCard.setGameDEF(monsterCard.getDefensePoint());
         monsterCard.setMode(MonsterCard.Mode.DEFENSE);
         Card.addCard(monsterCard);
-        DatabaseController.getInstance().writeMonsterCardToCSV(monsterCard);
-//        ImageIO.write(bImage, "jpg", new File(getClass().getResource("/Images/Cards/" +
-//                DatabaseController.getInstance().getAddressByCard(monsterCard)).toString()));
+        DatabaseController.getInstance().serializeCard(monsterCard);
         MenuController.getUser().setMoney(MenuController.getUser().getMoney()
                 - monsterCard.getPrice() / 10);
         System.out.println(MonsterCard.getCardByName(nameTextField.getText()));
-        UtilityController.makeAlert("Happy!!", "Good job!", error, new Image(String.valueOf(getClass().
+        UtilityController.makeAlert("Happy!!", "Good job!", "Card created successfully", new Image(String.valueOf(getClass().
                 getResource("/Images/okAnimeGirl.png"))));
     }
 
     public String errorCheck(CheckBox[] effects) {
         if (nameTextField.getText().equals(""))
             return "You should choose a name for your card";
-//        if (cardImage.getImage() == null || cardImage.getImage().getUrl().
-//                equals(new Image(getClass().getResource("/Images/PreGame.png").toString()).getUrl()))
         if (path == null)
             return "You should choose an image for your card";
         if (Integer.parseInt(calculatePriceOfMonster(effects)) > MenuController.getUser().getMoney())
