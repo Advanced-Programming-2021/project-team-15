@@ -98,7 +98,7 @@
                </cursor>
               </TextArea>
             <Separator prefWidth="200.0" />
-            <HBox prefHeight="35.0" prefWidth="250.0" spacing="10.0">
+            <HBox alignment="TOP_CENTER" prefHeight="35.0" prefWidth="250.0" spacing="10.0">
                <children>
                     <Label text="Price : " textFill="#50003b">
                         <font>

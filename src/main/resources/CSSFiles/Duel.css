@@ -56,3 +56,30 @@
     -fx-background-color: linear-gradient(to right,#DE3163,#CCCCFF);
     -fx-text-fill: #9FE2BF;
 }
+.settingBack {
+    -fx-background-image: url("../Images/Setting2.gif");
+    -fx-background-size: cover;
+}
+.slider .track {
+    -fx-background-color: #21253A;
+}
+.slider .thumb {
+    -fx-background-color: #5D151B;
+}
+.settingContainer {
+    -fx-background-color: #8CA3DB;
+    -fx-opacity: 0.3;
+}
+.settingContainer:hover {
+    -fx-opacity: 1;
+}
+.settingButton {
+    -fx-background-color: #5D151B;
+    -fx-text-fill: #8CA3DB;
+    -fx-opacity: 0.5;
+}
+.settingButton:hover {
+    -fx-background-color: #21253A;
+    -fx-text-fill: #8CA3DB;
+    -fx-opacity: 1;
+}

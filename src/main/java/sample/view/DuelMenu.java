@@ -821,6 +821,24 @@ public class DuelMenu {
             }
         });
     }
+
+    public void pauseButtonClicked(MouseEvent mouseEvent) {
+        AudioController.playClick();
+        isPause=true;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/GameSetting.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GameSettingController gameSettingController = loader.getController();
+        Stage popupStage = new Stage();
+        gameSettingController.setStage(popupStage);
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setScene(scene);
+        popupStage.showAndWait();
+    }
 //    @Override
 //    public void scanInput() {
 //        while (true) {
