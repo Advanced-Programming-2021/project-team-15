@@ -81,18 +81,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button onMouseClicked="#pauseButtonClicked" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Pause">
+            <Button mnemonicParsing="false" onMouseClicked="#pauseButtonClicked" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Pause">
                <font>
                   <Font size="18.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Surrender">
-               <font>
-                  <Font size="18.0" />
-               </font>
             </Button>
          </children></VBox>
       <VBox prefHeight="840.0" prefWidth="566.0" styleClass="playersTexture" stylesheets="@../CSSFiles/Duel.css">
