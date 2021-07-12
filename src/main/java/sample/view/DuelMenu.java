@@ -42,6 +42,7 @@ import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 import sample.model.Game;
+import sample.model.Phase;
 import sample.model.Player;
 import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
@@ -185,7 +186,8 @@ public class DuelMenu {
         if ((selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getHand()
                 && selectedCard instanceof MonsterCard)) activeButton(summonButton);
         else inActiveButton(summonButton);
-        if (selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard) selectedCard).toStringPosition().equals("OO"))
+        if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) == Phase.PhaseLevel.BATTLE  &&
+                selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard) selectedCard).toStringPosition().equals("OO"))
             activeButton(attackButton);
         else inActiveButton(attackButton);
         if (selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard) selectedCard).toStringPosition().equals("OO"))
@@ -195,9 +197,11 @@ public class DuelMenu {
                 || (((MagicCard) selectedCard).getMagicType() == MagicCard.MagicType.TRAP && selectedCard.getCardPlacedZone() == gamePlayController.getCurrentPlayer().getMagicCardZone())))
             activeButton(activateButton);
         else inActiveButton(activateButton);
-        if(selectedCard.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard) selectedCard).toStringPosition().equals("DH"));
+        if(selectedCard.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getMonsterCardZone() && ((MonsterCard) selectedCard).toStringPosition().equals("DH"))
+            activeButton(flipSummon);
          else inActiveButton(flipSummon);
-         if(selectedCard.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getMonsterCardZone() && !((MonsterCard) selectedCard).toStringPosition().equals("DH") );
+         if(selectedCard.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getMonsterCardZone() && !((MonsterCard) selectedCard).toStringPosition().equals("DH") )
+             activeButton(changePosition);
          else inActiveButton(changePosition);
 
     }
@@ -421,7 +425,7 @@ public class DuelMenu {
                 imageView.setFitWidth(80);
                 imageView.setImage(null);
                 playerCards[i][j] = imageView;
-                setOnMouseClickedForCardImage(imageView, "player");
+                setOnMouseClickedForCardImage( playerCards[i][j], "player");
                 firstPlayerBoardCards.add(imageView, j, i);
                 firstPlayerBoardCards.setHgap(27);
                 ImageView imageView1 = new ImageView();
@@ -429,7 +433,7 @@ public class DuelMenu {
                 imageView1.setFitWidth(80);
                 imageView1.setImage(null);
                 opponentCards[i][j] = imageView1;
-                setOnMouseClickedForCardImage(imageView1, "opponent");
+                setOnMouseClickedForCardImage(opponentCards[i][j], "opponent");
                 secondPlayerBoardCards.add(imageView1, j, i);
                 secondPlayerBoardCards.setHgap(27);
             }
@@ -1164,78 +1168,114 @@ public class DuelMenu {
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case ALREADY_WANTED_POSITION:
-                System.out.println("selected card is already in wanted position");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "selected card is already in wanted position",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY:
+                AudioController.playPosChanged();
                 System.out.println("monster card position changed successfully");
                 break;
             case CANT_FLIP_SUMMON:
-                System.out.println("you can't flip summon this card");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't flip summon this card",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case FLIP_SUMMONED_SUCCESSFULLY: {
-                System.out.println("flip summoned successfully");
+                AudioController.playFlipSummoned();
                 gamePlayController.checkForTrapHole();
             }
             break;
             case YOU_CANT_ATTACK_WITH_THIS_CARD:
-                System.out.println("you can't attack with this card");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "you can't attack with this card",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case NOT_IN_ATTACK_POSITION:
                 System.out.println("Your card is not in attack position");
                 break;
             case ALREADY_ATTACKED:
-                System.out.println("this card already attacked");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "this card already attacked",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case NO_CARD_TO_ATTACK:
-                System.out.println("there is no card to attack here");
+                UtilityController.makeAlert("No!!","Can't be done!",
+                        "there is no card to attack here",  new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE:
-                System.out.println("your opponent's monster is destroyed and your opponent receives " + AttackController.getDamage() + " battle damage");
+                output = "your opponent's monster is destroyed and your opponent receives " + AttackController.getDamage() + " battle damage";
+                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case BOTH_MONSTERS_ARE_DESTROYED:
-                System.out.println("both you and your opponent monster cards are destroyed and no one receives damage");
+                UtilityController.makeAlert("hmmm...", "both bad news and good news!...","both you and your opponent monster cards are destroyed and no one receives damage", new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case DESTROYED_CURRENT_MONSTER_AFTER_ATTACK:
-                System.out.println("your monster card is destroyed and you received " + AttackController.getDamage() + " battle damage");
+                output = "your monster card is destroyed and you received " + AttackController.getDamage() + " battle damage";
+                UtilityController.makeAlert("bad news!!","",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             case DEFENCE_POSITION_MONSTER_DESTROYED:
-                System.out.println("the defense position monster is destroyed");
+                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", "the defense position monster is destroyed", new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case NO_CARD_DESTROYED:
-                System.out.println("no card is destroyed ");
+                UtilityController.makeAlert("hmmm...", "nothing special!...","no card is destroyed", new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case NO_CARD_DESTROYED_CURRENT_DAMAGED:
-                System.out.println("no card is destroyed and you received " + AttackController.getDamage() + " battle damage");
+                output =  "no card is destroyed and you received " + AttackController.getDamage() + " battle damage";
+                UtilityController.makeAlert("bad news!!","",output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg" ))));
                 break;
             case CANT_ATTACK_DIRECTLY:
-                System.out.println("you can't attack the opponent directly");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "you can't attack the opponent directly", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK:
-                System.out.println("your opponent receives " + AttackController.getDamage() + " battle damage");
+                output ="your opponent receives " + AttackController.getDamage() + " battle damage";
+                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/fightAnimeGirl.jpg"))));
                 break;
             case ACTIVATE_EFFECT_ONLY_ON_SPELL:
-                System.out.println("activate effect is only for spell cards");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "activate effect is only for spell cards", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_ACTIVATE_EFFECT_ON_THIS_PHASE:
-                System.out.println("you can't activate an effect on this phase");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "you can't activate an effect on this phase", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case YOU_ALREADY_ACTIVATED_THIS_CARD:
-                System.out.println("you have already activated this card");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "you have already activated this card", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case SPELL_ZONE_CARD_IS_FULL:
-                System.out.println("spell card zone is full");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "spell card zone is full", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET:
-                System.out.println("preparations of this spell are not done yet");
+                UtilityController.makeAlert("No!!", "Can't be done!",
+                        "preparations of this spell are not done yet", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case SPELL_ACTIVATED:
                 AudioController.playActivated();
                 break;
             case CANT_BE_ADDED_TO_CHAIN:
-                System.out.println("you can't add this card ro chain");
+                UtilityController.makeAlert("No!!", "you can't add this card ro chain",
+                        "preparations of this spell are not done yet", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case EFFECT_DONE_SUCCESSFULLY:
-                System.out.println("effect done successfully");
+                AudioController.playEffectDone();
                 break;
             case SHOW_CARD:
                 System.out.println(gamePlayController.getSelectedCard().cardShow());

@@ -15,7 +15,9 @@ public class AudioController {
     private static final MediaPlayer set;
     private static final MediaPlayer summoned;
     private static final MediaPlayer activated;
-
+    private static final MediaPlayer posChanged;
+    private static final MediaPlayer flipSummoned;
+    private static final MediaPlayer effectDone;
     private static boolean mute;
     static {
         Media setMedia  = new Media(AudioController.class.getResource("/Audios/set.mp3").toExternalForm());
@@ -26,6 +28,10 @@ public class AudioController {
         Media clickMedia = new Media(AudioController.class.getResource("/Audios/Click.mp3").toExternalForm());
         Media heartbeatMedia = new Media(AudioController.class.getResource("/Audios/Heartbeat.mp3").toExternalForm());
         Media swampMedia = new Media(AudioController.class.getResource("/Audios/Swamp.mp3").toExternalForm());
+        Media posChangedMedia = new  Media(AudioController.class.getResource("/Audios/posChanged.mp3").toExternalForm());
+        Media flipSummonedMedia = new Media(AudioController.class.getResource("/Audios/flipSummoned.mp3").toExternalForm());
+        Media effectDoneMedia = new Media(AudioController.class.getResource("/Audios/effectDone.mp3").toExternalForm());
+        effectDone = new MediaPlayer(effectDoneMedia);
         set = new MediaPlayer(setMedia);
         summoned = new MediaPlayer(summonedMedia);
         activated = new MediaPlayer(activatedMedia);
@@ -34,6 +40,8 @@ public class AudioController {
         click = new MediaPlayer(clickMedia);
         heartbeat = new MediaPlayer(heartbeatMedia);
         swamp = new MediaPlayer(swampMedia);
+        posChanged = new MediaPlayer(posChangedMedia);
+        flipSummoned = new MediaPlayer(flipSummonedMedia);
     }
 
     public static void playSwamp() {
@@ -46,11 +54,27 @@ public class AudioController {
         set.play();
        set.setOnEndOfMedia(set::stop);
     }
+    public static void playEffectDone() {
+        if (mute) return;
+        effectDone.play();
+       effectDone.setOnEndOfMedia(effectDone::stop);
+    }
     public static void playSummoned() {
         if (mute) return;
         summoned.play();
         summoned.setOnEndOfMedia(summoned::stop);
     }
+    public static void playFlipSummoned() {
+        if (mute) return;
+        flipSummoned.play();
+        flipSummoned.setOnEndOfMedia(flipSummoned::stop);
+    }
+    public static void playPosChanged()
+    {  if(mute) return;
+        posChanged.play();
+        posChanged.setOnEndOfMedia(posChanged::stop);
+    }
+
     public static void playActivated()
     { if(mute) return;
         activated.play();
