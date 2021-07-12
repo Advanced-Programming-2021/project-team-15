@@ -79,7 +79,7 @@
     -fx-opacity: 0.5;
 }
 .settingButton:hover {
-    -fx-background-color: #8CA3DB;
-    -fx-text-fill: #5D151B;
+    -fx-background-color: #21253A;
+    -fx-text-fill: #8CA3DB;
     -fx-opacity: 1;
 }

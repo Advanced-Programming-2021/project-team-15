@@ -7,7 +7,7 @@ import sample.model.Game;
 import sample.view.DuelMenu;
 
 public class AudioController {
-    private static MediaPlayer mainMusic;
+    public static MediaPlayer mainMusic;
     private static final MediaPlayer alert;
     private static final MediaPlayer click;
     private static final MediaPlayer heartbeat;

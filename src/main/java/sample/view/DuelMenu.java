@@ -835,6 +835,7 @@ public class DuelMenu {
         GameSettingController gameSettingController = loader.getController();
         Stage popupStage = new Stage();
         gameSettingController.setStage(popupStage);
+        gameSettingController.init();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setScene(scene);
         popupStage.showAndWait();

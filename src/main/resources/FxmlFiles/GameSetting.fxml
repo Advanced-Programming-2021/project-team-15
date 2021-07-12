@@ -22,14 +22,14 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Slider prefHeight="35.0" prefWidth="140.0">
+                  <Slider fx:id="volumeSlider" prefHeight="35.0" prefWidth="140.0">
                      <cursor>
                         <Cursor fx:constant="MOVE" />
                      </cursor></Slider>
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" styleClass="settingButton" text="Back to Game">
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" styleClass="settingButton" text="Back to Game" onMouseClicked="#backButtonClicked">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
