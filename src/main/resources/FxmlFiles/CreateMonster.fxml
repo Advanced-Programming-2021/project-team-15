@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -92,6 +93,9 @@
                </cursor>
               </TextArea>
          </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
       </VBox>
       <VBox layoutX="249.0" layoutY="11.0" prefHeight="200.0" prefWidth="290.0" spacing="10.0" styleClass="backLight">
          <children>

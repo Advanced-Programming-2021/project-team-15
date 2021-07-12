@@ -2,16 +2,12 @@ package sample.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.controller.menuController.MenuController;
 import sample.controller.utilizationController.DatabaseController;
@@ -19,13 +15,8 @@ import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 import sample.model.cards.MonsterCard;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -83,24 +74,7 @@ public class CreateMonsterController implements Initializable {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage) backButton.getScene().getWindow();
-                URL url = null;
-                try {
-                    url = new File("src/main/resources/FxmlFiles/CreateCard.fxml").toURI().toURL();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                Parent root = null;
-                try {
-                    assert url != null;
-                    root = FXMLLoader.load(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                stage.setTitle("CreateCard");
-                assert root != null;
-                stage.setScene(new Scene(root, 1920, 1150));
-                stage.show();
+                stage.close();
             }
         });
 
@@ -130,12 +104,12 @@ public class CreateMonsterController implements Initializable {
 //            Image image = new Image(new FileInputStream(files.get(files.size() - 1)));
 //            System.out.println(files.get(files.size() - 1).getAbsolutePath());
 //            System.out.println((files.get(files.size() - 1)).toURI());
-            Image image = new Image(String.valueOf(files.get(files.size() - 1).toURI()));
-            System.out.println(cardImage.getImage().getUrl());
-            cardImage.setImage(image);
-            path = cardImage.getImage().getUrl();
-            System.out.println("Path : "+path);
-            cardImageLBL.setText("");
+        Image image = new Image(String.valueOf(files.get(files.size() - 1).toURI()));
+        System.out.println(cardImage.getImage().getUrl());
+        cardImage.setImage(image);
+        path = cardImage.getImage().getUrl();
+        System.out.println("Path : " + path);
+        cardImageLBL.setText("");
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
@@ -225,7 +199,7 @@ public class CreateMonsterController implements Initializable {
         String error = errorCheck(effects);
 
         if (!error.equals("")) {
-            UtilityController.makeAlert("Error!!","Na Da!",error,new Image(String.valueOf(getClass().
+            UtilityController.makeAlert("Error!!", "Na Da!", error, new Image(String.valueOf(getClass().
                     getResource("/Images/AngryAnimeGirl.jpg"))));
             return;
         } else
@@ -252,10 +226,11 @@ public class CreateMonsterController implements Initializable {
 //        ImageIO.write(bImage, "jpg", new File(getClass().getResource("/Images/Cards/" +
 //                DatabaseController.getInstance().getAddressByCard(monsterCard)).toString()));
         MenuController.getUser().setMoney(MenuController.getUser().getMoney()
-                - monsterCard.getPrice()/10);
+                - monsterCard.getPrice() / 10);
         System.out.println(MonsterCard.getCardByName(nameTextField.getText()));
-        UtilityController.makeAlert("Happy!!","Good job!",error,new Image(String.valueOf(getClass().
-                getResource("/Images/okAnimeGirl.png"))));    }
+        UtilityController.makeAlert("Happy!!", "Good job!", error, new Image(String.valueOf(getClass().
+                getResource("/Images/okAnimeGirl.png"))));
+    }
 
     public String errorCheck(CheckBox[] effects) {
         if (nameTextField.getText().equals(""))

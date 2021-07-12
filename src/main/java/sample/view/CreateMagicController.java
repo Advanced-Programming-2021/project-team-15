@@ -1,29 +1,25 @@
 package sample.view;
-import sample.controller.menuController.MenuController;
-//import javafx.embed.swing.SwingFXUtils;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.controller.menuController.MenuController;
+import sample.controller.utilizationController.DatabaseController;
+import sample.controller.utilizationController.UtilityController;
+import sample.model.cards.Card;
 import sample.model.cards.MagicCard;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,13 +40,20 @@ public class CreateMagicController implements Initializable {
     public Button backButton;
     public Button createButton;
     public TextField nameTextField;
-    public Label errorLBL;
     public TextArea cardDescription;
+    @FXML
+    private Label dragLBL;
+
+    private Stage stage;
+    private String path;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setIcons();
-
         cardImage.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -75,24 +78,7 @@ public class CreateMagicController implements Initializable {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage) backButton.getScene().getWindow();
-                URL url = null;
-                try {
-                    url = new File("src/main/resources/FxmlFiles/CreateCard.fxml").toURI().toURL();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                Parent root = null;
-                try {
-                    assert url != null;
-                    root = FXMLLoader.load(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                stage.setTitle("CreateCard");
-                assert root != null;
-                stage.setScene(new Scene(root, 1920, 1150));
-                stage.show();
+                stage.close();
             }
         });
 
@@ -136,27 +122,23 @@ public class CreateMagicController implements Initializable {
         String error = errorCheck(effects);
 
         if (!error.equals("")) {
-            errorLBL.setText(error);
-            errorLBL.setTextFill(Color.RED);
+            UtilityController.makeAlert("Error!!", "Na Da!", error, new Image(String.valueOf(getClass().
+                    getResource("/Images/AngryAnimeGirl.jpg"))));
         } else {
-            String status = "Limited";
             calculate();
-         //   File outputFile = new File("src/main/resources/Images/Cards" + nameTextField.getText() + ".JPG");
-           // BufferedImage bImage = SwingFXUtils.fromFXImage(cardImage.getImage(), null);
-            //ImageIO.write(bImage, "JPG", outputFile);
-
-            if (unlimitedButton.isSelected())
-                status = "Unlimited";
-//TODO add into file
-            if (trapButton.isSelected()) {
-
-              } else {
-                 }
-
+            MagicCard magicCard = new MagicCard(cardDescription.getText(), nameTextField.getText(), "0", Card.CardType.MAGIC);
+            magicCard.setCardIcon(MagicCard.CardIcon.getCardIcon(icons.getValue()));
+            magicCard.setPrice(Integer.parseInt(priceLBL.getText()));
+            if (unlimitedButton.isSelected()) magicCard.setStatus(MagicCard.Status.UNLIMITED);
+            else magicCard.setStatus(MagicCard.Status.LIMITED);
+            if (trapButton.isSelected()) magicCard.setMagicType(MagicCard.MagicType.TRAP);
+            else magicCard.setMagicType(MagicCard.MagicType.SPELL);
+            Card.addCard(magicCard);
+            DatabaseController.getInstance().writeMagicCardToCSV(magicCard);
             MenuController.getUser().setMoney(MenuController.getUser().getMoney()
-                    - Integer.parseInt(calculatePriceOfSpellAndTrapCard(effects)));
-
-            errorLBL.setText("card created successfully!");
+                    - magicCard.getPrice() / 10);
+            UtilityController.makeAlert("Happy!!", "Good job!", error, new Image(String.valueOf(getClass().
+                    getResource("/Images/okAnimeGirl.png"))));
         }
     }
 
@@ -175,6 +157,7 @@ public class CreateMagicController implements Initializable {
         try {
             Image image = new Image(new FileInputStream(files.get(files.size() - 1)));
             cardImage.setImage(image);
+            dragLBL.setText("");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
