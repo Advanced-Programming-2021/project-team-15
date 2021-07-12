@@ -19,7 +19,7 @@ public class User {
     private String passWord;
     private String nickName;
     private int score;
-    private int money;
+    private int money=1000;
 private int rank=1;
     public User(String userName, String nickName, String passWord) {
         this.userName = userName;

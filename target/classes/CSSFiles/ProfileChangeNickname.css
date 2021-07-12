@@ -1,4 +1,8 @@
 .changeNickname{
+<<<<<<< HEAD
     -fx-background-image: url("../Images/AnimeGirl1.jpg");
+=======
+    -fx-background-image: url("../Images/yugi4.jpg");
+>>>>>>> ghraphics-phase2
     -fx-background-size: cover;
 }
