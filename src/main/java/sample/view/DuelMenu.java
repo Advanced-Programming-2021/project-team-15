@@ -235,8 +235,23 @@ public class DuelMenu {
     }
 
     public void attackButtonClicked(MouseEvent mouseEvent) {
+            try {
+                attack();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    public void directAttackButtonClicked(MouseEvent mouseEvent) {
+        try {
+            printResponse(gamePlayController.directAttack());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public Timeline attackFire()
+    {
         Image image = new Image(String.valueOf(DuelMenu.class.
-                getResource("/Images/fire.jpg")));
+                getResource("/Images/fire.gif")));
         viewImage.setFitWidth(200);
         viewImage.setFitHeight(500);
         viewImage.setImage(image);
@@ -244,33 +259,7 @@ public class DuelMenu {
             viewImage.setImage(null);
         });
         Timeline timeline = new Timeline(keyFrame);
-        timeline.play();
-        timeline.setOnFinished(vent -> {
-            try {
-                attack();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    public void directAttackButtonClicked(MouseEvent mouseEvent) {
-        Image image = new Image(String.valueOf(DuelMenu.class.
-                getResource("/Images/fire.jpg")));
-          viewImage.setFitWidth(200);
-         viewImage.setFitHeight(500);
-         viewImage.setImage(image);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
-           viewImage.setImage(null);
-        });
-        Timeline timeline = new Timeline(keyFrame);
-        timeline.play();
-        timeline.setOnFinished(vent -> {
-            try {
-                printResponse(gamePlayController.directAttack());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        return timeline;
     }
 
     public void activateButtonClicked(MouseEvent mouseEvent) {
@@ -1204,42 +1193,80 @@ public class DuelMenu {
                         "there is no card to attack here",  new Image(String.valueOf(getClass().
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
-            case DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE:
+            case DESTROYED_OPPONENT_MONSTER_AND_OPPONENT_RECEIVED_DAMAGE:{
                 output = "your opponent's monster is destroyed and your opponent receives " + AttackController.getDamage() + " battle damage";
-                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                        UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
+                                getResource("/Images/fightAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case BOTH_MONSTERS_ARE_DESTROYED:
-                UtilityController.makeAlert("hmmm...", "both bad news and good news!...","both you and your opponent monster cards are destroyed and no one receives damage", new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+            case BOTH_MONSTERS_ARE_DESTROYED: {
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("hmmm...", "both bad news and good news!...", "both you and your opponent monster cards are destroyed and no one receives damage", new Image(String.valueOf(getClass().
+                            getResource("/Images/fightAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case DESTROYED_CURRENT_MONSTER_AFTER_ATTACK:
+            case DESTROYED_CURRENT_MONSTER_AFTER_ATTACK: {
+                Timeline timeline = attackFire();
                 output = "your monster card is destroyed and you received " + AttackController.getDamage() + " battle damage";
-                UtilityController.makeAlert("bad news!!","",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/sadAnimeGirl.jpg" ))));
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("bad news!!", "", output, new Image(String.valueOf(getClass().
+                            getResource("/Images/sadAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case DEFENCE_POSITION_MONSTER_DESTROYED:
-                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", "the defense position monster is destroyed", new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+            case DEFENCE_POSITION_MONSTER_DESTROYED: {
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("Well done!!", "You are a true warrior...!", "the defense position monster is destroyed", new Image(String.valueOf(getClass().
+                            getResource("/Images/fightAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case NO_CARD_DESTROYED:
-                UtilityController.makeAlert("hmmm...", "nothing special!...","no card is destroyed", new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+            case NO_CARD_DESTROYED: {
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("hmmm...", "nothing special!...", "no card is destroyed", new Image(String.valueOf(getClass().
+                            getResource("/Images/fightAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case NO_CARD_DESTROYED_CURRENT_DAMAGED:
+            case NO_CARD_DESTROYED_CURRENT_DAMAGED:{
+                Timeline timeline = attackFire();
                 output =  "no card is destroyed and you received " + AttackController.getDamage() + " battle damage";
-                UtilityController.makeAlert("bad news!!","",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/sadAnimeGirl.jpg" ))));
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("bad news!!","",output, new Image(String.valueOf(getClass().
+                            getResource("/Images/sadAnimeGirl.jpg" ))));
+                });
+                timeline.play(); }
                 break;
-            case CANT_ATTACK_DIRECTLY:
-                UtilityController.makeAlert("No!!", "Can't be done!",
-                        "you can't attack the opponent directly", new Image(String.valueOf(getClass().
-                                getResource("/Images/confusedAnimeGirl.jpg"))));
+            case CANT_ATTACK_DIRECTLY: {
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("No!!", "Can't be done!",
+                            "you can't attack the opponent directly", new Image(String.valueOf(getClass().
+                                    getResource("/Images/confusedAnimeGirl.jpg"))));
+                });
+                timeline.play();
+            }
                 break;
-            case YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK:
+            case YOUR_OPPONENT_DAMAGED_DIRECT_ATTACK:{
                 output ="your opponent receives " + AttackController.getDamage() + " battle damage";
-                UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+                Timeline timeline = attackFire();
+                timeline.setOnFinished(vent -> {
+                    UtilityController.makeAlert("Well done!!", "You are a true warrior...!", output, new Image(String.valueOf(getClass().
+                            getResource("/Images/fightAnimeGirl.jpg"))));
+                });
+                timeline.play(); }
                 break;
             case ACTIVATE_EFFECT_ONLY_ON_SPELL:
                 UtilityController.makeAlert("No!!", "Can't be done!",
