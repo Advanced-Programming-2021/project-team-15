@@ -53,7 +53,7 @@ public class DatabaseController {
         }
     }
 
-    public Image getImageByCard(Card card) {
+    public String getAddressByCard(Card card) {
         StringBuilder address = new StringBuilder();
         String[] nameParts = card.getCardName().split(" ");
         for (String part : nameParts) {
@@ -64,8 +64,12 @@ public class DatabaseController {
             address.append(part);
         }
         address.append(".jpg");
+        return address.toString();
+    }
+
+    public Image getImageByCard(Card card) {
         try {
-            return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + address.toString())));
+            return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + getAddressByCard(card))));
         }catch (IllegalArgumentException e) {
             return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl.jpg")));
         }

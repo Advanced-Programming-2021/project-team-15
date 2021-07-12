@@ -3,9 +3,15 @@ package sample.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sample.Main;
 import sample.controller.utilizationController.AudioController;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class CreateCardMenu {
@@ -18,8 +24,19 @@ public class CreateCardMenu {
 
     public void createMonsterButtonClicked(MouseEvent mouseEvent)throws IOException {
         AudioController.playClick();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/CreateMonster.fxml")));
-        Main.stage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/CreateMonster.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CreateMonsterController createMonsterController = loader.getController();
+        Stage popupStage = new Stage();
+        createMonsterController.setStage(popupStage);
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.setScene(scene);
+        popupStage.showAndWait();
     }
 
     public void createMagicButtonClicked(MouseEvent mouseEvent)throws IOException {
@@ -33,4 +50,5 @@ public class CreateCardMenu {
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
         Main.stage.setScene(mainMenuScene);
     }
+
 }
