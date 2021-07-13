@@ -310,8 +310,7 @@ public class DuelMenu {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
             viewImage.setImage(null);
         });
-        Timeline timeline = new Timeline(keyFrame);
-        return timeline;
+        return new Timeline(keyFrame);
     }
 
     public void activateButtonClicked(MouseEvent mouseEvent) {
@@ -572,7 +571,8 @@ public class DuelMenu {
                 secondPlayerHand.setHgap(30);
             }
         }
-
+        refreshGraveyard(currentGraveyard);
+        refreshGraveyard(opponentGraveyard);
     }
 
     public void addToHand(int i, Card card) {
