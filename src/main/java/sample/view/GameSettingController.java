@@ -9,6 +9,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.controller.utilizationController.AudioController;
 
+import java.io.IOException;
+
 public class GameSettingController {
     @FXML
     private Slider volumeSlider;
@@ -19,7 +21,15 @@ public class GameSettingController {
 
     public void backButtonClicked(MouseEvent mouseEvent) {
         AudioController.playClick();
+        DuelMenu.isPause=false;
         stage.close();
+    }
+
+    public void surrenderButtonClicked(MouseEvent mouseEvent) throws IOException {
+        AudioController.playClick();
+        DuelMenu.isFinished=true;
+        stage.close();
+        DuelMenu.getInstance().surrender();
     }
 
     public void init() {

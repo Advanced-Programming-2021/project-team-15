@@ -32,7 +32,7 @@
                <VBox.margin>
                   <Insets bottom="100.0" />
                </VBox.margin></Separator>
-            <Button alignment="CENTER" layoutX="58.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" styleClass="settingButton" text="Surrender">
+            <Button alignment="CENTER" layoutX="58.0" layoutY="231.0" mnemonicParsing="false" onMouseClicked="#surrenderButtonClicked" prefHeight="40.0" prefWidth="135.0" styleClass="settingButton" text="Surrender">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

@@ -40,8 +40,8 @@ public class PopupController {
     private Stage stage;
 
     public void initialize() {
-        TranslateTransition trans = new TranslateTransition(Duration.millis(1500), vbox);
-        trans.setFromY(300);
+        TranslateTransition trans = new TranslateTransition(Duration.millis(1000), vbox);
+        trans.setFromY(200);
         trans.setToY(0);
         trans.play();
         String[] values = {"1", "3"};

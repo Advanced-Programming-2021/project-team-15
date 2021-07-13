@@ -1131,7 +1131,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void defineStarter(Player winner, Player loser) throws IOException {
-        String ans = duelMenu.defineStarterOfNextRound(loser.getUser().getUserName());
+        String ans = DuelMenu.getInstance().defineStarterOfNextRound();
         if (ans.equals("yes")) {
             currentPlayer = loser;
             opponentPlayer = winner;
