@@ -15,11 +15,9 @@ import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -28,7 +26,6 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import sample.Main;
@@ -279,6 +276,11 @@ public class DuelMenu {
 //            flip.play();
             opponentCards[1][i].setImage(card.getCardImage());
         }
+        flip.setFrontImage(card.getCardImage());
+        flip.setBackOfCard(backOfCard);
+        flip.setRightToLeft(mode == MonsterCard.Mode.DEFENSE);
+        flip.setFrontToBack(false);
+        flip.play();
     }
 
     public void flipMagic(Player player, int i, Card card) {
@@ -300,6 +302,11 @@ public class DuelMenu {
 //            flip.play();
            opponentCards[0][i].setImage(card.getCardImage());
         }
+        flip.setFrontImage(card.getCardImage());
+        flip.setBackOfCard(backOfCard);
+        flip.setRightToLeft(false);
+        flip.setFrontToBack(false);
+        flip.play();
         AudioController.playFlipSound();
     }
 
@@ -328,8 +335,7 @@ public class DuelMenu {
         KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
             viewImage.setImage(null);
         });
-        Timeline timeline = new Timeline(keyFrame);
-        return timeline;
+        return new Timeline(keyFrame);
     }
 
     public void activateButtonClicked(MouseEvent mouseEvent) {
@@ -338,6 +344,34 @@ public class DuelMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeFieldBack(Card card) {
+        switch (card.getCardName()) {
+            case "Yami" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("yamiPane");
+                break;
+            case "Forest":
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("forestPane");
+                break;
+            case "Closed Forest" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("closedForestPane");
+                break;
+            case "Umiiruka" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("umiPane");
+                break;
+            default:
+                return;
+        }
+
     }
 
     public void activeButton(Button button) {
@@ -590,7 +624,8 @@ public class DuelMenu {
                 secondPlayerHand.setHgap(30);
             }
         }
-
+        refreshGraveyard(currentGraveyard);
+        refreshGraveyard(opponentGraveyard);
     }
 
     public void addToHand(int i, Card card) {
@@ -821,7 +856,6 @@ public class DuelMenu {
         imageView.setOnMouseClicked(mouseEvent -> {
             DuelMenuResponses duelMenuResponses;
             duelMenuResponses = gamePlayController.selectNumericZone(i + 1, "hand", opponentOrPlayer);
-            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
             if (gamePlayController.showCard().equals(SHOW_CARD))
                 refreshPlayersBox();
         });
@@ -974,13 +1008,14 @@ public class DuelMenu {
             printResponse(gamePlayController.oneMonsterTribute(Integer.parseInt(result.get())));
         }
     }
-    public String getNum()
-    {  String string = "cancel";
+
+    public String getNum() {
+        String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
         dialog.setContentText("enter a number :");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-           string= result.get();
+            string = result.get();
         }
         return string;
     }
@@ -994,7 +1029,6 @@ public class DuelMenu {
         }
         return string;
     }
-
 
     public void twoMonsterTribute() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();

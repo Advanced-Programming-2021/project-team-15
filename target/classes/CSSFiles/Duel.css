@@ -2,6 +2,22 @@
     -fx-background-image: url("../Images/Field/fie_normal.bmp");
     -fx-background-size: cover;
 }
+.yamiPane {
+    -fx-background-image: url("../Images/Field/Yami.bmp");
+    -fx-background-size: cover;
+}
+.umiPane {
+    -fx-background-image: url("../Images/Field/Umi.bmp");
+    -fx-background-size: cover;
+}
+.forestPane {
+    -fx-background-image: url("../Images/Field/Forest.bmp");
+    -fx-background-size: cover;
+}
+.closedForestPane {
+    -fx-background-image: url("../Images/Field/Closed Forest.bmp");
+    -fx-background-size: cover;
+}
 .phaseTexture {
     -fx-background-image: url("../Images/Textures/RockTexture.png");
     -fx-background-size: auto;
