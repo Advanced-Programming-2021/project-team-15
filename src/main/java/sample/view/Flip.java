@@ -31,7 +31,6 @@ public class Flip extends Transition {
         this.frontToBack = frontToBack;
     }
 
-
     private void flipFrontToBackUpsideDown(double v) {
         if (v <= 0.5) {
             v *= 2;

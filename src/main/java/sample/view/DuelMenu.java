@@ -260,42 +260,28 @@ public class DuelMenu {
         Flip flip = new Flip();
         if (player == gamePlayController.getCurrentPlayer()) {
             flip.setNode(playerCards[1][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            if (mode == MonsterCard.Mode.DEFENSE)
-                flip.setRightToLeft(true);
-            else flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
         } else {
             flip.setNode(opponentCards[1][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            if (mode == MonsterCard.Mode.DEFENSE)
-                flip.setRightToLeft(true);
-            else flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
         }
+        flip.setFrontImage(card.getCardImage());
+        flip.setBackOfCard(backOfCard);
+        flip.setRightToLeft(mode == MonsterCard.Mode.DEFENSE);
+        flip.setFrontToBack(false);
+        flip.play();
     }
 
     public void flipMagic(Player player, int i, Card card) {
         Flip flip = new Flip();
         if (player == gamePlayController.getCurrentPlayer()) {
             flip.setNode(playerCards[0][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
         } else {
             flip.setNode(opponentCards[0][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
         }
+        flip.setFrontImage(card.getCardImage());
+        flip.setBackOfCard(backOfCard);
+        flip.setRightToLeft(false);
+        flip.setFrontToBack(false);
+        flip.play();
         AudioController.playFlipSound();
     }
 
