@@ -606,7 +606,12 @@ public class SpellEffectController {
         }
         Player player;
         duelMenu.printResponse(ENTER_PLAYER);
-        String rivalOrNot = duelMenu.getString();
+        String rivalOrNot = duelMenu.chooseQuestion("choose player :",gamePlayController.getCurrentPlayer().getUser().getNickName(),gamePlayController.getOpponentPlayer().getUser().getNickName());
+        if(rivalOrNot.equals(gamePlayController.getCurrentPlayer().getUser().getNickName()))
+            rivalOrNot ="player";
+        if(rivalOrNot.equals(gamePlayController.getOpponentPlayer().getUser().getNickName()))
+            rivalOrNot ="rival";
+
         if (rivalOrNot.equals("cancel")) {
             duelMenu.printResponse(CANCELED);
             return;

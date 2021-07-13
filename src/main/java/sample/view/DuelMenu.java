@@ -259,42 +259,46 @@ public class DuelMenu {
     public void flipMonster(Player player, int i, Card card, MonsterCard.Mode mode) {
         Flip flip = new Flip();
         if (player == gamePlayController.getCurrentPlayer()) {
-            flip.setNode(playerCards[1][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            if (mode == MonsterCard.Mode.DEFENSE)
-                flip.setRightToLeft(true);
-            else flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
+//            flip.setNode(playerCards[1][i]);
+//            flip.setFrontImage(card.getCardImage());
+//            flip.setBackOfCard(backOfCard);
+//            if (mode == MonsterCard.Mode.DEFENSE)
+//                flip.setRightToLeft(true);
+//            else flip.setRightToLeft(false);
+//            flip.setFrontToBack(false);
+//            flip.play();
+            playerCards[1][i].setImage(card.getCardImage());
         } else {
-            flip.setNode(opponentCards[1][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            if (mode == MonsterCard.Mode.DEFENSE)
-                flip.setRightToLeft(true);
-            else flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
+//            flip.setNode(opponentCards[1][i]);
+//            flip.setFrontImage(card.getCardImage());
+//            flip.setBackOfCard(backOfCard);
+//            if (mode == MonsterCard.Mode.DEFENSE)
+//                flip.setRightToLeft(true);
+//            else flip.setRightToLeft(false);
+//            flip.setFrontToBack(false);
+//            flip.play();
+            opponentCards[1][i].setImage(card.getCardImage());
         }
     }
 
     public void flipMagic(Player player, int i, Card card) {
         Flip flip = new Flip();
         if (player == gamePlayController.getCurrentPlayer()) {
-            flip.setNode(playerCards[0][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
+//            flip.setNode(playerCards[0][i]);
+//            flip.setFrontImage(card.getCardImage());
+//            flip.setBackOfCard(backOfCard);
+//            flip.setRightToLeft(false);
+//            flip.setFrontToBack(false);
+//            flip.play();
+            playerCards[0][i].setImage(card.getCardImage());
         } else {
-            flip.setNode(opponentCards[0][i]);
-            flip.setFrontImage(card.getCardImage());
-            flip.setBackOfCard(backOfCard);
-            flip.setRightToLeft(false);
-            flip.setFrontToBack(false);
-            flip.play();
+//            flip.setNode(opponentCards[0][i]);
+//            flip.setFrontImage(card.getCardImage());
+//            flip.setBackOfCard(backOfCard);
+//            flip.setRightToLeft(false);
+//            flip.setFrontToBack(false);
+//            flip.play();
+           opponentCards[0][i].setImage(card.getCardImage());
         }
         AudioController.playFlipSound();
     }
@@ -973,10 +977,20 @@ public class DuelMenu {
     public String getNum()
     {  String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setContentText("choose a monster : ");
+        dialog.setContentText("enter a number :");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
            string= result.get();
+        }
+        return string;
+    }
+    public String getStringAndAsk(String input)
+    {  String string = "cancel";
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setContentText(input);
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            string= result.get();
         }
         return string;
     }
@@ -1342,18 +1356,29 @@ public class DuelMenu {
                 System.out.println("enter player (rival/current player)");
                 break;
             case ATTACK_CANCELED:
-                System.out.println("attack canceled!");
+                UtilityController.makeAlert("No!!", "Bad news...",
+                        "attack canceled!", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case ACTIVATION_CANCELED:
-                System.out.println("activation cancelled!");
+                UtilityController.makeAlert("No!!", "Bad news...",
+                        "activation cancelled!", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_ADD_THIS_CARD_TO_CHAIN:
-                System.out.println("can't be added to chain");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "can't be added to chain", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_ATTACK_TO_THIS_CARD:
-                System.out.println("you can't attack to this card");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you can't attack to this card", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case THIS_CARD_CANT_BE_DESTROYED:
+                UtilityController.makeAlert("", "",
+                        "this card can't be destroyed", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 System.out.println("this card can't be destroyed");
                 break;
             case DO_YOU_WANNA_TRIBUTE:
@@ -1378,13 +1403,19 @@ public class DuelMenu {
                 System.out.println("wanna choose from hand?");
                 break;
             case NO_WAY_TO_SPECIAL_SUMMON:
-                System.out.println("");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "there is no way you could special summon", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_SPECIAL_SUMMON:
-                System.out.println("you can't special summon this monster");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you can't special summon this monster", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_NORMAL_SET_THIS_MONSTER:
-                System.out.println("you cant normal set this monster, it should be special summoned!");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you cant normal set this monster, it should be special summoned!", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case DO_YOU_WANNA_SPECIAL_SUMMON:
                 System.out.println("do you wanna special summon this monster?");
@@ -1393,16 +1424,24 @@ public class DuelMenu {
                 System.out.println("do you wanna activate spell or trap?");
                 break;
             case YOU_SHOULD_SET_TRAP:
-                System.out.println("you should set the trap");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you should set the trap", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CANT_ACTIVATE_TRAP_IN_THIS_TURN:
-                System.out.println("you can't activate the trap in first turn you set");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "you can't activate the trap in first turn you set", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD:
-                System.out.println("do you want to summon a normal Cyberse card? (yes/no)");
+                UtilityController.makeAlert("No!!", "can't be done",
+                        "do you want to summon a normal Cyberse card? (yes/no)", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case CARD_DESTROYED_BY_TRAP_HOLE:
-                System.out.println("card destroyed by trap hole!");
+                UtilityController.makeAlert("Oh No!!", "",
+                        "card destroyed by trap hole!", new Image(String.valueOf(getClass().
+                                getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case GIVE_A_NAME:
                 System.out.println("give a name :");
@@ -1422,6 +1461,7 @@ public class DuelMenu {
                 break;
         }
     }
+
 
     public void swapBoards() {
         firstPlayerBoardCards.getChildren().clear();
@@ -1447,6 +1487,23 @@ public class DuelMenu {
                     getResource("/Images/fightAnimeGirl.jpg"))));
         });
         timeline.play();
+    }
+    public String chooseQuestion(String question ,String first , String second )
+    {   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(question);
+        alert.setHeaderText("Yes Or No?");
+        ButtonType buttonTypeOne = new ButtonType(first);
+        ButtonType buttonTypeTwo = new ButtonType(second);
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            return first;
+        } else if (result.get() == buttonTypeTwo) {
+            return second;
+        } else {
+            return "cancel";
+        }
+
     }
 
     public String yesNoQuestionAlert(String question) {

@@ -36,6 +36,7 @@ public class Flip extends Transition {
         if (v <= 0.5) {
             v *= 2;
             node.setImage(frontImage);
+            ImageView imageView  = new ImageView();
             ((DropShadow) node.getEffect()).setOffsetX(-10 * v);
             ((DropShadow) node.getEffect()).setOffsetY(-10 * v);
             ((DropShadow) node.getEffect()).setHeight(50 * v);

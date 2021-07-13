@@ -43,7 +43,7 @@ public class TrapEffectController {
         }
         boolean did = false;
         duelMenu.printResponse(GIVE_A_NAME);
-        String string = duelMenu.getString();
+        String string = duelMenu.getStringAndAsk("give a card name : ");
         for (Card card : gamePlayController.getOpponentPlayer().getDeckZone().getZoneCards()) {
             if ( card!=null && card.getCardName().equals(string)) {
                 gamePlayController.getOpponentPlayer().getDeckZone().removeCardFromDeckZone(card);

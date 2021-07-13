@@ -741,16 +741,7 @@ public class GamePlayController extends MenuController {
             if (chainCards.get(i).getCardPlacedZone() == chainPlayers.get(i).getGraveyardZone())
                 continue;
             duelMenu.printString("**" + chainCards.get(i).getCardName() + "**");
-            int finalI = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), event -> {
-                try {
-                    callSpellOrTrap(chainCards.get(finalI), chainPlayers.get(finalI));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            Timeline timeline = new Timeline(keyFrame);
-            timeline.play();
+                    callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
         }
         chainCards.clear();
         duelMenu.setCantDoThisKindsOfMove(false);

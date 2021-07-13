@@ -86,7 +86,7 @@ public class MonsterEffectController {
 
     public boolean BeastKingBarbaros() throws IOException {
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_NORMAL_SUMMON);
-        String string = duelMenu.getString();
+        String string = duelMenu.yesNoQuestionAlert("do you wanna normal summon?");
         if (string.equals("yes")) {
             ((MonsterCard) gamePlayController.getSelectedCard()).setGameATK(1900);
             gamePlayController.doSummon();
@@ -95,7 +95,7 @@ public class MonsterEffectController {
             return true;
         }
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_TRIBUTE_TREE_MONSTERS);
-        String ans = duelMenu.getString();
+        String ans = duelMenu.yesNoQuestionAlert("do you wanna tribute 3 monsters?");
         if (ans.equals("yes")) {
             if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard()<3) {
                 duelMenu.printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
@@ -145,7 +145,7 @@ public class MonsterEffectController {
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getHand().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_HAND);
-            String ans = DuelMenu.getInstance().getString();
+            String ans = duelMenu.yesNoQuestionAlert("wanna choose from hand?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getHand().getZoneCards());
                 gamePlayController.changeTurn();
@@ -154,7 +154,7 @@ public class MonsterEffectController {
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_DECK);
-            String ans = DuelMenu.getInstance().getString();
+            String ans = duelMenu.yesNoQuestionAlert("wanna choose from deck?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards());
                 gamePlayController.changeTurn();
@@ -163,7 +163,7 @@ public class MonsterEffectController {
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_GRAVEYARD);
-            String ans = DuelMenu.getInstance().getString();
+            String ans = duelMenu.yesNoQuestionAlert("wanna choose from graveyard?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards());
                 gamePlayController.changeTurn();
@@ -314,7 +314,7 @@ public class MonsterEffectController {
     public boolean theTricky(MonsterCard theTricky) throws IOException    //WHEN CAN I CALL ?
     {
         duelMenu.printResponse(DO_YOU_WANNA_SPECIAL_SUMMON);
-        String string = duelMenu.getString();
+        String string = duelMenu.yesNoQuestionAlert("do you wanna special summon this monster?");
         if (!string.equals("yes"))
             return false;
         if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().isEmpty()) {
