@@ -13,13 +13,13 @@ public class Flip extends Transition {
     private  boolean rightToLeft= false;
 
     @Override
-    protected void interpolate(double frac) {
+    protected void interpolate(double v) {
         if (frontToBack) {
-            if (!rightToLeft) flipFrontToBackUpsideDown(frac);
-            else flipFrontToBackRightToLeft(frac);
+            if (!rightToLeft) flipFrontToBackUpsideDown(v);
+            else flipFrontToBackRightToLeft(v);
         } else {
-            if (!rightToLeft) flipBackToFrontUpsideDown(frac);
-            else flipBackToFrontRightToLeft(frac);
+            if (!rightToLeft) flipBackToFrontUpsideDown(v);
+            else flipBackToFrontRightToLeft(v);
         }
     }
 

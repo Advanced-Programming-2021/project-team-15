@@ -322,7 +322,7 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses showCard() {
         if (selectedCard == null) return NO_CARD_SELECTED;
-        else if (selectedCard.getOwner() == opponentPlayer
+        else if ( selectedCard != null && selectedCard.getOwner() == opponentPlayer
                 && !selectedCard.getSummoned()) {
             selectedCard = null;
             return CANNOT_ACCESS_RIVAL_CARD;
@@ -608,9 +608,8 @@ public class GamePlayController extends MenuController {
                 isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard))
             return CANT_FLIP_SUMMON;
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
-        duelMenu.changePos(currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,currentPlayer, MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
-        duelMenu.flipMonster(currentPlayer,currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,selectedCard , MonsterCard.Mode.ATTACK);
+        duelMenu.flipSummon(currentPlayer,currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,selectedCard);
         checkForMonsters((MonsterCard) selectedCard);
         if (selectedCard.getCardName().equals("Man-Eater Bug") && !selectedCard.isActivated())
             monsterEffectController.manEaterBug((MonsterCard) selectedCard);
@@ -782,6 +781,7 @@ public class GamePlayController extends MenuController {
 
     public void activateCard(Card card) throws IOException {
         card.setHidden(false);
+        duelMenu.flipMagic(card.getOwner(),card.getOwner().getMagicCardZone().getPlace(card)-1,card);
         card.setActivated(true);
         activatedCards.put(currentPlayer, card);
         duelMenu.printResponse(TRAP_ACTIVATED);
@@ -797,8 +797,11 @@ public class GamePlayController extends MenuController {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
             currentPlayer.getHand().removeCardFromHand(selectedCard);
         }
-        if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD)
+        if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD) {
             currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
+            duelMenu.flipMagic(gamePlayController.currentPlayer,currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,selectedCard);
+        }
+
         duelMenu.printResponse(SPELL_ACTIVATED);
     }
 
