@@ -163,6 +163,8 @@ public class DuelMenu {
         graveyard.getChildren().clear();
         for (Card card : player.getGraveyardZone().getZoneCards()) {
             ImageView imageView = new ImageView(card.getCardImage());
+            imageView.setFitWidth(80);
+            imageView.setFitHeight(120);
             graveyard.getChildren().add(imageView);
         }
     }
@@ -438,6 +440,8 @@ public class DuelMenu {
                 int counter = 0;
                 for (Card card : player.getGraveyardZone().getZoneCards()) {
                     ImageView imageView = new ImageView(card.getCardImage());
+                    imageView.setFitWidth(80);
+                    imageView.setFitHeight(120);
                     gridPane.add(imageView, 0, counter);
                     Label cardNameLabel = new Label();
                     cardNameLabel.setPrefWidth(150);

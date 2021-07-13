@@ -658,7 +658,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void activateSpellCard() throws IOException {
-        DuelMenu.getInstance().changeFieldBack(selectedCard);
+//        DuelMenu.getInstance().changeFieldBack(selectedCard);
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
