@@ -898,7 +898,6 @@ public class GamePlayController extends MenuController {
     public void surrender() throws IOException {
         isSurrender = true;
         defineWinner();
-
     }
 
     public boolean askForActivatingInRivalsTurn() throws IOException {
@@ -1114,7 +1113,6 @@ public class GamePlayController extends MenuController {
     public void setChangedPositionCardsInTurn(ArrayList<Card> changedPositionCardsInTurn) {
         this.changedPositionCardsInTurn = changedPositionCardsInTurn;
     }
-
 
     public Boolean checkIfGameIsFinished() {
         return (currentPlayer.getLifePoint() <= 0 || opponentPlayer.getLifePoint() <= 0 || currentPlayer.getDeckZone().getZoneCards().size() == 0 ||

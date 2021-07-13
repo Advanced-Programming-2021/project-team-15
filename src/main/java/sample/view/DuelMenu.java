@@ -804,6 +804,7 @@ public class DuelMenu {
     }
 
     public void selectHandCard(ImageView imageView, String opponentOrPlayer, int i) {
+        imageView.setCursor(Cursor.HAND);
         imageView.setOnMouseClicked(mouseEvent -> {
                 DuelMenuResponses duelMenuResponses;
                 duelMenuResponses = gamePlayController.selectNumericZone(i + 1, "hand", opponentOrPlayer);
