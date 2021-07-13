@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.CheatController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" styleClass="cheatBack" stylesheets="@../CSSFiles/Duel.css">
+         <children>
+            <VBox fx:id="cheatsVBox" alignment="TOP_CENTER" layoutX="285.0" layoutY="10.0" prefHeight="300.0" prefWidth="200.0" spacing="10.0" styleClass="vBoxBack">
+               <children>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="200.0" text="Increase Money" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="300.0" spacing="20.0" stylesheets="@../CSSFiles/Duel.css">
+                     <children>
+                        <TextField fx:id="increaseMoneyTF" alignment="CENTER" maxWidth="150.0" prefHeight="20.0" prefWidth="100.0" promptText="Amount..." styleClass="buttonCheatBack" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#increaseMoneyButtonClicked" prefHeight="26.0" prefWidth="65.0" styleClass="buttonCheatBack" text="Action">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="10.0" prefWidth="300.0" />
+                  <Label alignment="CENTER" layoutX="60.0" layoutY="10.0" prefHeight="26.0" prefWidth="200.0" text="Increase Life Point" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="48.0" prefHeight="40.0" prefWidth="300.0" spacing="20.0">
+                     <children>
+                        <TextField fx:id="increaseLPTF" alignment="CENTER" maxWidth="150.0" prefHeight="20.0" prefWidth="100.0" promptText="Amount..." styleClass="buttonCheatBack" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#increaseLPButtonClicked" prefWidth="65.0" styleClass="buttonCheatBack" text="Action">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Separator layoutX="10.0" layoutY="98.0" prefHeight="10.0" prefWidth="300.0" />
+               </children>
+            </VBox>
+            <Label fx:id="response" alignment="CENTER" layoutX="235.0" layoutY="346.0" prefHeight="40.0" prefWidth="300.0" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children></Pane>
+   </children>
+</AnchorPane>

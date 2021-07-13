@@ -1,0 +1,53 @@
+.round-blue {
+    -fx-background-color: linear-gradient(#6d8eee, rgba(38, 68, 177, 0.94));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+}
+.green {
+    -fx-background-color:
+            linear-gradient(#f0ff35, #a9ff00),
+            radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #395306;
+}
+.red {
+    -fx-background-color:
+            linear-gradient(#ff3535, #ff0084),
+            radial-gradient(center 50% -40%, radius 200%, #ee6136 45%, #c82800 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgb(62, 5, 9), 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #fcfcfc;
+}
+.white {
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+.redDarkButton {
+    -fx-background-color:  #4D1922;
+    -fx-text-fill:  #DF1F53;
+    -fx-opacity: 0.5;
+}
+.redDarkButton:hover {
+    -fx-background-color:  #DF1F53;
+    -fx-text-fill:  #4D1922;
+    -fx-opacity: 1;
+}
+.gameMenuContainer {
+    -fx-background-color:  #B795A1;
+    -fx-opacity: 0.5;
+}
+.gameMenuContainer:hover {
+    -fx-background-color:  #2C2B31;
+    -fx-opacity: 0.5;
+}

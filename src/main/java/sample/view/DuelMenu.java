@@ -15,11 +15,9 @@ import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -28,7 +26,6 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import sample.Main;
@@ -319,6 +316,34 @@ public class DuelMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeFieldBack(Card card) {
+        switch (card.getCardName()) {
+            case "Yami" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("yamiPane");
+                break;
+            case "Forest":
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("forestPane");
+                break;
+            case "Closed Forest" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("closedForestPane");
+                break;
+            case "Umiiruka" :
+                father.getStylesheets().add(
+                        DuelMenu.class.getResource("/CSSFiles/Duel.css").toExternalForm());
+                father.getStyleClass().add("umiPane");
+                break;
+            default:
+                return;
+        }
+
     }
 
     public void activeButton(Button button) {
@@ -803,7 +828,6 @@ public class DuelMenu {
         imageView.setOnMouseClicked(mouseEvent -> {
             DuelMenuResponses duelMenuResponses;
             duelMenuResponses = gamePlayController.selectNumericZone(i + 1, "hand", opponentOrPlayer);
-            if (duelMenuResponses.equals(DuelMenuResponses.CARD_SELECTED)) ;
             if (gamePlayController.showCard().equals(SHOW_CARD))
                 refreshPlayersBox();
         });
@@ -956,17 +980,17 @@ public class DuelMenu {
             printResponse(gamePlayController.oneMonsterTribute(Integer.parseInt(result.get())));
         }
     }
-    public String getNum()
-    {  String string = "cancel";
+
+    public String getNum() {
+        String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
         dialog.setContentText("choose a monster : ");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-           string= result.get();
+            string = result.get();
         }
         return string;
     }
-
 
     public void twoMonsterTribute() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();

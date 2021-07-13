@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="Signup" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000" prefWidth="1500" styleClass="signup" stylesheets="@../CSSFiles/Signup.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.SignUpMenu">
+    <children>
+        <Button alignment="CENTER" layoutX="457.0" layoutY="544.0" mnemonicParsing="false" onMouseClicked="#signupButtonClicked" prefHeight="52.0" prefWidth="135.0" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css" text="Sign up">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+        <VBox alignment="TOP_CENTER" layoutX="109.0" layoutY="160.0" prefHeight="409.0" prefWidth="620.0" spacing="30.0">
+            <Label layoutX="927.0" layoutY="259.0" text="SignUp" textFill="#c62c47">
+                <font>
+                    <Font size="41.0" />
+                </font>
+            </Label>
+            <TextField fx:id="usernameField" layoutX="876.0" layoutY="365.0" prefHeight="52.0" prefWidth="234.0" promptText="Username" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </TextField>
+            <TextField fx:id="nicknameField" layoutX="876.0" layoutY="449.0" prefHeight="52.0" prefWidth="234.0" promptText="Nickname" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css">
+                <font>
+                    <Font size="16.0" />
+                </font>
+            </TextField>
+            <PasswordField fx:id="passwordField" layoutX="876.0" layoutY="534.0" prefHeight="52.0" prefWidth="234.0" promptText="Password" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css">
+                <font>
+                    <Font size="17.0" />
+                </font>
+            </PasswordField>
+
+        </VBox>
+        <Button alignment="CENTER" layoutX="228.0" layoutY="544.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="52.0" prefWidth="135.0" styleClass="loginButton" stylesheets="@../CSSFiles/Menus.css" text="Back">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+    </children>
+</AnchorPane>
