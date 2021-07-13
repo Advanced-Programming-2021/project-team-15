@@ -83,3 +83,6 @@
     -fx-text-fill: #8CA3DB;
     -fx-opacity: 1;
 }
+.alertYesNo {
+    -fx-text-fill: black;
+}

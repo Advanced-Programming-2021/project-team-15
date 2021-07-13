@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
+<AnchorPane fx:id="grandFather" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.DuelMenu">
     <children>
         <Pane fx:id="father" layoutX="702.0" prefHeight="840.0" prefWidth="798.0" styleClass="fieldPane" stylesheets="@../CSSFiles/Duel.css">
             <children>
