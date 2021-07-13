@@ -154,8 +154,21 @@ public class DuelMenu extends Menu {
     }
 
     public void checkAndCallNewAiDuel(String input) {
-
-
+        HashMap<String, String> enteredDetails = new HashMap<>();
+        if (!regexController.newGameAiRegex(input, enteredDetails))
+            System.out.println("invalid command");
+        else {
+           // isAi = true;
+            String secondPlayer = "ai";
+            secondUsername = secondPlayer;
+            int rounds = Integer.parseInt(enteredDetails.get("rounds"));
+            duelMenuResponses = gamePlayController.startNewGame(secondPlayer, rounds);
+            printResponse(duelMenuResponses);
+            if (duelMenuResponses == DuelMenuResponses.GAME_STARTED_SUCCESSFULLY) {
+                weAreOnGame = true;
+                playRPS();
+            }
+        }
     }
 
     public void checkAndCallSelectNumericZone(String input) {
@@ -498,10 +511,17 @@ public class DuelMenu extends Menu {
 
     public void playRPS() {
         while (true) {
+            String secondPlayerMove;
             System.out.println(gamePlayController.getGame().getFirstPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
             String firstPlayerMove = UtilityController.getNextLine();
             System.out.println(gamePlayController.getGame().getSecondPlayer().getUser().getNickName() + " please choose rock, paper or scissors");
-            String secondPlayerMove = UtilityController.getNextLine();
+            if (gamePlayController.getGame().getSecondPlayer().getUser().getNickName().equals("ai")) {
+                int r = (int) (Math.random() * 3);
+                secondPlayerMove = new String[]{"rock", "paper", "scissors"}[r];
+                System.out.println(secondPlayerMove);
+            } else {
+                secondPlayerMove = UtilityController.getNextLine();
+            }
             if (gamePlayController.RPS(firstPlayerMove, secondPlayerMove)) {
                 System.out.println("GAME STARTED!");
                 System.out.println("now it will be " +
