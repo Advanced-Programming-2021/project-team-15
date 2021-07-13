@@ -1440,9 +1440,9 @@ public class DuelMenu {
     public String yesNoQuestionAlert(String question) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(question);
-        alert.initStyle(StageStyle.DECORATED);
-        ButtonType buttonTypeOne = new ButtonType("yes");
-        ButtonType buttonTypeTwo = new ButtonType("no");
+        alert.setHeaderText("Yes Or No?");
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeOne) {
@@ -1508,8 +1508,11 @@ public class DuelMenu {
     }
 
 
-    public String defineStarterOfNextRound(String name) {
-        return yesNoQuestionAlert("Dear " + name + " do you wanna be first player of this round?");
+    public String defineStarterOfNextRound() {
+//        return yesNoQuestionAlert("Dear " + name + " do you wanna be first player of this round?");
+        UtilityController.makeAlert("Sad!!", "Oh no!...", "You lost 1 round! Try for Next Round", new Image(String.valueOf(getClass().
+                getResource("/Images/fightAnimeGirl.jpg"))));
+        return "yes";
     }
 
     public void startNewRound(String name) {
