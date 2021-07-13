@@ -55,7 +55,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                </content>
             </ScrollPane>
-            <ImageView  fx:id="viewImage" fitHeight="182.0" fitWidth="528.0" layoutX="150.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="viewImage" fitHeight="182.0" fitWidth="528.0" layoutX="150.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </Pane>
       <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">
@@ -81,15 +81,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Pause">
+            <Button mnemonicParsing="false" onMouseClicked="#pauseButtonClicked" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Pause">
                <font>
                   <Font size="18.0" />
                </font>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" styleClass="back" text="Surrender">
-               <font>
-                  <Font size="18.0" />
-               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children></VBox>
       <VBox prefHeight="840.0" prefWidth="566.0" styleClass="playersTexture" stylesheets="@../CSSFiles/Duel.css">

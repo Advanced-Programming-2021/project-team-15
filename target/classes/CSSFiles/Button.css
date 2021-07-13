@@ -33,3 +33,21 @@
     -fx-text-fill: black;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
+.redDarkButton {
+    -fx-background-color:  #4D1922;
+    -fx-text-fill:  #DF1F53;
+    -fx-opacity: 0.5;
+}
+.redDarkButton:hover {
+    -fx-background-color:  #DF1F53;
+    -fx-text-fill:  #4D1922;
+    -fx-opacity: 1;
+}
+.gameMenuContainer {
+    -fx-background-color:  #B795A1;
+    -fx-opacity: 0.5;
+}
+.gameMenuContainer:hover {
+    -fx-background-color:  #2C2B31;
+    -fx-opacity: 0.5;
+}

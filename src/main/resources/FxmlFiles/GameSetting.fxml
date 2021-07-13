@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="settingBack" stylesheets="@../CSSFiles/Duel.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.GameSettingController">
+   <children>
+      <Label alignment="CENTER" layoutX="233.0" layoutY="14.0" prefHeight="27.0" prefWidth="134.0" text="Setting" textFill="#5d151b">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="49.0" prefHeight="302.0" prefWidth="230.0" spacing="10.0" styleClass="settingContainer" stylesheets="@../CSSFiles/Duel.css">
+         <children>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="212.0" spacing="5.0">
+               <children>
+                  <Label text="Volume : " textFill="#5d151b">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="volumeSlider" prefHeight="35.0" prefWidth="140.0">
+                     <cursor>
+                        <Cursor fx:constant="MOVE" />
+                     </cursor></Slider>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="100.0" />
+               </VBox.margin></Separator>
+            <Button alignment="CENTER" layoutX="58.0" layoutY="231.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" styleClass="settingButton" text="Surrender">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="40.0" prefWidth="135.0" styleClass="settingButton" text="Back to Game">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
