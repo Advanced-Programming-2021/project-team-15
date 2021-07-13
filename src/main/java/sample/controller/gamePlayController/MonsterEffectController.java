@@ -56,7 +56,10 @@ public class MonsterEffectController {
         else victim = gamePlayController.getCurrentPlayer();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String string = duelMenu.getNum();
+            if(string.equals("cancel"))
+                return;
+            int num = Integer.parseInt(string);
             if (victim.getMonsterCardZone().getZoneCards().get(num) != null) {
                 victim.getMonsterCardZone().moveCardToGraveyard(num, victim);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -114,7 +117,10 @@ public class MonsterEffectController {
         int i = 0;
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+          String string  = duelMenu.getNum();
+          if(string.equals("cancel"))
+              return;
+          int num = Integer.parseInt(string);
             if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(num) == null)
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
             else {
@@ -229,14 +235,20 @@ public class MonsterEffectController {
     public void heraldOfCreation() throws IOException {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int n = duelMenu.getNum();
+            String string  = duelMenu.getNum();
+            if(string.equals("cancel"))
+                return;
+            int n = Integer.parseInt(string);
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(n - 1);
             if (card != null) {
                 gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
                 while (true) {
-                    int num = duelMenu.getNum();
+                    String o = duelMenu.getNum();
+                    if(o.equals("cancel"))
+                        return;
+                    int num = Integer.parseInt(o);
                     if (gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1) != null &&
                             (gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1) instanceof MonsterCard) &&
                             ((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1)).getLevel() >= 7) {
@@ -279,7 +291,10 @@ public class MonsterEffectController {
     public void terratigertheEmpoweredWarrior() throws IOException {
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String string  = duelMenu.getNum();
+            if(string.equals("cancel"))
+                return;
+            int num = Integer.parseInt(string);
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
             if ((card instanceof MonsterCard) && ((MonsterCard) card).getLevel() <= 4 &&
                     ((MonsterCard) card).getMonsterEffectType() == MonsterCard.MonsterEffectType.NORMAL) {
@@ -308,7 +323,8 @@ public class MonsterEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            int num = Integer.parseInt(s);
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
             if (card != null) {
                 gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);

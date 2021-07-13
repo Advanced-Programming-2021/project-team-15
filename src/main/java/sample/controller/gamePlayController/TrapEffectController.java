@@ -107,7 +107,10 @@ public class TrapEffectController {
             return; }
         while (true) {
                 duelMenu.printResponse(ENTER_ONE_NUMBER);
-                int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
                 if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num) != null) {
                     gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));
                     gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num));

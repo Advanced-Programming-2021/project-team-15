@@ -1,5 +1,8 @@
 package sample.controller.gamePlayController;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.responses.MainMenuResponses;
@@ -622,8 +625,7 @@ public class GamePlayController extends MenuController {
     public void checkForTrapHole() throws IOException {
             if(trapHoleVictim!=null){
             gamePlayController.changeTurn();
-            duelMenu.doYouWannaActivateSpecialCard("Trap Hole");
-            if (getAnswer()) {
+            if (getAnswer("Trap Hole")) {
                 trapEffectController.trapHole(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Trap Hole"), trapHoleVictim);
             }
             gamePlayController.changeTurn();
@@ -636,25 +638,23 @@ public class GamePlayController extends MenuController {
         checkForTrapHole();
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(),
                 "Torrential Tribute") != null) {
-            duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
-            if (getAnswer()) {
+            if (getAnswer("Torrential Tribute")) {
                 trapEffectController.torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
             }
         }
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Torrential Tribute") != null) {
             gamePlayController.changeTurn();
-            duelMenu.doYouWannaActivateSpecialCard("Torrential Tribute");
-            if (getAnswer()) {
+            if (getAnswer("Torrential Tribute")) {
                 trapEffectController.torrentialTribute(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Torrential Tribute"));
             }
             gamePlayController.changeTurn();
         }
     }
-
-    public boolean getAnswer() {
-        String ans = duelMenu.getString();
-        return ans.equals("yes");
-
+    public Boolean getAnswer(String name) {
+        String ans = duelMenu.yesNoQuestionAlert("do you wanna activate your " + name + " ?");
+        if (ans.equals("yes"))
+            return true;
+        else return false;
     }
 
     public void activateSpellCard() throws IOException {
@@ -733,13 +733,24 @@ public class GamePlayController extends MenuController {
     }
 
     public void doChainActions() throws IOException {
+        if(chainCards.isEmpty())
+            return;
         for (int i = chainCards.size() - 1; i >= 0; i--) {
             spellEffectController.setDoIt(true);
             trapEffectController.setDoIt(true);
             if (chainCards.get(i).getCardPlacedZone() == chainPlayers.get(i).getGraveyardZone())
                 continue;
             duelMenu.printString("**" + chainCards.get(i).getCardName() + "**");
-            callSpellOrTrap(chainCards.get(i), chainPlayers.get(i));
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), event -> {
+                try {
+                    callSpellOrTrap(chainCards.get(finalI), chainPlayers.get(finalI));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            Timeline timeline = new Timeline(keyFrame);
+            timeline.play();
         }
         chainCards.clear();
         duelMenu.setCantDoThisKindsOfMove(false);

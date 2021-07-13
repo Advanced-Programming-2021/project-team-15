@@ -24,7 +24,7 @@ public class Flip extends Transition {
     }
 
     public void setNode(ImageView imageView) {
-        this.node = node;
+        this.node = imageView;
     }
 
     public void setFrontToBack(boolean frontToBack) {

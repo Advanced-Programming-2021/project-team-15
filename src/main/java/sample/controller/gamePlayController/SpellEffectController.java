@@ -145,8 +145,6 @@ public class SpellEffectController {
         GamePlayController.getEffectController().addATK(MonsterCard.MonsterType.AQUA, true, -400, card.getOwner());
     }
 
-    // TODO check for invalid cell number just like magnum shield
-    // TODO check magnum shield to be sure
 
     public void umiirukaForNewAddedCard(MonsterCard monsterCard) {
         duelMenu.printString("umiiruka effect for new added card!");
@@ -177,7 +175,10 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
             if ((map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FIEND) &&
                     (map.get(num) != null && map.get(num).getMonsterType() != MonsterCard.MonsterType.FAIRY)) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + 400);
@@ -241,7 +242,10 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         int amount = GamePlayController.getEffectController().getNumberOfFaceUpMonstersOfCurrentPlayer();
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
             if (map.get(num) != null) {
                 map.get(num).setGameATK(map.get(num).getGameATK() + amount * 800);
                 map.get(num).setGameDEF(map.get(num).getGameDEF() + amount * 800);
@@ -277,7 +281,10 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
             if (map.get(num) != null && map.get(num).getMonsterType() == MonsterCard.MonsterType.WARRIOR && !map.get(num).getHidden()) {
                 if (map.get(num).getMode() == MonsterCard.Mode.ATTACK) {
                     map.get(num).setGameATK(map.get(num).getGameATK() + map.get(num).getDefensePoint());
@@ -416,7 +423,6 @@ public class SpellEffectController {
         }
         Map<Integer, MagicCard> map;
         Player player;
-        duelMenu.printResponse(ENTER_PLAYER);
         String rivalOrNot = duelMenu.getString();
         if (rivalOrNot.equals("rival")) {
             player = gamePlayController.getTheOtherPlayer(ownerOfCard);
@@ -427,7 +433,10 @@ public class SpellEffectController {
         }
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
             if (num <= 5 && map.get(num) != null) {
                 player.getMagicCardZone().moveCardToGraveyard(num, player);
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
@@ -557,7 +566,10 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         duelMenu.printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            int num = duelMenu.getNum();
+            String s  = duelMenu.getNum();
+            if(s.equals("cancel"))
+                return;
+            int num = Integer.parseInt(s);
             if (map.get(num) != null) {
                 GamePlayController.getEffectController().getControl(map.get(num));
                 duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);

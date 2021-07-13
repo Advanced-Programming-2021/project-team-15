@@ -145,6 +145,7 @@ public class DuelMenu {
         return duelMenu;
     }
 
+
     private static PathTransition newPathTransitionTo(ImageView block, double toX, double toY) {
         double fromX = block.getLayoutBounds().getWidth() / 2;
         double fromY = block.getLayoutBounds().getHeight() / 2;
@@ -952,6 +953,17 @@ public class DuelMenu {
             printResponse(gamePlayController.oneMonsterTribute(Integer.parseInt(result.get())));
         }
     }
+    public String getNum()
+    {  String string = "cancel";
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setContentText("choose a monster : ");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+           string= result.get();
+        }
+        return string;
+    }
+
 
 
     public void twoMonsterTribute() {
@@ -1422,7 +1434,8 @@ public class DuelMenu {
     }
 
     public String yesNoQuestionAlert(String question)
-    {   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(question);
         ButtonType buttonTypeOne = new ButtonType("yes");
         ButtonType buttonTypeTwo = new ButtonType("no");
@@ -1499,9 +1512,6 @@ public class DuelMenu {
         System.out.println(string);
     }
 
-    public int getNum() {
-        return Integer.parseInt(UtilityController.getNextLine());
-    }
 
     public String getString() {
         return UtilityController.getNextLine();
