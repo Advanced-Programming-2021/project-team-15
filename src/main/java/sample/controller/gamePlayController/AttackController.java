@@ -79,7 +79,7 @@ public class AttackController {
             return attackTOAttackPos(attacker, target, number);
         else if (position.equals("DO"))
             return attackToDefencePos(attacker, target, number, false);
-        else { gamePlayController.getDuelMenu().flipMonster(gamePlayController.getOpponentPlayer(),number-1,target, MonsterCard.Mode.DEFENSE);
+        else { gamePlayController.getDuelMenu().flipMonster(number-1,target, MonsterCard.Mode.DEFENSE);
             return attackToDefencePos(attacker, target, number, true);
         }
     }
@@ -87,7 +87,7 @@ public class AttackController {
     public void checkerForEffects() throws IOException {
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Magic Cylinder") != null) {
             gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
+            GamePlayController.getInstance().getDuelMenu().getInstance().doYouWannaActivateSpecialCard("Magic Cylinder");
             if (getAnswer("Magic Cylinder")) {
                 GamePlayController.getTrapEffectController().magicCylinder(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Magic Cylinder"));
                 isAttacking = false;
@@ -96,7 +96,7 @@ public class AttackController {
         }
         if (gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getOpponentPlayer(), "Mirror Force") != null) {
             gamePlayController.changeTurn();
-            DuelMenu.getInstance().doYouWannaActivateSpecialCard("Mirror Force");
+            GamePlayController.getInstance().getDuelMenu().getInstance().doYouWannaActivateSpecialCard("Mirror Force");
             if (getAnswer("Mirror Force")) {
                 GamePlayController.getTrapEffectController().mirrorForce(gamePlayController.ifPlayerHasThisCardGiveIt(gamePlayController.getCurrentPlayer(), "Mirror Force"));
                 isAttacking = false;
@@ -138,28 +138,28 @@ public class AttackController {
                 GamePlayController.getMonsterEffectController().yomiShip(attacker, target);
             if (target.getCardName().equals("Marshmallon")) {
                 if (hidden) {
-                    DuelMenu.getInstance().lifePointReduced(1000);
+                    GamePlayController.getInstance().getDuelMenu().getInstance().lifePointReduced(1000);
                     gamePlayController.getCurrentPlayer().reduceLifePoint(1000);
                 }
                 return THIS_CARD_CANT_BE_DESTROYED;
             }
             if (target.getCardName().equals("Exploder Dragon")) {
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
-                DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");
+                GamePlayController.getInstance().getDuelMenu().getInstance().printString("attacker destroyed by Exploder Dragon effect!");
             }
             gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
             if (!hidden)
                 return DuelMenuResponses.DEFENCE_POSITION_MONSTER_DESTROYED;
-            else DuelMenu.getInstance().hiddenDefensePositionMonsterDestroyed(target.getCardName());
+            else GamePlayController.getInstance().getDuelMenu().getInstance().hiddenDefensePositionMonsterDestroyed(target.getCardName());
         } else if (difference == 0) {
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED;
-            else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyed(target.getCardName());
+            else GamePlayController.getInstance().getDuelMenu().getInstance().hiddenDefensePosNoCardDestroyed(target.getCardName());
         } else {
             gamePlayController.getCurrentPlayer().reduceLifePoint(-difference);
             if (!hidden)
                 return DuelMenuResponses.NO_CARD_DESTROYED_CURRENT_DAMAGED;
-            else DuelMenu.getInstance().hiddenDefensePosNoCardDestroyedWithDamage(target.getCardName());
+            else GamePlayController.getInstance().getDuelMenu().getInstance().hiddenDefensePosNoCardDestroyedWithDamage(target.getCardName());
         }
         return MONSTER_CARD_POSITION_CHANGED_SUCCESSFULLY;
     }
@@ -172,7 +172,7 @@ public class AttackController {
             attackedCardsInTurn.add(attacker);
             if (target.getCardName().equals("Exploder Dragon")) {
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
-                DuelMenu.getInstance().printString("attacker destroyed by Exploder Dragon effect!");
+                GamePlayController.getInstance().getDuelMenu().getInstance().printString("attacker destroyed by Exploder Dragon effect!");
                 gamePlayController.getOpponentPlayer().getMonsterCardZone().moveCardToGraveyard(number, gamePlayController.getOpponentPlayer());
                 return EFFECT_DONE_SUCCESSFULLY;
             }

@@ -1,5 +1,6 @@
 package sample.model.zones;
 
+import sample.controller.gamePlayController.GamePlayController;
 import sample.model.Player;
 import sample.model.cards.MagicCard;
 
@@ -23,11 +24,13 @@ public class FieldZone extends Zone {
             zoneCards.add(card);
         }
         card.setCardPlacedZone(this);
+        GamePlayController.getInstance().getDuelMenu().addToField(card);
     }
 
 
     public void removeCardFromFieldZone(MagicCard magicCard) {
         zoneCards.remove(magicCard);
+        GamePlayController.getInstance().getDuelMenu().removeFromField(magicCard);
     }
 
     public ArrayList<MagicCard> getZoneCards() {

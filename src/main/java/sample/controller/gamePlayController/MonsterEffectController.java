@@ -14,7 +14,6 @@ import static sample.controller.responses.DuelMenuResponses.*;
 
 public class MonsterEffectController {
     GamePlayController gamePlayController = GamePlayController.getInstance();
-    DuelMenu duelMenu = DuelMenu.getInstance();
 
     public void commandKnight(Boolean x, MonsterCard commandKnight)  //flip and change pos to up
     {
@@ -42,7 +41,7 @@ public class MonsterEffectController {
         suijin.setActivated(true);
         gamePlayController.getSuijinVictims().put((MonsterCard) gamePlayController.getSelectedCard(), ((MonsterCard) gamePlayController.getSelectedCard()).getGameATK());
         ((MonsterCard) gamePlayController.getSelectedCard()).setGameATK(0);
-        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+        GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
     }
 
     public void manEaterBug(MonsterCard manEaterBug) throws IOException  //flip or change pos from down to up
@@ -54,58 +53,58 @@ public class MonsterEffectController {
         if (player == gamePlayController.getCurrentPlayer())
             victim = gamePlayController.getOpponentPlayer();
         else victim = gamePlayController.getCurrentPlayer();
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string = duelMenu.getNum();
+            String string = GamePlayController.getInstance().getDuelMenu().getNum();
             if(string.equals("cancel"))
                 return;
             int num = Integer.parseInt(string);
             if (victim.getMonsterCardZone().getZoneCards().get(num) != null) {
                 victim.getMonsterCardZone().moveCardToGraveyard(num, victim);
-                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
                 return;
             } else {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             }
         }
     }
 
     public boolean gateGuardian() throws IOException {
         if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard() < 3) {
-            duelMenu.printResponse(CANT_SPECIAL_SUMMON);
+            GamePlayController.getInstance().getDuelMenu().printResponse(CANT_SPECIAL_SUMMON);
             return false;
         }
         gamePlayController.getSelectedCard().setActivated(true);
         chooseThreeMonsterAndTribute();
         gamePlayController.doSummon();
-        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+        GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
         return true;
     }
 
 
     public boolean BeastKingBarbaros() throws IOException {
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_NORMAL_SUMMON);
-        String string = duelMenu.yesNoQuestionAlert("do you wanna normal summon?");
+        String string =GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("do you wanna normal summon?");
         if (string.equals("yes")) {
             ((MonsterCard) gamePlayController.getSelectedCard()).setGameATK(1900);
             gamePlayController.doSummon();
-            duelMenu.printResponse(CARD_SUMMONED);
+            GamePlayController.getInstance().getDuelMenu().printResponse(CARD_SUMMONED);
             //gamePlayController.setSelectedCard(null);
             return true;
         }
         DuelMenu.getInstance().printResponse(DO_YOU_WANNA_TRIBUTE_TREE_MONSTERS);
-        String ans = duelMenu.yesNoQuestionAlert("do you wanna tribute 3 monsters?");
+        String ans = GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("do you wanna tribute 3 monsters?");
         if (ans.equals("yes")) {
             if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getNumberOfCard()<3) {
-                duelMenu.printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
+                GamePlayController.getInstance().getDuelMenu().printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
                 return false;
             }
             chooseThreeMonsterAndTribute();
             GamePlayController.getEffectController().destroyCards(Card.CardType.MONSTER, false);
             GamePlayController.getEffectController().destroyCards(Card.CardType.MAGIC, false);
             gamePlayController.doSummon();
-            duelMenu.printResponse(CARD_SUMMONED);
+            GamePlayController.getInstance().getDuelMenu().printResponse(CARD_SUMMONED);
             //gamePlayController.setSelectedCard(null);
             return true;
         }
@@ -115,37 +114,37 @@ public class MonsterEffectController {
 
     public void chooseThreeMonsterAndTribute() throws IOException {
         int i = 0;
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-          String string  = duelMenu.getNum();
+          String string  = GamePlayController.getInstance().getDuelMenu().getNum();
           if(string.equals("cancel"))
               return;
           int num = Integer.parseInt(string);
             if (gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards().get(num) == null)
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             else {
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyard(num, gamePlayController.getCurrentPlayer());
                 i++;
                 if (i == 3) {
                     return;
                 }
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             }
         }
     }
 
     public void textChanger(MonsterCard textChanger) throws IOException {
-        duelMenu.printResponse(ATTACK_CANCELED);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ATTACK_CANCELED);
         gamePlayController.changeTurn();
-        duelMenu.printResponse(DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD);
-        String string = duelMenu.getString();
+        GamePlayController.getInstance().getDuelMenu().printResponse(DO_YOU_WANT_SUMMON_NORMAL_CYBERSE_CARD);
+        String string =GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("wanna normal summon a cyberse card?");
         if (string.equals("no")) {
             gamePlayController.changeTurn();
             return;
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getHand().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_HAND);
-            String ans = duelMenu.yesNoQuestionAlert("wanna choose from hand?");
+            String ans = GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("wanna choose from hand?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getHand().getZoneCards());
                 gamePlayController.changeTurn();
@@ -154,7 +153,7 @@ public class MonsterEffectController {
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_DECK);
-            String ans = duelMenu.yesNoQuestionAlert("wanna choose from deck?");
+            String ans = GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("wanna choose from deck?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getDeckZone().getZoneCards());
                 gamePlayController.changeTurn();
@@ -163,7 +162,7 @@ public class MonsterEffectController {
         }
         if (isNormalCyberseExists(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards())) {
             DuelMenu.getInstance().printResponse(WANNA_CHOOSE_FROM_GRAVEYARD);
-            String ans = duelMenu.yesNoQuestionAlert("wanna choose from graveyard?");
+            String ans =GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("wanna choose from graveyard?");
             if (ans.equals("yes")) {
                 checkFindAskTextChanger(gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards());
                 gamePlayController.changeTurn();
@@ -194,7 +193,7 @@ public class MonsterEffectController {
     public void yomiShip(MonsterCard attacker, MonsterCard yomiShip) throws IOException {
         yomiShip.setActivated(true);
         gamePlayController.getCurrentPlayer().getMonsterCardZone().moveCardToGraveyardWithoutAddress(attacker, gamePlayController.getCurrentPlayer());
-        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+        GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
     }
 
     public Boolean isNormalCyberseExists(ArrayList<Card> zoneCards) {
@@ -213,11 +212,11 @@ public class MonsterEffectController {
             if (zoneCards.get(i) != null && zoneCards.get(i).getCardType() == Card.CardType.MONSTER
                     && ((MonsterCard) zoneCards.get(i)).getMonsterType()== MonsterCard.MonsterType.CYBER
                     && !zoneCards.get(i).getCardName().equals("Texchanger")) {
-                duelMenu.printString("wanna special summon this " + zoneCards.get(i).getCardName());
-                String ans = duelMenu.getString();
+                String ans =GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlertWithCardImage("wanna special summon this " + zoneCards.get(i).getCardName(),zoneCards.get(i));
+                if(ans.equals("cancel")) return;
                 if (ans.equals("yes")) {
-                    duelMenu.printResponse(ENTER_POS);
-                    String ans1 = duelMenu.getString();
+                    GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_POS);
+                    String ans1 = GamePlayController.getInstance().getDuelMenu().getString();
                     if (ans1.equals("ATK"))
                         ((MonsterCard) zoneCards.get(i)).setMode(MonsterCard.Mode.ATTACK);
                     else
@@ -233,9 +232,9 @@ public class MonsterEffectController {
     }
 
     public void heraldOfCreation() throws IOException {
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string  = duelMenu.getNum();
+            String string  = GamePlayController.getInstance().getDuelMenu().getNum();
             if(string.equals("cancel"))
                 return;
             int n = Integer.parseInt(string);
@@ -243,9 +242,9 @@ public class MonsterEffectController {
             if (card != null) {
                 gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
                 while (true) {
-                    String o = duelMenu.getNum();
+                    String o =GamePlayController.getInstance().getDuelMenu().getNum();
                     if(o.equals("cancel"))
                         return;
                     int num = Integer.parseInt(o);
@@ -255,17 +254,17 @@ public class MonsterEffectController {
                         MonsterCard monsterCard = ((MonsterCard) gamePlayController.getCurrentPlayer().getGraveyardZone().getZoneCards().get(num - 1));
                         gamePlayController.getCurrentPlayer().getGraveyardZone().removeCardFromGraveyardZone(monsterCard);
                         gamePlayController.getCurrentPlayer().getHand().addCardToHand(monsterCard);
-                        duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                        GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
                         return;
                     } else {
-                        duelMenu.printResponse(INVALID_CELL_NUMBER);
-                        duelMenu.printResponse(ENTER_ONE_NUMBER);
+                        GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
+                        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
                     }
                 }
 
             } else {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             }
         }
     }
@@ -289,9 +288,9 @@ public class MonsterEffectController {
     }
 
     public void terratigertheEmpoweredWarrior() throws IOException {
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string  = duelMenu.getNum();
+            String string  = GamePlayController.getInstance().getDuelMenu().getNum();
             if(string.equals("cancel"))
                 return;
             int num = Integer.parseInt(string);
@@ -302,36 +301,36 @@ public class MonsterEffectController {
                 card.setHidden(false);
                 gamePlayController.getCurrentPlayer().getMonsterCardZone().
                         summonOrSetMonster((MonsterCard) card, gamePlayController.getCurrentPlayer());
-                duelMenu.printResponse(EFFECT_DONE_SUCCESSFULLY);
+                GamePlayController.getInstance().getDuelMenu().printResponse(EFFECT_DONE_SUCCESSFULLY);
                 return;
             } else {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             }
         }
     }
 
     public boolean theTricky(MonsterCard theTricky) throws IOException    //WHEN CAN I CALL ?
     {
-        duelMenu.printResponse(DO_YOU_WANNA_SPECIAL_SUMMON);
-        String string = duelMenu.yesNoQuestionAlert("do you wanna special summon this monster?");
+        GamePlayController.getInstance().getDuelMenu().printResponse(DO_YOU_WANNA_SPECIAL_SUMMON);
+        String string =GamePlayController.getInstance().getDuelMenu().yesNoQuestionAlert("do you wanna special summon this monster?");
         if (!string.equals("yes"))
             return false;
         if (gamePlayController.getCurrentPlayer().getHand().getZoneCards().isEmpty()) {
-            duelMenu.printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
+            GamePlayController.getInstance().getDuelMenu().printResponse(NOT_ENOUGH_CARD_TO_BE_TRIBUTE);
             return false;
         }
-        duelMenu.printResponse(ENTER_ONE_NUMBER);
+        GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = duelMenu.getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
             int num = Integer.parseInt(s);
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
             if (card != null) {
                 gamePlayController.getCurrentPlayer().getHand().removeCardFromHand(card);
                 gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 theTricky.setHidden(false);
-                duelMenu.printResponse(ENTER_POS);  //special summon?
-                String ans = duelMenu.getString();
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_POS);  //special summon?
+                String ans = GamePlayController.getInstance().getDuelMenu().chooseQuestion("choose position :","ATK","DEF");
                 if (ans.equals("ATK"))
                     theTricky.setMode(MonsterCard.Mode.ATTACK);
                 else
@@ -340,8 +339,8 @@ public class MonsterEffectController {
                         summonOrSetMonster(theTricky, gamePlayController.getCurrentPlayer());
                 return true;
             } else {
-                duelMenu.printResponse(INVALID_CELL_NUMBER);
-                duelMenu.printResponse(ENTER_ONE_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
+                GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
             }
         }
     }

@@ -43,10 +43,7 @@ import sample.model.cards.MagicCard;
 import sample.model.cards.MonsterCard;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -132,6 +129,11 @@ public class DuelMenu {
     private Button flipSummon;
     @FXML
     private ImageView viewImage;
+    @FXML
+    private StackPane playerField;
+    @FXML
+    private  StackPane opponentField;
+
     private Timer timer;
 
     public static DuelMenu getInstance() {
@@ -163,8 +165,6 @@ public class DuelMenu {
         graveyard.getChildren().clear();
         for (Card card : player.getGraveyardZone().getZoneCards()) {
             ImageView imageView = new ImageView(card.getCardImage());
-            imageView.setFitWidth(80);
-            imageView.setFitHeight(120);
             graveyard.getChildren().add(imageView);
         }
     }
@@ -250,14 +250,14 @@ public class DuelMenu {
         rotateTransition.setDuration(Duration.millis(1000));
         rotateTransition.setByAngle(-90);
         rotateTransition.setOnFinished(event -> {
-            flipMonster(player, i, card, MonsterCard.Mode.ATTACK);
+            flipMonster(i, card, MonsterCard.Mode.ATTACK);
         });
         rotateTransition.play();
     }
 
-    public void flipMonster(Player player, int i, Card card, MonsterCard.Mode mode) {
+    public void flipMonster( int i, Card card, MonsterCard.Mode mode) {
         Flip flip = new Flip();
-        if (player == gamePlayController.getCurrentPlayer()) {
+        if (card.getOwner() == gamePlayController.getCurrentPlayer()) {
 //            flip.setNode(playerCards[1][i]);
 //            flip.setFrontImage(card.getCardImage());
 //            flip.setBackOfCard(backOfCard);
@@ -285,9 +285,9 @@ public class DuelMenu {
         flip.play();
     }
 
-    public void flipMagic(Player player, int i, Card card) {
+    public void flipMagic( int i, Card card) {
         Flip flip = new Flip();
-        if (player == gamePlayController.getCurrentPlayer()) {
+        if (card.getOwner() == gamePlayController.getCurrentPlayer()) {
 //            flip.setNode(playerCards[0][i]);
 //            flip.setFrontImage(card.getCardImage());
 //            flip.setBackOfCard(backOfCard);
@@ -440,8 +440,8 @@ public class DuelMenu {
                 int counter = 0;
                 for (Card card : player.getGraveyardZone().getZoneCards()) {
                     ImageView imageView = new ImageView(card.getCardImage());
-                    imageView.setFitWidth(80);
                     imageView.setFitHeight(120);
+                    imageView.setFitWidth(80);
                     gridPane.add(imageView, 0, counter);
                     Label cardNameLabel = new Label();
                     cardNameLabel.setPrefWidth(150);
@@ -575,7 +575,6 @@ public class DuelMenu {
         text.setFill(Color.WHITE);
         text.setEffect(new Reflection());
         pane.getChildren().add(text);
-
     }
 
     public void runAndUpdate() {
@@ -630,6 +629,42 @@ public class DuelMenu {
         }
         refreshGraveyard(currentGraveyard);
         refreshGraveyard(opponentGraveyard);
+    }
+    public void addToField(Card card)
+    {  ImageView imageView= new ImageView();
+        imageView.setFitHeight(120);
+        imageView.setFitWidth(80);
+        if( card.getOwner() == gamePlayController.getCurrentPlayer()){
+            if(card.getHidden())
+                imageView.setImage(backOfCard);
+            else   imageView.setImage(card.getCardImage());
+            playerField.getChildren().clear();
+            selectField(imageView,"player");
+            playerField.getChildren().add(imageView);
+            appearTransition(imageView);
+        } else {  if(card.getHidden())
+            imageView.setImage(backOfCard);
+        else   imageView.setImage(card.getCardImage());
+            opponentField.getChildren().clear();
+            selectField(imageView, "opponent");
+           opponentField.getChildren().add(imageView);
+            appearTransition(imageView);
+        }
+    }
+    public void removeFromField(Card card)
+    {    if(card.getOwner()==gamePlayController.getCurrentPlayer())
+          disAppearTransition((ImageView) playerField.getChildren().get(0));
+        else disAppearTransition((ImageView) opponentField.getChildren().get(0));
+    }
+    public void selectField(ImageView imageView, String opponentOrPlayer)
+    {   imageView.setCursor(Cursor.HAND);
+        imageView.setOnMouseClicked(mouseEvent -> {
+            DuelMenuResponses duelMenuResponses;
+            duelMenuResponses = gamePlayController.selectNotNumericZone("field",opponentOrPlayer);
+            if (gamePlayController.showCard().equals(SHOW_CARD))
+                refreshPlayersBox();
+        });
+
     }
 
     public void addToHand(int i, Card card) {
@@ -782,6 +817,17 @@ public class DuelMenu {
         popupController.initialize();
         popupStage.showAndWait();
     }
+    public void showListOfCards(ArrayList<MonsterCard> cards) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/showCardsList.fxml"));
+        Scene scene = new Scene(loader.load());
+        PopupController popupController = loader.getController();
+        Stage popupStage = new Stage();
+        popupController.setStage(popupStage);
+        popupStage.initModality(Modality.WINDOW_MODAL);
+        popupStage.setScene(scene);
+        popupController.showList(cards);
+        popupStage.showAndWait();
+    }
 
     public boolean isWeAreOnGame() {
         return weAreOnGame;
@@ -906,63 +952,6 @@ public class DuelMenu {
     public void surrender() throws IOException {
         gamePlayController.surrender();
     }
-
-//    @Override
-//    public void scanInput() {
-//        while (true) {
-//            String input = UtilityController.getNextLine();
-//            if (input.equals("menu exit")) checkAndCallMenuExit();
-//            else if (input.startsWith("duel") && input.contains(" --ai")) checkAndCallNewAiDuel(input);
-//            else if (input.startsWith("duel")) {
-//                checkAndCallNewDuel(input);
-//                if (weAreOnGame) {
-//                    printResponse(gamePlayController.goNextPhase());
-//                    break;
-//                }
-//            } else if (regexController.showMenuRegex(input)) checkAndCallShowCurrentMenu();
-//            else System.out.println("invalid command");
-//            if (super.isExit) {
-//                super.isExit = false;
-//                return;
-//            }
-//        }
-//        while (true) {
-//            String input = UtilityController.getNextLine();
-//            if (cantDoThisKindsOfMove && !input.equals("activate effect") && !input.startsWith("select") && !input.equals("card show")) {
-//                System.out.println("you can't do this kind of moves");
-//                continue;
-//            }
-//            if (input.equals("menu exit")) checkAndCallMenuExit();
-//            else if (input.equals("show graveyard")) showGraveYard();
-//            else if (input.equals("surrender")) gamePlayController.surrender();
-//            else if (input.matches("duel set-winner (\\.+)")) {
-//                Matcher matcher = Pattern.compile("duel set-winner (\\.+)").matcher(input);
-//                if (matcher.find()) gamePlayController.cheatAndWin(matcher.group(1));
-//            } else if (input.matches("select(.*)(\\d)(.*)")) checkAndCallSelectNumericZone(input);
-//            else if (input.equals("select -d")) checkAndCallDeselect(input);
-//            else if(input.matches("increase LP (\\d+)")) increaseLp(input);
-//            else if (input.startsWith("select")) checkAndCallSelectNotNumericZone(input);
-//            else if (input.equals("card show")) checkAndCallShowSelectedCard();
-//            else if (input.startsWith("card show ")) UtilityController.showCardByName(input);
-//            else if (input.equals("next phase")) printResponse(gamePlayController.goNextPhase());
-//            else if (input.equals("summon")) printResponse(gamePlayController.summonCommand());
-//            else if (input.equals("set")) printResponse(gamePlayController.setCommand());
-//            else if (input.matches("set --position (attack|defense)")) {
-//                Matcher matcher = Pattern.compile("set --position (attack|defense)").matcher(input);
-//                if (matcher.find()) printResponse(gamePlayController.setPosCommand(matcher.group(1)));
-//            } else if (input.equals("flip-summon")) printResponse(gamePlayController.flipSummonCommand());
-//            else if (input.matches("attack (\\d+)")) {
-//                Matcher matcher = Pattern.compile("attack (\\d+)").matcher(input);
-//                if (matcher.find()) printResponse(gamePlayController.normalAttack(Integer.parseInt(matcher.group(1))));
-//            } else if (input.equals("attack direct")) printResponse(gamePlayController.directAttack());
-//            else if (input.equals("activate effect")) gamePlayController.activateSpellCard();
-//            else System.out.println("invalid command");
-//            if (super.isExit) {
-//                super.isExit = false;
-//                return;
-//            }
-//        }
-//    }
 
 
     public void showGraveYard() {
@@ -1495,6 +1484,12 @@ public class DuelMenu {
                 updateHandGrid(gamePlayController.getOpponentPlayer());
                 refreshPlayersBox();
             }
+            break;
+            case YOU_DONT_HAVE_RITUAL_MONSTER:
+             UtilityController.makeAlert("Oh No!!", "",
+                    "you dont have ritual monster!", new Image(String.valueOf(getClass().
+                            getResource("/Images/confusedAnimeGirl.jpg"))));
+            break;
             default:
                 break;
         }
@@ -1541,12 +1536,34 @@ public class DuelMenu {
         } else {
             return "cancel";
         }
-
     }
+
+
 
     public String yesNoQuestionAlert(String question) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(question);
+        alert.setHeaderText("Yes Or No?");
+        ButtonType buttonTypeOne = new ButtonType("Yes");
+        ButtonType buttonTypeTwo = new ButtonType("No");
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            return "yes";
+        } else if (result.get() == buttonTypeTwo) {
+            return "no";
+        } else {
+            return "no";
+        }
+    }
+
+    public String yesNoQuestionAlertWithCardImage(String question, Card card) {
+        ImageView imageView = new ImageView(card.getCardImage());
+        imageView.setFitHeight(150);
+        imageView.setFitWidth(100);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(question);
+        alert.setGraphic(imageView);
         alert.setHeaderText("Yes Or No?");
         ButtonType buttonTypeOne = new ButtonType("Yes");
         ButtonType buttonTypeTwo = new ButtonType("No");

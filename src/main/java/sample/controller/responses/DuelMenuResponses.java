@@ -96,7 +96,8 @@ public enum DuelMenuResponses {
     GIVE_A_NAME,
     CANCELED,
     TRAP_ACTIVATED,
-    TURN_CHANGED;
+    TURN_CHANGED,
+    YOU_DONT_HAVE_RITUAL_MONSTER;
 
 
 

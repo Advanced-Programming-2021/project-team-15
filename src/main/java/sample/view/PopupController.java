@@ -8,21 +8,36 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
+import sample.model.cards.Card;
+import sample.model.cards.MonsterCard;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static sample.controller.responses.DuelMenuResponses.GAME_STARTED_SUCCESSFULLY;
 
@@ -35,6 +50,8 @@ public class PopupController {
     private ChoiceBox<Object> choiceBox;
     @FXML
     private Button button;
+    @FXML
+    private ScrollPane cardsScrollPane;
 
     private String round = "";
     private Stage stage;
@@ -63,6 +80,32 @@ public class PopupController {
                 }
             }
         });
+    }
+    public void showList(ArrayList<MonsterCard> cards) {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(10, 10, 10, 20));
+        cardsScrollPane.setContent(pane);
+        pane.setAlignment(Pos.CENTER);
+        pane.setVgap(10);
+        pane.setHgap(10);
+        for (int i = 0; i <cards.size(); i++) {
+            StackPane stackPane= new StackPane();
+            Rectangle rectangle = new Rectangle();
+            rectangle.setHeight(153.5);
+            rectangle.setWidth(105.25);
+            rectangle.setArcHeight(5);
+            rectangle.setArcWidth(5);
+            stackPane.setPrefHeight(153.5);
+            stackPane.setPrefWidth(105.25);
+            rectangle.setFill(new ImagePattern(cards.get(i).getCardImage()));
+            stackPane.getChildren().add(rectangle);
+            Text text = new Text((i + ""));
+            text.setFont(new Font("Verdana Bold", 20));
+            text.setFill(Color.WHITE);
+            text.setEffect(new Reflection());
+            stackPane.getChildren().add(text);
+            pane.add(stackPane,i,0);
+        }
     }
 
     public void startGameButtonClicked() throws IOException {

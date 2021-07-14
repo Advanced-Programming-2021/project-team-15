@@ -363,8 +363,7 @@ public class GamePlayController extends MenuController {
             DuelMenuResponses duelMenuResponses = summon();
             ((MonsterCard) selectedCard).setSummoned(true, false);
             selectedCard = null;
-//            DuelMenu.getInstance().printString(showGameBoard());
-            duelMenu.printString(showGameBoard());
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -405,7 +404,6 @@ public class GamePlayController extends MenuController {
         board.append("\n").append(currentPlayer.getUser().getNickName()).append(" : ").
                 append(currentPlayer.getLifePoint());
         //DuelMenu.getInstance().printString(board.toString());
-        duelMenu.printString(board.toString());
         return board.toString();
     }
 
@@ -494,8 +492,7 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = set();
             selectedCard = null;
-//            DuelMenu.getInstance().printString(showGameBoard());
-            duelMenu.printString(showGameBoard());
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -573,6 +570,7 @@ public class GamePlayController extends MenuController {
         selectedCard.setHidden(true);
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+            duelMenu.addToField(selectedCard);
             currentPlayer.getHand().removeCardFromHand(selectedCard);
         } else currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         selectedCard.setHidden(true);
@@ -599,8 +597,7 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
             selectedCard = null;
-//            DuelMenu.getInstance().printString(showGameBoard());
-            duelMenu.printString(showGameBoard());
+            DuelMenu.getInstance().printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -662,6 +659,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void activateSpellCard() throws IOException {
+       duelMenu.changeFieldBack(selectedCard);
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -679,9 +677,11 @@ public class GamePlayController extends MenuController {
                 && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else {
-            duelMenu.changeFieldBack(selectedCard);
+
             spellEffectController.setDoIt(false);
             trapEffectController.setDoIt(false);
+
+
             if (chainCards.isEmpty() || canContinueTheChain(selectedCard)) {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
@@ -765,10 +765,7 @@ public class GamePlayController extends MenuController {
                         && !magics.get(i).getCardName().equals("Mirror Force") && !magics.get(i).getCardName().equals("Trap Hole") && !magics.get(i).getCardName().equals("Torrential Tribute") &&
                         !magics.get(i).getCardName().equals("Negate Attack") && !magics.get(i).getCardName().equals("Solemn Warning") && !magics.get(i).getCardName().equals("Ring of defense"))
                     return true;
-
-
             }
-
         }
         return false;
     }
@@ -785,7 +782,7 @@ public class GamePlayController extends MenuController {
 
     public void activateCard(Card card) throws IOException {
         card.setHidden(false);
-        duelMenu.flipMagic(card.getOwner(),card.getOwner().getMagicCardZone().getPlace(card)-1,card);
+        duelMenu.flipMagic(card.getOwner().getMagicCardZone().getPlace(card)-1,card);
         card.setActivated(true);
         activatedCards.put(currentPlayer, card);
         duelMenu.printResponse(TRAP_ACTIVATED);
@@ -799,13 +796,13 @@ public class GamePlayController extends MenuController {
         activatedCards.put(currentPlayer, selectedCard);
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD && selectedCard.getCardPlacedZone() == currentPlayer.getHand()) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
+            duelMenu.addToField(selectedCard);
             currentPlayer.getHand().removeCardFromHand(selectedCard);
         }
         if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD) {
             currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
-            duelMenu.flipMagic(gamePlayController.currentPlayer,currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,selectedCard);
+            duelMenu.flipMagic(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,selectedCard);
         }
-
         duelMenu.printResponse(SPELL_ACTIVATED);
     }
 
@@ -942,16 +939,14 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses normalAttack(int number) throws IOException {
         DuelMenuResponses responses = attackController.normalAttack(number);
         selectedCard = null;
-//        DuelMenu.getInstance().printString(showGameBoard());
-        duelMenu.printString(showGameBoard());
+        DuelMenu.getInstance().printString(showGameBoard());
         return responses;
     }
 
     public DuelMenuResponses directAttack() throws IOException {
         DuelMenuResponses responses = attackController.directAttack();
         selectedCard = null;
-//        DuelMenu.getInstance().printString(showGameBoard());
-        duelMenu.printString(showGameBoard());
+        DuelMenu.getInstance().printString(showGameBoard());
         return responses;
     }
 
@@ -1126,8 +1121,7 @@ public class GamePlayController extends MenuController {
     }
 
     public void defineStarter(Player winner, Player loser) throws IOException {
-//        String ans = DuelMenu.getInstance().defineStarterOfNextRound();
-        String ans = duelMenu.defineStarterOfNextRound();
+        String ans = DuelMenu.getInstance().defineStarterOfNextRound();
         if (ans.equals("yes")) {
             currentPlayer = loser;
             opponentPlayer = winner;
