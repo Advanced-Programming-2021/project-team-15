@@ -174,7 +174,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose your monster");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);
@@ -208,7 +208,7 @@ public class SpellEffectController {
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         while (true) {
-            String input = GamePlayController.getInstance().getDuelMenu().getNum();
+            String input = GamePlayController.getInstance().getDuelMenu().getNum("choose your monster");
             if (input.equals("cancel")) {
                 GamePlayController.getInstance().getDuelMenu().printString("canceled");
                 return;
@@ -241,7 +241,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         int amount = GamePlayController.getEffectController().getNumberOfFaceUpMonstersOfCurrentPlayer();
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose your monster");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);
@@ -280,7 +280,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getCurrentPlayer().getMonsterCardZone().getZoneCards();
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose your monster");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);
@@ -422,8 +422,8 @@ public class SpellEffectController {
         }
         Map<Integer, MagicCard> map;
         Player player;
-        String rivalOrNot = GamePlayController.getInstance().getDuelMenu().getString();
-        if (rivalOrNot.equals("rival")) {
+        String rivalOrNot = GamePlayController.getInstance().getDuelMenu().chooseQuestion("choose player",ownerOfCard.getUser().getNickName(),gamePlayController.getTheOtherPlayer(ownerOfCard).getUser().getNickName());
+        if (rivalOrNot == gamePlayController.getTheOtherPlayer(ownerOfCard).getUser().getNickName()) {
             player = gamePlayController.getTheOtherPlayer(ownerOfCard);
             map = gamePlayController.getTheOtherPlayer(ownerOfCard).getMagicCardZone().getZoneCards();
         } else {
@@ -432,7 +432,7 @@ public class SpellEffectController {
         }
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose your magic");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);
@@ -491,7 +491,7 @@ public class SpellEffectController {
         int i = 0;
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);  // of your hand !
         while (true) {
-            String ans = GamePlayController.getInstance().getDuelMenu().getNum();
+            String ans = GamePlayController.getInstance().getDuelMenu().getNum("choose from hand");
             if (ans.equals("cancel")) {
                 GamePlayController.getInstance().getDuelMenu().printResponse(CANCELED);
                 return;
@@ -499,6 +499,7 @@ public class SpellEffectController {
             int num = Integer.parseInt(ans);
             if (ownerOfCard.getHand().getNumberOfCardsInHand() >= num) {
                 ownerOfCard.getMagicCardZone().moveCardToGraveyardWithoutAddress(twinTwisters, ownerOfCard);
+                ownerOfCard.getHand().removeCardFromHand(ownerOfCard.getHand().getZoneCards().get(num-1));
                 break;
             } else {
                 GamePlayController.getInstance().getDuelMenu().printResponse(INVALID_CELL_NUMBER);
@@ -507,7 +508,7 @@ public class SpellEffectController {
         }
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String ans = GamePlayController.getInstance().getDuelMenu().getString();
+            String ans = GamePlayController.getInstance().getDuelMenu().getNum("choose from magic");
             if (ans.equals("cancel")) {
                 GamePlayController.getInstance().getDuelMenu().printResponse(CANCELED);
                 return;
@@ -568,7 +569,7 @@ public class SpellEffectController {
         Map<Integer, MonsterCard> map = gamePlayController.getOpponentPlayer().getMonsterCardZone().getZoneCards();
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose from opponent monster");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);
@@ -623,7 +624,7 @@ public class SpellEffectController {
         else player = gamePlayController.getCurrentPlayer();
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-             String ans=  GamePlayController.getInstance().getDuelMenu().getNum();
+             String ans=  GamePlayController.getInstance().getDuelMenu().getNum("choose a random monster from grave yard");
               if (rivalOrNot.equals("cancel")) {
                 GamePlayController.getInstance().getDuelMenu().printResponse(CANCELED);
                 return;

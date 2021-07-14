@@ -106,7 +106,7 @@ public class TrapEffectController {
             return; }
         while (true) {
                 GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose from hand");
             if(s.equals("cancel"))
                 return;
             int num = Integer.parseInt(s);

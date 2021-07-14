@@ -55,7 +55,7 @@ public class MonsterEffectController {
         else victim = gamePlayController.getCurrentPlayer();
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string = GamePlayController.getInstance().getDuelMenu().getNum();
+            String string = GamePlayController.getInstance().getDuelMenu().getNum("man eater bug");
             if(string.equals("cancel"))
                 return;
             int num = Integer.parseInt(string);
@@ -116,7 +116,7 @@ public class MonsterEffectController {
         int i = 0;
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-          String string  = GamePlayController.getInstance().getDuelMenu().getNum();
+          String string  = GamePlayController.getInstance().getDuelMenu().getNum("choose monster");
           if(string.equals("cancel"))
               return;
           int num = Integer.parseInt(string);
@@ -234,7 +234,7 @@ public class MonsterEffectController {
     public void heraldOfCreation() throws IOException {
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String string  = GamePlayController.getInstance().getDuelMenu().getNum("choose from hand");
             if(string.equals("cancel"))
                 return;
             int n = Integer.parseInt(string);
@@ -244,7 +244,7 @@ public class MonsterEffectController {
                 gamePlayController.getCurrentPlayer().getGraveyardZone().addCardToGraveyardZone(card);
                 GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
                 while (true) {
-                    String o =GamePlayController.getInstance().getDuelMenu().getNum();
+                    String o =GamePlayController.getInstance().getDuelMenu().getNum("choose a random monster in grave yard");
                     if(o.equals("cancel"))
                         return;
                     int num = Integer.parseInt(o);
@@ -290,7 +290,7 @@ public class MonsterEffectController {
     public void terratigertheEmpoweredWarrior() throws IOException {
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String string  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String string  = GamePlayController.getInstance().getDuelMenu().getNum("choose from hand");
             if(string.equals("cancel"))
                 return;
             int num = Integer.parseInt(string);
@@ -322,7 +322,7 @@ public class MonsterEffectController {
         }
         GamePlayController.getInstance().getDuelMenu().printResponse(ENTER_ONE_NUMBER);
         while (true) {
-            String s  = GamePlayController.getInstance().getDuelMenu().getNum();
+            String s  = GamePlayController.getInstance().getDuelMenu().getNum("choose from hand");
             int num = Integer.parseInt(s);
             Card card = gamePlayController.getCurrentPlayer().getHand().getZoneCards().get(num - 1);
             if (card != null) {

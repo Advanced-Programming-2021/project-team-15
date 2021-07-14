@@ -165,6 +165,8 @@ public class DuelMenu {
         graveyard.getChildren().clear();
         for (Card card : player.getGraveyardZone().getZoneCards()) {
             ImageView imageView = new ImageView(card.getCardImage());
+            imageView.setFitWidth(80);
+            imageView.setFitHeight(120);
             graveyard.getChildren().add(imageView);
         }
     }
@@ -1002,9 +1004,10 @@ public class DuelMenu {
         }
     }
 
-    public String getNum() {
+    public String getNum(String name) {
         String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText(name);
         dialog.setContentText("enter a number :");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
