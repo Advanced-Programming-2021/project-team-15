@@ -363,7 +363,8 @@ public class GamePlayController extends MenuController {
             DuelMenuResponses duelMenuResponses = summon();
             ((MonsterCard) selectedCard).setSummoned(true, false);
             selectedCard = null;
-            DuelMenu.getInstance().printString(showGameBoard());
+//            DuelMenu.getInstance().printString(showGameBoard());
+            duelMenu.printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -404,6 +405,7 @@ public class GamePlayController extends MenuController {
         board.append("\n").append(currentPlayer.getUser().getNickName()).append(" : ").
                 append(currentPlayer.getLifePoint());
         //DuelMenu.getInstance().printString(board.toString());
+        duelMenu.printString(board.toString());
         return board.toString();
     }
 
@@ -492,7 +494,8 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = set();
             selectedCard = null;
-            DuelMenu.getInstance().printString(showGameBoard());
+//            DuelMenu.getInstance().printString(showGameBoard());
+            duelMenu.printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -596,7 +599,8 @@ public class GamePlayController extends MenuController {
         else {
             DuelMenuResponses duelMenuResponses = flipSummon();
             selectedCard = null;
-            DuelMenu.getInstance().printString(showGameBoard());
+//            DuelMenu.getInstance().printString(showGameBoard());
+            duelMenu.printString(showGameBoard());
             return duelMenuResponses;
         }
     }
@@ -658,7 +662,6 @@ public class GamePlayController extends MenuController {
     }
 
     public void activateSpellCard() throws IOException {
-//        DuelMenu.getInstance().changeFieldBack(selectedCard);
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -676,11 +679,9 @@ public class GamePlayController extends MenuController {
                 && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
             duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
         else {
-
+            duelMenu.changeFieldBack(selectedCard);
             spellEffectController.setDoIt(false);
             trapEffectController.setDoIt(false);
-
-
             if (chainCards.isEmpty() || canContinueTheChain(selectedCard)) {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
@@ -941,14 +942,16 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses normalAttack(int number) throws IOException {
         DuelMenuResponses responses = attackController.normalAttack(number);
         selectedCard = null;
-        DuelMenu.getInstance().printString(showGameBoard());
+//        DuelMenu.getInstance().printString(showGameBoard());
+        duelMenu.printString(showGameBoard());
         return responses;
     }
 
     public DuelMenuResponses directAttack() throws IOException {
         DuelMenuResponses responses = attackController.directAttack();
         selectedCard = null;
-        DuelMenu.getInstance().printString(showGameBoard());
+//        DuelMenu.getInstance().printString(showGameBoard());
+        duelMenu.printString(showGameBoard());
         return responses;
     }
 
@@ -1123,7 +1126,8 @@ public class GamePlayController extends MenuController {
     }
 
     public void defineStarter(Player winner, Player loser) throws IOException {
-        String ans = DuelMenu.getInstance().defineStarterOfNextRound();
+//        String ans = DuelMenu.getInstance().defineStarterOfNextRound();
+        String ans = duelMenu.defineStarterOfNextRound();
         if (ans.equals("yes")) {
             currentPlayer = loser;
             opponentPlayer = winner;

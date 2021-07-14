@@ -1,0 +1,16 @@
+{
+  "Attack": 1600,
+  "gameATK": 1600,
+  "Defence": 1400,
+  "gameDEF": 1400,
+  "Level": 5,
+  "Monster Type": "Dragon",
+  "Monster Attribute": "EARTH",
+  "Monster Effect Type": "Normal",
+  "Name": "Crawling dragon",
+  "Description": "This weakened dragon can no longer fly, but is still a deadly force to be reckoned with.",
+  "cardNumber": "0",
+  "Card Type": "MONSTER",
+  "type": "MONSTER",
+  "Price": 3900
+}

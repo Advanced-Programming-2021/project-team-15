@@ -15,7 +15,7 @@
     -fx-background-size: cover;
 }
 .closedForestPane {
-    -fx-background-image: url("../Images/Field/Closed Forest.bmp");
+    -fx-background-image: url("../Images/Field/ClosedForest.bmp");
     -fx-background-size: cover;
 }
 .phaseTexture {

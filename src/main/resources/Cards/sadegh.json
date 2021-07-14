@@ -1,0 +1,16 @@
+{
+  "Attack": 4000,
+  "gameATK": 4000,
+  "Defence": 100,
+  "gameDEF": 100,
+  "Level": 9,
+  "Monster Type": "Beast-Warrior",
+  "Monster Attribute": "DARK",
+  "Monster Effect Type": "Normal",
+  "Name": "sadegh",
+  "Description": "yu gi oh",
+  "cardNumber": "0",
+  "Card Type": "MONSTER",
+  "type": "MONSTER",
+  "Price": 2700
+}
