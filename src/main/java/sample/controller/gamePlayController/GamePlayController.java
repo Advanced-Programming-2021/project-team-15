@@ -659,7 +659,6 @@ public class GamePlayController extends MenuController {
     }
 
     public void activateSpellCard() throws IOException {
-       duelMenu.changeFieldBack(selectedCard);
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
@@ -794,6 +793,7 @@ public class GamePlayController extends MenuController {
         selectedCard.setHidden(false);
         selectedCard.setActivated(true);
         activatedCards.put(currentPlayer, selectedCard);
+        duelMenu.changeFieldBack(selectedCard);
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD && selectedCard.getCardPlacedZone() == currentPlayer.getHand()) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
             duelMenu.addToField(selectedCard);
