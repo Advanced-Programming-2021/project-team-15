@@ -1,17 +1,13 @@
 package sample.view;
 
 import javafx.scene.image.Image;
-import sample.Main;
 import sample.controller.menuController.LoginController;
 import sample.controller.responses.LoginMenuResponses;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import sample.controller.utilizationController.AudioController;
 import sample.controller.utilizationController.UtilityController;
 
@@ -34,7 +30,7 @@ public class SignUpMenu {
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene welcomeMenu= new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml")));
-        Main.stage.setScene(welcomeMenu);
+        WelcomeMenu.stage.setScene(welcomeMenu);
     }
 
      public void signupButtonClicked(MouseEvent mouseEvent){

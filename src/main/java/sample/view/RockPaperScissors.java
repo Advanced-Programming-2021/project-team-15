@@ -4,11 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.utilizationController.UtilityController;
 
@@ -72,7 +70,7 @@ public class RockPaperScissors {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/Duel.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
         DuelMenu duelMenu = loader.getController();
         GamePlayController.getInstance().setDuelMenu(duelMenu);
         duelMenu.initialGame();

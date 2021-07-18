@@ -1,6 +1,5 @@
 package sample.view;
 
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -9,18 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Callback;
-import sample.Main;
 import sample.controller.menuController.DeckController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
@@ -194,7 +189,7 @@ public class DeckMenu{
     public void goToEditDeckMenu(Deck deck) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckEdit.fxml"));
         Scene scene= new Scene(loader.load());
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
         DeckEdit deckEdit =  loader.getController();
         deckEdit.setDeck(deck);
         deckEdit.start();
@@ -234,7 +229,7 @@ public class DeckMenu{
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
 

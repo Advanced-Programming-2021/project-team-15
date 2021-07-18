@@ -5,13 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
 import sample.controller.utilizationController.AudioController;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class CreateCardMenu {
@@ -59,7 +54,7 @@ public class CreateCardMenu {
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException{
         AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
 }

@@ -17,7 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -28,7 +27,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import sample.Main;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.menuController.MenuController;
@@ -805,7 +803,7 @@ public class DuelMenu {
     public void mainMenuButtonClicked() throws IOException {
         AudioController.playMenu();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
     public void newDuelButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -1621,7 +1619,7 @@ public class DuelMenu {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Main.stage.setScene(mainMenuScene);
+            WelcomeMenu.stage.setScene(mainMenuScene);
         });
     }
 

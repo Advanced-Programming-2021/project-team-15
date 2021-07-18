@@ -18,7 +18,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,11 +28,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sample.Main;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
-import sample.model.cards.Card;
 import sample.model.cards.MonsterCard;
 
 import java.io.IOException;
@@ -136,7 +133,7 @@ public class PopupController {
                 Scene scene = new Scene(loader.load());
                 RockPaperScissors rockPaperScissors = loader.getController();
                 rockPaperScissors.start();
-                Main.stage.setScene(scene);
+                WelcomeMenu.stage.setScene(scene);
             }
         }
     }

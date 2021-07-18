@@ -6,29 +6,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import sample.Main;
 import sample.controller.menuController.DeckController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
 import sample.model.cards.Card;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static sample.controller.responses.DeckMenuResponses.*;
 
@@ -284,7 +278,7 @@ public class DeckEdit {
     public void backButtonClicked() throws Exception {     FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckMenu.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
         DeckMenu deckMenu = loader.getController();
         deckMenu.start();
 

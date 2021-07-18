@@ -14,7 +14,6 @@ import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import sample.Main;
 import sample.controller.menuController.ImportExportController;
 import sample.controller.responses.ImportExportResponses;
 import sample.controller.utilizationController.AudioController;
@@ -88,7 +87,7 @@ public class ImportExportMenu {
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
     private void addCardToGridPane(Card card, GridPane gridPane, int cardCounter) {

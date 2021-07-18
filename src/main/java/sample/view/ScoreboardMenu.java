@@ -1,10 +1,7 @@
 package sample.view;
 
-import com.opencsv.exceptions.CsvValidationException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -12,10 +9,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import sample.Main;
-import sample.controller.menuController.ScoreboardController;
-import sample.controller.responses.ScoreboardMenuResponses;
-import sample.controller.utilizationController.UtilityController;
 import sample.model.User;
 
 import java.io.File;
@@ -80,7 +73,7 @@ public class ScoreboardMenu {
 
     public void scoreBoardBackButtonClicked(MouseEvent mouseEvent) throws IOException {
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
     //    @Override
 //    public void scanInput() {

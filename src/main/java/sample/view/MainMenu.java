@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import sample.Main;
 import sample.controller.menuController.MainMenuController;
 import sample.controller.responses.MainMenuResponses;
 import sample.controller.utilizationController.AudioController;
@@ -78,7 +77,7 @@ public class MainMenu {
     public void profileButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
-        Main.stage.setScene(profileScene);
+        WelcomeMenu.stage.setScene(profileScene);
     }
 
     public void scoreboardButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -86,7 +85,7 @@ public class MainMenu {
        // Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
         //Main.stage.setScene(scoreboardScene);
         AudioController.playClick();
-        ScoreboardMenu.getInstance().showScoreBoard(Main.stage);
+        ScoreboardMenu.getInstance().showScoreBoard(WelcomeMenu.stage);
 //=======
 
       //  Scene scoreboardScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Scoreboard.fxml")));
@@ -99,7 +98,7 @@ public class MainMenu {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/DeckMenu.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
         DeckMenu deckMenu = loader.getController();
         deckMenu.start();
     }
@@ -108,7 +107,7 @@ public class MainMenu {
         AudioController.playClick();
         AudioController.playGame();
         Scene duelScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/GameMenu.fxml")));
-        Main.stage.setScene(duelScene);
+        WelcomeMenu.stage.setScene(duelScene);
     }
 
     public void shopButtonClicked(MouseEvent mouseEvent) throws Exception {
@@ -117,7 +116,7 @@ public class MainMenu {
         Scene scene = new Scene(loader.load());
         ShopMenu shopMenu = loader.getController();
         shopMenu.initializeContainer();
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
     }
 
     public void importExportButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -126,20 +125,20 @@ public class MainMenu {
         Scene scene = new Scene(loader.load());
         ImportExportMenu importExportMenu = loader.getController();
         importExportMenu.initializeScene();
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
     }
 
     public void logoutButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene loginScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Login.fxml")));
         mainMenuController.logout();
-        Main.stage.setScene(loginScene);
+        WelcomeMenu.stage.setScene(loginScene);
     }
 
     public void createCardButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/CreateCard.fxml")));
-        Main.stage.setScene(scene);
+        WelcomeMenu.stage.setScene(scene);
     }
 
 //    private void printResponse(MainMenuResponses mainMenuResponses) {

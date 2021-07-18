@@ -6,9 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import sample.Main;
 import sample.controller.menuController.ProfileController;
-import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ProfileMenuResponses;
 import sample.controller.utilizationController.AudioController;
 
@@ -41,18 +39,18 @@ public class  ProfileMenu {
     public void changePasswordButtonClicked(MouseEvent mouseEvent) throws IOException{
         AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangePassword.fxml")));
-        Main.stage.setScene(profileScene);
+        WelcomeMenu.stage.setScene(profileScene);
 
     }
     public void changeNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
         AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/ProfileChangeNickname.fxml")));
-        Main.stage.setScene(profileScene);
+        WelcomeMenu.stage.setScene(profileScene);
     }
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException{
         AudioController.playClick();
         Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-        Main.stage.setScene(mainMenuScene);
+        WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
     public void submitNicknameButtonClicked(MouseEvent mouseEvent) throws IOException{
@@ -67,7 +65,7 @@ public class  ProfileMenu {
         newNicknameTextField.setText("");
         if (responses == ProfileMenuResponses. NICKNAME_CHANGE_SUCCESSFUL) {
             Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
-            Main.stage.setScene(profileScene);
+            WelcomeMenu.stage.setScene(profileScene);
         }
 
     }
@@ -93,13 +91,13 @@ public class  ProfileMenu {
     public void backFromNicknameButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
-        Main.stage.setScene(profileScene);
+        WelcomeMenu.stage.setScene(profileScene);
     }
 
     public void backFromPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
         AudioController.playClick();
         Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
-        Main.stage.setScene(profileScene);
+        WelcomeMenu.stage.setScene(profileScene);
     }
 
     public void submitPasswordButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -119,7 +117,7 @@ public class  ProfileMenu {
         oldPasswordTextField.setText("");
         if (responses == ProfileMenuResponses. PASSWORD_CHANGE_SUCCESSFUL) {
             Scene profileScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/Profile.fxml")));
-            Main.stage.setScene(profileScene);
+            WelcomeMenu.stage.setScene(profileScene);
         }
     }
 }
