@@ -1,0 +1,104 @@
+.fieldPane {
+    -fx-background-image: url("../Images/Field/fie_normal.bmp");
+    -fx-background-size: cover;
+}
+.yamiPane {
+    -fx-background-image: url("../Images/Field/Yami.bmp");
+    -fx-background-size: cover;
+}
+.umiPane {
+    -fx-background-image: url("../Images/Field/Umi.bmp");
+    -fx-background-size: cover;
+}
+.forestPane {
+    -fx-background-image: url("../Images/Field/Forest.bmp");
+    -fx-background-size: cover;
+}
+.closedForestPane {
+    -fx-background-image: url("../Images/Field/ClosedForest.bmp");
+    -fx-background-size: cover;
+}
+.phaseTexture {
+    -fx-background-image: url("../Images/Textures/RockTexture.png");
+    -fx-background-size: auto;
+}
+.playersTexture {
+    -fx-background-image: url("../Images/Textures/BrickTexture.jpg");
+    -fx-background-size: auto;
+}
+.back {
+    -fx-background-color:  #9FE2BF;
+    -fx-text-fill:  #DE3163;
+    -fx-opacity: 0.5;
+}
+.back:hover {
+    -fx-opacity: 1;
+}
+.progress-bar .bar {
+    -fx-background-color:linear-gradient(to right,#DE3163,#CCCCFF);
+            /*-fx-box-border,*/
+            /*Red,*/
+    -fx-background-insets: 0, 1, 2;
+    -fx-padding: 0.416667em; /* 5 */
+}
+.progress-bar {
+    -fx-border-color: #9FE2BF;
+    -fx-border-width: 2;
+}
+.progress-bar .track {
+    -fx-background-color: transparent;
+}
+.progressLabel {
+    -fx-text-fill:linear-gradient(to right,#DE3163,#CCCCFF);
+}
+.cheatBack {
+    -fx-background-image: url("../Images/EvilAnimeGirl.jpg");
+    -fx-background-size: cover;
+}
+.vBoxBack {
+    -fx-background-color: #1B2631;
+}
+.buttonCheatBack {
+    -fx-background-color:linear-gradient(to right,White,Black);
+    -fx-text-fill: #212F3C;
+    -fx-prompt-text-fill: #212F3C;
+}
+.buttonCheatBack:hover {
+    -fx-background-color:#212F3C;
+    -fx-text-fill: linear-gradient(to right,White,Black);
+    -fx-prompt-text-fill: linear-gradient(to right,White,Black);
+}
+.actionButtonsBack {
+    -fx-background-color: linear-gradient(to right,#DE3163,#CCCCFF);
+    -fx-text-fill: #9FE2BF;
+}
+.settingBack {
+    -fx-background-image: url("../Images/Setting2.gif");
+    -fx-background-size: cover;
+}
+.slider .track {
+    -fx-background-color: #21253A;
+}
+.slider .thumb {
+    -fx-background-color: #5D151B;
+}
+.settingContainer {
+    -fx-background-color: #8CA3DB;
+    -fx-opacity: 0.3;
+}
+.settingContainer:hover {
+    -fx-opacity: 1;
+}
+.settingButton {
+    -fx-background-color: #5D151B;
+    -fx-text-fill: #8CA3DB;
+    -fx-opacity: 0.5;
+}
+.settingButton:hover {
+    -fx-background-color: #21253A;
+    -fx-text-fill: #8CA3DB;
+    -fx-opacity: 1;
+}
+.alertYesNo {
+    -fx-text-fill: black;
+}

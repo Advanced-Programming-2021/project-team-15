@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="Login" prefHeight="1000" prefWidth="1500" styleClass="login" stylesheets="@../CSSFiles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.LoginMenu">
+    <children>
+
+        <VBox alignment="TOP_CENTER" layoutX="794.0" layoutY="183.0" prefHeight="246.0" prefWidth="620.0" spacing="20.0">
+            <children>
+                <Label text="Login" textFill="#f2d7d3">
+                    <font>
+                        <Font size="41.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="usernameTextField" prefHeight="56.0" prefWidth="618.0" promptText="Username" styleClass="signupButton" stylesheets="@../CSSFiles/Menus.css">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="passwordTextField" prefHeight="52.0" prefWidth="234.0" promptText="Password" styleClass="signupButton" stylesheets="@../CSSFiles/Menus.css">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </PasswordField>
+            </children>
+        </VBox>
+        <Button alignment="CENTER" layoutX="927.0" layoutY="420.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="52.0" prefWidth="135.0" styleClass="signupButton" stylesheets="@../CSSFiles/Menus.css" text="Back" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Button alignment="CENTER" layoutX="1143.0" layoutY="420.0" mnemonicParsing="false" onMouseClicked="#submitButtonClicked" prefHeight="52.0" prefWidth="135.0" styleClass="signupButton" stylesheets="@../CSSFiles/Menus.css" text="Submit" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+    </children>
+</AnchorPane>

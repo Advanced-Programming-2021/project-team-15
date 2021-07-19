@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="CreateCard" prefHeight="1080.0" prefWidth="1920.0" styleClass="createCard" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.CreateCardMenu">
+   <left>
+        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="createMonsterButton" layoutX="832.0" layoutY="393.0" mnemonicParsing="false" onMouseClicked="#createMonsterButtonClicked" prefHeight="54.0" prefWidth="438.0" styleClass="backDarkButton" stylesheets="@../CSSFiles/Menus.css" text="Create Monster" textFill="#764d4d">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                <Button fx:id="createMagicButton" layoutX="868.0" layoutY="514.0" mnemonicParsing="false" onMouseClicked="#createMagicButtonClicked" prefHeight="54.0" prefWidth="303.0" styleClass="backDarkButtonRed" stylesheets="@../CSSFiles/Button.css" text="Create Magic" textFill="#844c4c">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+                <Button fx:id="backButton" layoutX="913.0" layoutY="641.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="49.0" prefWidth="140.0" styleClass="backDarkButton" text="Back" textFill="#794d4d">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </Button>
+            </children>
+         <BorderPane.margin>
+            <Insets left="50.0" />
+         </BorderPane.margin>
+        </VBox>
+   </left>
+
+
+</BorderPane>

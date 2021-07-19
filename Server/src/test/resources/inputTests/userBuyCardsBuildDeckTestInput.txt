@@ -1,0 +1,194 @@
+user create --username mehrad --nickname milan --password m
+user create --password k --username kiarash --nickname kia
+user create --nickname parpari --username parnian --password p
+user creat --username mehrad --nickname milan --password m
+menu show-current
+user login --username mehrad --password m
+menu show-current
+menu inter Shop
+menu enter Shop
+menu show-current
+shap buy sag
+shop buy Call of The Haunted
+menu exit
+increase --money 1000000
+menu enter Shop
+shop buy an
+shop show --all
+shop buy Call of The Haunted
+shop buy Vanity's Emptiness
+shop buy Wall of Revealing Light
+shop buy Sword of dark destruction
+shop buy Black Pendant
+shop buy United We Stand
+shop buy Magnum Shield
+shop buy Advanced Ritual Art
+shop buy Hero of the east
+shop buy Battle warrior
+shop buy Crawling dragon
+shop buy Flame manipulator
+shop buy Blue-Eyes white dragon
+shop buy Crab Turtle
+shop buy Skull Guardian
+shop buy Slot Machine
+shop buy Haniwa
+shop buy Man-Eater Bug
+shop buy Gate Guardian
+shop buy Scanner
+shop buy Bitron
+shop buy Call of The Haunted
+shop buy Vanity's Emptiness
+shop buy Wall of Revealing Light
+shop buy Sword of dark destruction
+shop buy Black Pendant
+shop buy United We Stand
+shop buy Magnum Shield
+shop buy Advanced Ritual Art
+shop buy Hero of the east
+shop buy Battle warrior
+shop buy Crawling dragon
+shop buy Flame manipulator
+shop buy Blue-Eyes white dragon
+shop buy Crab Turtle
+shop buy Skull Guardian
+shop buy Slot Machine
+shop buy Haniwa
+shop buy Man-Eater Bug
+shop buy Gate Guardian
+shop buy Scanner
+shop buy Bitron
+shop buy Call of The Haunted
+shop buy Vanity's Emptiness
+shop buy Wall of Revealing Light
+shop buy Sword of dark destruction
+shop buy Black Pendant
+shop buy United We Stand
+shop buy Magnum Shield
+shop buy Advanced Ritual Art
+shop buy Hero of the east
+shop buy Battle warrior
+shop buy Crawling dragon
+shop buy Flame manipulator
+shop buy Blue-Eyes white dragon
+shop buy Crab Turtle
+shop buy Skull Guardian
+shop buy Slot Machine
+shop buy Haniwa
+shop buy Man-Eater Bug
+shop buy Gate Guardian
+shop buy Scanner
+shop buy Bitron
+shop buy Call of The Haunted
+shop buy Vanity's Emptiness
+shop buy Wall of Revealing Light
+shop buy Sword of dark destruction
+shop buy Black Pendant
+shop buy United We Stand
+shop buy Magnum Shield
+shop buy Advanced Ritual Art
+shop buy Hero of the east
+shop buy Battle warrior
+shop buy Crawling dragon
+shop buy Flame manipulator
+shop buy Blue-Eyes white dragon
+shop buy Crab Turtle
+shop buy Skull Guardian
+shop buy Slot Machine
+shop buy Haniwa
+shop buy Man-Eater Bug
+shop buy Gate Guardian
+shop buy Scanner
+shop buy Bitron
+menu exit
+menu enter Deck
+an
+menu current-show
+deck create pedaret
+deck add-card --card Bitron --deck pedaret
+deck add-card --card Bitro --deck pedaret
+deck add-card --card Bitron --deck pedare
+deck set-activate pedaret
+deck set-activate pedaresh
+deck add-card --card Bitron --deck pedaret --side
+deck add-card --card Bitron --deck pedaret
+deck rm-card --card Wattkid --deck pedaret
+deck add-card --card Wattkid --deck pedaret
+deck rm-card --card Bitron --deck pedaret
+deck delete pedaret
+deck create pedaret
+deck set-activate pedaret
+deck add-card --card Call of The Haunted --deck pedaret
+deck add-card --card Vanity's Emptiness --deck pedaret
+deck add-card --card Wall of Revealing Light --deck pedaret
+deck add-card --card Sword of dark destruction --deck pedaret
+deck add-card --card Black Pendant --deck pedaret
+deck add-card --card United We Stand --deck pedaret
+deck add-card --card Magnum Shield --deck pedaret
+deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Hero of the east --deck pedaret
+deck add-card --card Battle warrior --deck pedaret
+deck add-card --card Crawling dragon --deck pedaret
+deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Blue-Eyes white dragon --deck pedaret
+deck add-card --card Crab Turtle --deck pedaret
+deck add-card --card Skull Guardian --deck pedaret
+deck add-card --card Slot Machine --deck pedaret
+deck add-card --card Haniwa --deck pedaret
+deck add-card --card Man-Eater Bug --deck pedaret
+deck add-card --card Gate Guardian --deck pedaret
+deck add-card --card Bitron --deck pedaret
+deck add-card --card Call of The Haunted --deck pedaret
+deck add-card --card Vanity's Emptiness --deck pedaret
+deck add-card --card Wall of Revealing Light --deck pedaret
+deck add-card --card Sword of dark destruction --deck pedaret
+deck add-card --card Black Pendant --deck pedaret
+deck add-card --card United We Stand --deck pedaret
+deck add-card --card Magnum Shield --deck pedaret
+deck add-card --card Advanced Ritual Art --deck pedaret
+deck add-card --card Hero of the east --deck pedaret
+deck add-card --card Battle warrior --deck pedaret
+deck add-card --card Crawling dragon --deck pedaret
+deck add-card --card Flame manipulator --deck pedaret
+deck add-card --card Blue-Eyes white dragon --deck pedaret
+deck add-card --card Crab Turtle --deck pedaret
+deck add-card --card Skull Guardian --deck pedaret
+deck add-card --card Slot Machine --deck pedaret
+deck add-card --card Haniwa --deck pedaret
+deck add-card --card Man-Eater Bug --deck pedaret
+deck add-card --card Gate Guardian --deck pedaret
+deck add-card --card Bitron --deck pedaret
+deck add-card --card Slot Machine --deck pedaret --side
+deck add-card --card Haniwa --deck pedaret --side
+deck add-card --card Man-Eater Bug --deck pedaret --side
+deck add-card --card Gate Guardian --deck pedaret --side
+deck add-card --card Bitron --deck pedaret --side
+deck add-card --card Bitron --deck pedaret --side
+deck create sag
+deck add-card --card Call of The Haunted --deck sag --side
+deck add-card --card Vanity's Emptiness --deck sag --side
+deck add-card --card Wall of Revealing Light --deck sag --side
+deck add-card --card Sword of dark destruction --deck sag --side
+deck add-card --card Black Pendant --deck sag --side
+deck add-card --card United We Stand --deck sag --side
+deck add-card --card Magnum Shield --deck sag --side
+deck add-card --card Advanced Ritual Art --deck sag --side
+deck add-card --card Hero of the east --deck sag --side
+deck add-card --card Battle warrior --deck sag --side
+deck add-card --card Crawling dragon --deck sag --side
+deck add-card --card Flame manipulator --deck sag --side
+deck add-card --card Blue-Eyes white dragon --deck sag --side
+deck add-card --card Crab Turtle --deck sag --side
+deck add-card --card Skull Guardian --deck sag --side
+deck add-card --card Slot Machine --deck sag --side
+deck show --all
+deck show --deck-name sag
+deck show --deck-name sag --side
+deck show --deck-name pedaret
+deck show --cards
+deck set-activate sag
+menu exit
+user logout
+user remove --username mehrad --password m
+user remove --username kiarash --password k
+user remove --username parnian --password p
+menu exit
