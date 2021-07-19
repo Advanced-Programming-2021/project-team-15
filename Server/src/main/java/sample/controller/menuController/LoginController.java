@@ -1,7 +1,10 @@
 package sample.controller.menuController;
 
+import com.google.gson.JsonObject;
 import sample.controller.responses.LoginMenuResponses;
 import sample.model.User;
+
+import java.lang.reflect.Method;
 
 public class LoginController extends MenuController {
     public LoginController() {
@@ -9,6 +12,7 @@ public class LoginController extends MenuController {
     }
 
     public LoginMenuResponses registerUser(String userName, String nickName, String passWord) {
+
         databaseController.refreshUsersFromFileJson();
         if (User.getUserByUserName(userName) != null)
             return LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS;
