@@ -1,12 +1,19 @@
 package sample.controller.menuController;
 
 import sample.controller.responses.MainMenuResponses;
+import sample.model.User;
 import sample.view.*;
 
 import java.util.HashMap;
 
 public class MainMenuController extends MenuController {
     private static final HashMap<String, Menu> allMenus = new HashMap<>();
+
+    public static HashMap<String, User> getActiveUsers() {
+        return activeUsers;
+    }
+
+    private static HashMap<String, User> activeUsers = new HashMap<>();
 
 //    static {
 //        allMenus.put("Duel", DuelMenu.getInstance());

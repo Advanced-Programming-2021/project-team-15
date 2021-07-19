@@ -28,14 +28,13 @@ public class WelcomeMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        DatabaseController databaseController = new DatabaseController();
-        databaseController.loadGameCards();
-        AudioController.playMenu();
-        WelcomeMenu.stage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setMaximized(true);
-        stage.show();
+        System.out.println("kir");
+//        AudioController.playMenu();
+//        WelcomeMenu.stage = stage;
+//        Parent root = FXMLLoader.load(getClass().getResource("/FxmlFiles/Welcome.fxml"));
+//        stage.setScene(new Scene(root));
+//        stage.setMaximized(true);
+//        stage.show();
     }
 
 

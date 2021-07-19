@@ -34,28 +34,28 @@ public class LoginMenu {
 
     }
 
-    public void submitButtonClicked(MouseEvent mouseEvent) throws IOException {
-        AudioController.playClick();
-        if (usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
-            if (usernameTextField.getText().equals(""))
-                UtilityController.makeAlert("Error!!","Can't do action!","username field is empty",
-                        new Image(String.valueOf(getClass().
-                    getResource("/Images/sadAnimeGirl.jpg" ))));
-            if (passwordTextField.getText().equals(""))
-                UtilityController.makeAlert("Error!!","Can't do action!","password field is empty",
-                        new Image(String.valueOf(getClass().
-                                getResource("/Images/sadAnimeGirl.jpg" ))));
-            return;
-        }
-        LoginMenuResponses responses = loginController.loginUser(usernameTextField.getText(), passwordTextField.getText());
-        showResponse(responses);
-        passwordTextField.setText("");
-        usernameTextField.setText("");
-        if (responses == LoginMenuResponses.USER_LOGIN_SUCCESSFUL) {
-            Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
-            WelcomeMenu.stage.setScene(mainMenuScene);
-        }
-    }
+//    public void submitButtonClicked(MouseEvent mouseEvent) throws IOException {
+//        AudioController.playClick();
+//        if (usernameTextField.getText().equals("") || passwordTextField.getText().equals("")) {
+//            if (usernameTextField.getText().equals(""))
+//                UtilityController.makeAlert("Error!!","Can't do action!","username field is empty",
+//                        new Image(String.valueOf(getClass().
+//                    getResource("/Images/sadAnimeGirl.jpg" ))));
+//            if (passwordTextField.getText().equals(""))
+//                UtilityController.makeAlert("Error!!","Can't do action!","password field is empty",
+//                        new Image(String.valueOf(getClass().
+//                                getResource("/Images/sadAnimeGirl.jpg" ))));
+//            return;
+//        }
+//        LoginMenuResponses responses = loginController.loginUser(usernameTextField.getText(), passwordTextField.getText());
+//        showResponse(responses);
+//        passwordTextField.setText("");
+//        usernameTextField.setText("");
+//        if (responses == LoginMenuResponses.USER_LOGIN_SUCCESSFUL) {
+//            Scene mainMenuScene = new Scene(FXMLLoader.load(getClass().getResource("/FxmlFiles/MainMenu.fxml")));
+//            WelcomeMenu.stage.setScene(mainMenuScene);
+//        }
+//    }
 
 
     private void showResponse(LoginMenuResponses loginMenuResponses) {

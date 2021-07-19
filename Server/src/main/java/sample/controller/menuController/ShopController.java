@@ -1,6 +1,8 @@
 package sample.controller.menuController;
 
 import com.opencsv.exceptions.CsvValidationException;
+import org.json.JSONObject;
+import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ShopMenuResponses;
 import sample.model.cards.Card;
 import sample.model.User;
@@ -39,6 +41,24 @@ public class ShopController extends MenuController {
         }
         enteredDetails.put("allCards", stringBuilder.toString());
         return ShopMenuResponses.SHOP_SHOW_ALL;
+    }
+
+    public String callMethods(JSONObject jsonObject) {
+        ShopMenuResponses shopMenuResponses;
+        MainMenuController.setUser(MainMenuController.getActiveUsers().get(jsonObject.getString("token")));
+//        switch (jsonObject.getString("method")) {
+//            case "loginUser" :
+//                return loginUser(
+//                        jsonObject.getString("username"), jsonObject.getString("password"));
+//            case "registerUser" :
+//                loginMenuResponses = registerUser(
+//                        jsonObject.getString("username"), jsonObject.getString("nickname"), jsonObject.getString("password"));
+//                break;
+//            default:
+//                return "Something Happened!";
+//        }
+//        return loginMenuResponses.toString();
+        return "";
     }
 
 }

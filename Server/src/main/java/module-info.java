@@ -1,4 +1,4 @@
-module YuGiOhG15 {
+module YuGiOh {
     requires javafx.controls;
     requires javafx.fxml;
     requires gson;

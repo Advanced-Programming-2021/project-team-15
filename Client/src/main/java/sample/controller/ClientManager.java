@@ -6,18 +6,21 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientManager {
-    private  static DataInputStream dataInputStream;
-    private  static DataOutputStream dataOutputStream;
-    public  static void run() {
+    private static DataInputStream dataInputStream;
+    private static DataOutputStream dataOutputStream;
+
+    public static void run() {
         try {
-            Socket socket = new Socket("localhost", 8000);
+            Socket socket = new Socket("localHost", 8000);
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            System.out.println("khar");
             dataOutputStream.flush();
-        } catch ( IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public static void send(String input) {
         try {
             dataOutputStream.writeUTF(input);

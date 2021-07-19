@@ -8,6 +8,16 @@ import java.util.HashMap;
 public class MainMenuController extends MenuController {
     private static final HashMap<String, Menu> allMenus = new HashMap<>();
 
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        MainMenuController.token = token;
+    }
+
+    private static String token;
+
 //    static {
 //        allMenus.put("Duel", DuelMenu.getInstance());
 //        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());

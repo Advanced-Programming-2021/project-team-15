@@ -1,10 +1,10 @@
 package sample.controller.menuController;
 
-import com.google.gson.JsonObject;
+import org.json.JSONObject;
 import sample.controller.responses.LoginMenuResponses;
 import sample.model.User;
 
-import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class LoginController extends MenuController {
     public LoginController() {
@@ -12,7 +12,6 @@ public class LoginController extends MenuController {
     }
 
     public LoginMenuResponses registerUser(String userName, String nickName, String passWord) {
-
         databaseController.refreshUsersFromFileJson();
         if (User.getUserByUserName(userName) != null)
             return LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS;
@@ -25,14 +24,33 @@ public class LoginController extends MenuController {
         }
     }
 
-    public LoginMenuResponses loginUser(String username, String password) {
+    public synchronized String loginUser(String username, String password) {
         databaseController.refreshUsersFromFileJson();
         if (User.getUserByUserName(username) == null || !User.getUserByUserName(username).getPassWord().equals(password))
-            return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
+            return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED.toString();
         else {
-            MenuController.setUser(User.getUserByUserName(username));
-            return LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
+            User user = User.getUserByUserName(username);
+            MenuController.setUser(user);
+            String token = UUID.randomUUID().toString();
+            MainMenuController.getActiveUsers().put(token,user);
+            return LoginMenuResponses.USER_LOGIN_SUCCESSFUL+" "+token;
         }
+    }
+
+    public String callMethods(JSONObject jsonObject) {
+        LoginMenuResponses loginMenuResponses;
+        switch (jsonObject.getString("method")) {
+            case "loginUser" :
+                return loginUser(
+                       jsonObject.getString("username"), jsonObject.getString("password"));
+            case "registerUser" :
+                loginMenuResponses = registerUser(
+                        jsonObject.getString("username"), jsonObject.getString("nickname"), jsonObject.getString("password"));
+                break;
+            default:
+                return "Something Happened!";
+        }
+        return loginMenuResponses.toString();
     }
 
     public LoginMenuResponses removeUser(String username, String password) {
