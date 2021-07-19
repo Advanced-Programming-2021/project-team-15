@@ -1,8 +1,0 @@
-.deckFrame{
-    -fx-background-image: url("../Images/deckBox.png");
-    -fx-background-size: cover;
-    -fx-opacity: 0.5;
-}
-.deckFrame:hover {
-    -fx-opacity: 1;
-}

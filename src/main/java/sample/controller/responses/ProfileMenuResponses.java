@@ -1,9 +1,0 @@
-package sample.controller.responses;
-
-public enum ProfileMenuResponses {
-    NICKNAME_CHANGE_SUCCESSFUL,
-    USER_NICKNAME_ALREADY_EXISTS,
-    PASSWORD_CHANGE_SUCCESSFUL,
-    CURRENT_PASSWORD_INVALID,
-    IDENTICAL_PASSWORDS
-}
