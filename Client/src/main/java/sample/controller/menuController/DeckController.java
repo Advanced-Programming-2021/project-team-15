@@ -9,6 +9,7 @@ import sample.model.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class DeckController extends MenuController {
     public DeckController() {
@@ -16,77 +17,67 @@ public class DeckController extends MenuController {
     }
 
     public DeckMenuResponses createDeck(String deckName) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","createDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("token",MainMenuController.getToken());
-        DeckMenuResponses deckMenuResponses =   DeckMenuResponses.valueOf(ClientManager.sendAndGetResponse(jsonObject.toString()));
+        DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
        return deckMenuResponses;
     }
 
     public DeckMenuResponses removeDeck(String deckName) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","removeDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("token",MainMenuController.getToken());
-        DeckMenuResponses deckMenuResponses =   DeckMenuResponses.valueOf(ClientManager.sendAndGetResponse(jsonObject.toString()));
+        DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
         }
 
 
     public DeckMenuResponses setActiveDeck(String deckName) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","setActiveDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("token",MainMenuController.getToken());
-        DeckMenuResponses deckMenuResponses =   DeckMenuResponses.valueOf(ClientManager.sendAndGetResponse(jsonObject.toString()));
+        DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
     }
 
     public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","removeCardFromDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("card",card);
         jsonObject.put("type",deckType.toString());
         jsonObject.put("token",MainMenuController.getToken());
-        DeckMenuResponses deckMenuResponses =   DeckMenuResponses.valueOf(ClientManager.sendAndGetResponse(jsonObject.toString()));
+        DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
     }
 
 
     public DeckMenuResponses addCardToDeck(Card card, String deckName, Deck.DeckType deckType) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","removeCardFromDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("card",card);
         jsonObject.put("type",deckType.toString());
         jsonObject.put("token",MainMenuController.getToken());
-        DeckMenuResponses deckMenuResponses =   DeckMenuResponses.valueOf(ClientManager.sendAndGetResponse(jsonObject.toString()));
+        DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
     }
 
     public ArrayList<Deck> sortDecks(ArrayList<Deck> decks) {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String,Object> jsonObject = new HashMap<>();
         jsonObject.put("method","removeCardFromDeck");
         jsonObject.put("class","DeckController");
-        JSONArray deckArray  =new JSONArray();
-        for(Deck deck :decks)
-        {  deckArray.put(deck);
-        }
-        jsonObject.put("deck array",deckArray);
-       String string = ClientManager.sendAndGetResponse(jsonObject.toString());
-        JSONObject jsonObj = new JSONObject(string);
-        JSONArray result = jsonObj.getJSONArray("sorted deck");
-        ArrayList<Deck> sorted = new ArrayList<>();
-        for (int i=0;i<result.length();i++){
-            sorted.add((Deck) result.get(i));
-        }
+        jsonObject.put("deck array",decks);
+       ArrayList<Deck> sorted = (ArrayList<Deck>) ClientManager.sendAndGetResponse(jsonObject);
         return sorted;
     }
 

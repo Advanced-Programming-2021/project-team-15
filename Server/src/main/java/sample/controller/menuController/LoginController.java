@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import sample.controller.responses.LoginMenuResponses;
 import sample.model.User;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class LoginController extends MenuController {
@@ -37,20 +38,19 @@ public class LoginController extends MenuController {
         }
     }
 
-    public String callMethods(JSONObject jsonObject) {
+    public Object  callMethods(HashMap<String ,Object> jsonObject) {
         LoginMenuResponses loginMenuResponses;
-        switch (jsonObject.getString("method")) {
+        switch ((String)jsonObject.get("method")) {
             case "loginUser" :
-                return loginUser(
-                       jsonObject.getString("username"), jsonObject.getString("password"));
+                return loginUser((String) jsonObject.get("username"),(String)jsonObject.get("password"));
             case "registerUser" :
                 loginMenuResponses = registerUser(
-                        jsonObject.getString("username"), jsonObject.getString("nickname"), jsonObject.getString("password"));
+                        (String) jsonObject.get("username"), (String) jsonObject.get("nickname"),(String) jsonObject.get("password"));
                 break;
             default:
                 return "Something Happened!";
         }
-        return loginMenuResponses.toString();
+        return loginMenuResponses;
     }
 
     public LoginMenuResponses removeUser(String username, String password) {

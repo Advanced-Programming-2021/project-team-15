@@ -9,6 +9,9 @@ import sample.model.User;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+
+import static sample.controller.menuController.MenuController.MenuResponse.SHOW_Current_Menu;
 
 public class MenuController {
     private static MenuController menuController = null;
@@ -27,7 +30,7 @@ public class MenuController {
     }
 
     public MenuResponse showCurrentMenu() {
-        return MenuResponse.SHOW_Current_Menu;
+        return SHOW_Current_Menu;
     }
 
     public MenuResponse menuExit() {
@@ -43,13 +46,13 @@ public class MenuController {
     }
 
     public static User getUser() {
-        JSONObject jsonObject=  new JSONObject();
+        HashMap<String, Object> jsonObject=  new HashMap<>();
         jsonObject.put("method","getUser");
         jsonObject.put("class","MainMenuController");
         jsonObject.put("token",MainMenuController.getToken());
-        String str =  ClientManager.sendAndGetResponse(jsonObject.toString());
-        JSONObject userJson=  new JSONObject(str);
-        return (User)userJson.get("user");
+       User user =(User)  ClientManager.sendAndGetResponse(jsonObject);
+       return user;
+
     }
 
     public static void setUser(User user) {

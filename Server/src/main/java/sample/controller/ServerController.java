@@ -6,9 +6,7 @@ import sample.controller.menuController.MenuController;
 import sample.controller.menuController.ShopController;
 import sample.model.User;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,21 +24,21 @@ public class ServerController {
             serverSocket = new ServerSocket(8000);
             while (true) {
                 socket = serverSocket.accept();
-                DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 new Thread(() -> {
                     try {
-                        String command = dataInputStream.readUTF();
-                        while (!command.equals("terminate")) {
-                            dataOutputStream.writeUTF(processString(command));
-                            dataOutputStream.flush();
-                            command = dataInputStream.readUTF();
+                       Object command = objectInputStream.readObject();;
+                        while (!( command instanceof String && command.equals("terminate"))) {
+                            objectOutputStream.writeObject(processString(command));
+                            objectOutputStream.flush();
+                            command = objectInputStream.readObject();
                         }
                         serverSocket.close();
                         socket.close();
-                        dataInputStream.close();
+                        objectInputStream.close();
 
-                    } catch (IOException e) {
+                    } catch (IOException | ClassNotFoundException e) {
                         if (e instanceof SocketException)
                             System.out.println("one client disconnected");
                         else e.printStackTrace();
@@ -52,13 +50,13 @@ public class ServerController {
         }
     }
 
-    private static String processString(String command) {
-        JSONObject jsonObj = new JSONObject(command);
+    private static Object processString(Object command) {
+       HashMap<String, Object> jsonObj = (HashMap<String, Object>) command;
         try {
             System.out.println(LoginController.class.getName());
             Class<?> clazz = Class.forName("sample.controller.menuController."+jsonObj.get("class"));
             Object obj = clazz.getDeclaredConstructor().newInstance();
-            Method method = clazz.getDeclaredMethod("callMethods",JSONObject.class);
+            Method method = clazz.getDeclaredMethod("callMethods",HashMap.class);
             return (String) method.invoke(obj,jsonObj);
         } catch (Exception e) {
             e.printStackTrace();

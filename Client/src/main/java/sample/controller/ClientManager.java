@@ -1,43 +1,37 @@
 package sample.controller;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientManager {
-    private static DataInputStream dataInputStream;
-    private static DataOutputStream dataOutputStream;
     private static ObjectInputStream objectInputStream;
-
+    private static  ObjectOutputStream objectOutputStream;
     public static void run() {
         try {
             Socket socket = new Socket("localHost", 8000);
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("khar");
-            dataOutputStream.flush();
+           objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void send(String input) {
+    public static void send(Object input) {
         try {
-            dataOutputStream.writeUTF(input);
-            dataOutputStream.flush();
+            objectOutputStream.writeObject(input);
+            objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String sendAndGetResponse(String input) {
+    public static Object sendAndGetResponse(Object input) {
         try {
             send(input);
-            return dataInputStream.readUTF();
-        } catch (IOException e) {
+            return objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }

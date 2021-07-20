@@ -18,18 +18,17 @@ public class MainMenuController extends MenuController {
 
     private static HashMap<String, User> activeUsers = new HashMap<>();
 
-    public String callMethods(JSONObject jsonObject){
-        switch (jsonObject.getString("method")) {
+    public Object callMethods(HashMap<String ,Object> jsonObject){
+        switch ((String) jsonObject.get("method")) {
             case "getUser" :
-                return MainMenuController.getUserByToken(jsonObject.getString("token"));
+                return MainMenuController.getUserByToken((String)jsonObject.get("token"));
             default:
                 return "Something Happened!";
         }
     }
-    public static String getUserByToken(String token)
-    { JSONObject jsonObject = new JSONObject();
-        jsonObject.put("user", activeUsers.get(token));
-        return jsonObject.toString();
+    public static Object getUserByToken(String token)
+    {
+        return activeUsers.get(token);
     }
 
     public MainMenuController() {

@@ -27,20 +27,12 @@ public class LoginController extends MenuController {
     }
 
     public LoginMenuResponses loginUser(String username, String password) {
-//        databaseController.refreshUsersFromFileJson();
-//        if (User.getUserByUserName(username) == null || !User.getUserByUserName(username).getPassWord().equals(password))
-//            return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED;
-//        else {
-//            MenuController.setUser(User.getUserByUserName(username));
-//            return LoginMenuResponses.USER_LOGIN_SUCCESSFUL;
-//        }
-        Map<String, String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
         map.put("class", "LoginController");
         map.put("method", "loginUser");
         map.put("username", username);
         map.put("password", password);
-        JSONObject jsonObject = new JSONObject(map);
-        String output = ClientManager.sendAndGetResponse(jsonObject.toString());
+        String output = (String) ClientManager.sendAndGetResponse(map);
         if (output.startsWith("USER_LOGIN_SUCCESSFUL")) {
             String[] logRes = output.split(" ");
             MainMenuController.setToken(logRes[1]);

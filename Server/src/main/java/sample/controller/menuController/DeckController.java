@@ -9,6 +9,7 @@ import sample.model.cards.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class DeckController extends MenuController {
     public DeckController() {
@@ -23,32 +24,32 @@ public class DeckController extends MenuController {
             return DeckMenuResponses.DECK_CREATE_SUCCESSFUL;
         }
     }
-    public String callMethods(JSONObject jsonObject) {
+    public Object callMethods(HashMap<String ,Object> jsonObject) {
         DeckMenuResponses deckMenuResponses ;
-        switch (jsonObject.getString("method")) {
+        switch ((String)jsonObject.get("method")) {
             case "getUser" :
-                return MainMenuController.getUserByToken(jsonObject.getString("token"));
+                return MainMenuController.getUserByToken((String) jsonObject.get("token"));
             case "createDeck" :
-              deckMenuResponses= createDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+              deckMenuResponses= createDeck((String)jsonObject.get("deckName"),(String)jsonObject.get("token"));
                 break;
             case "removeDeck" :
-                deckMenuResponses = removeDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+                deckMenuResponses = removeDeck((String)jsonObject.get("deckName"),(String)jsonObject.get("token"));
                 break;
             case "setActiveDeck" :
-                deckMenuResponses = setActiveDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+                deckMenuResponses = setActiveDeck((String)jsonObject.get("deckName"),(String)jsonObject.get("token"));
                 break;
             case "addCardToDeck" :
-                deckMenuResponses = addCardToDeck((Card)jsonObject.get("card"),jsonObject.getString("deckName"), Deck.DeckType.valueOf(jsonObject.getString("type")),jsonObject.getString("token"));
+                deckMenuResponses = addCardToDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"), Deck.DeckType.valueOf((String)jsonObject.get("type")),(String)jsonObject.get("token"));
                 break;
             case "removeCardFromDeck" :
-                deckMenuResponses = removeCardFromDeck((Card)jsonObject.get("card"),jsonObject.getString("deckName"), Deck.DeckType.valueOf(jsonObject.getString("type")),jsonObject.getString("token"));
+                deckMenuResponses = removeCardFromDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"), Deck.DeckType.valueOf((String)jsonObject.get("type")),(String)jsonObject.get("token"));
                 break;
             case "sortDecks" :
                return  sortDecks(jsonObject);
             default:
                 return "Something Happened!";
         }
-        return deckMenuResponses.toString();
+        return deckMenuResponses;
     }
 
     public DeckMenuResponses removeDeck(String deckName ,  String token) {
@@ -111,20 +112,15 @@ public class DeckController extends MenuController {
         }
     }
 
-    public String sortDecks(JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("deck array");
+    public ArrayList<Deck> sortDecks(HashMap<String, Object> jsonObject) {
+        ArrayList<Deck> jsonArray= (ArrayList<Deck>) jsonObject.get("deck array");
         ArrayList<Deck> decks = new ArrayList<>();
-        for (int i=0;i<jsonArray.length();i++){
+        for (int i=0;i<jsonArray.size();i++){
             decks.add((Deck)jsonArray.get(i));
         }
          ArrayList<Deck> sortedDecks = new ArrayList<>(decks);
          sortedDecks.sort(Comparator.comparing(Deck::getName));
-         JSONArray sorted  =new JSONArray();
-         for(Deck deck : sortedDecks)
-         {   sorted.put(deck);
-         }
-         JSONObject result= jsonObject.put("sorted deck",sorted);
-        return result.toString();
+         return sortedDecks;
     }
 
 }
