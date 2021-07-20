@@ -1,7 +1,10 @@
 package sample.controller.menuController;
 
+import org.json.JSONObject;
 import sample.controller.responses.MainMenuResponses;
+import sample.model.Deck;
 import sample.model.User;
+import sample.model.cards.Card;
 import sample.view.*;
 
 import java.util.HashMap;
@@ -15,13 +18,19 @@ public class MainMenuController extends MenuController {
 
     private static HashMap<String, User> activeUsers = new HashMap<>();
 
-//    static {
-//        allMenus.put("Duel", DuelMenu.getInstance());
-//        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
-//        allMenus.put("Profile", ProfileMenu.getInstance());
-//        allMenus.put("Shop", ShopMenu.getInstance());
-//        allMenus.put("ImportExport", ImportExportMenu.getInstance());
-//    }
+    public String callMethods(JSONObject jsonObject){
+        switch (jsonObject.getString("method")) {
+            case "getUser" :
+                return MainMenuController.getUserByToken(jsonObject.getString("token"));
+            default:
+                return "Something Happened!";
+        }
+    }
+    public static String getUserByToken(String token)
+    { JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user", activeUsers.get(token));
+        return jsonObject.toString();
+    }
 
     public MainMenuController() {
         super("sample.Main Menu");
