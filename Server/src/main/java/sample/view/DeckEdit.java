@@ -207,7 +207,7 @@ public class DeckEdit {
             if(selectedCard.getDeckViewLocation()== Card.DeckViewLocation.MAIN_DECK)
                 type = Deck.DeckType.MAIN;
              else type = Deck.DeckType.SIDE;
-            deckController.removeCardFromDeck(selectedCard,deck.getName(),type);
+//            deckController.removeCardFromDeck(selectedCard,deck.getName(),type);
             selectedCard.setDeckViewLocation(Card.DeckViewLocation.TRUNK);
             new Alert(Alert.AlertType.INFORMATION,"card removed successfully").show();
             if(type== Deck.DeckType.MAIN)  readyUpMainDeck();
@@ -221,7 +221,7 @@ public class DeckEdit {
         else if(selectedCard.getDeckViewLocation()!= Card.DeckViewLocation.TRUNK)
             new Alert(Alert.AlertType.ERROR,"you must choose your card from trunk").show();
         else {
-            DeckMenuResponses deckMenuResponses = deckController.addCardToDeck(selectedCard,deck.getName(), Deck.DeckType.MAIN);
+            DeckMenuResponses deckMenuResponses = null;
             if(deckMenuResponses.equals(DECK_FULL))
                 new Alert(Alert.AlertType.ERROR,"deck is full! you cant add card to this").show();
             else if(deckMenuResponses.equals(MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK))
@@ -240,7 +240,7 @@ public class DeckEdit {
         else if(selectedCard.getDeckViewLocation()!= Card.DeckViewLocation.TRUNK)
             new Alert(Alert.AlertType.ERROR,"you must choose your card from trunk").show();
         else {
-            DeckMenuResponses deckMenuResponses = deckController.addCardToDeck(selectedCard,deck.getName(), Deck.DeckType.SIDE);
+            DeckMenuResponses deckMenuResponses = null;
             if(deckMenuResponses.equals(DECK_FULL))
                 new Alert(Alert.AlertType.ERROR,"deck is full! you cant add card to this").show();
             else if(deckMenuResponses.equals(MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK))

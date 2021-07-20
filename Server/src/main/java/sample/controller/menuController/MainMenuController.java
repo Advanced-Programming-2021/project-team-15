@@ -4,7 +4,9 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.MainMenuResponses;
+import sample.model.Deck;
 import sample.model.User;
+import sample.model.cards.Card;
 import sample.view.*;
 
 import java.util.HashMap;

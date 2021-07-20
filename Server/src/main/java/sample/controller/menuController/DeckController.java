@@ -1,6 +1,9 @@
 package sample.controller.menuController;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import sample.controller.responses.DeckMenuResponses;
+import sample.controller.responses.LoginMenuResponses;
 import sample.model.Deck;
 import sample.model.cards.Card;
 
@@ -12,49 +15,76 @@ public class DeckController extends MenuController {
         super("Deck Menu");
     }
 
-    public DeckMenuResponses createDeck(String deckName) {
-        if (user.getDeckByName(deckName) != null)
+    public DeckMenuResponses createDeck(String deckName, String token) {
+        if (MainMenuController.getActiveUsers().get(token).getDeckByName(deckName) != null)
             return DeckMenuResponses.DECK_NAME_ALREADY_EXISTS;
         else {
-            new Deck(user.getUserName(), deckName);
+            new Deck(MainMenuController.getActiveUsers().get(token).getUserName(), deckName);
             return DeckMenuResponses.DECK_CREATE_SUCCESSFUL;
         }
     }
+    public String callMethods(JSONObject jsonObject) {
+        DeckMenuResponses deckMenuResponses ;
+        switch (jsonObject.getString("method")) {
+            case "getUser" :
+                return MainMenuController.getUserByToken(jsonObject.getString("token"));
+            case "createDeck" :
+              deckMenuResponses= createDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+                break;
+            case "removeDeck" :
+                deckMenuResponses = removeDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+                break;
+            case "setActiveDeck" :
+                deckMenuResponses = setActiveDeck(jsonObject.getString("deckName"),jsonObject.getString("token"));
+                break;
+            case "addCardToDeck" :
+                deckMenuResponses = addCardToDeck((Card)jsonObject.get("card"),jsonObject.getString("deckName"), Deck.DeckType.valueOf(jsonObject.getString("type")),jsonObject.getString("token"));
+                break;
+            case "removeCardFromDeck" :
+                deckMenuResponses = removeCardFromDeck((Card)jsonObject.get("card"),jsonObject.getString("deckName"), Deck.DeckType.valueOf(jsonObject.getString("type")),jsonObject.getString("token"));
+                break;
+            case "sortDecks" :
+               return  sortDecks(jsonObject);
+            default:
+                return "Something Happened!";
+        }
+        return deckMenuResponses.toString();
+    }
 
-    public DeckMenuResponses removeDeck(String deckName) {
-        if (user.getDeckByName(deckName) == null)
+    public DeckMenuResponses removeDeck(String deckName ,  String token) {
+        if (MainMenuController.getActiveUsers().get(token).getDeckByName(deckName) == null)
             return DeckMenuResponses.DECK_NAME_NOT_EXIST;
         else {
-            Deck deck = user.getDeckByName(deckName);
+            Deck deck = MainMenuController.getActiveUsers().get(token).getDeckByName(deckName);
             ArrayList<ArrayList<Card>> mainAndSideDeck = new ArrayList<>();
             mainAndSideDeck.add(deck.getMainDeck());
             mainAndSideDeck.add(deck.getSideDeck());
             for (ArrayList<Card> deckToCopyCards : mainAndSideDeck) {
                 for (Card card : deckToCopyCards) {
-                    user.addCard(card);
+                    MainMenuController.getActiveUsers().get(token).addCard(card);
                 }
             }
-            user.removeDeckByName(deckName);
+            MainMenuController.getActiveUsers().get(token).removeDeckByName(deckName);
             return DeckMenuResponses.DECK_DELETE_SUCCESSFUL;
         }
     }
 
-    public DeckMenuResponses setActiveDeck(String deckName) {
-        if (user.getDeckByName(deckName) == null)
+    public DeckMenuResponses setActiveDeck(String deckName ,  String token) {
+        if (MainMenuController.getActiveUsers().get(token).getDeckByName(deckName) == null)
             return DeckMenuResponses.DECK_NAME_NOT_EXIST;
         else {
-            if (user.getActiveDeck() != null) user.getActiveDeck().setActive(false);
-            user.setActiveDeck(user.getDeckByName(deckName));
-            user.getDeckByName(deckName).setActive(true);
-            user.setActiveDeckName(user.getActiveDeck().getName());
+            if (MainMenuController.getActiveUsers().get(token).getActiveDeck() != null) user.getActiveDeck().setActive(false);
+            MainMenuController.getActiveUsers().get(token).setActiveDeck(MainMenuController.getActiveUsers().get(token).getDeckByName(deckName));
+            MainMenuController.getActiveUsers().get(token).getDeckByName(deckName).setActive(true);
+            MainMenuController.getActiveUsers().get(token).setActiveDeckName(MainMenuController.getActiveUsers().get(token).getActiveDeck().getName());
             databaseController.refreshUsersToFileJson();
             return DeckMenuResponses.DECK_ACTIVATE_SUCCESSFUL;
         }
     }
 
-    public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType) {
-        Deck addingDeck = user.getDeckByName(deckName);
-            user.addCard(card);
+    public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType,  String token) {
+        Deck addingDeck = MainMenuController.getActiveUsers().get(token).getDeckByName(deckName);
+        MainMenuController.getActiveUsers().get(token).addCard(card);
             addingDeck.removeCardFromDeck(card, deckType);
             if (addingDeck.getMainDeck().size() < Deck.mainDeckMinCardCount)
                 addingDeck.setValid(false);
@@ -63,8 +93,8 @@ public class DeckController extends MenuController {
         }
 
 
-    public DeckMenuResponses addCardToDeck(Card card, String deckName, Deck.DeckType deckType) {
-        Deck addingDeck = user.getDeckByName(deckName);
+    public DeckMenuResponses addCardToDeck(Card card, String deckName, Deck.DeckType deckType , String token) {
+        Deck addingDeck = MainMenuController.getActiveUsers().get(token).getDeckByName(deckName);
         if (deckType == Deck.DeckType.MAIN && addingDeck.getMainDeck().size() == Deck.mainDeckMaxCardCount)
             return DeckMenuResponses.DECK_FULL;
         if (deckType == Deck.DeckType.SIDE && addingDeck.getSideDeck().size() == Deck.sideDeckMaxCardCount)
@@ -73,7 +103,7 @@ public class DeckController extends MenuController {
             return DeckMenuResponses.MAX_SIZE_IDENTICAL_CARDS_ALREADY_IN_DECK;
         else {
             addingDeck.addCardToDeck(cloner.deepClone(card), deckType);
-           user.getAllCardsOfUser().remove(card);
+            MainMenuController.getActiveUsers().get(token).getAllCardsOfUser().remove(card);
             if (addingDeck.getMainDeck().size() >= Deck.mainDeckMinCardCount)
                 addingDeck.setValid(true);
             databaseController.refreshUsersToFileJson();
@@ -81,81 +111,20 @@ public class DeckController extends MenuController {
         }
     }
 
-    public ArrayList<Deck> sortDecks(ArrayList<Deck> decks) {
-        ArrayList<Deck> sortedDecks = new ArrayList<>(decks);
-        sortedDecks.sort(Comparator.comparing(Deck::getName));
-        return sortedDecks;
-    }
-
-    public DeckMenuResponses showThisDeckOfTheUser(StringBuilder deckDetails, String deckName, Deck.DeckType deckType) {
-        if (user.getDeckByName(deckName) == null)
-            return DeckMenuResponses.DECK_NAME_NOT_EXIST;
-        else {
-            Deck toPrintDeck = user.getDeckByName(deckName);
-            ArrayList<Card> mainOrSideDeck = new ArrayList<>();
-            if (deckType == Deck.DeckType.MAIN)
-                mainOrSideDeck = toPrintDeck.getMainDeck();
-            else if (deckType == Deck.DeckType.SIDE)
-                mainOrSideDeck = toPrintDeck.getSideDeck();
-            ArrayList<Card> monsterCards = new ArrayList<>();
-            ArrayList<Card> magicCards = new ArrayList<>();
-            for (Card card : mainOrSideDeck) {
-                if (card.getCardType() == Card.CardType.MONSTER)
-                    monsterCards.add(card);
-                else if (card.getCardType() == Card.CardType.MAGIC)
-                    magicCards.add(card);
-            }
-            magicCards = sortCardsByName(magicCards);
-            monsterCards = sortCardsByName(monsterCards);
-            deckDetails.append("* ").append("Deck : ").append(toPrintDeck.getName()).append("\n");
-            deckDetails.append("* ").append(deckType.toString()).append("deck :\n");
-            deckDetails.append("* ").append("Monsters :\n");
-            for (Card card : monsterCards) {
-                deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
-            }
-            deckDetails.append("* ").append("Magics :\n");
-            for (Card card : magicCards) {
-                deckDetails.append("+").append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
-            }
-            return DeckMenuResponses.SHOW_DECK;
+    public String sortDecks(JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("deck array");
+        ArrayList<Deck> decks = new ArrayList<>();
+        for (int i=0;i<jsonArray.length();i++){
+            decks.add((Deck)jsonArray.get(i));
         }
-    }
-
-    public DeckMenuResponses showAllDecksOfTheUser(StringBuilder allDecks) {
-        Deck activeDeck = null;
-        ArrayList<Deck> otherDecks = new ArrayList<>();
-        for (Deck deck : user.getAllDecksOfUser()) {
-            if (!deck.isActive())
-                otherDecks.add(deck);
-            //else activeDeck = deck;
-        }
-        activeDeck = user.getActiveDeck();
-        otherDecks = sortDecks(otherDecks);
-        allDecks.append("* ").append("Decks :\n").append("* ").append("Active Deck :\n");
-        allDecks.append(getDeckDetails(activeDeck)).append("* ").append("Other decks :\n");
-        for (Deck deck : otherDecks) {
-            allDecks.append(getDeckDetails(deck));
-        }
-        return DeckMenuResponses.SHOW_ALL_DECKS;
-    }
-
-    public DeckMenuResponses showAllCardsOfUser(StringBuilder allCards) {
-        ArrayList<Card> sortedAllUserCards = sortCardsByName(user.getAllCardsOfUser());
-        allCards.append("* All cards of user : \n");
-        for (Card card : sortedAllUserCards) {
-            allCards.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
-        }
-        return DeckMenuResponses.SHOW_ALL_CARDS;
-    }
-
-    private String getDeckDetails(Deck deck) {
-        if (deck == null)
-            return "";
-        String validation;
-        if (deck.isValid()) validation = "valid";
-        else validation = "invalid";
-        return deck.getName() + " : main deck " + deck.getMainDeck().size() + " , side deck " +
-                deck.getSideDeck().size() + " , " + validation + "\n";
+         ArrayList<Deck> sortedDecks = new ArrayList<>(decks);
+         sortedDecks.sort(Comparator.comparing(Deck::getName));
+         JSONArray sorted  =new JSONArray();
+         for(Deck deck : sortedDecks)
+         {   sorted.put(deck);
+         }
+         JSONObject result= jsonObject.put("sorted deck",sorted);
+        return result.toString();
     }
 
 }

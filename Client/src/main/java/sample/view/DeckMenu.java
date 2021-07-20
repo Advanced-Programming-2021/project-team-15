@@ -199,13 +199,8 @@ public class DeckMenu{
     public void activateButtonPressed(MouseEvent mouseEvent){
         if(selectedDeck==null)
            new Alert(Alert.AlertType.ERROR,"you haven't selected any deck").show();
-        else if(selectedDeck==MenuController.getUser().getActiveDeck())
-            new Alert(Alert.AlertType.ERROR,"this deck is already activated!").show();
-        else {
-            selectedDeck.setActive(true);
-            MenuController.getUser().setActiveDeck(selectedDeck);
+            deckController.setActiveDeck(selectedDeck.getName());
             activatedDeck.setText(selectedDeck.getName());
-        }
 
     }
     public void createDeck(MouseEvent mouseEvent) throws Exception {

@@ -1,6 +1,8 @@
 package sample.controller.menuController;
 
 import com.rits.cloning.Cloner;
+import org.json.JSONObject;
+import sample.controller.ClientManager;
 import sample.controller.utilizationController.DatabaseController;
 import sample.model.cards.Card;
 import sample.model.User;
@@ -41,7 +43,13 @@ public class MenuController {
     }
 
     public static User getUser() {
-        return user;
+        JSONObject jsonObject=  new JSONObject();
+        jsonObject.put("method","getUser");
+        jsonObject.put("class","MainMenuController");
+        jsonObject.put("token",MainMenuController.getToken());
+        String str =  ClientManager.sendAndGetResponse(jsonObject.toString());
+        JSONObject userJson=  new JSONObject(str);
+        return (User)userJson.get("user");
     }
 
     public static void setUser(User user) {

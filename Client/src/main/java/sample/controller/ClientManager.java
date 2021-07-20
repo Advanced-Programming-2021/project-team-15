@@ -3,11 +3,13 @@ package sample.controller;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ClientManager {
     private static DataInputStream dataInputStream;
     private static DataOutputStream dataOutputStream;
+    private static ObjectInputStream objectInputStream;
 
     public static void run() {
         try {

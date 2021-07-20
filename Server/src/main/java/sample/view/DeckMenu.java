@@ -55,7 +55,7 @@ public class DeckMenu{
         setMainCards();
         activatedDeck.setText(MenuController.getUser().getActiveDeck().getName());
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
-        decksList.addAll(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
+//        decksList.addAll(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
         listView  = new ListView<>();
         listView.setCellFactory((Callback<ListView<Deck>, ListCell<Deck>>) param -> {
             return new ListCell<Deck>() {
@@ -91,7 +91,7 @@ public class DeckMenu{
                                 cleanEveryThing();
                             }
                             listView.getItems().remove(deck);
-                            deckController.removeDeck(deck.getName());
+//                            deckController.removeDeck(deck.getName());
                         });
                         Button edit = new Button("Edit");
                         edit.setFont(new Font("Arial", 20));
@@ -214,7 +214,7 @@ public class DeckMenu{
             dialog.setContentText("please enter name for the new deck :");
             Optional<String> result = dialog.showAndWait();
             if (result.isPresent()) {
-                DeckMenuResponses deckMenuResponses = deckController.createDeck(result.get());
+                DeckMenuResponses deckMenuResponses = null;
                 System.out.println(result.get());
                 if (deckMenuResponses.equals(DeckMenuResponses.DECK_NAME_ALREADY_EXISTS)) {
                     new Alert(Alert.AlertType.ERROR, "this deck name already exists").show();
