@@ -1,5 +1,8 @@
 package sample.controller.menuController;
 
+import com.google.gson.GsonBuilder;
+import org.json.JSONObject;
+import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.MainMenuResponses;
 import sample.model.User;
 import sample.view.*;
@@ -15,13 +18,20 @@ public class MainMenuController extends MenuController {
 
     private static HashMap<String, User> activeUsers = new HashMap<>();
 
-//    static {
-//        allMenus.put("Duel", DuelMenu.getInstance());
-//        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
-//        allMenus.put("Profile", ProfileMenu.getInstance());
-//        allMenus.put("Shop", ShopMenu.getInstance());
-//        allMenus.put("ImportExport", ImportExportMenu.getInstance());
-//    }
+    public String getUserByToken(JSONObject jsonObject) {
+        User user = activeUsers.get(jsonObject.getString("token"));
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        return gsonBuilder.create().toJson(user);
+    }
+
+    public String callMethods(JSONObject jsonObject) {
+        switch (jsonObject.getString("method")) {
+            case "getUserByToken" :
+                return getUserByToken(jsonObject);
+            default:
+                return "Something Happened!";
+        }
+    }
 
     public MainMenuController() {
         super("sample.Main Menu");

@@ -10,6 +10,7 @@ import sample.model.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ShopController extends MenuController {
 
@@ -43,22 +44,31 @@ public class ShopController extends MenuController {
         return ShopMenuResponses.SHOP_SHOW_ALL;
     }
 
-    public String callMethods(JSONObject jsonObject) {
+    public String callMethods(JSONObject jsonObject) throws IOException, CsvValidationException {
         ShopMenuResponses shopMenuResponses;
         MainMenuController.setUser(MainMenuController.getActiveUsers().get(jsonObject.getString("token")));
-//        switch (jsonObject.getString("method")) {
-//            case "loginUser" :
-//                return loginUser(
-//                        jsonObject.getString("username"), jsonObject.getString("password"));
-//            case "registerUser" :
-//                loginMenuResponses = registerUser(
-//                        jsonObject.getString("username"), jsonObject.getString("nickname"), jsonObject.getString("password"));
-//                break;
-//            default:
-//                return "Something Happened!";
-//        }
-//        return loginMenuResponses.toString();
-        return "";
+        switch (jsonObject.getString("method")) {
+            case "buyItem" :
+                shopMenuResponses = buyItem(
+                        jsonObject.getString("cardName"));
+                break;
+//            case "getUserMoney" :
+//                return getUserMoney(jsonObject);
+//            case "getUserSpecificCardCount" :
+//                return getUserSpecificCardCount(jsonObject);
+            default:
+                return "Something Happened!";
+        }
+        return shopMenuResponses.toString();
     }
+
+//    public String getUserMoney(JSONObject jsonObject) {
+//        return String.valueOf(MainMenuController.getUserByToken(jsonObject.getString("token")).getMoney());
+//    }
+//
+//    public String getUserSpecificCardCount(JSONObject jsonObject) {
+//        User user = MainMenuController.getUserByToken(jsonObject.getString("token"));
+//        return String.valueOf(user.getUserSpecificCardCount(jsonObject.getString("cardName")));
+//    }
 
 }

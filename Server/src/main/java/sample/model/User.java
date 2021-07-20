@@ -19,27 +19,15 @@ public class User {
     private String passWord;
     private String nickName;
     private int score;
-    private int money=1000;
-private int rank=1;
+    private int money = 1000;
+    private int rank = 1;
+
     public User(String userName, String nickName, String passWord) {
         this.userName = userName;
         this.nickName = nickName;
         this.passWord = passWord;
         allDecksOfUser = new ArrayList<>();
         allCardsOfUser = new ArrayList<>();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null)
-            return false;
-        if (object == this)
-            return true;
-        if (!(object instanceof User)) return false;
-        User user = (User) object;
-        if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
-        || user.money!=money || user.score!=score || !user.activeDeckName.equals(activeDeckName)) return false;
-        return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
     }
 
     public static User getUserByUserName(String userName) {
@@ -75,6 +63,20 @@ private int rank=1;
         User.allUsers = allUsers;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (object == this)
+            return true;
+        if (!(object instanceof User)) return false;
+        User user = (User) object;
+        if (!user.userName.equals(userName) || !user.nickName.equals(nickName) || !user.passWord.equals(passWord)
+                || user.money != money || user.score != score || !user.activeDeckName.equals(activeDeckName))
+            return false;
+        return user.allDecksOfUser.equals(allDecksOfUser) && user.allCardsOfUser.equals(allCardsOfUser);
+    }
+
     public Card getCardByName(String cardName) {
         for (Card card : allCardsOfUser) {
             if (card.getCardName().equals(cardName))
@@ -84,7 +86,7 @@ private int rank=1;
     }
 
     public void removeUserCardByName(String cardName) {
-        if (getCardIndexByName(cardName)==-1)
+        if (getCardIndexByName(cardName) == -1)
             return;
         allCardsOfUser.remove(getCardIndexByName(cardName));
     }
@@ -199,10 +201,10 @@ private int rank=1;
         this.activeDeck = activeDeck;
     }
 
-    public int getUserSpecificCardCount(Card searchCard) {
+    public int getUserSpecificCardCount(String searchCardName) {
         int count = 0;
         for (Card card : allCardsOfUser) {
-            if (card.equals(searchCard)) count++;
+            if (card.getCardName().equals(searchCardName)) count++;
         }
         return count;
     }

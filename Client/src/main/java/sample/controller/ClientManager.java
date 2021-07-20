@@ -14,7 +14,6 @@ public class ClientManager {
             Socket socket = new Socket("localHost", 8000);
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            System.out.println("khar");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

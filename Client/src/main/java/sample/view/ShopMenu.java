@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import sample.controller.menuController.MainMenuController;
 import sample.controller.menuController.MenuController;
 import sample.controller.menuController.ShopController;
 import sample.controller.responses.ShopMenuResponses;
@@ -106,8 +107,8 @@ public class ShopMenu {
         toBuyCard = selectedCard;
         cardName.setText(selectedCard.getCardName());
         cardImage.setImage(selectedCard.getCardImage());
-        cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
-        int money = MenuController.getUser().getMoney();
+        cardCount.setText(String.valueOf(MainMenuController.getUser().getUserSpecificCardCount(selectedCard)));
+        int money = MainMenuController.getUser().getMoney();
         moneyLabel.setText(String.valueOf(money));
         priceLabel.setText(String.valueOf(selectedCard.getPrice()));
         if (money>=selectedCard.getPrice()) activateBuyButton(buyCardButton);

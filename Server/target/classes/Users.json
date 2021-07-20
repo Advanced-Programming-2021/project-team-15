@@ -11511,5 +11511,15 @@
     "score": 0,
     "money": 1000,
     "rank": 1
+  },
+  {
+    "allDecksOfUser": [],
+    "allCardsOfUser": [],
+    "userName": "aaaa",
+    "passWord": "aaa",
+    "nickName": "aaa",
+    "score": 0,
+    "money": 1000,
+    "rank": 1
   }
 ]
