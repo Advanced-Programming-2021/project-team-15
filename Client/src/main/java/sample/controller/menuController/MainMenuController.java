@@ -1,12 +1,32 @@
 package sample.controller.menuController;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
+import org.json.JSONObject;
+import sample.controller.ClientManager;
 import sample.controller.responses.MainMenuResponses;
+import sample.model.User;
+import sample.model.cards.Card;
+import sample.model.cards.MagicCard;
+import sample.model.cards.MonsterCard;
 import sample.view.*;
 
-import java.util.HashMap;
+import java.lang.reflect.Type;
+import java.util.*;
 
 public class MainMenuController extends MenuController {
     private static final HashMap<String, Menu> allMenus = new HashMap<>();
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        MainMenuController.user = user;
+    }
+
+    private static User user;
 
     public static String getToken() {
         return token;
@@ -18,13 +38,22 @@ public class MainMenuController extends MenuController {
 
     private static String token;
 
-//    static {
-//        allMenus.put("Duel", DuelMenu.getInstance());
-//        allMenus.put("Scoreboard", ScoreboardMenu.getInstance());
-//        allMenus.put("Profile", ProfileMenu.getInstance());
-//        allMenus.put("Shop", ShopMenu.getInstance());
-//        allMenus.put("ImportExport", ImportExportMenu.getInstance());
-//    }
+    public static void getUserByToken(String token) {
+        Map<String, String> map = new HashMap<>();
+        map.put("class", "MainMenuController");
+        map.put("method", "getUserByToken");
+        map.put("token",MainMenuController.getToken());
+        JSONObject jsonObject = new JSONObject(map);
+        String userString = ClientManager.sendAndGetResponse(jsonObject.toString());
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        RuntimeTypeAdapterFactory<Card> runtimeTypeAdapterFactory = RuntimeTypeAdapterFactory
+                .of(Card.class, "type").
+                        registerSubtype(MonsterCard.class, "MONSTER").
+                        registerSubtype(MagicCard.class, "MAGIC");
+        Type usersListType = new TypeToken<User>() {
+        }.getType();
+        setUser(gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(userString, usersListType));
+    }
 
     public MainMenuController() {
         super("sample.Main Menu");

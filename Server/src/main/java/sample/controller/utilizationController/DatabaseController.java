@@ -43,7 +43,7 @@ public class DatabaseController {
         readMagicCardsFromCSV(reader);
         fileReader.close();
         reader.close();
-        setAllCardsImages();
+//        setAllCardsImages();
     }
 
     private void setAllCardsImages() {

@@ -106,7 +106,7 @@ public class ShopMenu {
         toBuyCard = selectedCard;
         cardName.setText(selectedCard.getCardName());
         cardImage.setImage(selectedCard.getCardImage());
-        cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
+        cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard.getCardName())));
         int money = MenuController.getUser().getMoney();
         moneyLabel.setText(String.valueOf(money));
         priceLabel.setText(String.valueOf(selectedCard.getPrice()));
