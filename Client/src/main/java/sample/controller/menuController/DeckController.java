@@ -53,7 +53,7 @@ public class DeckController extends MenuController {
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("card",card);
-        jsonObject.put("type",deckType.toString());
+        jsonObject.put("type",deckType);
         jsonObject.put("token",MainMenuController.getToken());
         DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
@@ -62,11 +62,11 @@ public class DeckController extends MenuController {
 
     public DeckMenuResponses addCardToDeck(Card card, String deckName, Deck.DeckType deckType) {
         HashMap<String,Object> jsonObject = new HashMap<>();
-        jsonObject.put("method","removeCardFromDeck");
+        jsonObject.put("method","addCardToDeck");
         jsonObject.put("class","DeckController");
         jsonObject.put("deckName",deckName);
         jsonObject.put("card",card);
-        jsonObject.put("type",deckType.toString());
+        jsonObject.put("type",deckType);
         jsonObject.put("token",MainMenuController.getToken());
         DeckMenuResponses deckMenuResponses = (DeckMenuResponses) ClientManager.sendAndGetResponse(jsonObject);
         return deckMenuResponses;
@@ -74,9 +74,10 @@ public class DeckController extends MenuController {
 
     public ArrayList<Deck> sortDecks(ArrayList<Deck> decks) {
         HashMap<String,Object> jsonObject = new HashMap<>();
-        jsonObject.put("method","removeCardFromDeck");
+        jsonObject.put("method","sortDecks");
         jsonObject.put("class","DeckController");
         jsonObject.put("deck array",decks);
+        jsonObject.put("token",MainMenuController.getToken());
        ArrayList<Deck> sorted = (ArrayList<Deck>) ClientManager.sendAndGetResponse(jsonObject);
         return sorted;
     }

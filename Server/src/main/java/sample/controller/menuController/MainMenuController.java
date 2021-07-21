@@ -21,13 +21,16 @@ public class MainMenuController extends MenuController {
     public Object callMethods(HashMap<String ,Object> jsonObject){
         switch ((String) jsonObject.get("method")) {
             case "getUser" :
-                return MainMenuController.getUserByToken((String)jsonObject.get("token"));
-            default:
+                return MainMenuController.getUserByToken((String) jsonObject.get("token"));
+            default: {
+                System.out.println("Something Happened!");
                 return "Something Happened!";
+            }
         }
     }
     public static Object getUserByToken(String token)
     {
+        System.out.println(activeUsers.get(token).getUserName());
         return activeUsers.get(token);
     }
 

@@ -27,7 +27,7 @@ public class LoginController extends MenuController {
     }
 
     public LoginMenuResponses loginUser(String username, String password) {
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("class", "LoginController");
         map.put("method", "loginUser");
         map.put("username", username);

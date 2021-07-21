@@ -2,7 +2,7 @@ package sample.model.cards;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MagicCard extends Card {
+public class MagicCard extends Card  {
 
 
 

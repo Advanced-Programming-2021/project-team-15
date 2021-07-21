@@ -5,10 +5,11 @@ import javafx.scene.image.Image;
 import sample.model.Player;
 import sample.model.zones.Zone;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Card {
+public class Card  implements Serializable {
 
     private static ArrayList<Card> allCards;
 

@@ -1,6 +1,8 @@
 package sample.model;
 
-public class Phase {
+import java.io.Serializable;
+
+public class Phase  implements Serializable {
     private PhaseLevel phaseLevel;
     public enum PhaseLevel{
         DRAW("draw phase"),

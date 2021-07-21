@@ -1,10 +1,11 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class Game {
+public class Game  implements Serializable {
     private static HashMap<Integer, Phase.PhaseLevel> phases;
 
     static {

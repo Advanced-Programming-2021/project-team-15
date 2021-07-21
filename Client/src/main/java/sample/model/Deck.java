@@ -2,9 +2,10 @@ package sample.model;
 
 import sample.model.cards.Card;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable {
     public static transient final int mainDeckMinCardCount = 40;
     public static transient final int mainDeckMaxCardCount = 60;
     public static transient final int sideDeckMinCardCount = 0;

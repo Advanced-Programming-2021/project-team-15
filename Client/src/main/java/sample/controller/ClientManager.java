@@ -9,8 +9,8 @@ public class ClientManager {
     public static void run() {
         try {
             Socket socket = new Socket("localHost", 8000);
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
             System.out.println("khar");
            objectOutputStream.flush();
         } catch (IOException e) {
@@ -32,7 +32,7 @@ public class ClientManager {
             send(input);
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("ridim!");
             return null;
         }
     }

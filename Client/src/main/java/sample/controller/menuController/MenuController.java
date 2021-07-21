@@ -50,9 +50,8 @@ public class MenuController {
         jsonObject.put("method","getUser");
         jsonObject.put("class","MainMenuController");
         jsonObject.put("token",MainMenuController.getToken());
-       User user =(User)  ClientManager.sendAndGetResponse(jsonObject);
-       return user;
-
+         User  user = (User) ClientManager.sendAndGetResponse(jsonObject);
+         return user;
     }
 
     public static void setUser(User user) {

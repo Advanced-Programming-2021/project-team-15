@@ -26,6 +26,7 @@ public class LoginController extends MenuController {
     }
 
     public synchronized String loginUser(String username, String password) {
+        System.out.println("login user with username "+username);
         databaseController.refreshUsersFromFileJson();
         if (User.getUserByUserName(username) == null || !User.getUserByUserName(username).getPassWord().equals(password))
             return LoginMenuResponses.USER_USERNAME_PASSWORD_NOT_MATCHED.toString();

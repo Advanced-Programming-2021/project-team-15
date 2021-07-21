@@ -55,6 +55,12 @@ public class DeckMenu{
         setMainCards();
         activatedDeck.setText(MenuController.getUser().getActiveDeck().getName());
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
+        System.out.println(MenuController.getUser().getUserName()+" is here");
+        if(decksList==null) System.out.println("deck List is empty");
+        if(MenuController.getUser().getAllDecksOfUser()==null)
+            System.out.println("decks of "+MenuController.getUser()+" is null");
+        if(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser())==null)
+            System.out.println("sorted deck is empty");
         decksList.addAll(deckController.sortDecks(MenuController.getUser().getAllDecksOfUser()));
         listView  = new ListView<>();
         listView.setCellFactory((Callback<ListView<Deck>, ListCell<Deck>>) param -> {

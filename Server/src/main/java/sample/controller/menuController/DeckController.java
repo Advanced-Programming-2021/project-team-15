@@ -39,10 +39,10 @@ public class DeckController extends MenuController {
                 deckMenuResponses = setActiveDeck((String)jsonObject.get("deckName"),(String)jsonObject.get("token"));
                 break;
             case "addCardToDeck" :
-                deckMenuResponses = addCardToDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"), Deck.DeckType.valueOf((String)jsonObject.get("type")),(String)jsonObject.get("token"));
+                deckMenuResponses = addCardToDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"), (Deck.DeckType) jsonObject.get("type"),(String)jsonObject.get("token"));
                 break;
             case "removeCardFromDeck" :
-                deckMenuResponses = removeCardFromDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"), Deck.DeckType.valueOf((String)jsonObject.get("type")),(String)jsonObject.get("token"));
+                deckMenuResponses = removeCardFromDeck((Card)jsonObject.get("card"),(String)jsonObject.get("deckName"),(Deck.DeckType) jsonObject.get("type"),(String)jsonObject.get("token"));
                 break;
             case "sortDecks" :
                return  sortDecks(jsonObject);
@@ -66,6 +66,7 @@ public class DeckController extends MenuController {
                 }
             }
             MainMenuController.getActiveUsers().get(token).removeDeckByName(deckName);
+            databaseController.refreshUsersToFileJson();
             return DeckMenuResponses.DECK_DELETE_SUCCESSFUL;
         }
     }
@@ -83,7 +84,9 @@ public class DeckController extends MenuController {
         }
     }
 
-    public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType,  String token) {
+    public DeckMenuResponses removeCardFromDeck(Card card, String deckName, Deck.DeckType deckType, String token) {
+        System.out.println("remove deck "+ MainMenuController.getActiveUsers().get(token)+"with token :"+token);
+        System.out.println("remove deck name "+deckName);
         Deck addingDeck = MainMenuController.getActiveUsers().get(token).getDeckByName(deckName);
         MainMenuController.getActiveUsers().get(token).addCard(card);
             addingDeck.removeCardFromDeck(card, deckType);

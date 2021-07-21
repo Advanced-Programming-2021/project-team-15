@@ -24,14 +24,14 @@ public class ServerController {
             serverSocket = new ServerSocket(8000);
             while (true) {
                 socket = serverSocket.accept();
-                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 new Thread(() -> {
-                    try {
-                       Object command = objectInputStream.readObject();;
+                    try { Object command = objectInputStream.readObject();
                         while (!( command instanceof String && command.equals("terminate"))) {
+                            if(!command.equals("")) {
                             objectOutputStream.writeObject(processString(command));
-                            objectOutputStream.flush();
+                            objectOutputStream.flush();}
                             command = objectInputStream.readObject();
                         }
                         serverSocket.close();
@@ -57,10 +57,12 @@ public class ServerController {
             Class<?> clazz = Class.forName("sample.controller.menuController."+jsonObj.get("class"));
             Object obj = clazz.getDeclaredConstructor().newInstance();
             Method method = clazz.getDeclaredMethod("callMethods",HashMap.class);
-            return (String) method.invoke(obj,jsonObj);
+
+            return  method.invoke(obj,jsonObj);
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            System.out.println("hi bitch");
+            return null;
         }
     }
 

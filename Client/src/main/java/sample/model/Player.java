@@ -3,9 +3,10 @@ package sample.model;
 import sample.controller.Limit;
 import sample.model.zones.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
     private User user;
     private boolean canDraw;
     private boolean canAttack;
