@@ -2,16 +2,25 @@ package sample.controller.menuController;
 
 import sample.controller.responses.MainMenuResponses;
 import sample.model.User;
+import sample.model.cards.Card;
 import sample.view.Menu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainMenuController extends MenuController {
     private static final HashMap<String, Menu> allMenus = new HashMap<>();
     private static HashMap<String, User> activeUsers = new HashMap<>();
 
+    public static ArrayList<String> getAdmins() {
+        return admins;
+    }
+
+    private static ArrayList<String> admins;
+
     public MainMenuController() {
         super("sample.Main Menu");
+        init();
     }
 
     public static HashMap<String, User> getActiveUsers() {
@@ -19,7 +28,7 @@ public class MainMenuController extends MenuController {
     }
 
     public static User getUserByToken(String token) {
-        System.out.println("we are sending "+activeUsers.get(token).getUserName()+" with trunk size : "+activeUsers.get(token).getAllCardsOfUser().size());
+        System.out.println("we are sending " + activeUsers.get(token).getUserName() + " with trunk size : " + activeUsers.get(token).getAllCardsOfUser().size());
         return activeUsers.get(token);
     }
 
@@ -27,10 +36,19 @@ public class MainMenuController extends MenuController {
         return allMenus;
     }
 
+    public void init() {
+        admins = new ArrayList<>();
+        admins.add("mehrad");
+        admins.add("parnian");
+        ShopController.init();
+    }
+
     public Object callMethods(HashMap<String, Object> jsonObject) {
         switch ((String) jsonObject.get("method")) {
             case "getUser":
                 return MainMenuController.getUserByToken((String) jsonObject.get("token"));
+            case "getAllCards":
+                return Card.getAllCards();
             default: {
                 System.out.println("Something Happened!");
                 return "Something Happened!";

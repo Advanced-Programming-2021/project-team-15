@@ -121,10 +121,22 @@
 
 .backBlue {
     -fx-background-color: #3498DB;
+    -fx-text-fill: #581845;
     -fx-opacity: 0.5;
 }
 
 .backBlue:hover {
+    -fx-opacity: 1;
+}
+
+.backPurple {
+    -fx-background-color: #581845;
+    -fx-prompt-text-fill: #3498DB;
+    -fx-text-fill: #3498DB;
+    -fx-opacity: 0.5;
+}
+
+.backPurple:hover {
     -fx-opacity: 1;
 }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -22,7 +23,7 @@
          <left>
             <Pane prefHeight="743.0" prefWidth="645.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="5.0" styleClass="backBlue">
+                  <VBox fx:id="buyCardVBox" alignment="TOP_CENTER" layoutX="262.0" layoutY="14.0" opacity="0.5" prefHeight="726.0" prefWidth="360.0" spacing="2.0" styleClass="backBlue">
                      <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="Name : " textAlignment="CENTER" textFill="#581845">
                            <font>
@@ -40,12 +41,22 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="cardCount" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" textFill="RED">
+                        <Label fx:id="cardCount" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" text="hand" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" opacity="0.5" prefHeight="30.0" prefWidth="150.0" text="BUY" textAlignment="CENTER" textFill="#581845">
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="445.0" prefHeight="30.0" prefWidth="400.0" text="Number of this card Available :" textFill="#581845">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="availableCountLabel" alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buyCardButton" alignment="CENTER" mnemonicParsing="false" opacity="0.5" prefHeight="30.0" prefWidth="150.0" styleClass="backPurple" stylesheets="@../CSSFiles/Menus.css" text="BUY" textAlignment="CENTER" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -68,12 +79,71 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="priceLabel" alignment="CENTER" prefHeight="30.0" prefWidth="300.0" textFill="#581845">
+                        <Label fx:id="priceLabel" alignment="CENTER" layoutX="115.0" layoutY="476.0" prefHeight="30.0" textFill="#581845">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                      </children></VBox>
+                  <VBox fx:id="adminPanel" alignment="TOP_CENTER" layoutX="19.0" layoutY="67.0" prefHeight="300.0" prefWidth="226.0" spacing="10.0" styleClass="backBlue" visible="false">
+                     <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#unmarketable" prefHeight="40.0" prefWidth="145.0" styleClass="backPurple" text="Able / Disable">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="226.0" spacing="10.0">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#increaseCardCount" prefHeight="30.0" prefWidth="130.0" styleClass="backPurple" text="Increase Card">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></Button>
+                              <TextField fx:id="increaseCardCountTF" prefHeight="26.0" prefWidth="50.0" promptText="Count" styleClass="backPurple">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="168.0" prefHeight="50.0" prefWidth="226.0" spacing="10.0">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#decreaseCardCount" prefHeight="30.0" prefWidth="130.0" styleClass="backPurple" text="Decrease Card">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <TextField fx:id="decreaseCardCountTF" prefHeight="26.0" prefWidth="50.0" promptText="Count" styleClass="backPurple">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding></VBox>
+                  <Button layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#adminPanelButtonClicked" prefHeight="30.0" prefWidth="225.0" styleClass="backBlue" text="Admin Panel" textFill="#581845">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </Pane>
          </left>

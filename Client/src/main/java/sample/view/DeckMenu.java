@@ -24,16 +24,16 @@ import sample.model.Deck;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.function.UnaryOperator;
 
 public class DeckMenu {
+    private static DeckMenu deckMenu;
+    private static ArrayList<Deck> sorted;
     private boolean first = true;
     private Deck selectedDeck;
     @FXML
     private ScrollPane mainCards;
     @FXML
     private ScrollPane sideCards;
-    private static DeckMenu deckMenu;
     @FXML
     private Label activatedDeck;
     @FXML
@@ -43,25 +43,25 @@ public class DeckMenu {
     @FXML
     private Label validation;
     private DeckController deckController = new DeckController();
+    private ListView<Deck> listView = null;
+    @FXML
+    private VBox leftSide;
 
     public static DeckMenu getInstance() {
         if (deckMenu == null)
             deckMenu = new DeckMenu();
         return deckMenu;
     }
-    private static ArrayList<Deck> sorted ;
-   public void update()
-   {   MenuController.getUserByToken();
-       sorted = deckController.sortDecks(MenuController.getUser().getAllDecksOfUser());
-   }
-    private ListView<Deck> listView = null;
-    @FXML
-    private VBox leftSide;
+
+    public void update() {
+        MenuController.getUserByToken();
+        sorted = deckController.sortDecks(MenuController.getUser().getAllDecksOfUser());
+    }
 
     public void start() throws Exception {
         setSideCards();
         setMainCards();
-        sorted =new ArrayList<>();
+        sorted = new ArrayList<>();
         sorted = deckController.sortDecks(MenuController.getUser().getAllDecksOfUser());
         activatedDeck.setText(MenuController.getUser().getActiveDeck().getName());
         ObservableList<Deck> decksList = FXCollections.observableArrayList();
@@ -114,7 +114,8 @@ public class DeckMenu {
                                 "            linear-gradient(#d6d6d6 50%, white 100%),\n" +
                                 "            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);");
                         edit.setOnAction(event -> {
-                            try {MenuController.getUserByToken();
+                            try {
+                                MenuController.getUserByToken();
                                 goToEditDeckMenu(deck);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -131,8 +132,6 @@ public class DeckMenu {
         });
         listView.setItems(decksList);
         leftSide.getChildren().add(listView);
-
-
         listView.getSelectionModel().selectedItemProperty()
                 .addListener(new ChangeListener<Deck>() {
                     public void changed(ObservableValue<? extends Deck> ov,

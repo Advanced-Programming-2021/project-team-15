@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +24,7 @@ import sample.controller.utilizationController.UtilityController;
 import sample.model.cards.Card;
 
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.Objects;
 
 public class ShopMenu {
@@ -42,12 +44,19 @@ public class ShopMenu {
     @FXML
     public Label priceLabel;
     @FXML
+    public Label availableCountLabel;
+    @FXML
     public VBox buyCardVBox;
     @FXML
     public Button buyCardButton;
-
+    @FXML
+    private TextField increaseCardCountTF;
+    @FXML
+    private TextField decreaseCardCountTF;
     ShopMenuResponses responses;
     String allCards;
+    @FXML
+    private VBox adminPanel;
     private ShopController shopController = new ShopController();
     private boolean isBuyPossible = false;
     private Card toBuyCard;
@@ -103,15 +112,66 @@ public class ShopMenu {
     }
 
     private void selectCard(Card selectedCard) {
+//        update();
         toBuyCard = selectedCard;
+        int money = MenuController.getUser().getMoney();
+        int availableCount = getCardAvailableCount(toBuyCard.getCardName());
+        boolean ability = getAbility(toBuyCard.getCardName());
         cardName.setText(selectedCard.getCardName());
         cardImage.setImage(selectedCard.getCardImage());
         cardCount.setText(String.valueOf(MenuController.getUser().getUserSpecificCardCount(selectedCard)));
-        int money = MenuController.getUser().getMoney();
+        availableCountLabel.setText(String.valueOf(availableCount));
         moneyLabel.setText(String.valueOf(money));
         priceLabel.setText(String.valueOf(selectedCard.getPrice()));
-        if (money>=selectedCard.getPrice()) activateBuyButton(buyCardButton);
+        if (!ability) priceLabel.setText("Card is disabled by Admin!");
+        if (money >= selectedCard.getPrice() && availableCount>0 && ability) activateBuyButton(buyCardButton);
         else inactivateBuyButton(buyCardButton);
+    }
+
+    private int getCardAvailableCount(String cardName) {
+        return ShopController.getAllCardsCountByName().get(cardName);
+    }
+
+    private boolean getAbility(String cardName) {
+        return !ShopController.getUnmarketableCards().contains(cardName);
+    }
+
+    public void unmarketable(MouseEvent mouseEvent) {
+        AudioController.playClick();
+        if (toBuyCard==null) printResponse(ShopMenuResponses.NO_CARD_SELECTED);
+        else {
+            printResponse(shopController.unmarketableCard(toBuyCard.getCardName()));
+            ShopController.updateAdminPanel();
+            selectCard(toBuyCard);
+        }
+    }
+
+    public void increaseCardCount(MouseEvent mouseEvent) {
+        AudioController.playClick();
+        if (toBuyCard==null) printResponse(ShopMenuResponses.NO_CARD_SELECTED);
+        else if (increaseCardCountTF.getText().equals(""))
+        printResponse(ShopMenuResponses.FILL_FIELDS);
+        else {
+            printResponse(shopController.changeCardCount(toBuyCard.getCardName(),
+                    Integer.parseInt(increaseCardCountTF.getText())));
+            ShopController.updateAdminPanel();
+            selectCard(toBuyCard);
+        }
+        increaseCardCountTF.setText("");
+    }
+
+    public void decreaseCardCount(MouseEvent mouseEvent) {
+        AudioController.playClick();
+        if (toBuyCard==null) printResponse(ShopMenuResponses.NO_CARD_SELECTED);
+        else if (decreaseCardCountTF.getText().equals(""))
+            printResponse(ShopMenuResponses.FILL_FIELDS);
+        else {
+            printResponse(shopController.changeCardCount(toBuyCard.getCardName(),
+                    Integer.parseInt(decreaseCardCountTF.getText())*(-1)));
+            ShopController.updateAdminPanel();
+            selectCard(toBuyCard);
+        }
+        decreaseCardCountTF.setText("");
     }
 
     private void activateBuyButton(Button buyButton) {
@@ -123,9 +183,10 @@ public class ShopMenu {
                 try {
                     AudioController.playClick();
                     printResponse(shopController.buyItem(toBuyCard.getCardName()));
-                    int money = MenuController.getUser().getMoney();
-                    moneyLabel.setText(String.valueOf(money));
-                    priceLabel.setText(String.valueOf(toBuyCard.getPrice()));
+//                    int money = MenuController.getUser().getMoney();
+//                    int count = MenuController.getUser().getUserSpecificCardCount(toBuyCard);
+                    selectCard(toBuyCard);
+                    ShopController.updateAdminPanel();
                 } catch (IOException | CsvValidationException e) {
                     e.printStackTrace();
                 }
@@ -139,7 +200,7 @@ public class ShopMenu {
         buyButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                printResponse(ShopMenuResponses.USER_MONEY_NOT_ENOUGH);
+                printResponse(ShopMenuResponses.FAILED);
             }
         });
     }
@@ -161,6 +222,13 @@ public class ShopMenu {
         cardsGridPane.setBackground(Background.EMPTY);
         cardsGridPane.setHgap(5);
         cardsGridPane.setVgap(5);
+    }
+
+    public void adminPanelButtonClicked(MouseEvent mouseEvent) {
+        AudioController.playClick();
+        ShopMenuResponses shopMenuResponses = shopController.initAdminPanel();
+        if (shopMenuResponses == ShopMenuResponses.ADMIN_ENTER_SUCCESSFUL) adminPanel.setVisible(true);
+        else printResponse(shopMenuResponses);
     }
 
     public void backButtonClicked(MouseEvent mouseEvent) throws IOException {
@@ -214,18 +282,53 @@ public class ShopMenu {
                 break;
             case BUY_SUCCESSFUL:
                 output = "Bought item successfully!";
-                UtilityController.makeAlert("Happy!!","You're doing great!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/okAnimeGirl.png" ))));
+                UtilityController.makeAlert("Happy!!", "You're doing great!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png"))));
                 break;
             case CARD_NAME_NOT_EXIST:
                 output = "There is no card with this name";
-                UtilityController.makeAlert("Confused!!","What are you doing?!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/confusedAnimeGirl.jpg" ))));
+                UtilityController.makeAlert("Confused!!", "What are you doing?!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
+                break;
+            case NO_CARD_SELECTED:
+                output = "No card is selected!";
+                UtilityController.makeAlert("Confused!!", "What are you doing?!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case USER_MONEY_NOT_ENOUGH:
                 output = "Not enough money";
-                UtilityController.makeAlert("Sad!!","You are so bad!",output, new Image(String.valueOf(getClass().
-                        getResource("/Images/sadAnimeGirl.jpg" ))));
+                UtilityController.makeAlert("Sad!!", "You are so bad!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg"))));
+                break;
+            case NOT_ADMIN:
+                output = "You are not admin";
+                UtilityController.makeAlert("Sad!!", "You are Fake!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg"))));
+                break;
+            case ADMIN_ENTER_SUCCESSFUL:
+                output = "Welcome dear Admin!";
+                UtilityController.makeAlert("Happy!!", "Let's Go!!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png"))));
+                break;
+            case COUNT_CHANGED_SUCCESSFULLY:
+                output = "Changed count successfully!";
+                UtilityController.makeAlert("Happy!!", "You're doing great!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png"))));
+                break;
+            case DISABLED_SUCCESSFULLY:
+                output = "Able/Disabled item successfully!";
+                UtilityController.makeAlert("Happy!!", "You're doing great!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png"))));
+                break;
+            case FILL_FIELDS:
+                output = "Fill Fields!";
+                UtilityController.makeAlert("Confused!!", "What are you doing?!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/confusedAnimeGirl.jpg"))));
+                break;
+            case FAILED:
+                output = "Failed!";
+                UtilityController.makeAlert("Sad!!", "You are so bad!", output, new Image(String.valueOf(getClass().
+                        getResource("/Images/sadAnimeGirl.jpg"))));
                 break;
             default:
                 break;

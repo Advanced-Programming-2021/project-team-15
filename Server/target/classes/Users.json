@@ -7020,22 +7020,6 @@
             "Price": 4300
           },
           {
-            "Attack": 700,
-            "gameATK": 700,
-            "Defence": 1000,
-            "gameDEF": 1000,
-            "Level": 3,
-            "Monster Type": "Warrior",
-            "Monster Attribute": "EARTH",
-            "Monster Effect Type": "Normal",
-            "Name": "Battle warrior",
-            "Description": "A warrior that fights with his bare hands!!!",
-            "cardNumber": "0",
-            "Card Type": "MONSTER",
-            "type": "MONSTER",
-            "Price": 1300
-          },
-          {
             "Attack": 1600,
             "gameATK": 1600,
             "Defence": 1400,
@@ -7469,6 +7453,14 @@
         ],
         "isActive": true,
         "isValid": true
+      },
+      {
+        "name": "asali",
+        "ownerUsername": "parnian",
+        "sideDeck": [],
+        "mainDeck": [],
+        "isActive": false,
+        "isValid": false
       }
     ],
     "allCardsOfUser": [
@@ -11464,6 +11456,22 @@
         "Card Type": "MONSTER",
         "type": "MONSTER",
         "Price": 8000
+      },
+      {
+        "Attack": 700,
+        "gameATK": 700,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 3,
+        "Monster Type": "Warrior",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Normal",
+        "Name": "Battle warrior",
+        "Description": "A warrior that fights with his bare hands!!!",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1300
       }
     ],
     "userName": "parnian",
@@ -11475,12 +11483,109 @@
   },
   {
     "allDecksOfUser": [],
-    "allCardsOfUser": [],
+    "allCardsOfUser": [
+      {
+        "Attack": 1300,
+        "gameATK": 1300,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 4,
+        "Monster Type": "Pyro",
+        "Monster Attribute": "FIRE",
+        "Monster Effect Type": "Normal",
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 2500
+      },
+      {
+        "Attack": 1200,
+        "gameATK": 1200,
+        "Defence": 700,
+        "gameDEF": 700,
+        "Level": 3,
+        "Monster Type": "Dragon",
+        "Monster Attribute": "WIND",
+        "Monster Effect Type": "Normal",
+        "Name": "Baby dragon",
+        "Description": "Much more than just a child, this dragon is gifted with untapped power.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 1600
+      },
+      {
+        "Attack": 300,
+        "gameATK": 300,
+        "Defence": 500,
+        "gameDEF": 500,
+        "Level": 3,
+        "Monster Type": "Fairy",
+        "Monster Attribute": "LIGHT",
+        "Monster Effect Type": "Effect",
+        "Name": "Marshmallon",
+        "Description": "Cannot be destroyed by battle. After damage calculation, if this card was attacked, and was face-down at the start of the Damage Step: The attacking player takes 1000 damage.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 700
+      },
+      {
+        "Attack": 1300,
+        "gameATK": 1300,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 4,
+        "Monster Type": "Pyro",
+        "Monster Attribute": "FIRE",
+        "Monster Effect Type": "Normal",
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 2500
+      },
+      {
+        "Attack": 2500,
+        "gameATK": 2500,
+        "Defence": 2400,
+        "gameDEF": 2400,
+        "Level": 7,
+        "Monster Type": "Aqua",
+        "Monster Attribute": "WATER",
+        "Monster Effect Type": "Effect",
+        "Name": "Suijin",
+        "Description": "During damage calculation in your opponent\u0027s turn, if this card is being attacked: You can target the attacking monster; make that target\u0027s ATK 0 during damage calculation only (this is a Quick Effect). This effect can only be used once while this card is face-up on the field.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 8700
+      },
+      {
+        "Attack": 1700,
+        "gameATK": 1700,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 4,
+        "Monster Type": "Beast-Warrior",
+        "Monster Attribute": "EARTH",
+        "Monster Effect Type": "Normal",
+        "Name": "Battle OX",
+        "Description": "A monster with tremendous power, it destroys enemies with a swing of its axe.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 2900
+      }
+    ],
     "userName": "aaa",
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 0,
+    "money": 5900,
     "rank": 1
   },
   {

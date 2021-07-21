@@ -1,11 +1,10 @@
 package sample.controller.menuController;
 
 import com.opencsv.exceptions.CsvValidationException;
-import org.json.JSONObject;
-import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ShopMenuResponses;
-import sample.model.cards.Card;
+import sample.controller.utilizationController.DatabaseController;
 import sample.model.User;
+import sample.model.cards.Card;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +12,34 @@ import java.util.HashMap;
 
 public class ShopController extends MenuController {
 
+    private static HashMap<String, Integer> allCardsCountByName;
+    private static ArrayList<String> unmarketableCards;
+
     public ShopController() {
         super("Shop Menu");
+    }
+
+    public static HashMap<String, Integer> getAllCardsCountByName() {
+        return allCardsCountByName;
+    }
+
+    public static void setAllCardsCountByName(HashMap<String, Integer> allCardsCountByName) {
+        ShopController.allCardsCountByName = allCardsCountByName;
+    }
+
+    public static ArrayList<String> getUnmarketableCards() {
+        return unmarketableCards;
+    }
+
+    public static void setUnmarketableCards(ArrayList<String> unmarketableCards) {
+        ShopController.unmarketableCards = unmarketableCards;
+    }
+
+    public static void init() {
+        allCardsCountByName = new HashMap<>();
+        unmarketableCards = new ArrayList<>();
+        DatabaseController.getInstance().readCardsCount();
+        DatabaseController.getInstance().readUnmarketableCards();
     }
 
     public ShopMenuResponses buyItem(String cardName) throws IOException, CsvValidationException {
@@ -43,11 +68,32 @@ public class ShopController extends MenuController {
         return ShopMenuResponses.SHOP_SHOW_ALL;
     }
 
-    public Object callMethods(HashMap<String ,Object> jsonObject) {
+    public ShopMenuResponses unmarketableCard(String cardName) {
+        if (unmarketableCards.contains(cardName)) unmarketableCards.remove(cardName);
+        else {
+            unmarketableCards.add(cardName);
+            DatabaseController.getInstance().writeUnmarketableCards(unmarketableCards);
+        }
+        return ShopMenuResponses.DISABLED_SUCCESSFULLY;
+    }
+
+    public ShopMenuResponses adminPanel(String username) {
+        if (MainMenuController.getAdmins().contains(username)) return ShopMenuResponses.ADMIN_ENTER_SUCCESSFUL;
+        else return ShopMenuResponses.NOT_ADMIN;
+    }
+
+    public ShopMenuResponses changeCardCount(String cardName, int count) {
+        int numberOfCard = allCardsCountByName.get(cardName);
+        allCardsCountByName.put(cardName,numberOfCard+count);
+        DatabaseController.getInstance().writeCardsCount(allCardsCountByName);
+        return ShopMenuResponses.COUNT_CHANGED_SUCCESSFULLY;
+    }
+
+    public Object callMethods(HashMap<String, Object> jsonObject) {
         ShopMenuResponses shopMenuResponses;
         MenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
         switch ((String) jsonObject.get("method")) {
-            case "buyItem" :
+            case "buyItem":
                 try {
                     shopMenuResponses = buyItem(
                             (String) jsonObject.get("cardName"));
@@ -55,6 +101,22 @@ public class ShopController extends MenuController {
                     e.printStackTrace();
                     return "Something Happened!";
                 }
+                break;
+            case "getAllCardsCountByName" :
+                return allCardsCountByName;
+            case "getUnmarketableCards" :
+                return unmarketableCards;
+            case "changeCardCount" :
+                shopMenuResponses = changeCardCount(
+                        (String) jsonObject.get("cardName"), Integer.parseInt((String)jsonObject.get("count")));
+                break;
+            case "adminPanel" :
+                shopMenuResponses = adminPanel(
+                        (String) jsonObject.get("username"));
+                break;
+            case "unmarketableCard" :
+                shopMenuResponses = unmarketableCard(
+                        (String) jsonObject.get("cardName"));
                 break;
             default:
                 return "Something Happened!";

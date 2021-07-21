@@ -9,7 +9,8 @@ import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Path;
+import sample.controller.ClientManager;
+import sample.controller.menuController.MainMenuController;
 import sample.model.Deck;
 import sample.model.User;
 import sample.model.cards.Card;
@@ -18,7 +19,6 @@ import sample.model.cards.MonsterCard;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,19 +31,30 @@ public class DatabaseController {
         return databaseController;
     }
 
-    public void loadGameCards() throws IOException, CsvValidationException {
+//    public void loadGameCards() throws IOException, CsvValidationException {
+//        Card.getAllCards().clear();
+//        File file = new File("src/main/resources/Monster.csv");
+//        FileReader fileReader = new FileReader(file);
+//        CSVReader reader = new CSVReader(fileReader);
+//        readMonsterCardsFromCSV(reader);
+//        file = new File("src/main/resources/Magic.csv");
+//        fileReader = new FileReader(file);
+//        reader = new CSVReader(fileReader);
+//        readMagicCardsFromCSV(reader);
+//        fileReader.close();
+//        reader.close();
+//        setAllCardsImages();
+//    }
+
+    public void loadGameCards() {
         Card.getAllCards().clear();
-        File file = new File("src/main/resources/Monster.csv");
-        FileReader fileReader = new FileReader(file);
-        CSVReader reader = new CSVReader(fileReader);
-        readMonsterCardsFromCSV(reader);
-        file = new File("src/main/resources/Magic.csv");
-        fileReader = new FileReader(file);
-        reader = new CSVReader(fileReader);
-        readMagicCardsFromCSV(reader);
-        fileReader.close();
-        reader.close();
+        HashMap<String, Object> jsonObject = new HashMap<>();
+        jsonObject.put("method", "getAllCards");
+        jsonObject.put("class", "MainMenuController");
+        jsonObject.put("token", MainMenuController.getToken());
+        Card.setAllCards((ArrayList<Card>) ClientManager.sendAndGetResponse(jsonObject));
         setAllCardsImages();
+        System.out.println("we are getting cards with trunk size : " + Card.getAllCards().size());
     }
 
     private void setAllCardsImages() {
@@ -70,7 +81,7 @@ public class DatabaseController {
     public Image getImageByCard(Card card) {
         try {
             return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + getAddressByCard(card))));
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl2.jpg")));
         }
     }
@@ -156,7 +167,8 @@ public class DatabaseController {
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
-            Type cardType = new TypeToken<Card>() {}.getType();
+            Type cardType = new TypeToken<Card>() {
+            }.getType();
             card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardType);
             return card;
         } catch (IOException e) {

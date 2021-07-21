@@ -37,7 +37,6 @@ public class MenuController {
         jsonObject.put("token", MainMenuController.getToken());
         setUser((User) ClientManager.sendAndGetResponse(jsonObject));
         System.out.println("we are getting "+user.getUserName()+" with trunk size : "+user.getAllCardsOfUser().size());
-
     }
 
     public static User getUser() {

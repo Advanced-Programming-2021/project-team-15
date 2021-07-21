@@ -12,24 +12,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ShopController extends MenuController {
+    public static HashMap<String, Integer> getAllCardsCountByName() {
+        return allCardsCountByName;
+    }
+
+    public static ArrayList<String> getUnmarketableCards() {
+        return unmarketableCards;
+    }
+
+    private static HashMap<String, Integer> allCardsCountByName;
+    private static ArrayList<String> unmarketableCards;
 
     public ShopController() {
         super("Shop Menu");
+        updateAdminPanel();
+    }
+
+    public static void updateAdminPanel() {
+        setAllCardsCountByName();
+        setUnmarketableCards();
+    }
+
+    public static void setAllCardsCountByName() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ShopController");
+        map.put("method", "getAllCardsCountByName");
+        map.put("token",MainMenuController.getToken());
+        allCardsCountByName = (HashMap<String, Integer>) ClientManager.sendAndGetResponse(map);
+    }
+
+    public static void setUnmarketableCards() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ShopController");
+        map.put("method", "getUnmarketableCards");
+        map.put("token",MainMenuController.getToken());
+        unmarketableCards = (ArrayList<String>) ClientManager.sendAndGetResponse(map);
     }
 
     public ShopMenuResponses buyItem(String cardName) throws IOException, CsvValidationException {
-//        User user = MenuController.getUser();
-//        databaseController.loadGameCards();
-//        if (Card.getCardByName(cardName) == null)
-//            return ShopMenuResponses.CARD_NAME_NOT_EXIST;
-//        else if (user.getMoney() < Card.getCardByName(cardName).getPrice())
-//            return ShopMenuResponses.USER_MONEY_NOT_ENOUGH;
-//        else {
-//            user.getAllCardsOfUser().add(cloner.deepClone(Card.getCardByName(cardName)));
-//            user.changeMoney((-1) * Card.getCardByName(cardName).getPrice());
-//            databaseController.refreshUsersToFileJson();
-//            return ShopMenuResponses.BUY_SUCCESSFUL;
-//        }
         HashMap<String, Object> map = new HashMap<>();
         map.put("class", "ShopController");
         map.put("method", "buyItem");
@@ -40,15 +60,46 @@ public class ShopController extends MenuController {
         return ShopMenuResponses.valueOf(output);
     }
 
-    public ShopMenuResponses showAllCards(HashMap<String, String> enteredDetails) throws IOException, CsvValidationException {
-        databaseController.loadGameCards();
-        ArrayList<Card> sortedCards = sortCardsByName(Card.getAllCards());
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Card card : sortedCards) {
-            stringBuilder.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
-        }
-        enteredDetails.put("allCards", stringBuilder.toString());
-        return ShopMenuResponses.SHOP_SHOW_ALL;
+    public ShopMenuResponses initAdminPanel() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ShopController");
+        map.put("method", "adminPanel");
+        map.put("token",MainMenuController.getToken());
+        map.put("username",MainMenuController.getUser().getUserName());
+        String output = (String) ClientManager.sendAndGetResponse(map);
+        return ShopMenuResponses.valueOf(output);
     }
+
+    public ShopMenuResponses unmarketableCard(String cardName) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ShopController");
+        map.put("method", "unmarketableCard");
+        map.put("token",MainMenuController.getToken());
+        map.put("cardName", cardName);
+        String output = (String) ClientManager.sendAndGetResponse(map);
+        return ShopMenuResponses.valueOf(output);
+    }
+
+    public ShopMenuResponses changeCardCount(String cardName, int count) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ShopController");
+        map.put("method", "changeCardCount");
+        map.put("token",MainMenuController.getToken());
+        map.put("count",count);
+        map.put("cardName", cardName);
+        String output = (String) ClientManager.sendAndGetResponse(map);
+        return ShopMenuResponses.valueOf(output);
+    }
+
+//    public ShopMenuResponses showAllCards(HashMap<String, String> enteredDetails) throws IOException, CsvValidationException {
+//        databaseController.loadGameCards();
+//        ArrayList<Card> sortedCards = sortCardsByName(Card.getAllCards());
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (Card card : sortedCards) {
+//            stringBuilder.append(card.getCardName()).append(" : ").append(card.getCardDescription()).append("\n");
+//        }
+//        enteredDetails.put("allCards", stringBuilder.toString());
+//        return ShopMenuResponses.SHOP_SHOW_ALL;
+//    }
 
 }

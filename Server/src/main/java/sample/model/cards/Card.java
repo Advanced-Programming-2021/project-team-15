@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Card  implements Serializable {
+public class Card implements Serializable {
 
     private static ArrayList<Card> allCards;
 
@@ -26,7 +26,6 @@ public class Card  implements Serializable {
 
     public transient Boolean isSummoned = false;
     protected transient Player owner;
-    //    protected ArrayList<CardAction> cardActions ;
     @SerializedName("Name")
     protected String cardName;
     @SerializedName("Description")

@@ -9,7 +9,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.ICSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Path;
+import sample.controller.menuController.ShopController;
 import sample.model.Deck;
 import sample.model.User;
 import sample.model.cards.Card;
@@ -18,7 +18,6 @@ import sample.model.cards.MonsterCard;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,13 +42,45 @@ public class DatabaseController {
         readMagicCardsFromCSV(reader);
         fileReader.close();
         reader.close();
-//        setAllCardsImages();
     }
 
-    private void setAllCardsImages() {
-        for (Card card : Card.getAllCards()) {
-            Image cardImage = getImageByCard(card);
-            Card.getAllCardsImages().put(card.getCardName(), cardImage);
+    public void readCardsCount() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        try (Reader reader = new FileReader("src/main/resources/CardsCount.json")) {
+            Type cardsCountType = new TypeToken<HashMap<String, Integer>>() {
+            }.getType();
+            ShopController.setAllCardsCountByName(gsonBuilder.create().fromJson(reader, cardsCountType));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeCardsCount(HashMap<String, Integer> allCardsCount) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (Writer writer = new FileWriter("src/main/resources/CardsCount.json")) {
+            gson.toJson(allCardsCount, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readUnmarketableCards() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        try (Reader reader = new FileReader("src/main/resources/UnmarketableCards.json")) {
+            Type unmarketableCardsType = new TypeToken<ArrayList<String>>() {
+            }.getType();
+            ShopController.setUnmarketableCards(gsonBuilder.create().fromJson(reader, unmarketableCardsType));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeUnmarketableCards(ArrayList<String> unmarketableCards) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (Writer writer = new FileWriter("src/main/resources/UnmarketableCards.json")) {
+            gson.toJson(unmarketableCards, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -70,7 +101,7 @@ public class DatabaseController {
     public Image getImageByCard(Card card) {
         try {
             return new Image(String.valueOf(getClass().getResource("/Images/Cards/" + getAddressByCard(card))));
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return new Image(String.valueOf(getClass().getResource("/Images/cardAnimeGirl2.jpg")));
         }
     }
@@ -156,7 +187,8 @@ public class DatabaseController {
                     .of(Card.class, "type").
                             registerSubtype(MonsterCard.class, "MONSTER").
                             registerSubtype(MagicCard.class, "MAGIC");
-            Type cardType = new TypeToken<Card>() {}.getType();
+            Type cardType = new TypeToken<Card>() {
+            }.getType();
             card = gsonBuilder.registerTypeAdapterFactory(runtimeTypeAdapterFactory).create().fromJson(reader, cardType);
             return card;
         } catch (IOException e) {
