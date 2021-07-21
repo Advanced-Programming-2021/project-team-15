@@ -36,7 +36,7 @@ public class ShopController extends MenuController {
         map.put("token",MainMenuController.getToken());
         map.put("cardName", cardName);
         String output = (String) ClientManager.sendAndGetResponse(map);
-        MainMenuController.getUserByToken();
+        MenuController.getUserByToken();
         return ShopMenuResponses.valueOf(output);
     }
 

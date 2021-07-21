@@ -53,11 +53,9 @@ public class ServerController {
     private static Object processString(Object command) {
        HashMap<String, Object> jsonObj = (HashMap<String, Object>) command;
         try {
-            System.out.println(LoginController.class.getName());
             Class<?> clazz = Class.forName("sample.controller.menuController."+jsonObj.get("class"));
             Object obj = clazz.getDeclaredConstructor().newInstance();
             Method method = clazz.getDeclaredMethod("callMethods",HashMap.class);
-
             return method.invoke(obj,jsonObj);
         } catch (Exception e) {
             e.printStackTrace();

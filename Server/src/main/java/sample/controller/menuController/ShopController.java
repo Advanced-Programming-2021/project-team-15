@@ -45,7 +45,7 @@ public class ShopController extends MenuController {
 
     public Object callMethods(HashMap<String ,Object> jsonObject) {
         ShopMenuResponses shopMenuResponses;
-        MainMenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
+        MenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
         switch ((String) jsonObject.get("method")) {
             case "buyItem" :
                 try {

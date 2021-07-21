@@ -13,11 +13,12 @@ import java.util.HashMap;
 import static sample.controller.menuController.MenuController.MenuResponse.SHOW_Current_Menu;
 
 public class MenuController {
-    public static User user;
+    private static User user;
     private static MenuController menuController = null;
     protected DatabaseController databaseController = new DatabaseController();
     protected Cloner cloner = new Cloner();
     private String menuName;
+
     public MenuController(String menuName) {
         this.menuName = menuName;
         menuController = this;
@@ -39,7 +40,7 @@ public class MenuController {
     }
 
     public static User getUser() {
-        return user;
+        return MenuController.user;
     }
 
     public static void setUser(User user) {
