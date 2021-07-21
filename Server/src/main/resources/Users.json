@@ -11475,12 +11475,29 @@
   },
   {
     "allDecksOfUser": [],
-    "allCardsOfUser": [],
+    "allCardsOfUser": [
+      {
+        "Attack": 1300,
+        "gameATK": 1300,
+        "Defence": 1000,
+        "gameDEF": 1000,
+        "Level": 4,
+        "Monster Type": "Pyro",
+        "Monster Attribute": "FIRE",
+        "Monster Effect Type": "Normal",
+        "Name": "Fireyarou",
+        "Description": "A malevolent creature wrapped in flames that attacks enemies with intense fire.",
+        "cardNumber": "0",
+        "Card Type": "MONSTER",
+        "type": "MONSTER",
+        "Price": 2500
+      }
+    ],
     "userName": "aaa",
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 0,
+    "money": 47500,
     "rank": 1
   },
   {

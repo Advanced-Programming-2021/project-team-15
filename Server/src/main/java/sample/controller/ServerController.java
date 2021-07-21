@@ -58,7 +58,7 @@ public class ServerController {
             Object obj = clazz.getDeclaredConstructor().newInstance();
             Method method = clazz.getDeclaredMethod("callMethods",HashMap.class);
 
-            return  method.invoke(obj,jsonObj);
+            return method.invoke(obj,jsonObj);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("hi bitch");

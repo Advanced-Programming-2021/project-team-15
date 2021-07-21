@@ -36,6 +36,7 @@ public class LoginController extends MenuController {
         if (output.startsWith("USER_LOGIN_SUCCESSFUL")) {
             String[] logRes = output.split(" ");
             MainMenuController.setToken(logRes[1]);
+            MainMenuController.getUserByToken();
             System.out.println(MainMenuController.getToken());
             return LoginMenuResponses.valueOf(logRes[0]);
         }

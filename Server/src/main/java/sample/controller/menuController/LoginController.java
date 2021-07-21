@@ -12,14 +12,15 @@ public class LoginController extends MenuController {
         super("Login Menu");
     }
 
-    public LoginMenuResponses registerUser(String userName, String nickName, String passWord) {
+    public LoginMenuResponses registerUser(String username, String nickname, String password) {
+        System.out.println("register user with username "+ username);
         databaseController.refreshUsersFromFileJson();
-        if (User.getUserByUserName(userName) != null)
+        if (User.getUserByUserName(username) != null)
             return LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS;
-        else if (User.getUserByNickname(nickName) != null)
+        else if (User.getUserByNickname(nickname) != null)
             return LoginMenuResponses.USER_NICKNAME_ALREADY_EXISTS;
         else {
-            User.getAllUsers().add(new User(userName, nickName, passWord));
+            User.getAllUsers().add(new User(username, nickname, password));
             databaseController.refreshUsersToFileJson();
             return LoginMenuResponses.USER_CREATE_SUCCESSFUL;
         }
@@ -39,7 +40,7 @@ public class LoginController extends MenuController {
         }
     }
 
-    public Object  callMethods(HashMap<String ,Object> jsonObject) {
+    public Object callMethods(HashMap<String ,Object> jsonObject) {
         LoginMenuResponses loginMenuResponses;
         switch ((String)jsonObject.get("method")) {
             case "loginUser" :

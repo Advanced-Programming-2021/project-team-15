@@ -7466,6 +7466,17 @@
             "Card Type": "MAGIC",
             "type": "MAGIC",
             "Price": 4300
+          },
+          {
+            "Type": "Spell",
+            "Status": "Unlimited",
+            "Icon (Property)": "Equip",
+            "Name": "United We Stand",
+            "Description": "The equipped monster gains 800 ATK/DEF for each face-up monster you control.",
+            "cardNumber": "0",
+            "Card Type": "MAGIC",
+            "type": "MAGIC",
+            "Price": 4300
           }
         ],
         "isActive": true,
@@ -7788,17 +7799,6 @@
         "Icon (Property)": "Field",
         "Name": "Umiiruka",
         "Description": "Increase the ATK of all WATER monsters by 500 points and decrease their DEF by 400 points.",
-        "cardNumber": "0",
-        "Card Type": "MAGIC",
-        "type": "MAGIC",
-        "Price": 4300
-      },
-      {
-        "Type": "Spell",
-        "Status": "Unlimited",
-        "Icon (Property)": "Equip",
-        "Name": "United We Stand",
-        "Description": "The equipped monster gains 800 ATK/DEF for each face-up monster you control.",
         "cardNumber": "0",
         "Card Type": "MAGIC",
         "type": "MAGIC",
@@ -11480,7 +11480,7 @@
     "passWord": "aa",
     "nickName": "aa",
     "score": 0,
-    "money": 0,
+    "money": 50000,
     "rank": 1
   },
   {

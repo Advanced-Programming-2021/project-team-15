@@ -43,22 +43,22 @@ public class ShopController extends MenuController {
         return ShopMenuResponses.SHOP_SHOW_ALL;
     }
 
-    public String callMethods(JSONObject jsonObject) {
+    public Object callMethods(HashMap<String ,Object> jsonObject) {
         ShopMenuResponses shopMenuResponses;
-        MainMenuController.setUser(MainMenuController.getActiveUsers().get(jsonObject.getString("token")));
-//        switch (jsonObject.getString("method")) {
-//            case "loginUser" :
-//                return loginUser(
-//                        jsonObject.getString("username"), jsonObject.getString("password"));
-//            case "registerUser" :
-//                loginMenuResponses = registerUser(
-//                        jsonObject.getString("username"), jsonObject.getString("nickname"), jsonObject.getString("password"));
-//                break;
-//            default:
-//                return "Something Happened!";
-//        }
-//        return loginMenuResponses.toString();
-        return "";
+        MainMenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
+        switch ((String) jsonObject.get("method")) {
+            case "buyItem" :
+                try {
+                    shopMenuResponses = buyItem(
+                            (String) jsonObject.get("cardName"));
+                } catch (IOException | CsvValidationException e) {
+                    e.printStackTrace();
+                    return "Something Happened!";
+                }
+                break;
+            default:
+                return "Something Happened!";
+        }
+        return shopMenuResponses.toString();
     }
-
 }
