@@ -1,5 +1,6 @@
 package sample.controller.menuController;
 
+import sample.controller.responses.LoginMenuResponses;
 import sample.controller.responses.ScoreboardMenuResponses;
 import sample.model.User;
 
@@ -43,5 +44,20 @@ public class ScoreboardController extends MenuController {
             sortingUsers.put(score, tempUsersWithScore);
         }
         return sortingUsers.descendingMap();
+    }
+    public Object callMethods(HashMap<String ,Object> jsonObject) {
+        ScoreboardMenuResponses scoreboardMenuResponses;
+        MenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
+        switch ((String)jsonObject.get("method")) {
+            case "showScoreboard" :
+                scoreboardMenuResponses= showScoreboard((StringBuilder) jsonObject.get("users"));
+          //  case "refreshScoreboard" :
+//                scoreboardMenuResponses = refreshScoreboard(
+//                        (String) jsonObject.get("username"), (String) jsonObject.get("nickname"),(String) jsonObject.get("password"));
+          break;
+        default:
+                return "Something Happened!";
+        }
+        return scoreboardMenuResponses;
     }
 }
