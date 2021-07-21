@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import sample.controller.menuController.DeckController;
+import sample.controller.menuController.MainMenuController;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DeckMenuResponses;
 import sample.model.Deck;
@@ -73,7 +74,11 @@ public class DeckEdit {
         readyUpMainDeck();
         readyUpSideDeck();
     }
-
+   public void update(){
+       MainMenuController.getUserByToken();
+       userCards =  MenuController.getUser().getAllCardsOfUser();
+       deck = MenuController.getUser().getDeckByName(deck.getName());
+   }
     public void readyUpTrunk(){
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10,10,10,20));
@@ -210,6 +215,7 @@ public class DeckEdit {
             deckController.removeCardFromDeck(selectedCard,deck.getName(),type);
             selectedCard.setDeckViewLocation(Card.DeckViewLocation.TRUNK);
             new Alert(Alert.AlertType.INFORMATION,"card removed successfully").show();
+            update();
             if(type== Deck.DeckType.MAIN)  readyUpMainDeck();
             else readyUpSideDeck();
             readyUpTrunk();
@@ -228,6 +234,7 @@ public class DeckEdit {
             new Alert(Alert.AlertType.ERROR,"there are already three cards of this type").show();
             else if(deckMenuResponses.equals(CARD_ADD_TO_DECK_SUCCESSFUL)) {
                 selectedCard.setDeckViewLocation(Card.DeckViewLocation.MAIN_DECK);
+                update();
                 readyUpMainDeck();
                 readyUpTrunk();
                 new Alert(Alert.AlertType.INFORMATION, "card added to main deck successfully").show();
@@ -247,6 +254,7 @@ public class DeckEdit {
                 new Alert(Alert.AlertType.ERROR,"there are already three cards of this type").show();
             else if(deckMenuResponses.equals(CARD_ADD_TO_DECK_SUCCESSFUL)) {
                 selectedCard.setDeckViewLocation(Card.DeckViewLocation.SIDE_DECK);
+                update();
                 readyUpSideDeck();
                 readyUpTrunk();
                 new Alert(Alert.AlertType.INFORMATION, "card added to side deck successfully").show();

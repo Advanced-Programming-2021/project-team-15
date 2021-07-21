@@ -22,6 +22,7 @@ public class ClientManager {
         try {
             objectOutputStream.writeObject(input);
             objectOutputStream.flush();
+            objectOutputStream.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }

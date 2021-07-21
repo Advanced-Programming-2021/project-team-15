@@ -19,7 +19,7 @@ public class MainMenuController extends MenuController {
     }
 
     public static User getUserByToken(String token) {
-        System.out.println(activeUsers.get(token).getUserName());
+        System.out.println("we are sending "+activeUsers.get(token).getUserName()+" with trunk size : "+activeUsers.get(token).getAllCardsOfUser().size());
         return activeUsers.get(token);
     }
 

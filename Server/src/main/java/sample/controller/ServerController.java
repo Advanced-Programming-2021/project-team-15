@@ -31,7 +31,8 @@ public class ServerController {
                         while (!( command instanceof String && command.equals("terminate"))) {
                             if(!command.equals("")) {
                             objectOutputStream.writeObject(processString(command));
-                            objectOutputStream.flush();}
+                            objectOutputStream.flush();
+                            objectOutputStream.reset();}
                             command = objectInputStream.readObject();
                         }
                         serverSocket.close();
