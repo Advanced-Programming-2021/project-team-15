@@ -13,17 +13,15 @@ public class LoginController extends MenuController {
         super("Login Menu");
     }
 
-    public LoginMenuResponses registerUser(String userName, String nickName, String passWord) {
-        databaseController.refreshUsersFromFileJson();
-        if (User.getUserByUserName(userName) != null)
-            return LoginMenuResponses.USER_USERNAME_ALREADY_EXISTS;
-        else if (User.getUserByNickname(nickName) != null)
-            return LoginMenuResponses.USER_NICKNAME_ALREADY_EXISTS;
-        else {
-            User.getAllUsers().add(new User(userName, nickName, passWord));
-            databaseController.refreshUsersToFileJson();
-            return LoginMenuResponses.USER_CREATE_SUCCESSFUL;
-        }
+    public LoginMenuResponses registerUser(String username, String nickname, String password) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "LoginController");
+        map.put("method", "loginUser");
+        map.put("username", username);
+        map.put("password", password);
+        map.put("nickname",nickname);
+        String output = (String) ClientManager.sendAndGetResponse(map);
+        return LoginMenuResponses.valueOf(output);
     }
 
     public LoginMenuResponses loginUser(String username, String password) {

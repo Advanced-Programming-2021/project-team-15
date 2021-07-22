@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.*?>
+<AnchorPane fx:id="father" prefHeight="1000.0" prefWidth="1500.0" styleClass="chatBox" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ChatMenu">
+   <children>
+      <VBox alignment="BOTTOM_CENTER" layoutX="921.0" layoutY="10.0" prefHeight="781.0" prefWidth="566.0" spacing="5.0" styleClass="chatVBox">
+         <children>
+            <ScrollPane fx:id="chatSP" nodeOrientation="LEFT_TO_RIGHT" opacity="0.5" prefHeight="763.0" prefWidth="566.0" styleClass="chatVBox" stylesheets="@../CSSFiles/Menus.css">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+            <TextField fx:id="typeTF" promptText="Type Here..." />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

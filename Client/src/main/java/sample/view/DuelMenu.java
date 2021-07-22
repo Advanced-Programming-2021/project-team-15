@@ -806,6 +806,15 @@ public class DuelMenu {
         WelcomeMenu.stage.setScene(mainMenuScene);
     }
 
+    public void chatButtonClicked() throws IOException {
+        AudioController.playClick();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/ChatBox.fxml"));
+        Scene scene = new Scene(loader.load());
+        ChatMenu chatMenu = loader.getController();
+        chatMenu.init();
+        WelcomeMenu.stage.setScene(scene);
+    }
+
     public void newDuelButtonClicked(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FxmlFiles/PopUp.fxml"));
         Scene scene = new Scene(loader.load());

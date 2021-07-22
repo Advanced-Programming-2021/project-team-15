@@ -26,7 +26,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" styleClass="redDarkButton" stylesheets="@../CSSFiles/Button.css" text="Setting">
+            <Button onMouseClicked="#chatButtonClicked" mnemonicParsing="false" prefHeight="74.0" prefWidth="327.0" styleClass="redDarkButton" stylesheets="@../CSSFiles/Button.css" text="Global Chat">
                <font>
                   <Font size="41.0" />
                </font>
