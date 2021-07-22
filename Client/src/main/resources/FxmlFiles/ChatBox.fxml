@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="father" prefHeight="1000.0" prefWidth="1500.0" styleClass="chatBox" stylesheets="@../CSSFiles/Menus.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ChatMenu">
    <children>
       <VBox alignment="BOTTOM_CENTER" layoutX="921.0" layoutY="10.0" prefHeight="781.0" prefWidth="566.0" spacing="5.0" styleClass="chatVBox">
          <children>
-            <ScrollPane fx:id="chatSP" nodeOrientation="LEFT_TO_RIGHT" opacity="0.5" prefHeight="763.0" prefWidth="566.0" styleClass="chatVBox" stylesheets="@../CSSFiles/Menus.css">
+            <Label fx:id="onlineLabel" prefHeight="134.0" text="Online Users : 0" textFill="#d6eaf8">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ScrollPane fx:id="chatSP" nodeOrientation="LEFT_TO_RIGHT" opacity="0.5" prefHeight="763.0" prefWidth="566.0" styleClass="chatGrid">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
               </content>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </ScrollPane>
             <TextField fx:id="typeTF" promptText="Type Here..." />
          </children>
@@ -19,5 +29,12 @@
             <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="63.0" prefWidth="175.0" styleClass="brownButton" text="Back">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

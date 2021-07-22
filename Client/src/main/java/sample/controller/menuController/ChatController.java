@@ -19,7 +19,9 @@ public class ChatController extends MenuController{
         map.put("class", "ChatController");
         map.put("method", "refresh");
         map.put("token",MainMenuController.getToken());
-        Message.setAllMessages((ArrayList<Message>) ClientManager.sendAndGetResponse(map));
+        ArrayList<Message> arrayList = (ArrayList<Message>) ClientManager.sendAndGetResponse(map);
+        if (arrayList==null) return ChatMenuResponses.NO_CHANGE;
+        Message.setAllMessages(arrayList);
         return ChatMenuResponses.REFRESH_SUCCESSFUL;
     }
 
@@ -33,5 +35,29 @@ public class ChatController extends MenuController{
         String output = (String) ClientManager.sendAndGetResponse(map);
 //        ChatMenu.getInstance().refreshChatBox();
         return ChatMenuResponses.valueOf(output);
+    }
+
+    public String enter() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ChatController");
+        map.put("method", "enter");
+        map.put("token",MainMenuController.getToken());
+        return (String) ClientManager.sendAndGetResponse(map);
+    }
+
+    public String exit() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ChatController");
+        map.put("method", "exit");
+        map.put("token",MainMenuController.getToken());
+        return (String) ClientManager.sendAndGetResponse(map);
+    }
+
+    public Integer online() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("class", "ChatController");
+        map.put("method", "online");
+        map.put("token",MainMenuController.getToken());
+        return (Integer) ClientManager.sendAndGetResponse(map);
     }
 }

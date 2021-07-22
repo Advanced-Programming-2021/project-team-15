@@ -4,5 +4,6 @@ public enum ChatMenuResponses {
     REFRESH_SUCCESSFUL,
     MESSAGE_SENT,
     MESSAGE_DELETED,
-    MESSAGE_EDITED;
+    MESSAGE_EDITED,
+    NO_CHANGE;
 }

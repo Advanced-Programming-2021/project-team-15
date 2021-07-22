@@ -1,8 +1,9 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Message {
+public class Message implements Serializable {
     public static ArrayList<Message> getAllMessages() {
         return allMessages;
     }
