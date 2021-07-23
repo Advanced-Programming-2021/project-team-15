@@ -49,7 +49,7 @@ public Request.MessageEnum addRequest(Request request) throws InterruptedExcepti
     Thread search = new Thread(() -> {
             for(Request req : requests) {
                 if (request.getRound() == req.getRound() && !request.getToken().equals(req.getToken()) ) {
-                    System.out.println(req.getRound()+" == "+request.getRound()+" with "+req.getToken()+" ,"+request.getToken());
+                    System.out.println(req.getRound()+" == "+request.getRound()+" with "+req.getToken()+" , "+request.getToken());
                     commands.put("first", MainMenuController.getActiveUsers().get(request.getToken()));
                     commands.put("second",MainMenuController.getActiveUsers().get(req.getToken()));
                     commands.put("round",req.getRound());
@@ -61,6 +61,7 @@ public Request.MessageEnum addRequest(Request request) throws InterruptedExcepti
             }
 });
     search.start();
+
         return commands;
 }
 

@@ -102,17 +102,19 @@ public class PopupController {
         imageView.setFitHeight(386.0);
         waiting.getChildren().clear();
         waiting.getChildren().add(imageView);
-        KeyFrame keyFrame = new KeyFrame(new Duration(500) , actionEvent -> {
+        KeyFrame keyFrame = new KeyFrame(new Duration(1000) , actionEvent -> {
             HashMap<String,Object> hashMap = (HashMap<String, Object>)LobbyMenu.startGameAndWait();
             if(hashMap.get("message").equals(ACCEPT_FOR_GAME))
-            { System.out.println("rival is "+hashMap.get("second"));
+            {   System.out.println("rival is "+hashMap.get("second"));
                 stage.close();
+                UtilityController.makeAlert("Happy!!", "", "rival is "+hashMap.get("second"), new Image(String.valueOf(getClass().
+                        getResource("/Images/okAnimeGirl.png"))));
                 return;
             }
         });
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(40);
+        timeline.setCycleCount(20);
         timeline.setOnFinished(event -> {
             UtilityController.makeAlert("Sad!!", "", "no online player found!", new Image(String.valueOf(getClass().
                     getResource("/Images/sadAnimeGirl.jpg"))));

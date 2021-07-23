@@ -15,7 +15,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="chatSP" nodeOrientation="LEFT_TO_RIGHT" opacity="0.5" prefHeight="763.0" prefWidth="566.0">
+            <ScrollPane fx:id="chatSP" nodeOrientation="LEFT_TO_RIGHT" opacity="0.5" prefHeight="763.0" prefWidth="566.0" styleClass="chatGrid">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
               </content>
