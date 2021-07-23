@@ -9,10 +9,12 @@ public class ChatController extends MenuController {
     public ChatController() {
         super("Chat Menu");
     }
+    private static HashMap<String,Boolean> onlineUsersSeen = new HashMap<>();
 
     public ChatMenuResponses sendMessage(String text, String token) {
         Message message = new Message(MainMenuController.getUserByToken(token).getUserName(), text);
         Message.getAllMessages().add(message);
+        onlineUsersSeen.replaceAll((u, v) -> false);
         return ChatMenuResponses.MESSAGE_SENT;
     }
 
@@ -20,10 +22,22 @@ public class ChatController extends MenuController {
         ChatMenuResponses chatMenuResponses;
         MenuController.setUser(MainMenuController.getUserByToken((String) jsonObject.get("token")));
         switch ((String) jsonObject.get("method")) {
-            case "refresh": {
-                System.out.println(Message.getAllMessages());
-                return Message.getAllMessages();
+            case "enter" : {
+                onlineUsersSeen.put((String) jsonObject.get("token"),false);
+                return "Welcome";
             }
+            case "exit" : {
+                onlineUsersSeen.remove((String) jsonObject.get("token"));
+                return "Bye";
+            }
+            case "refresh": {
+                if (onlineUsersSeen.get((String) jsonObject.get("token"))) return null;
+                else {
+                    onlineUsersSeen.put((String) jsonObject.get("token"), true);
+                    return Message.getAllMessages();
+                }
+            }
+            case "online" : return onlineUsersSeen.size();
             case "send":
                 chatMenuResponses = sendMessage(
                         (String) jsonObject.get("text"), (String) jsonObject.get("token"));

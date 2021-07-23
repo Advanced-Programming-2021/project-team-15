@@ -50,6 +50,18 @@
     -fx-opacity: 1;
 }
 
+.brownButton {
+    -fx-background-color: #422825;
+    -fx-text-fill: #FFE7CA;
+    -fx-opacity: 0.7;
+}
+
+.brownButton:hover {
+    -fx-background-color: #FFE7CA;
+    -fx-text-fill: #422825;
+    -fx-opacity: 1;
+}
+
 .profileButton {
     -fx-background-color: #5D6D7E;
     -fx-text-fill: #17202A;
@@ -247,4 +259,12 @@
 }
 .chatVBox:hover {
     -fx-opacity: 1;
+}
+.chatLabel {
+    -fx-background-color: #273746;
+    -fx-text-fill: #D6EAF8;
+    -fx-font-size: 15;
+}
+.chatGrid {
+    -fx-background-color: #D6EAF8;
 }
