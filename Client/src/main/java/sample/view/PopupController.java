@@ -1,6 +1,10 @@
 package sample.view;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,6 +22,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -28,15 +34,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sample.controller.ClientManager;
 import sample.controller.gamePlayController.GamePlayController;
+import sample.controller.menuController.LobbyMenu;
+import sample.controller.menuController.MainMenuController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.UtilityController;
+import sample.model.Message;
+import sample.model.Request;
 import sample.model.cards.MonsterCard;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static sample.controller.responses.DuelMenuResponses.GAME_STARTED_SUCCESSFULLY;
+import static sample.model.Request.MessageEnum.ACCEPT_FOR_GAME;
 
 public class PopupController {
     @FXML
@@ -48,10 +63,12 @@ public class PopupController {
     @FXML
     private Button button;
     @FXML
+    private AnchorPane waiting;
     private ScrollPane cardsScrollPane;
-
     private String round = "";
     private Stage stage;
+    private static Image boardGirl = new Image(String.valueOf(DuelMenu.class.
+            getResource("/Images/waiting.gif")));
 
     public void initialize() {
         TranslateTransition trans = new TranslateTransition(Duration.millis(1000), vbox);
@@ -70,14 +87,41 @@ public class PopupController {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    startGameButtonClicked();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (round.equals("")) {
+                    UtilityController.makeAlert("Confused!!", "What are you doing?!", "complete information!", new Image(String.valueOf(getClass().
+                            getResource("/Images/confusedAnimeGirl.jpg"))));
                 }
+               else sendAndWait(MainMenuController.getToken(),Integer.parseInt(round));
             }
         });
     }
+    public  void sendAndWait(String token , int round)
+    {  LobbyMenu.sendStartGameRequest(token,round);
+        ImageView imageView = new ImageView(boardGirl);
+        imageView.setFitWidth(469.0);
+        imageView.setFitHeight(386.0);
+        waiting.getChildren().clear();
+        waiting.getChildren().add(imageView);
+        KeyFrame keyFrame = new KeyFrame(new Duration(500) , actionEvent -> {
+            HashMap<String,Object> hashMap = (HashMap<String, Object>)LobbyMenu.startGameAndWait();
+            if(hashMap.get("message").equals(ACCEPT_FOR_GAME))
+            { System.out.println("rival is "+hashMap.get("second"));
+                stage.close();
+                return;
+            }
+        });
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.setCycleCount(40);
+        timeline.setOnFinished(event -> {
+            UtilityController.makeAlert("Sad!!", "", "no online player found!", new Image(String.valueOf(getClass().
+                    getResource("/Images/sadAnimeGirl.jpg"))));
+            LobbyMenu.removeRequestsByToken();
+          stage.close();
+        });
+        timeline.play();
+    }
+
     public void showList(ArrayList<MonsterCard> cards) {
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(10, 10, 10, 20));
@@ -106,10 +150,9 @@ public class PopupController {
     }
 
     public void startGameButtonClicked() throws IOException {
-        if (round.equals("") || usernameTF.getText().equals("")) {
+        if (round.equals("")) {
             UtilityController.makeAlert("Confused!!", "What are you doing?!", "complete information!", new Image(String.valueOf(getClass().
                     getResource("/Images/confusedAnimeGirl.jpg"))));
-
         } else {
             DuelMenuResponses duelMenuResponses = GamePlayController.getInstance().startNewGame(usernameTF.getText(), Integer.parseInt(round));
             if (duelMenuResponses.equals(DuelMenuResponses.NO_PLAYER_WITH_THIS_USERNAME_EXISTS))

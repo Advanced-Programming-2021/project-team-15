@@ -29,6 +29,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import sample.controller.gamePlayController.AttackController;
 import sample.controller.gamePlayController.GamePlayController;
+import sample.controller.menuController.LobbyMenu;
 import sample.controller.menuController.MenuController;
 import sample.controller.responses.DuelMenuResponses;
 import sample.controller.utilizationController.AudioController;
@@ -288,20 +289,8 @@ public class DuelMenu {
     public void flipMagic( int i, Card card) {
         Flip flip = new Flip();
         if (card.getOwner() == gamePlayController.getCurrentPlayer()) {
-//            flip.setNode(playerCards[0][i]);
-//            flip.setFrontImage(card.getCardImage());
-//            flip.setBackOfCard(backOfCard);
-//            flip.setRightToLeft(false);
-//            flip.setFrontToBack(false);
-//            flip.play();
             playerCards[0][i].setImage(card.getCardImage());
         } else {
-//            flip.setNode(opponentCards[0][i]);
-//            flip.setFrontImage(card.getCardImage());
-//            flip.setBackOfCard(backOfCard);
-//            flip.setRightToLeft(false);
-//            flip.setFrontToBack(false);
-//            flip.play();
            opponentCards[0][i].setImage(card.getCardImage());
         }
         flip.setFrontImage(card.getCardImage());
@@ -541,17 +530,14 @@ public class DuelMenu {
         updateDeck(playerDeck, gamePlayController.getCurrentPlayer());
         updateDeck(opponentDeck, gamePlayController.getOpponentPlayer());
     }
-
     public void startTimerAndRun() {
-        timer = new java.util.Timer();
+        timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-//                        if(!isPause)
-//                            runAndUpdate();
                     }
                 });
             }
@@ -560,6 +546,8 @@ public class DuelMenu {
         timer.schedule(timerTask, 0, frameTimeInMilliseconds);
 
     }
+
+
 
     public void updateDeck(StackPane pane, Player player) {
         pane.getChildren().clear();
@@ -1525,7 +1513,7 @@ public class DuelMenu {
 
     public void hiddenDefensePositionMonsterDestroyed(String name) {
         Timeline timeline = attackFire();
-        timeline.setOnFinished(vent -> {
+        timeline.setOnFinished(event -> {
             UtilityController.makeAlert("Well done!!", "You are a true warrior...!", "opponent's monster card was " + name + " and the defense position monster is destroyed", new Image(String.valueOf(getClass().
                     getResource("/Images/fightAnimeGirl.jpg"))));
         });

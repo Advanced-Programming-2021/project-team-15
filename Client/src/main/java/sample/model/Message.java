@@ -1,16 +1,15 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Message {
+public class Message  implements Serializable {
     public static ArrayList<Message> getAllMessages() {
         return allMessages;
     }
-
     public static void setAllMessages(ArrayList<Message> allMessages) {
         Message.allMessages = allMessages;
     }
-
     private static ArrayList<Message> allMessages = new ArrayList<>();
     private static int idCounter = 0;
     private int id;
