@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -39,6 +40,8 @@ import java.util.ArrayList;
 import static sample.controller.responses.DuelMenuResponses.GAME_STARTED_SUCCESSFULLY;
 
 public class PopupController {
+    @FXML
+    private AnchorPane anchor;
     @FXML
     private VBox vbox;
     @FXML
@@ -103,6 +106,7 @@ public class PopupController {
             stackPane.getChildren().add(text);
             pane.add(stackPane,i,0);
         }
+        anchor.getChildren().add(pane);
     }
 
     public void startGameButtonClicked() throws IOException {

@@ -513,6 +513,27 @@ public class DuelMenu {
             rotateTransition.play();
         }
     }
+    public void errorTransition(int i, Player player,String type, Card card) {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setByX(8);
+        translate.setDuration(Duration.millis(100));
+        translate.setCycleCount(6);
+        translate.setAutoReverse(true);
+        if (player == gamePlayController.getCurrentPlayer()) {
+            if(card.getCardPlacedZone()==gamePlayController.getCurrentPlayer().getHand())
+                translate.setNode(getNodeByCoordinate(0 , gamePlayController.getCurrentPlayer().getHand().getCardsInHand().indexOf(card), firstPlayerHand));
+          else{  if (type.equals("m"))
+          translate.setNode(playerCards[1][i]);
+            else translate.setNode(playerCards[0][i]);}
+    } else { if(card.getCardPlacedZone()==gamePlayController.getOpponentPlayer().getHand())
+            translate.setNode(getNodeByCoordinate(0 , gamePlayController.getOpponentPlayer().getHand().getCardsInHand().indexOf(card), secondPlayerHand));
+            else {if (type.equals("m"))
+                translate.setNode(opponentCards[1][i]);
+            else translate.setNode(opponentCards[0][i]);}
+        }
+        translate.play();
+
+    }
 
     public void initializeBoard() {
         playerCards = new ImageView[2][5];
@@ -567,12 +588,12 @@ public class DuelMenu {
             ImageView imageView = new ImageView();
             imageView.setFitHeight(120);
             imageView.setFitWidth(80);
-            imageView.setImage(player.getDeckZone().getZoneCards().get(i).getCardImage());
+            imageView.setImage(backOfCard);
             pane.getChildren().add(imageView);
         }
         Text text = new Text((player.getDeckZone().getZoneCards().size() + 1) + "");
         text.setFont(new Font("Verdana Bold", 20));
-        text.setFill(Color.WHITE);
+        text.setFill(Color.BLACK);
         text.setEffect(new Reflection());
         pane.getChildren().add(text);
     }
@@ -994,6 +1015,9 @@ public class DuelMenu {
 
     public void oneTribute() throws IOException {
         TextInputDialog dialog = new TextInputDialog();
+        dialog.getDialogPane().getStylesheets().add(
+        UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
         dialog.setTitle("We need one Sacrifice");
         dialog.setContentText("please choose a monster");
         Optional<String> result = dialog.showAndWait();
@@ -1005,6 +1029,9 @@ public class DuelMenu {
     public String getNum(String name) {
         String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
+        dialog.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
         dialog.setHeaderText(name);
         dialog.setContentText("enter a number :");
         Optional<String> result = dialog.showAndWait();
@@ -1016,6 +1043,9 @@ public class DuelMenu {
     public String getStringAndAsk(String input)
     {  String string = "cancel";
         TextInputDialog dialog = new TextInputDialog();
+        dialog.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
         dialog.setContentText(input);
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
@@ -1026,6 +1056,9 @@ public class DuelMenu {
 
     public void twoMonsterTribute() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
         dialog.setTitle("We need 2 sacrifices!!");
         ButtonType loginButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
@@ -1100,7 +1133,7 @@ public class DuelMenu {
                 gamePlayController.drawPhase();
                 gamePlayController.goNextPhase();
                 System.out.println("it's " + gamePlayController.getCurrentPlayer().getUser().getNickName() + "'s turn");
-                System.out.println("phase : draw phase");
+                setPhaseImage("draw phase");
             }
             break;
             case CANT_SUMMON_THIS_CARD:
@@ -1344,9 +1377,7 @@ public class DuelMenu {
                                 getResource("/Images/confusedAnimeGirl.jpg"))));
                 break;
             case SHOW_NEW_PHASE:
-                output = "Phase :" + " " + Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName();
-                UtilityController.makeAlert("Nice!!", "You're playing good!", output, new Image(String.valueOf(getClass().
-                        getResource("/Images/fightAnimeGirl.jpg"))));
+                setPhaseImage(Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()).getName());
                 break;
             case CARD_EQUIPPED:
                 System.out.println("card equipped!");
@@ -1495,6 +1526,56 @@ public class DuelMenu {
                 break;
         }
     }
+    public void setPhaseImage(String name) {
+        Image image = null;
+        switch (name) {
+            case "draw phase":
+               image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/DRAW PHASE.png")));
+                break;
+            case "standby phase":
+                image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/STANDBY PHASE.png")));
+                break;
+            case "main phase 1":
+                image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/MAIN PHASE 1.png")));
+                break;
+            case "battle phase":
+                image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/BATTLE PHASE.png")));
+                break;
+            case "main phase 2":
+                image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/MAIN PHASE 2.png")));
+                break;
+            case "end phase":
+                image =  new Image(String.valueOf(DuelMenu.class.
+                        getResource("/Images/END PHASE.png")));
+                break;
+
+            default:
+                break;
+
+        }
+        viewImage.setImage(image);
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(viewImage);
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+        fadeTransition.setOnFinished(event -> {
+            FadeTransition fade = new FadeTransition();
+            fade.setDelay(Duration.millis(1000));
+            fade.setNode(viewImage);
+            fade.setDuration(Duration.millis(1000));
+            fade.setFromValue(1);
+            fade.setToValue(0);
+            fade.play();
+        });
+
+    }
 
 
     public void swapBoards() {
@@ -1525,6 +1606,9 @@ public class DuelMenu {
     public String chooseQuestion(String question ,String first , String second )
     {   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(question);
+        alert.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.setHeaderText("Yes Or No?");
         ButtonType buttonTypeOne = new ButtonType(first);
         ButtonType buttonTypeTwo = new ButtonType(second);
@@ -1544,6 +1628,9 @@ public class DuelMenu {
     public String yesNoQuestionAlert(String question) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText(question);
+        alert.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.setHeaderText("Yes Or No?");
         ButtonType buttonTypeOne = new ButtonType("Yes");
         ButtonType buttonTypeTwo = new ButtonType("No");
@@ -1563,6 +1650,9 @@ public class DuelMenu {
         imageView.setFitHeight(150);
         imageView.setFitWidth(100);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.getDialogPane().getStylesheets().add(
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.setContentText(question);
         alert.setGraphic(imageView);
         alert.setHeaderText("Yes Or No?");

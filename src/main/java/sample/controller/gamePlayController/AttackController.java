@@ -54,11 +54,14 @@ public class AttackController {
         else if (!((MonsterCard) gamePlayController.getSelectedCard()).toStringPosition().equals("OO")
                 || !(gamePlayController.getSelectedCard() instanceof MonsterCard)
                 || (gamePlayController.getSelectedCard().getCardPlacedZone() != gamePlayController.getCurrentPlayer().getMonsterCardZone()))
-            return YOU_CANT_ATTACK_WITH_THIS_CARD;
+        { gamePlayController.getDuelMenu().errorTransition(gamePlayController.getCurrentPlayer().getMagicCardZone().getPlace(gamePlayController.getSelectedCard())-1,gamePlayController.getCurrentPlayer(),"t",gamePlayController.getSelectedCard());
+            return YOU_CANT_ATTACK_WITH_THIS_CARD;}
         else if (Game.getPhases().get(gamePlayController.getCurrentPhaseNumber()) != Phase.PhaseLevel.BATTLE)
-            return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
+        {  gamePlayController.getDuelMenu().errorTransition(gamePlayController.getCurrentPlayer().getMagicCardZone().getPlace(gamePlayController.getSelectedCard())-1,gamePlayController.getCurrentPlayer(),"m",gamePlayController.getSelectedCard());
+         return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;}
         else if (alreadyAttackedThisTurn((MonsterCard) gamePlayController.getSelectedCard()))
-            return DuelMenuResponses.ALREADY_ATTACKED;
+        {gamePlayController.getDuelMenu().errorTransition(gamePlayController.getCurrentPlayer().getMagicCardZone().getPlace(gamePlayController.getSelectedCard())-1,gamePlayController.getCurrentPlayer(),"t",gamePlayController.getSelectedCard());
+            return DuelMenuResponses.ALREADY_ATTACKED;}
         else if (gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number) == null)
             return DuelMenuResponses.NO_CARD_TO_ATTACK;
         String position = gamePlayController.getOpponentPlayer().getMonsterCardZone().getCardByPlaceNumber(number).toStringPosition();

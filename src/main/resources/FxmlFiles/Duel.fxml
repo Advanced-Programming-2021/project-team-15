@@ -56,6 +56,8 @@
                </content>
             </ScrollPane>
             <ImageView fx:id="viewImage" fitHeight="182.0" fitWidth="528.0" layoutX="150.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" />
+            <StackPane fx:id="opponentField" layoutX="42.0" layoutY="270.0" prefHeight="126.0" prefWidth="94.0" />
+            <StackPane fx:id="playerField" layoutX="687.0" layoutY="435.0" prefHeight="135.0" prefWidth="100.0" />
             </children>
         </Pane>
       <VBox alignment="CENTER" layoutX="566.0" prefHeight="840.0" prefWidth="135.0" spacing="25.0" styleClass="phaseTexture" stylesheets="@../CSSFiles/Duel.css">

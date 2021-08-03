@@ -408,21 +408,24 @@ public class GamePlayController extends MenuController {
     }
 
     public DuelMenuResponses summon() throws IOException {
-//        if (selectedCard instanceof MonsterCard) System.out.println("monster");
-//        else if (selectedCard instanceof  MagicCard) System.out.println("magic");
-//        else System.out.println("what");
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand() ||
-                !(selectedCard instanceof MonsterCard))
+                !(selectedCard instanceof MonsterCard)) {
+            duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
             return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
+        }
         else if (((MonsterCard) selectedCard).getMonsterEffectType().equals(MonsterCard.MonsterEffectType.RITUAL))
-            return DuelMenuResponses.CANT_SUMMON_THIS_CARD;
+        {             duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.CANT_SUMMON_THIS_CARD;}
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
-            return DuelMenuResponses.NOT_ALLOWED_IN_THIS_PHASE;
+        {   duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.NOT_ALLOWED_IN_THIS_PHASE;}
         else if (currentPlayer.getMonsterCardZone().getNumberOfCard() == 5)
-            return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
+        {duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.MONSTER_ZONE_IS_FULL;}
         else if (!summonedOrSetMonstersInTurn.isEmpty())
-            return DuelMenuResponses.ALREADY_SUMMONED_SET;
+        {               duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.ALREADY_SUMMONED_SET;}
         if (selectedCard.getCardName().equals("Gate Guardian")) {
             if (monsterEffectController.gateGuardian())
                 return CARD_SUMMONED;
@@ -450,7 +453,8 @@ public class GamePlayController extends MenuController {
         } else {
             if (currentPlayer.getMonsterCardZone().getNumberOfCard() < 2 &&
                     !selectedCard.getCardName().equals("Beast King Barbaros"))
-                return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;
+            {  duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+                return DuelMenuResponses.NOT_ENOUGH_CARD_TO_BE_TRIBUTE;}
             else {
                 if (selectedCard.getCardName().equals("Beast King Barbaros")) {
                     boolean ans = monsterEffectController.BeastKingBarbaros();
@@ -500,10 +504,12 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses set() throws IOException {
 
         if (selectedCard.getCardPlacedZone() != currentPlayer.getHand())
-            return DuelMenuResponses.CANT_SET_THIS_CARD;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.CANT_SET_THIS_CARD;}
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
-            return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
+        {   duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;}
         if (selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.SPELL))
             return setSpell();
         else if (selectedCard instanceof MagicCard && ((MagicCard) selectedCard).getMagicType().equals(MagicCard.MagicType.TRAP))
@@ -514,11 +520,13 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses setMonster() {
         if (currentPlayer.getMonsterCardZone().getNumberOfCard() == 5)
-            return DuelMenuResponses.MONSTER_ZONE_IS_FULL;
+        {   duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.MONSTER_ZONE_IS_FULL;}
         else if (!summonedOrSetMonstersInTurn.isEmpty())
             return DuelMenuResponses.ALREADY_SUMMONED_SET;
         if (selectedCard.getCardName().equals("Gate Guardian"))
-            return CANT_NORMAL_SET_THIS_MONSTER;
+        {   duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return CANT_NORMAL_SET_THIS_MONSTER;}
         setSetCard(selectedCard);
         summonedOrSetMonstersInTurn.add((MonsterCard) selectedCard);
         selectedCard.setHidden(true);
@@ -541,15 +549,18 @@ public class GamePlayController extends MenuController {
     public DuelMenuResponses setPosition() {
         if (isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard) ||
                 attackController.alreadyAttackedThisTurn((MonsterCard) selectedCard))
-            return CANT_CHANGE_THIS_CARD_POSITION;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return CANT_CHANGE_THIS_CARD_POSITION;}
         else if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone() ||
                 !(selectedCard instanceof MonsterCard))
-            return DuelMenuResponses.CANT_CHANGE_THIS_CARD_POSITION;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return DuelMenuResponses.CANT_CHANGE_THIS_CARD_POSITION;}
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
             return DuelMenuResponses.CANT_DO_THIS_ACTION_IN_THIS_PHASE;
         else if (((MonsterCard) selectedCard).toStringPosition().equals("DH"))
-            return CANT_CHANGE_HIDDEN_CARD_POSITION;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return CANT_CHANGE_HIDDEN_CARD_POSITION;}
         else if (isSelectCardChangedBefore())
             return ALREADY_CHANGED_POSITION;
         if (((MonsterCard) selectedCard).getMode()== MonsterCard.Mode.ATTACK)
@@ -566,7 +577,8 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses setSpell() throws IOException {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
-            return SPELL_ZONE_CARD_IS_FULL;
+        {duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            return SPELL_ZONE_CARD_IS_FULL;}
         selectedCard.setHidden(true);
         if (((MagicCard) selectedCard).getCardIcon() == MagicCard.CardIcon.FIELD) {
             currentPlayer.getFieldZone().moveCardToFieldZone((MagicCard) selectedCard, currentPlayer);
@@ -582,7 +594,8 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses setTrap() {
         if (currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
-            return SPELL_ZONE_CARD_IS_FULL;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            return SPELL_ZONE_CARD_IS_FULL;}
         selectedCard.setHidden(true);
         currentPlayer.getMagicCardZone().moveToFirstEmptyPlaceFromHand((MagicCard) selectedCard, currentPlayer);
         setTrapCardsInTurn.add((MagicCard) selectedCard);
@@ -604,13 +617,18 @@ public class GamePlayController extends MenuController {
 
     public DuelMenuResponses flipSummon() throws IOException {
         if (selectedCard.getCardPlacedZone() != currentPlayer.getMonsterCardZone())
-            return CANT_CHANGE_THIS_CARD_POSITION;
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return CANT_CHANGE_THIS_CARD_POSITION;}
         else if (Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
-                Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
+                Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2) {
+            duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
             return CANT_DO_THIS_ACTION_IN_THIS_PHASE;
+        }
         else if (!((MonsterCard) selectedCard).toStringPosition().equals("DH") ||
                 isMonsterSummonedOrSetInThisTurn((MonsterCard) selectedCard))
-            return CANT_FLIP_SUMMON;
+        {   if(currentPlayer.getMagicCardZone().getPlace(selectedCard)!=0)
+            duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            return CANT_FLIP_SUMMON;}
         ((MonsterCard) selectedCard).setMode(MonsterCard.Mode.ATTACK);
         selectedCard.setHidden(false);
         duelMenu.flipSummon(currentPlayer,currentPlayer.getMonsterCardZone().getPlace(selectedCard)-1,selectedCard);
@@ -662,28 +680,35 @@ public class GamePlayController extends MenuController {
         if (selectedCard == null)
             duelMenu.printResponse(NO_CARD_SELECTED);
         else if (!(selectedCard instanceof MagicCard))
-            duelMenu.printResponse(ACTIVATE_EFFECT_ONLY_ON_SPELL);
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"m", selectedCard);
+            duelMenu.printResponse(ACTIVATE_EFFECT_ONLY_ON_SPELL);}
         else if (!(((MagicCard) selectedCard).getMagicType() == MagicCard.MagicType.SPELL && ((MagicCard) selectedCard).getCardIcon() == QUICK_PLAY) &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN1 &&
                 Game.getPhases().get(currentPhaseNumber) != Phase.PhaseLevel.MAIN2)
-            duelMenu.printResponse(CANT_ACTIVATE_EFFECT_ON_THIS_PHASE);
+        {duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            duelMenu.printResponse(CANT_ACTIVATE_EFFECT_ON_THIS_PHASE);}
         else if (selectedCard.isActivated())
-            duelMenu.printResponse(YOU_ALREADY_ACTIVATED_THIS_CARD);
+        {duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            duelMenu.printResponse(YOU_ALREADY_ACTIVATED_THIS_CARD);}
         else if (((MagicCard) selectedCard).getMagicType() == MagicCard.MagicType.TRAP && selectedCard.getCardPlacedZone() == currentPlayer.getHand())
-            duelMenu.printResponse(YOU_SHOULD_SET_TRAP);
-        else if (isTrapSetInThisTurn((MagicCard) selectedCard)) duelMenu.printResponse(CANT_ACTIVATE_TRAP_IN_THIS_TURN);
+        {duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            duelMenu.printResponse(YOU_SHOULD_SET_TRAP);}
+        else if (isTrapSetInThisTurn((MagicCard) selectedCard))
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            duelMenu.printResponse(CANT_ACTIVATE_TRAP_IN_THIS_TURN);}
         else if (selectedCard.getCardPlacedZone() == currentPlayer.getHand() && ((MagicCard) selectedCard).getCardIcon() != MagicCard.CardIcon.FIELD
                 && currentPlayer.getMagicCardZone().getNumberOfCard() == 5)
-            duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);
+        { duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
+            duelMenu.printResponse(SPELL_ZONE_CARD_IS_FULL);}
         else {
 
             spellEffectController.setDoIt(false);
             trapEffectController.setDoIt(false);
-
-
             if (chainCards.isEmpty() || canContinueTheChain(selectedCard)) {
                 callSpellOrTrap((MagicCard) selectedCard, currentPlayer);
                 if (!selectedCard.isActivated()) {
+                   if(selectedCard.getCardPlacedZone() == currentPlayer.getMagicCardZone())
+                    duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
                     duelMenu.printResponse(PREPARATIONS_OF_THIS_SPELL_ARE_NOT_DONE_YET);
                     if (chainCards.isEmpty()) return;
                     if (chainCards.isEmpty()) mainCurrentPlayer = currentPlayer;
@@ -693,6 +718,7 @@ public class GamePlayController extends MenuController {
                     addSelectedCardToChain();
                 }
             } else {
+                duelMenu.errorTransition(currentPlayer.getMagicCardZone().getPlace(selectedCard)-1,currentPlayer,"t", selectedCard);
                 duelMenu.printResponse(CANT_ADD_THIS_CARD_TO_CHAIN);
                 selectedCard = null;
             }

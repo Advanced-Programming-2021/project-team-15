@@ -1,7 +1,10 @@
 package sample.controller.utilizationController;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import sample.controller.gamePlayController.GamePlayController;
 import sample.model.Game;
 import sample.view.DuelMenu;
@@ -74,8 +77,11 @@ public class AudioController {
     }
     public static void playEffectDone() {
         if (mute) return;
-        effectDone.play();
-       effectDone.setOnEndOfMedia(effectDone::stop);
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(2000), event -> {
+            effectDone.play();
+            effectDone.setOnEndOfMedia(effectDone::stop);
+        });
+        new Timeline(keyFrame).play();
     }
     public static void playSummoned() {
         if (mute) return;

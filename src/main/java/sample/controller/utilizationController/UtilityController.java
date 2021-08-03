@@ -44,7 +44,7 @@ public class UtilityController {
         imageView.setFitWidth(80);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getDialogPane().getStylesheets().add(
-                UtilityController.class.getResource("/CSSFiles/Dialogs.css").toExternalForm());
+                UtilityController.class.getResource("/CSSFiles/DuelAlert.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.setTitle(title);
         alert.setHeaderText(header);

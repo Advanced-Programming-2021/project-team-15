@@ -11,7 +11,7 @@
 
 .dialog-pane > .content.label {
     -fx-padding: 0.5em 0.5em 0.5em 0.5em;
-    -fx-background-color:  #bff4ff ;
+    -fx-background-color: #bff4ff;
     -fx-text-fill: #581845;
     -fx-font-size: 18px;
     -fx-alignment: center;
@@ -38,7 +38,6 @@
 }
 
 .dialog-pane .button:hover {
-    -fx-background-color:  #581845 ;
     -fx-text-fill: #bff4ff;
     -fx-font-weight: bold;
 }
